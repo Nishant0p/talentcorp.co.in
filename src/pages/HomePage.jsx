@@ -1,8 +1,10 @@
 import React from 'react';
 import { CheckCircle, Award, ArrowRight, Briefcase, Star } from 'lucide-react';
 import WorkforceSection from '../components/WorkforceSection';
+import StatsSection from '../components/StatsSection';
 import JobBoard from '../components/JobBoard';
 import Testimonials from '../components/Testimonials';
+import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 
 const HeroSection = ({ animateWords = false }) => {
@@ -147,12 +149,12 @@ const HeroSection = ({ animateWords = false }) => {
         </div>
       </section>
 
-      <section id="clients" className="relative overflow-hidden bg-[#dcebff] px-0 pb-20 pt-16 md:pt-40 text-[#0f2a4d]">
+      <section id="clients" className="relative overflow-hidden bg-white px-0 pb-20 pt-16 md:pt-40 text-[#0f2a4d]">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage:
-              'repeating-linear-gradient(135deg, rgba(17,87,168,0.1) 0px, rgba(17,87,168,0.1) 1px, transparent 1px, transparent 16px)',
+              'repeating-linear-gradient(135deg, rgba(37,99,235,0.04) 0px, rgba(37,99,235,0.04) 1px, transparent 1px, transparent 16px)',
           }}
         />
 
@@ -162,10 +164,10 @@ const HeroSection = ({ animateWords = false }) => {
           </h2>
 
           <div
-            className="logo-marquee mt-10 overflow-hidden border-y border-[#9fc3ea] py-6"
+            className="logo-marquee mt-10 overflow-hidden border-y border-[#e0eef8] py-6 bg-white/60"
             style={{
               backgroundImage:
-                'repeating-linear-gradient(135deg, rgba(19,93,174,0.08) 0px, rgba(19,93,174,0.08) 1px, rgba(236,245,255,0.35) 1px, rgba(236,245,255,0.35) 14px)',
+                'repeating-linear-gradient(135deg, rgba(37,99,235,0.04) 0px, rgba(37,99,235,0.04) 1px, transparent 1px, transparent 16px)',
             }}
           >
             <div className="logo-marquee-track">
@@ -190,6 +192,8 @@ const HeroSection = ({ animateWords = false }) => {
       <WorkforceSection />
       <JobBoard />
       <Testimonials />
+      <StatsSection />
+      <FAQSection />
       <Footer />
     </div>
   );

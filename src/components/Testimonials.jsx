@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Star, Quote, Building2, UserCircle } from 'lucide-react';
+import { Star, Quote, Building2, UserCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const clientReviews = [
   {
@@ -57,10 +57,36 @@ const employeeReviews = [
 
 const Testimonials = () => {
   const [activeTab, setActiveTab] = useState('clients');
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const currentReviews = useMemo(() => {
     return activeTab === 'clients' ? clientReviews : employeeReviews;
   }, [activeTab]);
+
+  const itemsPerSlide = 2;
+  const totalSlides = Math.ceil(currentReviews.length / itemsPerSlide);
+  const visibleReviews = currentReviews.slice(currentIndex * itemsPerSlide, (currentIndex + 1) * itemsPerSlide);
+
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
+  };
+
+  React.useEffect(() => {
+    setCurrentIndex(0);
+  }, [activeTab]);
+
+  // Auto-scroll through slides every 5.5 seconds
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
+    }, 5500);
+
+    return () => clearInterval(interval);
+  }, [totalSlides]);
 
   return (
     <section className="relative overflow-hidden bg-white px-4 py-24 sm:px-6 lg:px-8">
@@ -68,27 +94,27 @@ const Testimonials = () => {
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* Slanting line pattern overlay */}
         <div
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0 opacity-55"
           style={{
             backgroundImage:
-              'repeating-linear-gradient(135deg, rgba(37,99,235,0.05) 0px, rgba(37,99,235,0.05) 1px, transparent 1px, transparent 18px)',
+              'repeating-linear-gradient(135deg, rgba(37,99,235,0.1) 0px, rgba(37,99,235,0.1) 1px, transparent 1px, transparent 18px)',
           }}
         />
 
         {/* Corner dot-fade textures */}
         <div
-          className="absolute -left-24 -top-16 h-72 w-72 rounded-full opacity-35"
+          className="absolute -left-24 -top-16 h-72 w-72 rounded-full opacity-60"
           style={{
             backgroundImage:
-              'radial-gradient(circle, rgba(249,115,22,0.22) 1.1px, transparent 1.1px), radial-gradient(circle at center, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0.05) 50%, transparent 74%)',
+              'radial-gradient(circle, rgba(249,115,22,0.32) 1.1px, transparent 1.1px), radial-gradient(circle at center, rgba(249,115,22,0.22) 0%, rgba(249,115,22,0.08) 50%, transparent 74%)',
             backgroundSize: '13px 13px, 100% 100%',
           }}
         />
         <div
-          className="absolute -right-24 -bottom-20 h-80 w-80 rounded-full opacity-35"
+          className="absolute -right-24 -bottom-20 h-80 w-80 rounded-full opacity-60"
           style={{
             backgroundImage:
-              'radial-gradient(circle, rgba(37,99,235,0.2) 1px, transparent 1px), radial-gradient(circle at center, rgba(37,99,235,0.14) 0%, rgba(37,99,235,0.04) 55%, transparent 76%)',
+              'radial-gradient(circle, rgba(37,99,235,0.3) 1px, transparent 1px), radial-gradient(circle at center, rgba(37,99,235,0.22) 0%, rgba(37,99,235,0.06) 55%, transparent 76%)',
             backgroundSize: '14px 14px, 100% 100%',
           }}
         />
@@ -126,39 +152,77 @@ const Testimonials = () => {
           </button>
         </div>
 
-        <div key={activeTab} className="testimonial-switch grid gap-8 text-left md:grid-cols-2">
-          {currentReviews.map((review) => (
-            <article
-              key={`${activeTab}-${review.id}`}
-              className="testimonial-card group relative rounded-[2.5rem] border border-gray-100 bg-white p-10 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.08)]"
+        <div key={activeTab} className="relative">
+          {/* Carousel Container */}
+          <div className="relative mb-8">
+            <div className="testimonial-switch grid gap-8 text-left md:grid-cols-2">
+              {visibleReviews.map((review) => (
+                <article
+                  key={`${activeTab}-${review.id}`}
+                  className="testimonial-card group relative rounded-[2.5rem] border border-gray-100 bg-white p-10 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.08)]"
+                >
+                  <div className="absolute right-10 top-8 text-blue-100 transition-colors group-hover:text-blue-200">
+                    <Quote size={40} fill="currentColor" />
+                  </div>
+
+                  <div className="mb-6 flex gap-1">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+
+                  <p className="relative z-10 mb-8 text-lg italic leading-relaxed text-gray-600">"{review.text}"</p>
+
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-blue-50 font-bold text-blue-600 shadow-sm">
+                      <img
+                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(review.name)}&background=eff6ff&color=2563eb`}
+                        alt={review.name}
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900">{review.name}</h4>
+                      <p className="text-sm text-gray-500">{review.role}</p>
+                      <p className="mt-0.5 text-xs font-bold text-blue-600">{review.company}</p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          {/* Carousel Navigation - Subtle for auto-scrolling */}
+          <div className="flex items-center justify-center gap-6">
+            <button
+              onClick={goToPrevious}
+              className="rounded-full border-2 border-gray-200 p-3 text-gray-400 transition-all hover:border-blue-400 hover:text-blue-600 active:scale-95"
+              aria-label="Previous testimonials"
             >
-              <div className="absolute right-10 top-8 text-blue-100 transition-colors group-hover:text-blue-200">
-                <Quote size={40} fill="currentColor" />
-              </div>
+              <ChevronLeft size={24} />
+            </button>
+            
+            {/* Slide Indicators */}
+            <div className="flex gap-2">
+              {[...Array(totalSlides)].map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`h-2 rounded-full transition-all ${
+                    currentIndex === idx ? 'w-8 bg-blue-600' : 'w-2 bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
 
-              <div className="mb-6 flex gap-1">
-                {[...Array(review.rating)].map((_, i) => (
-                  <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-
-              <p className="relative z-10 mb-8 text-lg italic leading-relaxed text-gray-600">"{review.text}"</p>
-
-              <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-blue-50 font-bold text-blue-600 shadow-sm">
-                  <img
-                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(review.name)}&background=eff6ff&color=2563eb`}
-                    alt={review.name}
-                  />
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900">{review.name}</h4>
-                  <p className="text-sm text-gray-500">{review.role}</p>
-                  <p className="mt-0.5 text-xs font-bold text-blue-600">{review.company}</p>
-                </div>
-              </div>
-            </article>
-          ))}
+            <button
+              onClick={goToNext}
+              className="rounded-full border-2 border-gray-200 p-3 text-gray-400 transition-all hover:border-blue-400 hover:text-blue-600 active:scale-95"
+              aria-label="Next testimonials"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
         </div>
       </div>
     </section>

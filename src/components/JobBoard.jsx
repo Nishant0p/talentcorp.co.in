@@ -36,27 +36,27 @@ const JobBoard = () => {
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* Slanting line pattern overlay */}
         <div
-          className="absolute inset-0 opacity-35"
+          className="absolute inset-0 opacity-60"
           style={{
             backgroundImage:
-              'repeating-linear-gradient(135deg, rgba(37,99,235,0.06) 0px, rgba(37,99,235,0.06) 1px, transparent 1px, transparent 16px)',
+              'repeating-linear-gradient(135deg, rgba(37,99,235,0.12) 0px, rgba(37,99,235,0.12) 1px, transparent 1px, transparent 16px)',
           }}
         />
 
         {/* Corner dot-fade textures */}
         <div
-          className="absolute -right-48 -top-20 h-96 w-96 rounded-full opacity-40"
+          className="absolute -right-48 -top-20 h-96 w-96 rounded-full opacity-70"
           style={{
             backgroundImage:
-              'radial-gradient(circle, rgba(249,115,22,0.24) 1.1px, transparent 1.1px), radial-gradient(circle at center, rgba(249,115,22,0.16) 0%, rgba(249,115,22,0.06) 50%, transparent 74%)',
+              'radial-gradient(circle, rgba(249,115,22,0.35) 1.1px, transparent 1.1px), radial-gradient(circle at center, rgba(249,115,22,0.24) 0%, rgba(249,115,22,0.08) 50%, transparent 74%)',
             backgroundSize: '13px 13px, 100% 100%',
           }}
         />
         <div
-          className="absolute -left-32 bottom-12 h-72 w-72 rounded-full opacity-35"
+          className="absolute -left-32 bottom-12 h-72 w-72 rounded-full opacity-65"
           style={{
             backgroundImage:
-              'radial-gradient(circle, rgba(37,99,235,0.22) 1px, transparent 1px), radial-gradient(circle at center, rgba(37,99,235,0.14) 0%, rgba(37,99,235,0.04) 55%, transparent 76%)',
+              'radial-gradient(circle, rgba(37,99,235,0.32) 1px, transparent 1px), radial-gradient(circle at center, rgba(37,99,235,0.22) 0%, rgba(37,99,235,0.06) 55%, transparent 76%)',
             backgroundSize: '14px 14px, 100% 100%',
           }}
         />
