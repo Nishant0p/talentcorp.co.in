@@ -1,0 +1,140 @@
+import React, { useMemo, useState } from 'react';
+import { Star, Quote, Building2, UserCircle } from 'lucide-react';
+
+const clientReviews = [
+  {
+    id: 1,
+    name: 'Rajesh Sharma',
+    role: 'HR Director',
+    company: 'Tata Motors',
+    text: 'TSPL Group has been instrumental in helping us build a skilled workforce through their NAPS program. Their candidates are well-trained and job-ready. Highly recommend their services!',
+    rating: 5,
+  },
+  {
+    id: 2,
+    name: 'Priya Mehta',
+    role: 'Talent Acquisition Head',
+    company: 'Mahindra & Mahindra',
+    text: "We've partnered with TSPL for over 3 years now. Their understanding of government apprenticeship schemes and quick turnaround time makes them our preferred staffing partner.",
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: 'Amit Verma',
+    role: 'Operations Manager',
+    company: 'Bajaj Auto',
+    text: 'The quality of apprentices we receive from TSPL is exceptional. Their training programs ensure candidates are industry-ready from day one. A great team to work with.',
+    rating: 5,
+  },
+  {
+    id: 4,
+    name: 'Sanya Gupta',
+    role: 'Head of HR',
+    company: 'Hero MotoCorp',
+    text: "TSPL's contract staffing solutions have helped us scale our workforce efficiently. Their compliance management and payroll services are seamless and reliable.",
+    rating: 5,
+  },
+];
+
+const employeeReviews = [
+  {
+    id: 1,
+    name: 'Rahul Singh',
+    role: 'Production Trainee',
+    company: 'Tata Motors',
+    text: 'Got a great start to my career through TSPL. The training was practical and the placement process was very smooth.',
+    rating: 5,
+  },
+  {
+    id: 2,
+    name: 'Anjali Rao',
+    role: 'Quality Assistant',
+    company: 'Mahindra & Mahindra',
+    text: 'I am very happy with the job TSPL found for me. They helped me with all the government paperwork and my stipend comes on time.',
+    rating: 5,
+  },
+];
+
+const Testimonials = () => {
+  const [activeTab, setActiveTab] = useState('clients');
+
+  const currentReviews = useMemo(() => {
+    return activeTab === 'clients' ? clientReviews : employeeReviews;
+  }, [activeTab]);
+
+  return (
+    <section className="relative overflow-hidden bg-white px-4 py-24 sm:px-6 lg:px-8">
+      <div className="pointer-events-none absolute left-10 top-10 h-64 w-64 rounded-full border border-gray-100 opacity-50" />
+
+      <div className="relative z-10 mx-auto max-w-7xl text-center">
+        <div className="mb-12">
+          <span className="rounded-full bg-blue-50 px-4 py-1 text-[10px] font-black uppercase tracking-widest text-blue-600">
+            Testimonials
+          </span>
+          <h2 className="mb-4 mt-4 text-4xl font-extrabold text-[#1a2b4b] sm:text-5xl">
+            Voices of <span className="text-blue-600">Success</span>
+          </h2>
+          <p className="mx-auto max-w-2xl text-lg text-gray-500">
+            Hear from the companies we partner with and the careers we have transformed
+          </p>
+        </div>
+
+        <div className="mb-16 inline-flex rounded-2xl border border-gray-100 bg-gray-50 p-1.5">
+          <button
+            onClick={() => setActiveTab('clients')}
+            className={`flex items-center gap-2 rounded-xl px-8 py-3 font-bold transition-all ${
+              activeTab === 'clients' ? 'bg-white text-blue-600 shadow-md' : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            <Building2 size={18} /> Client Reviews
+          </button>
+          <button
+            onClick={() => setActiveTab('employees')}
+            className={`flex items-center gap-2 rounded-xl px-8 py-3 font-bold transition-all ${
+              activeTab === 'employees' ? 'bg-white text-blue-600 shadow-md' : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            <UserCircle size={18} /> Employee Reviews
+          </button>
+        </div>
+
+        <div key={activeTab} className="testimonial-switch grid gap-8 text-left md:grid-cols-2">
+          {currentReviews.map((review) => (
+            <article
+              key={`${activeTab}-${review.id}`}
+              className="testimonial-card group relative rounded-[2.5rem] border border-gray-100 bg-white p-10 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.08)]"
+            >
+              <div className="absolute right-10 top-8 text-blue-100 transition-colors group-hover:text-blue-200">
+                <Quote size={40} fill="currentColor" />
+              </div>
+
+              <div className="mb-6 flex gap-1">
+                {[...Array(review.rating)].map((_, i) => (
+                  <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+
+              <p className="relative z-10 mb-8 text-lg italic leading-relaxed text-gray-600">"{review.text}"</p>
+
+              <div className="flex items-center gap-4">
+                <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-blue-50 font-bold text-blue-600 shadow-sm">
+                  <img
+                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(review.name)}&background=eff6ff&color=2563eb`}
+                    alt={review.name}
+                  />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900">{review.name}</h4>
+                  <p className="text-sm text-gray-500">{review.role}</p>
+                  <p className="mt-0.5 text-xs font-bold text-blue-600">{review.company}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Testimonials;
