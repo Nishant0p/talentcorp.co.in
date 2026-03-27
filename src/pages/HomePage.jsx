@@ -3,6 +3,7 @@ import { CheckCircle, Award, ArrowRight, Briefcase, Star } from 'lucide-react';
 import WorkforceSection from '../components/WorkforceSection';
 import JobBoard from '../components/JobBoard';
 import Testimonials from '../components/Testimonials';
+import Footer from '../components/Footer';
 
 const HeroSection = ({ animateWords = false }) => {
   const partnerLogos = [
@@ -189,6 +190,7 @@ const HeroSection = ({ animateWords = false }) => {
       <WorkforceSection />
       <JobBoard />
       <Testimonials />
+      <Footer />
     </div>
   );
 };
