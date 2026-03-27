@@ -34,8 +34,54 @@ const JobDetailPage = () => {
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-blue-50 to-white px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-3xl">
+    <section className="relative min-h-screen bg-gradient-to-b from-blue-50 to-white px-4 py-16 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Background Textures */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* Slanting line pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(135deg, rgba(37,99,235,0.08) 0px, rgba(37,99,235,0.08) 1px, transparent 1px, transparent 14px)',
+          }}
+        />
+
+        {/* Corner dot-fade textures */}
+        <div
+          className="absolute -left-24 -top-16 h-64 w-64 rounded-full opacity-35"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, rgba(37,99,235,0.26) 1.1px, transparent 1.1px), radial-gradient(circle at center, rgba(37,99,235,0.18) 0%, rgba(37,99,235,0.06) 50%, transparent 74%)',
+            backgroundSize: '13px 13px, 100% 100%',
+          }}
+        />
+        <div
+          className="absolute -right-24 -top-10 h-72 w-72 rounded-full opacity-35"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, rgba(249,115,22,0.22) 1.1px, transparent 1.1px), radial-gradient(circle at center, rgba(249,115,22,0.16) 0%, rgba(249,115,22,0.06) 50%, transparent 74%)',
+            backgroundSize: '13px 13px, 100% 100%',
+          }}
+        />
+        <div
+          className="absolute -left-24 -bottom-20 h-72 w-72 rounded-full opacity-30"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, rgba(37,99,235,0.24) 1px, transparent 1px), radial-gradient(circle at center, rgba(37,99,235,0.16) 0%, rgba(37,99,235,0.04) 55%, transparent 76%)',
+            backgroundSize: '14px 14px, 100% 100%',
+          }}
+        />
+        <div
+          className="absolute -right-24 -bottom-24 h-80 w-80 rounded-full opacity-30"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, rgba(249,115,22,0.2) 1px, transparent 1px), radial-gradient(circle at center, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0.04) 56%, transparent 78%)',
+            backgroundSize: '14px 14px, 100% 100%',
+          }}
+        />
+      </div>
+
+      <div className="mx-auto max-w-3xl relative z-10">
         <button
           onClick={() => navigate(-1)}
           className="mb-8 flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 font-semibold text-gray-600 transition-all hover:border-blue-400 hover:text-blue-600"
@@ -44,7 +90,7 @@ const JobDetailPage = () => {
           Back
         </button>
 
-        <div className="rounded-2xl bg-white p-8 shadow-lg">
+        <div className="rounded-2xl bg-white p-8 shadow-lg relative">
           {/* Header */}
           <div className="mb-8 border-b border-gray-200 pb-8">
             <div className="mb-6 flex items-center gap-4">
