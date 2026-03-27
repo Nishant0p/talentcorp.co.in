@@ -334,5 +334,34 @@
 
 /* Carousel Auto-Scroll Transition */
 .testimonial-switch {
-  transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .hero-color-wash,
+  .hero-color-blob-one,
+  .hero-color-blob-two {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-color-wash,
+  .hero-color-blob-one,
+  .hero-color-blob-two,
+  .logo-marquee-track,
+  .job-card-animate,
+  .testimonial-card {
+    animation: none !important;
+  }
+
+  .testimonial-switch,
+  .home,
+  .hero-content-enter,
+  .hero-content-enter > * {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
 }

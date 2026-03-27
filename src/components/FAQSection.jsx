@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, MessageCircle } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const faqs = [
   {
@@ -32,6 +32,7 @@ const faqs = [
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -89,18 +90,16 @@ const FAQSection = () => {
       <motion.div
         className="max-w-7xl mx-auto relative z-10"
         variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        initial={false}
+        animate="visible"
       >
         <div className="grid lg:grid-cols-12 gap-16 items-start">
           {/* LEFT SIDE: Heading & CTA */}
           <motion.div className="lg:col-span-5 space-y-8" variants={leftPanelVariants}>
             <motion.div
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
+              initial={false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
             >
               <span className="bg-orange-50 text-orange-600 text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-widest">
                 Support
@@ -117,10 +116,9 @@ const FAQSection = () => {
 
             <motion.div
               className="bg-blue-600 rounded-3xl p-8 text-white shadow-xl shadow-blue-200 relative overflow-hidden group"
-              initial={{ opacity: 0, y: 36, scale: 0.97 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.35 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.08 }}
+              initial={false}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.05 }}
             >
               <div className="relative z-10">
                 <MessageCircle size={32} className="mb-4 text-blue-200" />
@@ -147,10 +145,9 @@ const FAQSection = () => {
                     ? 'border-blue-600 bg-blue-50/30 shadow-sm'
                     : 'border-gray-100 bg-white hover:border-gray-300'
                 }`}
-                initial={{ opacity: 0, y: 20, x: 24 }}
-                whileInView={{ opacity: 1, y: 0, x: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.5, delay: index * 0.07, ease: 'easeOut' }}
+                initial={false}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.32, delay: index * 0.045, ease: 'easeOut' }}
               >
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
@@ -172,20 +169,20 @@ const FAQSection = () => {
                   </div>
                 </button>
 
-                <AnimatePresence>
-                  {openIndex === index && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: 'easeInOut' }}
-                    >
-                      <div className="px-6 pb-6 text-gray-600 leading-relaxed border-t border-blue-100/50 pt-4">
-                        {faq.answer}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div
+                  className="grid overflow-hidden"
+                  style={{
+                    gridTemplateRows: openIndex === index ? '1fr' : '0fr',
+                    opacity: openIndex === index ? 1 : 0,
+                    transition: 'grid-template-rows 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 220ms ease',
+                  }}
+                >
+                  <div className="min-h-0">
+                    <div className="px-6 pb-6 text-gray-600 leading-relaxed border-t border-blue-100/50 pt-4">
+                      {faq.answer}
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </motion.div>
