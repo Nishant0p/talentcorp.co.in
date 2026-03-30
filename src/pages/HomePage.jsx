@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 import { CheckCircle, Award, ArrowRight, Briefcase, Star } from 'lucide-react';
 import WorkforceSection from '../components/WorkforceSection';
 import StatsSection from '../components/StatsSection';
@@ -6,6 +6,8 @@ import JobBoard from '../components/JobBoard';
 import Testimonials from '../components/Testimonials';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
+
+const NewsSection = lazy(() => import('../components/NewsSection'));
 
 const HeroSection = ({ animateWords = false }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -235,6 +237,9 @@ const HeroSection = ({ animateWords = false }) => {
       <WorkforceSection />
       <JobBoard />
       <Testimonials />
+      <Suspense fallback={<section id="news-events" className="bg-white py-24" />}>
+        <NewsSection />
+      </Suspense>
       <StatsSection />
       <FAQSection />
       <Footer />
