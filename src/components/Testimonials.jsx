@@ -133,19 +133,19 @@ const Testimonials = () => {
           </p>
         </div>
 
-        <div className="mb-16 flex w-full max-w-md flex-col rounded-2xl border border-gray-100 bg-gray-50 p-1.5 sm:mx-auto sm:inline-flex sm:w-auto sm:max-w-none sm:flex-row">
+        <div className="mb-16 mx-auto inline-flex w-full max-w-md items-center rounded-full border border-blue-100 bg-blue-50/70 p-1.5 sm:w-auto sm:max-w-none">
           <button
             onClick={() => setActiveTab('clients')}
-            className={`flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-bold transition-all sm:px-8 ${
-              activeTab === 'clients' ? 'bg-white text-blue-600 shadow-md' : 'text-gray-500 hover:text-gray-700'
+            className={`flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-bold transition-all sm:flex-none sm:px-8 sm:py-3 sm:text-base ${
+              activeTab === 'clients' ? 'bg-white text-blue-600 shadow-md shadow-blue-100/80' : 'text-gray-500 hover:bg-white/70 hover:text-gray-700'
             }`}
           >
             <Building2 size={18} /> Client Reviews
           </button>
           <button
             onClick={() => setActiveTab('employees')}
-            className={`flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-bold transition-all sm:px-8 ${
-              activeTab === 'employees' ? 'bg-white text-blue-600 shadow-md' : 'text-gray-500 hover:text-gray-700'
+            className={`flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-bold transition-all sm:flex-none sm:px-8 sm:py-3 sm:text-base ${
+              activeTab === 'employees' ? 'bg-white text-blue-600 shadow-md shadow-blue-100/80' : 'text-gray-500 hover:bg-white/70 hover:text-gray-700'
             }`}
           >
             <UserCircle size={18} /> Employee Reviews
