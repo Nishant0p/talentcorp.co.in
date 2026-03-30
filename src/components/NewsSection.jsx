@@ -10,7 +10,7 @@ const newsItems = [
     tag: 'Event',
     title: 'National Apprenticeship Mela 2026',
     desc: 'Join us in Mumbai for the largest hiring drive of the year with over 50+ partner companies.',
-    img: 'https://images.unsplash.com/photo-1540575861501-7ad060e39fe5?auto=format&fit=crop&q=80',
+    img: 'https://i.pinimg.com/736x/af/c5/88/afc58894fd4d7cc33b9e4aeffdf03759.jpg',
   },
   {
     date: 'March 15, 2026',
@@ -24,7 +24,7 @@ const newsItems = [
     tag: 'Updates',
     title: 'New Government Policy on NATS 2.0',
     desc: 'Understanding the new stipend benefits and how they affect the modern Indian workforce.',
-    img: 'https://images.unsplash.com/photo-1454165833767-027ffea8e41e?auto=format&fit=crop&q=80',
+    img: 'https://i.pinimg.com/736x/4d/ce/cc/4dcecc1aa007866ed59d34ab52b35770.jpg',
   },
 ];
 

@@ -93,10 +93,31 @@ const FAQSection = () => {
         initial={false}
         animate="visible"
       >
-        <div className="grid lg:grid-cols-12 gap-16 items-start">
+        {/* HEADING SECTION - Above FAQs on Mobile */}
+        <motion.div
+          className="mb-12 text-center lg:hidden"
+          initial={false}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: 'easeOut' }}
+        >
+          <span className="bg-orange-50 text-orange-600 text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-widest">
+            Support
+          </span>
+          <h2 className="text-4xl font-extrabold text-[#1a2b4b] mt-4 mb-4 leading-tight">
+            Frequently Asked <br />
+            <span className="text-blue-600">Questions</span>
+          </h2>
+          <p className="text-gray-500 text-base leading-relaxed">
+            Everything you need to know about our services, government schemes, and how we
+            transform careers.
+          </p>
+        </motion.div>
+
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 items-start">
           {/* LEFT SIDE: Heading & CTA */}
-          <motion.div className="lg:col-span-5 space-y-8" variants={leftPanelVariants}>
+          <motion.div className="lg:col-span-5 space-y-8 order-last lg:order-first" variants={leftPanelVariants}>
             <motion.div
+              className="hidden lg:block"
               initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, ease: 'easeOut' }}
@@ -136,7 +157,7 @@ const FAQSection = () => {
           </motion.div>
 
           {/* RIGHT SIDE: Accordion */}
-          <motion.div className="lg:col-span-7 space-y-4" variants={rightPanelVariants}>
+          <motion.div className="lg:col-span-7 space-y-4 order-first lg:order-last" variants={rightPanelVariants}>
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
