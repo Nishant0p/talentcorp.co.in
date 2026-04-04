@@ -7,10 +7,10 @@ import {
 } from 'lucide-react';
 
 // Counter Component
-const CountUpNumber = ({ target, duration = 1.5 }) => {
+export const CountUpNumber = ({ target, duration = 1.5 }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: true, margin: "-50px 0px" });
 
   React.useEffect(() => {
     if (!isInView) return;
@@ -87,7 +87,7 @@ const StatsSection = () => {
   };
 
   return (
-    <div ref={containerRef} className="bg-white py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans">
+    <div ref={containerRef} className="bg-white pt-16 pb-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans">
       {/* Background Decor - Seamless textures */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* Slanting line pattern overlay */}
@@ -126,7 +126,7 @@ const StatsSection = () => {
         initial={false}
         animate="visible"
       >
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
           
           {/* LEFT: Image with Floating Stats */}
           <motion.div className="relative" variants={itemVariants}>
@@ -271,39 +271,7 @@ const StatsSection = () => {
           </motion.div>
         </div>
 
-        {/* BOTTOM: Trust Badges Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { title: "Government Authorized", tag: "Official Partner", val: "100", desc: "Compliant with all norms", icon: <ShieldCheck />, color: "blue" },
-            { title: "World Record Holder", tag: "World Record", val: "#1", desc: "Recognized globally", icon: <Trophy />, color: "orange" },
-            { title: "Excellence Award", tag: "2024 Winner", val: "15", desc: "Awards for contribution", icon: <Award />, color: "orange" },
-            { title: "ISO Certified", tag: "ISO 9001", val: "98", desc: "Satisfaction rate", icon: <Star />, color: "blue" },
-          ].map((card, i) => (
-            <motion.div
-              key={i}
-              className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all group"
-              custom={i}
-              variants={badgeVariants}
-              initial={false}
-              animate="visible"
-            >
-              <div className={`mb-6 p-3 w-fit rounded-xl ${card.color === 'blue' ? 'bg-blue-50 text-blue-600' : 'bg-orange-50 text-orange-600'}`}>
-                {React.cloneElement(card.icon, { size: 24 })}
-              </div>
-              <div className="flex justify-between items-end mb-4">
-                <span className={`text-[10px] font-black px-3 py-1 rounded uppercase tracking-tighter ${card.color === 'blue' ? 'bg-blue-600 text-white' : 'bg-orange-500 text-white'}`}>
-                  {card.tag}
-                </span>
-                <span className="text-3xl font-black text-gray-900">
-                  {card.val === "#1" ? "#1" : <CountUpNumber target={parseInt(card.val)} duration={1.2} />}
-                  {card.val !== "#1" && "%"}
-                </span>
-              </div>
-              <h4 className="font-bold text-gray-900 text-lg mb-1">{card.title}</h4>
-              <p className="text-gray-500 text-sm font-medium">{card.desc}</p>
-            </motion.div>
-          ))}
-        </div>
+
       </motion.div>
     </div>
   );

@@ -32,7 +32,7 @@ function NewsScene() {
   return (
     <group>
       <Float speed={2.8} rotationIntensity={0.5} floatIntensity={1.4}>
-        <Sphere args={[1.1, 48, 48]} position={[-3.8, 1.4, -3.5]}>
+        <Sphere args={[1.1, 48, 48]} position={[-4.8, -0.5, -4.0]}>
           <MeshDistortMaterial color="#ff8c42" speed={1.8} distort={0.28} roughness={0.3} />
         </Sphere>
       </Float>
@@ -60,7 +60,7 @@ const NewsSection = () => {
   }, []);
 
   return (
-    <section id="news-events" className="relative overflow-hidden bg-white py-12 md:py-24">
+    <section id="news-events" className="relative overflow-hidden bg-white py-10 md:py-16">
       {isDesktop && (
         <div className="pointer-events-none absolute inset-0 z-0 opacity-60">
           <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 5], fov: 42 }} gl={{ antialias: true, powerPreference: 'high-performance' }}>

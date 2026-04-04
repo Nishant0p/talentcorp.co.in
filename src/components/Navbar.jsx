@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const navLinks = [
   { href: '#services', label: 'Services' },
@@ -34,9 +35,12 @@ const Navbar = () => {
         </div>
 
         <div className="hidden lg:flex items-center gap-2.5">
-          <button className="bg-white hover:bg-[#f3f8ff] border border-[#b7cde6] text-[#174a7f] px-4 py-2 rounded-xl font-semibold transition-all">
+          <Link
+            to="/contact-us"
+            className="bg-white hover:bg-[#f3f8ff] border border-[#b7cde6] text-[#174a7f] px-4 py-2 rounded-xl font-semibold transition-all"
+          >
             Contact Us
-          </button>
+          </Link>
           <button className="bg-[#FF8C00] hover:bg-orange-600 text-white px-4 py-2 rounded-xl font-semibold transition-all">
             Apply Job
           </button>
@@ -74,9 +78,13 @@ const Navbar = () => {
           </div>
 
           <div className="mt-5 grid grid-cols-1 gap-2.5">
-            <button className="bg-white hover:bg-[#f3f8ff] border border-[#b7cde6] text-[#174a7f] px-4 py-2 rounded-xl font-semibold transition-all">
+            <Link
+              to="/contact-us"
+              onClick={closeMenu}
+              className="bg-white hover:bg-[#f3f8ff] border border-[#b7cde6] text-[#174a7f] px-4 py-2 rounded-xl font-semibold transition-all text-center"
+            >
               Contact Us
-            </button>
+            </Link>
             <button className="bg-[#FF8C00] hover:bg-orange-600 text-white px-4 py-2 rounded-xl font-semibold transition-all">
               Apply Job
             </button>

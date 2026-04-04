@@ -3,7 +3,7 @@ import { CheckCircle2, ArrowRight, Users, Building2, Settings, BarChart3, UserCi
 
 const WorkforceSection = () => {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-white px-4 py-16 font-sans sm:px-6 lg:px-8">
+    <div className="relative w-full overflow-x-hidden bg-white px-4 py-8 sm:py-12 font-sans sm:px-6 lg:px-8">
       {/* Background is now pure white with no texture for maximum clarity */}
 
       {/* Extra edge textures for a richer frame */}
@@ -51,9 +51,9 @@ const WorkforceSection = () => {
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="mx-auto mb-10 max-w-3xl text-center">
+        <div className="mx-auto mb-6 max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-orange-500 sm:text-4xl">Solutions for Everyone</h2>
-          <p className="mt-4 text-base leading-relaxed text-gray-600 sm:text-lg">
+          <p className="mt-3 text-base leading-relaxed text-gray-600 sm:text-lg">
             Whether you're looking for your next opportunity or seeking skilled talent, we've got you covered.
           </p>
         </div>
@@ -77,11 +77,11 @@ const WorkforceSection = () => {
             }}
           />
 
-          <div className="grid md:grid-cols-2 gap-8 items-stretch">
+          <div className="grid md:grid-cols-2 gap-6 items-stretch">
           {/* CARD 1: JOB SEEKERS (Orange Theme) */}
           <div className="group relative bg-white rounded-[2.25rem] overflow-hidden shadow-[0_18px_40px_rgba(255,140,0,0.1)] border border-gray-100 transition-all hover:shadow-[0_18px_50px_rgba(255,140,0,0.15)] hover:-translate-y-1">
             {/* Image Header with Gradient Fade */}
-            <div className="relative h-60 overflow-hidden">
+            <div className="relative h-48 sm:h-52 overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80"
                 alt="Skilled Indian workers"
@@ -95,41 +95,41 @@ const WorkforceSection = () => {
             </div>
 
             {/* Card Body */}
-            <div className="relative p-6 sm:p-8">
+            <div className="relative p-5 sm:p-6">
               {/* VISUAL DECORATION (Right Side) */}
-              <div className="absolute right-8 top-12 flex flex-col items-end gap-6 text-orange-200/60 hidden lg:flex pointer-events-none">
-                <Settings size={48} className="animate-spin-slow" />
-                <div className="flex gap-1 items-end h-10">
+              <div className="absolute right-6 top-8 flex flex-col items-end gap-4 text-orange-200/60 hidden lg:flex pointer-events-none">
+                <Settings size={40} className="animate-spin-slow" />
+                <div className="flex gap-1 items-end h-8">
                   <div className="w-1.5 bg-orange-100 h-1/2 rounded-full"></div>
                   <div className="w-1.5 bg-orange-200 h-full rounded-full"></div>
                   <div className="w-1.5 bg-orange-100 h-2/3 rounded-full"></div>
                 </div>
-                <UserCircle2 size={40} />
+                <UserCircle2 size={32} />
               </div>
 
-              <h2 className="mb-4 text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Launch Your Career</h2>
-              <p className="mb-7 max-w-none text-base leading-relaxed text-gray-500 lg:max-w-[82%]">
+              <h2 className="mb-2 text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Launch Your Career</h2>
+              <p className="mb-4 max-w-none text-sm sm:text-base leading-relaxed text-gray-500 lg:max-w-[82%]">
                 Get access to thousands of job opportunities with top companies. We help you build a successful career.
               </p>
 
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-3 mb-6">
                 {[
                   'We help you find your job easily.',
                   'Get recognized training that works.',
                   'Build your skills and get a paper.',
                   'Meet great employers directly.',
                 ].map((text, i) => (
-                  <li key={i} className="flex items-center gap-4 text-gray-700 font-medium group/item">
+                  <li key={i} className="flex items-center gap-3 text-gray-700 font-medium group/item text-[15px] sm:text-base">
                     <div className="bg-orange-50 p-1 rounded-full text-orange-600 group-hover/item:bg-orange-600 group-hover/item:text-white transition-colors">
-                      <CheckCircle2 size={18} />
+                      <CheckCircle2 size={16} className="sm:w-[18px] sm:h-[18px]" />
                     </div>
                     <span>{text}</span>
                   </li>
                 ))}
               </ul>
 
-              <button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-4 rounded-2xl shadow-[0_10px_20px_rgba(249,115,22,0.3)] flex items-center justify-center gap-3 transition-all active:scale-[0.98]">
-                Apply Now <ArrowRight size={20} />
+              <button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3.5 rounded-xl shadow-[0_8px_16px_rgba(249,115,22,0.25)] flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+                Apply Now <ArrowRight size={18} />
               </button>
             </div>
           </div>
@@ -137,7 +137,7 @@ const WorkforceSection = () => {
           {/* CARD 2: EMPLOYERS (Blue Theme) */}
           <div className="group relative bg-white rounded-[2.25rem] overflow-hidden shadow-[0_18px_40px_rgba(37,99,235,0.1)] border border-gray-100 transition-all hover:shadow-[0_18px_50px_rgba(37,99,235,0.15)] hover:-translate-y-1">
             {/* Image Header with Gradient Fade */}
-            <div className="relative h-60 overflow-hidden">
+            <div className="relative h-48 sm:h-52 overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80"
                 alt="Business management"
@@ -151,39 +151,39 @@ const WorkforceSection = () => {
             </div>
 
             {/* Card Body */}
-            <div className="relative p-6 sm:p-8">
+            <div className="relative p-5 sm:p-6">
               {/* VISUAL DECORATION (Right Side) */}
-              <div className="absolute right-8 top-12 flex flex-col items-end gap-6 text-blue-200/60 hidden lg:flex pointer-events-none">
-                <BarChart3 size={48} />
+              <div className="absolute right-6 top-8 flex flex-col items-end gap-4 text-blue-200/60 hidden lg:flex pointer-events-none">
+                <BarChart3 size={40} />
                 <div className="flex gap-2">
-                  <div className="w-8 h-8 rounded-lg border-2 border-blue-100 flex items-center justify-center text-[10px] font-bold">100%</div>
+                  <div className="w-7 h-7 rounded-md border-2 border-blue-100 flex items-center justify-center text-[9px] font-bold">100%</div>
                 </div>
-                <Settings size={40} className="animate-reverse-spin" />
+                <Settings size={32} className="animate-reverse-spin" />
               </div>
 
-              <h2 className="mb-4 text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Build Your Team</h2>
-              <p className="mb-7 max-w-none text-base leading-relaxed text-gray-500 lg:max-w-[82%]">
+              <h2 className="mb-2 text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Build Your Team</h2>
+              <p className="mb-4 max-w-none text-sm sm:text-base leading-relaxed text-gray-500 lg:max-w-[82%]">
                 Access a vast pool of skilled workers. Use government schemes to reduce costs while building a talented team.
               </p>
 
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-3 mb-6">
                 {[
                   'Find pre-screened people, fast.',
                   'We manage all paperwork for you.',
                   'Get money-saving stipend benefits.',
                   'Find flexible staff just for you.',
                 ].map((text, i) => (
-                  <li key={i} className="flex items-center gap-4 text-gray-700 font-medium group/item">
+                  <li key={i} className="flex items-center gap-3 text-gray-700 font-medium group/item text-[15px] sm:text-base">
                     <div className="bg-blue-50 p-1 rounded-full text-blue-600 group-hover/item:bg-blue-600 group-hover/item:text-white transition-colors">
-                      <CheckCircle2 size={18} />
+                      <CheckCircle2 size={16} className="sm:w-[18px] sm:h-[18px]" />
                     </div>
                     <span>{text}</span>
                   </li>
                 ))}
               </ul>
 
-              <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 rounded-2xl shadow-[0_10px_20px_rgba(37,99,235,0.3)] flex items-center justify-center gap-3 transition-all active:scale-[0.98]">
-                Hire Now <ArrowRight size={20} />
+              <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3.5 rounded-xl shadow-[0_8px_16px_rgba(37,99,235,0.25)] flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+                Hire Now <ArrowRight size={18} />
               </button>
             </div>
           </div>

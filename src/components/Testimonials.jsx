@@ -55,6 +55,10 @@ const employeeReviews = [
   },
 ];
 
+// Settings: Easily change the background colors of the review cards by editing these hex codes.
+const CLIENT_CARD_BG = '#dbeafe'; // default blue-100 equivalent
+const EMPLOYEE_CARD_BG = '#ffedd5'; // default orange-100 equivalent
+
 const Testimonials = () => {
   const [activeTab, setActiveTab] = useState('clients');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -89,7 +93,7 @@ const Testimonials = () => {
   }, [totalSlides]);
 
   return (
-    <section className="relative overflow-hidden bg-white px-4 py-24 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden bg-white px-4 py-16 sm:px-6 lg:px-8">
       {/* Background Textures */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* Slanting line pattern overlay */}
@@ -136,17 +140,15 @@ const Testimonials = () => {
         <div className="mb-16 mx-auto inline-flex w-full max-w-md items-center rounded-full border border-blue-100 bg-blue-50/70 p-1.5 sm:w-auto sm:max-w-none">
           <button
             onClick={() => setActiveTab('clients')}
-            className={`flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-bold transition-all sm:flex-none sm:px-8 sm:py-3 sm:text-base ${
-              activeTab === 'clients' ? 'bg-white text-blue-600 shadow-md shadow-blue-100/80' : 'text-gray-500 hover:bg-white/70 hover:text-gray-700'
-            }`}
+            className={`flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-bold transition-all sm:flex-none sm:px-8 sm:py-3 sm:text-base ${activeTab === 'clients' ? 'bg-white text-blue-600 shadow-md shadow-blue-100/80' : 'text-gray-500 hover:bg-white/70 hover:text-gray-700'
+              }`}
           >
             <Building2 size={18} /> Client Reviews
           </button>
           <button
             onClick={() => setActiveTab('employees')}
-            className={`flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-bold transition-all sm:flex-none sm:px-8 sm:py-3 sm:text-base ${
-              activeTab === 'employees' ? 'bg-white text-blue-600 shadow-md shadow-blue-100/80' : 'text-gray-500 hover:bg-white/70 hover:text-gray-700'
-            }`}
+            className={`flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-bold transition-all sm:flex-none sm:px-8 sm:py-3 sm:text-base ${activeTab === 'employees' ? 'bg-white text-blue-600 shadow-md shadow-blue-100/80' : 'text-gray-500 hover:bg-white/70 hover:text-gray-700'
+              }`}
           >
             <UserCircle size={18} /> Employee Reviews
           </button>
@@ -159,7 +161,8 @@ const Testimonials = () => {
               {visibleReviews.map((review) => (
                 <article
                   key={`${activeTab}-${review.id}`}
-                  className="testimonial-card group relative rounded-[2.5rem] border border-gray-100 bg-white p-6 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.08)] sm:p-10"
+                  className="testimonial-card group relative rounded-[2.5rem] border border-gray-100 p-6 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.08)] sm:p-10"
+                  style={{ backgroundColor: activeTab === 'clients' ? '#add8e6' : '#eed7b8ff' }}
                 >
                   <div className="absolute right-10 top-8 text-blue-100 transition-colors group-hover:text-blue-200">
                     <Quote size={40} fill="currentColor" />
@@ -207,9 +210,8 @@ const Testimonials = () => {
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`h-2 rounded-full transition-all ${
-                    currentIndex === idx ? 'w-8 bg-blue-600' : 'w-2 bg-gray-300 hover:bg-gray-400'
-                  }`}
+                  className={`h-2 rounded-full transition-all ${currentIndex === idx ? 'w-8 bg-blue-600' : 'w-2 bg-gray-300 hover:bg-gray-400'
+                    }`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}

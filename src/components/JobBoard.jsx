@@ -31,7 +31,7 @@ const JobBoard = () => {
   }, [filter, query]);
 
   return (
-    <section className="relative overflow-hidden bg-white px-4 py-16 sm:px-6 lg:px-6 xl:px-8" id="job-board">
+    <section className="relative overflow-hidden bg-white px-4 py-12 sm:px-6 lg:px-6 xl:px-8" id="job-board">
       {/* Background Textures */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* Slanting line pattern overlay */}

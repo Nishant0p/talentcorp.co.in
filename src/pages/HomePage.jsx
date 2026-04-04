@@ -1,13 +1,15 @@
 import React, { Suspense, lazy, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { CheckCircle, Award, ArrowRight, Briefcase, Star } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import WorkforceSection from '../components/WorkforceSection';
-import StatsSection from '../components/StatsSection';
+import StatsSection, { CountUpNumber } from '../components/StatsSection';
 import JobBoard from '../components/JobBoard';
 import Testimonials from '../components/Testimonials';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 
+import AwardsSection from '../components/AwardsSection';
 const NewsSection = lazy(() => import('../components/NewsSection'));
 
 const HeroSection = ({ animateWords = false }) => {
@@ -30,10 +32,36 @@ const HeroSection = ({ animateWords = false }) => {
   ];
 
   const statCards = [
-    { value: '40,000+', label: 'Successful Placements' },
-    { value: '400+', label: 'Partner Employers' },
-    { value: 'Govt', label: 'Authorized' },
+    { value: 40000, isNumber: true, label: 'Successful Placements' },
+    { value: 400, isNumber: true, label: 'Partner Employers' },
+    { value: 'Govt', isNumber: false, label: 'Authorized' },
   ];
+
+  const renderPartnerRow = (reverse = false) => (
+    <div className="logo-marquee-track gap-4" style={{ animationDirection: reverse ? 'reverse' : 'normal' }}>
+      {[...partnerLogos, ...partnerLogos, ...partnerLogos].map((brand, idx) => (
+        <div
+          key={`${brand.name}-${reverse ? 'rev' : 'fwd'}-${idx}`}
+          className="mx-2 flex h-20 w-52 shrink-0 items-center rounded-2xl border border-[#f7c99b] bg-[#fff7ed]/90 px-4 shadow-sm backdrop-blur-sm"
+        >
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#fdba74] bg-white shadow-[0_6px_18px_rgba(249,115,22,0.12)]">
+            <img
+              src={brand.src}
+              alt={`${brand.name} logo`}
+              className={`${brand.name === 'MRF' ? 'h-8' : 'h-7'} w-auto object-contain`}
+              loading="lazy"
+            />
+          </div>
+          <div className="ml-3 flex min-w-0 flex-col text-left">
+            <span className="truncate text-sm font-bold text-blue-700">{brand.name}</span>
+            <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#fb923c]">
+              Partner
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <div className="relative bg-[#0f2a4d]">
@@ -91,9 +119,12 @@ const HeroSection = ({ animateWords = false }) => {
                   />
                 </motion.span>
               </motion.button>
-              <button className="hidden sm:inline-flex bg-white hover:bg-[#f3f8ff] border border-[#b7cde6] text-[#174a7f] px-4 py-2 rounded-xl font-semibold transition-all">
+              <Link
+                to="/contact-us"
+                className="hidden sm:inline-flex bg-white hover:bg-[#f3f8ff] border border-[#b7cde6] text-[#174a7f] px-4 py-2 rounded-xl font-semibold transition-all"
+              >
                 Contact Us
-              </button>
+              </Link>
               <button className="hidden sm:inline-flex bg-[#FF8C00] hover:bg-orange-600 text-white px-4 py-2 rounded-xl font-semibold transition-all">
                 Apply Job
               </button>
@@ -148,9 +179,9 @@ const HeroSection = ({ animateWords = false }) => {
         {/* Decorative Circle */}
         <div className="absolute -top-24 -left-24 w-96 h-96 border border-white/10 rounded-full z-0" />
 
-        <div className="container mx-auto px-6 relative z-10 py-20 pt-32 pb-20 md:pb-40">
+        <div className="container mx-auto px-6 relative z-10 py-16 pt-24 pb-16 md:pb-24">
           {/* Badges */}
-          <div className={`${animateWords ? 'hero-content-enter' : 'hero-content-wait'} max-w-3xl`}>
+          <div className={`${animateWords ? 'hero-content-enter' : 'hero-content-wait'} max-w-3xl md:ml-8 lg:ml-12`}>
           <div className="mb-8">
             <div className="flex flex-wrap md:flex-nowrap items-center gap-1.5 md:gap-2 overflow-visible md:overflow-x-auto pb-1">
             <div className="flex shrink-0 items-center gap-1.5 md:gap-2 whitespace-nowrap bg-white/3 backdrop-blur-md border border-white/15 px-3 md:px-4 py-1 md:py-1.5 rounded-full text-xs md:text-sm">
@@ -221,7 +252,9 @@ const HeroSection = ({ animateWords = false }) => {
                 key={card.label}
                 className="rounded-2xl border border-white/45 bg-white/28 p-6 text-center shadow-[0_24px_55px_rgba(7,22,49,0.42)] backdrop-blur-xl"
               >
-                <div className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">{card.value}</div>
+                <div className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+                  {card.isNumber ? <CountUpNumber target={card.value} /> : card.value}
+                </div>
                 <div className="mt-2 text-sm font-bold text-blue-900">
                   {card.label}
                 </div>
@@ -231,7 +264,7 @@ const HeroSection = ({ animateWords = false }) => {
         </div>
       </section>
 
-      <section id="clients" className="relative overflow-hidden bg-white px-0 pb-20 pt-16 md:pt-40 text-[#0f2a4d]">
+      <section id="clients" className="relative overflow-hidden bg-white px-0 pb-16 pt-16 md:pt-24 text-[#0f2a4d]">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -246,26 +279,15 @@ const HeroSection = ({ animateWords = false }) => {
           </h2>
 
           <div
-            className="logo-marquee mt-10 overflow-hidden border-y border-[#e0eef8] py-6 bg-white/60"
+            className="logo-marquee mt-10 overflow-hidden bg-gradient-to-b from-[#fffaf3] to-[#fff7ed] py-5"
             style={{
               backgroundImage:
-                'repeating-linear-gradient(135deg, rgba(37,99,235,0.04) 0px, rgba(37,99,235,0.04) 1px, transparent 1px, transparent 16px)',
+                'repeating-linear-gradient(135deg, rgba(249,115,22,0.05) 0px, rgba(249,115,22,0.05) 1px, transparent 1px, transparent 16px)',
             }}
           >
-            <div className="logo-marquee-track">
-              {[...partnerLogos, ...partnerLogos].map((brand, idx) => (
-                <div
-                  key={`${brand.name}-${idx}`}
-                  className="mx-2 flex h-20 w-44 shrink-0 items-center justify-center rounded-xl border border-[#9ec3ea] bg-[#eff6ff]/75 px-5 shadow-sm backdrop-blur-sm"
-                >
-                  <img
-                    src={brand.src}
-                    alt={`${brand.name} logo`}
-                    className={`${brand.name === 'MRF' ? 'h-14' : 'h-12'} w-auto object-contain`}
-                    loading="lazy"
-                  />
-                </div>
-              ))}
+            <div className="space-y-4">
+              {renderPartnerRow(false)}
+              {renderPartnerRow(true)}
             </div>
           </div>
         </div>
@@ -274,10 +296,11 @@ const HeroSection = ({ animateWords = false }) => {
       <WorkforceSection />
       <JobBoard />
       <Testimonials />
-      <Suspense fallback={<section id="news-events" className="bg-white py-24" />}>
+      <Suspense fallback={<section id="news-events" className="bg-white py-16" />}>
         <NewsSection />
       </Suspense>
       <StatsSection />
+      <AwardsSection />
       <FAQSection />
       <Footer />
     </div>
