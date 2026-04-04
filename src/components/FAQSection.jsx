@@ -56,12 +56,30 @@ const FAQSection = () => {
       {/* Dynamic Background Gradients */}
       <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-blue-50/40 to-transparent pointer-events-none" />
       <div className="absolute -right-64 top-20 w-[500px] h-[500px] rounded-full bg-orange-50/30 blur-[120px] pointer-events-none opacity-60" />
+      <div
+        className="pointer-events-none absolute right-0 top-1/2 h-[28rem] w-[28rem] -translate-y-1/2 translate-x-1/3 rounded-full opacity-35"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at center, rgba(255,140,0,0.22) 0 2px, transparent 2px), radial-gradient(circle at center, rgba(30,64,175,0.14) 0 2px, transparent 2px), radial-gradient(circle at center, rgba(255,140,0,0.08) 0 1px, transparent 1px)',
+          backgroundSize: '18px 18px, 28px 28px, 10px 10px',
+          maskImage: 'radial-gradient(circle, black 42%, transparent 76%)',
+          WebkitMaskImage: 'radial-gradient(circle, black 42%, transparent 76%)',
+        }}
+      />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* === HEADER SECTION === */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-16">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl relative">
+            <div
+              className="pointer-events-none absolute -inset-6 -z-10 rounded-[2rem] opacity-70"
+              style={{
+                backgroundImage:
+                  'radial-gradient(circle at 20% 20%, rgba(255,140,0,0.14) 0 1px, transparent 1px), radial-gradient(circle at 80% 30%, rgba(30,64,175,0.12) 0 1px, transparent 1px), radial-gradient(circle at 40% 80%, rgba(255,140,0,0.1) 0 1px, transparent 1px), repeating-linear-gradient(135deg, rgba(255,140,0,0.04) 0px, rgba(255,140,0,0.04) 1px, transparent 1px, transparent 18px)',
+                backgroundSize: '28px 28px, 32px 32px, 36px 36px, 100% 100%',
+              }}
+            />
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-bold uppercase tracking-widest mb-6">
               <HelpCircle size={14} /> Support
             </div>
