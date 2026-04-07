@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { 
@@ -7,7 +8,8 @@ import {
   MapPin, 
   Building, 
   ArrowRight,
-  Check
+  Check,
+  Send
 } from 'lucide-react';
 
 const STRAPI_BASE_URL =
@@ -19,11 +21,14 @@ const ContactUs = () => {
   const [isFormHovered, setIsFormHovered] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showPlaneAnimation, setShowPlaneAnimation] = useState(false);
+  const [isFormFlyingAway, setIsFormFlyingAway] = useState(false);
 
   const handleContactSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
     setShowSuccessPopup(false);
+    setShowPlaneAnimation(false);
 
     const formData = new FormData(event.currentTarget);
     const leadPayload = {
@@ -51,9 +56,15 @@ const ContactUs = () => {
       }
 
       event.currentTarget.reset();
+      setIsFormFlyingAway(true);
+      setShowPlaneAnimation(true);
       setShowSuccessPopup(true);
+      window.setTimeout(() => setShowPlaneAnimation(false), 1800);
+      window.setTimeout(() => setIsFormFlyingAway(false), 2300);
     } catch (error) {
       setShowSuccessPopup(false);
+      setShowPlaneAnimation(false);
+      setIsFormFlyingAway(false);
     } finally {
       setIsSubmitting(false);
     }
@@ -127,6 +138,73 @@ const ContactUs = () => {
               }
             }}
           >
+            <AnimatePresence>
+              {showPlaneAnimation && (
+                <motion.div
+                  className="pointer-events-none absolute inset-0 z-30 overflow-hidden rounded-[3rem]"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <motion.div
+                    className="absolute left-8 bottom-10 flex h-14 w-20 items-end justify-between"
+                    initial={{ opacity: 1, scale: 1, x: 0, y: 0, rotate: 0 }}
+                    animate={{
+                      opacity: [1, 1, 0.95, 0],
+                      scale: [1, 0.96, 0.9, 0.7],
+                      x: ['0%', '8%', '26%', '58%'],
+                      y: ['0%', '-8%', '-26%', '-62%'],
+                      rotate: [0, -6, -20, -38],
+                    }}
+                    transition={{ duration: 1.6, ease: 'easeInOut' }}
+                  >
+                    <motion.span
+                      className="h-12 w-4 rounded-full bg-blue-200"
+                      animate={{ height: [48, 34, 14, 0] }}
+                      transition={{ duration: 0.9, ease: 'easeOut' }}
+                    />
+                    <motion.span
+                      className="h-10 w-4 rounded-full bg-blue-300"
+                      animate={{ height: [40, 30, 12, 0] }}
+                      transition={{ duration: 0.9, ease: 'easeOut', delay: 0.06 }}
+                    />
+                    <motion.span
+                      className="h-8 w-4 rounded-full bg-orange-300"
+                      animate={{ height: [32, 24, 10, 0] }}
+                      transition={{ duration: 0.9, ease: 'easeOut', delay: 0.12 }}
+                    />
+                  </motion.div>
+
+                  <motion.div
+                    className="absolute left-6 bottom-10 flex items-center gap-2 rounded-full border border-blue-100 bg-white/90 px-4 py-2 shadow-[0_20px_50px_rgba(59,130,246,0.18)] backdrop-blur"
+                    initial={{ x: 0, y: 0, scale: 0.95, rotate: -12 }}
+                    animate={{
+                      x: ['0%', '28%', '66%', '118%'],
+                      y: ['0%', '-25%', '-52%', '-92%'],
+                      rotate: [-12, -2, 10, 22],
+                      scale: [0.95, 1, 1.04, 1.08],
+                      opacity: [0, 1, 1, 0],
+                    }}
+                    transition={{ duration: 1.6, ease: 'easeInOut' }}
+                  >
+                    <Send size={16} className="text-blue-600" />
+                    <span className="text-xs font-semibold uppercase tracking-[0.24em] text-blue-700">Sending</span>
+                  </motion.div>
+
+                  <motion.div
+                    className="absolute left-8 bottom-14 h-[2px] w-24 origin-left rounded-full bg-gradient-to-r from-blue-400 via-orange-300 to-transparent"
+                    initial={{ opacity: 0, scaleX: 0.2 }}
+                    animate={{
+                      opacity: [0, 1, 1, 0],
+                      scaleX: [0.2, 0.9, 1.2, 1.35],
+                      x: ['0%', '30%', '70%', '120%'],
+                      y: ['0%', '-16%', '-30%', '-58%'],
+                    }}
+                    transition={{ duration: 1.6, ease: 'easeInOut' }}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
             <div
               className="pointer-events-none absolute inset-0 rounded-[3rem]"
               style={{
@@ -154,6 +232,28 @@ const ContactUs = () => {
                 }}
               />
             </div>
+            <motion.div
+              animate={
+                isFormFlyingAway
+                  ? {
+                      opacity: 0,
+                      y: -34,
+                      x: 58,
+                      rotate: -12,
+                      scale: 0.9,
+                      filter: 'blur(1.5px)',
+                    }
+                  : {
+                      opacity: 1,
+                      y: 0,
+                      x: 0,
+                      rotate: 0,
+                      scale: 1,
+                      filter: 'blur(0px)',
+                    }
+              }
+              transition={{ duration: 0.8, ease: 'easeInOut' }}
+            >
             <h3 className="text-2xl font-bold mb-6">Send us a Message</h3>
             <form className="space-y-4" onSubmit={handleContactSubmit}>
               <div>
@@ -198,6 +298,7 @@ const ContactUs = () => {
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
+            </motion.div>
 
             {showSuccessPopup && (
               <div className="fixed left-1/2 top-6 z-[9999] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 rounded-[2.25rem] border border-blue-100 bg-white px-6 py-5 shadow-[0_20px_60px_rgba(59,130,246,0.18)]">
