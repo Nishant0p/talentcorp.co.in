@@ -23,12 +23,14 @@ const ContactUs = () => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showPlaneAnimation, setShowPlaneAnimation] = useState(false);
   const [isFormFlyingAway, setIsFormFlyingAway] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const handleContactSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
     setShowSuccessPopup(false);
     setShowPlaneAnimation(false);
+    setSubmitError('');
 
     const formData = new FormData(event.currentTarget);
     const leadPayload = {
@@ -52,7 +54,8 @@ const ContactUs = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Unable to submit contact form.');
+        const responseText = await response.text();
+        throw new Error(`Submit failed (${response.status}): ${responseText || 'no response body'}`);
       }
 
       event.currentTarget.reset();
@@ -65,6 +68,7 @@ const ContactUs = () => {
       setShowSuccessPopup(false);
       setShowPlaneAnimation(false);
       setIsFormFlyingAway(false);
+      setSubmitError(error?.message || 'Unable to submit contact form.');
     } finally {
       setIsSubmitting(false);
     }
@@ -298,6 +302,13 @@ const ContactUs = () => {
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
+            {submitError && (
+              <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                <p className="font-semibold">Submission failed</p>
+                <p className="mt-1 break-words">{submitError}</p>
+                <p className="mt-1 text-xs text-red-500">API target: {STRAPI_BASE_URL}/api/leads</p>
+              </div>
+            )}
             </motion.div>
 
             {showSuccessPopup && (
