@@ -1,17 +1,17 @@
-import { useState } from 'react'
 import {
 	ArrowRight,
 	Award,
 	Briefcase,
+	Building2,
 	Calendar,
 	CheckCircle2,
 	Clock,
 	FileText,
 	GraduationCap,
 	MapPin,
+	Mail,
 	Phone,
 	Play,
-	Send,
 	TrendingUp,
 	Users,
 	Wallet,
@@ -445,144 +445,41 @@ function FlexiItiProcess() {
 }
 
 function FlexiItiEnquiry() {
-	const [submitted, setSubmitted] = useState(false)
-
-	const handleSubmit = (event) => {
-		event.preventDefault()
-		setSubmitted(true)
-		window.setTimeout(() => setSubmitted(false), 3000)
-	}
-
 	return (
-		<section id="enquiry" className="relative overflow-hidden py-20 lg:py-28">
-			<div className="absolute inset-0 bg-gradient-to-br from-[#2563EB] via-[#1D4ED8] to-[#1E40AF]" />
-			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
-			<div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-[#F97316]/10 blur-3xl" />
+		<section className="px-8 pb-20 pt-2">
+			<div className="mx-auto w-full max-w-6xl">
+				<div className="flex flex-col items-center justify-between gap-10 rounded-3xl bg-gradient-to-r from-[#2d52b4] to-[#4083ff] p-8 shadow-lg md:flex-row md:p-12">
+					<div className="flex-1">
+						<h2 className="mb-3 text-3xl font-bold text-white md:text-4xl">Start Your Journey Today</h2>
+						<p className="mb-8 text-lg text-blue-100">Join thousands who transformed their careers through NATS.</p>
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="mb-12 text-center">
-					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2">
-						<span className="text-sm font-bold text-white">START YOUR JOURNEY</span>
-					</div>
-					<h2 className="mb-4 text-4xl font-bold text-white lg:text-5xl">Enquire Now - It's Free!</h2>
-					<p className="mx-auto max-w-2xl text-lg text-white/80">Fill this simple form and our team will call you within 24 hours. No fees for enquiry.</p>
-				</div>
+						<div className="flex flex-wrap gap-4">
+							<button className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
+								<GraduationCap className="h-5 w-5" />
+								Join Now
+								<ArrowRight className="h-5 w-5" />
+							</button>
 
-				<div className="grid gap-8 lg:grid-cols-5">
-					<div className="rounded-3xl bg-white p-8 shadow-2xl lg:col-span-3">
-						{submitted ? (
-							<div className="flex flex-col items-center justify-center py-12 text-center">
-								<div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#22C55E]/20">
-									<CheckCircle2 className="h-10 w-10 text-[#22C55E]" />
-								</div>
-								<h3 className="mb-2 text-2xl font-bold text-[#0F172A]">Thank You!</h3>
-								<p className="text-[#64748B]">We will call you within 24 hours.</p>
-							</div>
-						) : (
-							<form onSubmit={handleSubmit} className="space-y-6">
-								<div className="grid gap-6 sm:grid-cols-2">
-									<div>
-										<label className="mb-2 block text-sm font-bold text-[#0F172A]">Your Name *</label>
-										<input type="text" required placeholder="Enter your full name" className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" />
-									</div>
-									<div>
-										<label className="mb-2 block text-sm font-bold text-[#0F172A]">Phone Number *</label>
-										<input type="tel" required placeholder="10 digit mobile number" className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" />
-									</div>
-								</div>
-
-								<div className="grid gap-6 sm:grid-cols-2">
-									<div>
-										<label className="mb-2 block text-sm font-bold text-[#0F172A]">Education Level *</label>
-										<select required className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20">
-											<option value="">Select your education</option>
-											<option value="8th">8th Pass</option>
-											<option value="10th">10th Pass</option>
-											<option value="12th">12th Pass</option>
-											<option value="graduate">Graduate</option>
-											<option value="other">Other</option>
-										</select>
-									</div>
-									<div>
-										<label className="mb-2 block text-sm font-bold text-[#0F172A]">Which Trade? *</label>
-										<select required className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20">
-											<option value="">Select a trade</option>
-											{trades.map((trade) => (
-												<option key={trade} value={trade.toLowerCase()}>{trade}</option>
-											))}
-										</select>
-									</div>
-								</div>
-
-								<div>
-									<label className="mb-2 block text-sm font-bold text-[#0F172A]">Your City *</label>
-									<input type="text" required placeholder="Which city do you live in?" className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" />
-								</div>
-
-								<div>
-									<label className="mb-2 block text-sm font-bold text-[#0F172A]">Any Question? (Optional)</label>
-									<textarea rows={3} placeholder="Ask us anything about FLEXI ITI..." className="w-full resize-none rounded-xl border border-slate-300 px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" />
-								</div>
-
-								<button type="submit" className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-lg shadow-[#F97316]/30 transition-all duration-300 hover:scale-[1.02] hover:bg-[#EA580C] hover:shadow-xl">
-									<Send className="h-5 w-5" />
-									Submit Enquiry - FREE
-								</button>
-
-								<p className="text-center text-sm text-[#64748B]">By submitting, you agree to receive calls from TSPL Group.</p>
-							</form>
-						)}
+							<button className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
+								<Building2 className="h-5 w-5 text-blue-100" />
+								For Employers
+							</button>
+						</div>
 					</div>
 
-					<div className="space-y-6 lg:col-span-2">
-						<div className="rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm">
-							<h3 className="mb-4 text-xl font-bold text-white">Quick Contact</h3>
-							<div className="space-y-4">
-								<div className="flex items-center gap-3">
-									<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#F97316]">
-										<Phone className="h-5 w-5 text-white" />
-									</div>
-									<div>
-										<p className="text-sm text-white/60">Call Us</p>
-										<p className="font-bold text-white">+91 1800 200 4500</p>
-									</div>
-								</div>
-								<div className="flex items-center gap-3">
-									<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#22C55E]">
-										<Clock className="h-5 w-5 text-white" />
-									</div>
-									<div>
-										<p className="text-sm text-white/60">Working Hours</p>
-										<p className="font-bold text-white">Mon-Sat: 9AM - 7PM</p>
-									</div>
-								</div>
-								<div className="flex items-center gap-3">
-									<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2563EB]">
-										<MapPin className="h-5 w-5 text-white" />
-									</div>
-									<div>
-										<p className="text-sm text-white/60">Centers</p>
-										<p className="font-bold text-white">100+ locations in India</p>
-									</div>
-								</div>
-							</div>
-						</div>
+					<div className="w-full rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm md:w-[420px]">
+						<h3 className="mb-4 font-medium text-white">Need Help?</h3>
 
-						<div className="rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm">
-							<h3 className="mb-4 text-xl font-bold text-white">Why Talk to Us?</h3>
-							<ul className="space-y-3">
-								{['Free career guidance', 'Help choosing right trade', 'Fee and scholarship info', 'Nearest center location', 'Job placement support'].map((item) => (
-									<li key={item} className="flex items-center gap-2 text-white/80">
-										<CheckCircle2 className="h-5 w-5 shrink-0 text-[#22C55E]" />
-										{item}
-									</li>
-								))}
-							</ul>
-						</div>
+						<div className="space-y-3">
+							<a href="tel:+919876543210" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+								<Phone className="h-5 w-5 text-blue-100" />
+								<span className="font-medium">+91 98765 43210</span>
+							</a>
 
-						<div className="rounded-2xl bg-[#F97316] p-6 text-center">
-							<p className="mb-2 text-lg font-bold text-white">Government Approved</p>
-							<p className="text-sm text-white/80">NCVT & SCVT Certified Training Partner</p>
+							<a href="mailto:support@tsplgroup.com" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+								<Mail className="h-5 w-5 text-blue-100" />
+								<span className="font-medium">support@tsplgroup.com</span>
+							</a>
 						</div>
 					</div>
 				</div>

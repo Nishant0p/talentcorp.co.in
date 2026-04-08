@@ -428,42 +428,40 @@ function NAPSProcess() {
 
 function NAPSCTA() {
 	return (
-		<section className="relative bg-slate-50 py-16">
-			<div className="mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#2563EB] via-[#1D4ED8] to-[#F97316] p-8 lg:p-10">
-					<div className="absolute right-0 top-0 h-64 w-64 translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-3xl" />
-					<div className="absolute bottom-0 left-0 h-48 w-48 -translate-x-1/2 translate-y-1/2 rounded-full bg-[#F97316]/20 blur-3xl" />
+		<section className="px-8 pb-20 pt-2">
+			<div className="mx-auto w-full max-w-6xl">
+				<div className="flex flex-col items-center justify-between gap-10 rounded-3xl bg-gradient-to-r from-[#2d52b4] to-[#4083ff] p-8 shadow-lg md:flex-row md:p-12">
+					<div className="flex-1">
+						<h2 className="mb-3 text-3xl font-bold text-white md:text-4xl">Start Your Journey Today</h2>
+						<p className="mb-8 text-lg text-blue-100">Join thousands who transformed their careers through NATS.</p>
 
-					<div className="relative z-10 grid items-center gap-8 lg:grid-cols-2">
-						<div>
-							<h2 className="mb-3 text-2xl font-bold text-white lg:text-3xl">Advance Your Career with NAPS</h2>
-							<p className="mb-6 text-white/80">Join thousands of professionals who transformed their careers with premium industry experience.</p>
+						<div className="flex flex-wrap gap-4">
+							<button className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
+								<GraduationCap className="h-5 w-5" />
+								Join Now
+								<ArrowRight className="h-5 w-5" />
+							</button>
 
-							<div className="flex flex-wrap gap-3">
-								<button className="group inline-flex items-center rounded-xl bg-[#F97316] px-6 py-4 font-semibold text-white shadow-lg transition-all hover:scale-105 hover:bg-[#EA580C]">
-									<Briefcase className="mr-2 h-4 w-4" />
-									Apply Now
-									<ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-								</button>
-								<button className="inline-flex items-center rounded-xl border-2 border-white/30 bg-white/10 px-6 py-4 font-semibold text-white transition-all hover:bg-white hover:text-[#2563EB]">
-									<Building2 className="mr-2 h-4 w-4" />
-									For Employers
-								</button>
-							</div>
+							<button className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
+								<Building2 className="h-5 w-5 text-blue-100" />
+								For Employers
+							</button>
 						</div>
+					</div>
 
-						<div className="rounded-xl border border-white/20 bg-white/10 p-5 backdrop-blur-md">
-							<p className="mb-4 font-medium text-white">Get in Touch</p>
-							<div className="space-y-3">
-								<a href="tel:+919876543210" className="flex items-center gap-3 rounded-lg bg-white/10 p-3 transition-colors hover:bg-white/20">
-									<Phone className="h-5 w-5 text-white" />
-									<span className="text-white">+91 98765 43210</span>
-								</a>
-								<a href="mailto:naps@tsplgroup.com" className="flex items-center gap-3 rounded-lg bg-white/10 p-3 transition-colors hover:bg-white/20">
-									<Mail className="h-5 w-5 text-white" />
-									<span className="text-white">naps@tsplgroup.com</span>
-								</a>
-							</div>
+					<div className="w-full rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm md:w-[420px]">
+						<h3 className="mb-4 font-medium text-white">Need Help?</h3>
+
+						<div className="space-y-3">
+							<a href="tel:+919876543210" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+								<Phone className="h-5 w-5 text-blue-100" />
+								<span className="font-medium">+91 98765 43210</span>
+							</a>
+
+							<a href="mailto:support@tsplgroup.com" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+								<Mail className="h-5 w-5 text-blue-100" />
+								<span className="font-medium">support@tsplgroup.com</span>
+							</a>
 						</div>
 					</div>
 				</div>

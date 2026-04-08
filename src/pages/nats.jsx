@@ -335,11 +335,11 @@ export default function NatsLandingPage() {
 									</a>
 
 									<a
-										href="mailto:nats@tsplgroup.com"
+										href="mailto:support@tsplgroup.com"
 										className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25"
 									>
 										<Mail className="h-5 w-5 text-blue-100" />
-										<span className="font-medium">nats@tsplgroup.com</span>
+										<span className="font-medium">support@tsplgroup.com</span>
 									</a>
 								</div>
 							</div>

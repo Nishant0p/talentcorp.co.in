@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
 	Send,
 	Phone,
@@ -550,262 +549,41 @@ function WhyChooseUs() {
 }
 
 function Enquiry() {
-	const [formData, setFormData] = useState({
-		name: '',
-		phone: '',
-		email: '',
-		company: '',
-		location: '',
-		placeType: '',
-		staffCount: '',
-		services: [],
-		message: '',
-	})
-	const [isSubmitted, setIsSubmitted] = useState(false)
-
-	const placeTypes = ['Office', 'Factory', 'Hospital', 'Hotel', 'Mall / Retail', 'Warehouse', 'School / College', 'Residential Society', 'Other']
-	const serviceOptions = ['Floor Cleaning', 'Washroom Cleaning', 'Dusting & Wiping', 'Waste Management', 'Garden Maintenance', 'Sanitization', 'Full Housekeeping']
-
-	const handleServiceToggle = (service) => {
-		setFormData((prev) => ({
-			...prev,
-			services: prev.services.includes(service) ? prev.services.filter((s) => s !== service) : [...prev.services, service],
-		}))
-	}
-
-	const handleSubmit = (e) => {
-		e.preventDefault()
-		console.log('Form submitted:', formData)
-		setIsSubmitted(true)
-		setTimeout(() => setIsSubmitted(false), 5000)
-	}
-
 	return (
-		<section id="enquiry" className="relative overflow-hidden bg-[#0F172A] py-20 lg:py-28">
-			<div className="absolute inset-0 opacity-10">
-				<div
-					className="absolute inset-0"
-					style={{
-						backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
-						backgroundSize: '40px 40px',
-					}}
-				/>
-			</div>
+		<section className="px-8 pb-20 pt-2">
+			<div className="mx-auto w-full max-w-6xl">
+				<div className="flex flex-col items-center justify-between gap-10 rounded-3xl bg-gradient-to-r from-[#2d52b4] to-[#4083ff] p-8 shadow-lg md:flex-row md:p-12">
+					<div className="flex-1">
+						<h2 className="mb-3 text-3xl font-bold text-white md:text-4xl">Start Your Journey Today</h2>
+						<p className="mb-8 text-lg text-blue-100">Join thousands who transformed their careers through NATS.</p>
 
-			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/20 blur-3xl" />
-			<div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-[#F97316]/10 blur-3xl" />
+						<div className="flex flex-wrap gap-4">
+							<button className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
+								<GraduationCap className="h-5 w-5" />
+								Join Now
+								<ArrowRight className="h-5 w-5" />
+							</button>
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="grid gap-12 lg:grid-cols-5">
-					<div className="animate-fade-in lg:col-span-2">
-						<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2">
-							<span className="text-sm font-bold text-[#2563EB]">GET IN TOUCH</span>
-						</div>
-
-						<h2 className="mb-6 text-4xl font-bold text-white lg:text-5xl">Need Housekeeping Staff?</h2>
-
-						<p className="mb-10 text-lg text-white/70">Fill this form and our team will contact you within 24 hours. Or call us directly for urgent needs.</p>
-
-						<div className="mb-10 space-y-6">
-							<a href="tel:+919876543210" className="group flex items-center gap-4">
-								<div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2563EB]/20 transition-colors group-hover:bg-[#2563EB]">
-									<Phone className="h-6 w-6 text-[#2563EB] transition-colors group-hover:text-white" />
-								</div>
-								<div>
-									<p className="text-sm text-white/60">Call Us</p>
-									<p className="text-lg font-bold text-white">+91 98765 43210</p>
-								</div>
-							</a>
-
-							<a href="mailto:housekeeping@tsplgroup.com" className="group flex items-center gap-4">
-								<div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F97316]/20 transition-colors group-hover:bg-[#F97316]">
-									<Mail className="h-6 w-6 text-[#F97316] transition-colors group-hover:text-white" />
-								</div>
-								<div>
-									<p className="text-sm text-white/60">Email Us</p>
-									<p className="text-lg font-bold text-white">housekeeping@tsplgroup.com</p>
-								</div>
-							</a>
-
-							<div className="flex items-center gap-4">
-								<div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#22C55E]/20">
-									<MapPin className="h-6 w-6 text-[#22C55E]" />
-								</div>
-								<div>
-									<p className="text-sm text-white/60">Head Office</p>
-									<p className="text-lg font-bold text-white">Gurugram, Haryana</p>
-								</div>
-							</div>
-						</div>
-
-						<div className="grid grid-cols-3 gap-4 rounded-2xl border border-white/10 bg-white/5 p-6">
-							<div className="text-center">
-								<Building2 className="mx-auto mb-2 h-6 w-6 text-[#2563EB]" />
-								<p className="text-2xl font-bold text-white">500+</p>
-								<p className="text-xs text-white/60">Clients</p>
-							</div>
-							<div className="text-center">
-								<Users className="mx-auto mb-2 h-6 w-6 text-[#F97316]" />
-								<p className="text-2xl font-bold text-white">10K+</p>
-								<p className="text-xs text-white/60">Staff</p>
-							</div>
-							<div className="text-center">
-								<Clock className="mx-auto mb-2 h-6 w-6 text-[#22C55E]" />
-								<p className="text-2xl font-bold text-white">48hr</p>
-								<p className="text-xs text-white/60">Deployment</p>
-							</div>
+							<button className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
+								<Building2 className="h-5 w-5 text-blue-100" />
+								For Employers
+							</button>
 						</div>
 					</div>
 
-					<div className="animate-fade-in-up lg:col-span-3">
-						<div className="rounded-3xl bg-white p-8 shadow-2xl">
-							{isSubmitted ? (
-								<div className="py-12 text-center">
-									<div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#22C55E]/10">
-										<CheckCircle className="h-10 w-10 text-[#22C55E]" />
-									</div>
-									<h3 className="mb-2 text-2xl font-bold text-[#0F172A]">Thank You!</h3>
-									<p className="text-[#64748B]">We will contact you within 24 hours.</p>
-								</div>
-							) : (
-								<form onSubmit={handleSubmit} className="space-y-6">
-									<h3 className="mb-6 text-2xl font-bold text-[#0F172A]">Request Housekeeping Staff</h3>
+					<div className="w-full rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm md:w-[420px]">
+						<h3 className="mb-4 font-medium text-white">Need Help?</h3>
 
-									<div className="grid gap-4 sm:grid-cols-2">
-										<div>
-											<label className="mb-2 block text-sm font-semibold text-[#0F172A]">Your Name *</label>
-											<input
-												type="text"
-												required
-												value={formData.name}
-												onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-												className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 transition-colors focus:border-[#2563EB] focus:outline-none"
-												placeholder="Enter your name"
-											/>
-										</div>
-										<div>
-											<label className="mb-2 block text-sm font-semibold text-[#0F172A]">Phone Number *</label>
-											<input
-												type="tel"
-												required
-												value={formData.phone}
-												onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-												className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 transition-colors focus:border-[#2563EB] focus:outline-none"
-												placeholder="+91 98765 43210"
-											/>
-										</div>
-									</div>
+						<div className="space-y-3">
+							<a href="tel:+919876543210" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+								<Phone className="h-5 w-5 text-blue-100" />
+								<span className="font-medium">+91 98765 43210</span>
+							</a>
 
-									<div className="grid gap-4 sm:grid-cols-2">
-										<div>
-											<label className="mb-2 block text-sm font-semibold text-[#0F172A]">Email</label>
-											<input
-												type="email"
-												value={formData.email}
-												onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-												className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 transition-colors focus:border-[#2563EB] focus:outline-none"
-												placeholder="your@email.com"
-											/>
-										</div>
-										<div>
-											<label className="mb-2 block text-sm font-semibold text-[#0F172A]">Company Name</label>
-											<input
-												type="text"
-												value={formData.company}
-												onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-												className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 transition-colors focus:border-[#2563EB] focus:outline-none"
-												placeholder="Your company name"
-											/>
-										</div>
-									</div>
-
-									<div className="grid gap-4 sm:grid-cols-2">
-										<div>
-											<label className="mb-2 block text-sm font-semibold text-[#0F172A]">Type of Place *</label>
-											<select
-												required
-												value={formData.placeType}
-												onChange={(e) => setFormData({ ...formData, placeType: e.target.value })}
-												className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 transition-colors focus:border-[#2563EB] focus:outline-none"
-											>
-												<option value="">Select type</option>
-												{placeTypes.map((type) => (
-													<option key={type} value={type}>
-														{type}
-													</option>
-												))}
-											</select>
-										</div>
-										<div>
-											<label className="mb-2 block text-sm font-semibold text-[#0F172A]">City / Location *</label>
-											<input
-												type="text"
-												required
-												value={formData.location}
-												onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-												className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 transition-colors focus:border-[#2563EB] focus:outline-none"
-												placeholder="Enter city name"
-											/>
-										</div>
-									</div>
-
-									<div>
-										<label className="mb-2 block text-sm font-semibold text-[#0F172A]">How Many Staff Needed? *</label>
-										<select
-											required
-											value={formData.staffCount}
-											onChange={(e) => setFormData({ ...formData, staffCount: e.target.value })}
-											className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 transition-colors focus:border-[#2563EB] focus:outline-none"
-										>
-											<option value="">Select count</option>
-											<option value="1-5">1 - 5 Staff</option>
-											<option value="6-10">6 - 10 Staff</option>
-											<option value="11-20">11 - 20 Staff</option>
-											<option value="21-50">21 - 50 Staff</option>
-											<option value="50+">More than 50 Staff</option>
-										</select>
-									</div>
-
-									<div>
-										<label className="mb-3 block text-sm font-semibold text-[#0F172A]">What Services Do You Need?</label>
-										<div className="flex flex-wrap gap-2">
-											{serviceOptions.map((service) => (
-												<button
-													key={service}
-													type="button"
-													onClick={() => handleServiceToggle(service)}
-													className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
-														formData.services.includes(service) ? 'bg-[#2563EB] text-white' : 'bg-slate-100 text-[#64748B] hover:bg-slate-200'
-													}`}
-												>
-													{service}
-												</button>
-											))}
-										</div>
-									</div>
-
-									<div>
-										<label className="mb-2 block text-sm font-semibold text-[#0F172A]">Any Other Details</label>
-										<textarea
-											value={formData.message}
-											onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-											rows={3}
-											className="w-full resize-none rounded-xl border-2 border-slate-200 px-4 py-3 transition-colors focus:border-[#2563EB] focus:outline-none"
-											placeholder="Tell us more about your requirements..."
-										/>
-									</div>
-
-									<button
-										type="submit"
-										className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-lg shadow-[#F97316]/30 transition-all duration-300 hover:scale-[1.02] hover:bg-[#EA580C] hover:shadow-xl"
-									>
-										<Send className="h-5 w-5" />
-										Submit Enquiry
-									</button>
-
-									<p className="text-center text-sm text-[#64748B]">We will call you within 24 hours to discuss your needs</p>
-								</form>
-							)}
+							<a href="mailto:support@tsplgroup.com" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+								<Mail className="h-5 w-5 text-blue-100" />
+								<span className="font-medium">support@tsplgroup.com</span>
+							</a>
 						</div>
 					</div>
 				</div>

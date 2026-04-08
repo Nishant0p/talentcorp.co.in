@@ -7,6 +7,8 @@ import ContactUs from './pages/contactus'
 import NewsEventsPage from './pages/NewsEventsPage'
 import NatsLandingPage from './pages/nats'
 import NapsPage from './pages/naps'
+import BvocPage from './pages/bvoc'
+import DvocPage from './pages/dvoc'
 import FlexiItiPage from './pages/FLEXI'
 import SkilledPage from './pages/skilled'
 import AboutPage from './pages/about'
@@ -49,6 +51,8 @@ function App() {
             <Route path="/job/:jobId" element={<JobDetailPage />} />
             <Route path="/nats" element={<NatsLandingPage />} />
             <Route path="/naps" element={<NapsPage />} />
+            <Route path="/bvoc" element={<BvocPage />} />
+            <Route path="/dvoc" element={<DvocPage />} />
             <Route path="/flexi-iti" element={<FlexiItiPage />} />
             <Route path="/skilled" element={<SkilledPage />} />
             <Route path="/housekeeping" element={<HousekeepingPage />} />

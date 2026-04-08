@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
 	ArrowRight,
 	Award,
@@ -23,7 +22,6 @@ import {
 	Package,
 	Phone,
 	Pill,
-	Send,
 	Settings,
 	Shield,
 	Sparkles,
@@ -35,8 +33,6 @@ import {
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-
-const skillOptions = ['Welders', 'Electricians', 'CNC Operators', 'Fitters', 'Plumbers', 'Turners', 'Machinists', 'Supervisors', 'Other']
 
 const processSteps = [
 	{
@@ -475,169 +471,41 @@ function WhyChooseUs() {
 }
 
 function Enquiry() {
-	const [selectedSkills, setSelectedSkills] = useState([])
-	const [formState, setFormState] = useState('idle')
-
-	const toggleSkill = (skill) => {
-		setSelectedSkills((prev) => (prev.includes(skill) ? prev.filter((item) => item !== skill) : [...prev, skill]))
-	}
-
-	const handleSubmit = (event) => {
-		event.preventDefault()
-		setFormState('submitting')
-		window.setTimeout(() => {
-			setFormState('success')
-		}, 1500)
-	}
-
 	return (
-		<section id="enquiry" className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-20 lg:py-28">
-			<div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-[#F97316]/5 blur-3xl" />
-			<div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
+		<section className="px-8 pb-20 pt-2">
+			<div className="mx-auto w-full max-w-6xl">
+				<div className="flex flex-col items-center justify-between gap-10 rounded-3xl bg-gradient-to-r from-[#2d52b4] to-[#4083ff] p-8 shadow-lg md:flex-row md:p-12">
+					<div className="flex-1">
+						<h2 className="mb-3 text-3xl font-bold text-white md:text-4xl">Start Your Journey Today</h2>
+						<p className="mb-8 text-lg text-blue-100">Join thousands who transformed their careers through NATS.</p>
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-					<div>
-						<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#F97316]/20 bg-[#F97316]/10 px-4 py-2">
-							<Send className="h-4 w-4 text-[#F97316]" />
-							<span className="text-sm font-bold text-[#F97316]">FREE ENQUIRY</span>
+						<div className="flex flex-wrap gap-4">
+							<button className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
+								<GraduationCap className="h-5 w-5" />
+								Join Now
+								<ArrowRight className="h-5 w-5" />
+							</button>
+
+							<button className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
+								<Building2 className="h-5 w-5 text-blue-100" />
+								For Employers
+							</button>
 						</div>
-						<h2 className="mb-4 text-4xl font-bold text-[#0F172A] lg:text-5xl">Tell Us What You Need</h2>
-						<p className="mb-8 text-lg text-[#64748B]">Fill this form. We will call you back within 24 hours. No charge for enquiry.</p>
-
-						{formState === 'success' ? (
-							<div className="rounded-3xl border border-[#22C55E]/20 bg-[#22C55E]/10 p-8 text-center">
-								<div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#22C55E]/20">
-									<CheckCircle2 className="h-10 w-10 text-[#22C55E]" />
-								</div>
-								<h3 className="mb-3 text-2xl font-bold text-[#0F172A]">Thank You!</h3>
-								<p className="mb-6 text-[#64748B]">We received your enquiry. Our team will call you within 24 hours.</p>
-								<p className="font-bold text-[#F97316]">For urgent needs, call: +91 98765 43210</p>
-							</div>
-						) : (
-							<form onSubmit={handleSubmit} className="space-y-6">
-								<div className="grid gap-4 sm:grid-cols-2">
-									<div className="space-y-2">
-										<label htmlFor="name" className="font-medium text-[#0F172A]">Your Name *</label>
-										<input id="name" required placeholder="Enter your name" className="h-12 w-full rounded-xl border border-slate-200 px-4 focus:border-[#F97316] focus:outline-none" />
-									</div>
-									<div className="space-y-2">
-										<label htmlFor="phone" className="font-medium text-[#0F172A]">Phone Number *</label>
-										<input id="phone" type="tel" required placeholder="+91 98765 43210" className="h-12 w-full rounded-xl border border-slate-200 px-4 focus:border-[#F97316] focus:outline-none" />
-									</div>
-								</div>
-
-								<div className="grid gap-4 sm:grid-cols-2">
-									<div className="space-y-2">
-										<label htmlFor="company" className="font-medium text-[#0F172A]">Company Name *</label>
-										<input id="company" required placeholder="Your company name" className="h-12 w-full rounded-xl border border-slate-200 px-4 focus:border-[#F97316] focus:outline-none" />
-									</div>
-									<div className="space-y-2">
-										<label htmlFor="location" className="font-medium text-[#0F172A]">Location *</label>
-										<input id="location" required placeholder="City / Area" className="h-12 w-full rounded-xl border border-slate-200 px-4 focus:border-[#F97316] focus:outline-none" />
-									</div>
-								</div>
-
-								<div className="space-y-2">
-									<label className="font-medium text-[#0F172A]">How Many Workers? *</label>
-									<input type="number" min="1" required placeholder="e.g., 10, 50, 100" className="h-12 w-full rounded-xl border border-slate-200 px-4 focus:border-[#F97316] focus:outline-none" />
-								</div>
-
-								<div className="space-y-3">
-									<label className="font-medium text-[#0F172A]">What Skills Do You Need? (Select all)</label>
-									<div className="flex flex-wrap gap-2">
-										{skillOptions.map((skill) => (
-											<button
-												key={skill}
-												type="button"
-												onClick={() => toggleSkill(skill)}
-												className={`rounded-full border-2 px-4 py-2 text-sm font-medium transition-all duration-200 ${selectedSkills.includes(skill) ? 'border-[#F97316] bg-[#F97316] text-white' : 'border-slate-200 bg-white text-[#64748B] hover:border-[#F97316] hover:text-[#F97316]'}`}
-											>
-												{skill}
-											</button>
-										))}
-									</div>
-								</div>
-
-								<div className="space-y-2">
-									<label htmlFor="message" className="font-medium text-[#0F172A]">Any Other Details?</label>
-									<textarea id="message" rows={3} placeholder="Tell us more about your requirements..." className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#F97316] focus:outline-none" />
-								</div>
-
-								<button type="submit" disabled={formState === 'submitting'} className="h-14 w-full rounded-xl bg-[#F97316] text-lg font-bold text-white shadow-xl shadow-[#F97316]/20 transition-all duration-300 hover:bg-[#EA580C] disabled:cursor-not-allowed disabled:opacity-70">
-									{formState === 'submitting' ? 'Sending...' : 'Send Enquiry - Free'}
-								</button>
-
-								<p className="text-center text-sm text-[#64748B]">We will call you within 24 hours. Your information is safe with us.</p>
-							</form>
-						)}
 					</div>
 
-					<div>
-						<div className="mb-8 rounded-3xl bg-[#0F172A] p-8">
-							<h3 className="mb-6 text-2xl font-bold text-white">Need Workers Urgently?</h3>
-							<p className="mb-8 text-white/70">Call us directly. We can arrange workers within 48 hours for urgent needs.</p>
+					<div className="w-full rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm md:w-[420px]">
+						<h3 className="mb-4 font-medium text-white">Need Help?</h3>
 
-							<div className="space-y-4">
-								<a href="tel:+919876543210" className="flex items-center gap-4 rounded-xl bg-white/10 p-4 transition-colors hover:bg-white/20">
-									<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F97316]">
-										<Phone className="h-6 w-6 text-white" />
-									</div>
-									<div>
-										<p className="text-lg font-bold text-white">+91 98765 43210</p>
-										<p className="text-sm text-white/60">Call Now</p>
-									</div>
-								</a>
+						<div className="space-y-3">
+							<a href="tel:+919876543210" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+								<Phone className="h-5 w-5 text-blue-100" />
+								<span className="font-medium">+91 98765 43210</span>
+							</a>
 
-								<a href="mailto:skilled@tsplgroup.com" className="flex items-center gap-4 rounded-xl bg-white/10 p-4 transition-colors hover:bg-white/20">
-									<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2563EB]">
-										<Mail className="h-6 w-6 text-white" />
-									</div>
-									<div>
-										<p className="font-bold text-white">skilled@tsplgroup.com</p>
-										<p className="text-sm text-white/60">Email Us</p>
-									</div>
-								</a>
-							</div>
-						</div>
-
-						<div className="rounded-3xl border border-slate-100 bg-white p-8 shadow-xl">
-							<h3 className="mb-6 text-xl font-bold text-[#0F172A]">Why Enquire With Us?</h3>
-							<div className="space-y-4">
-								{[
-									{ icon: CheckCircle2, text: 'No charge for enquiry - FREE', color: '#22C55E' },
-									{ icon: Phone, text: 'We call you back within 24 hours', color: '#F97316' },
-									{ icon: Users, text: 'Get multiple worker options', color: '#2563EB' },
-									{ icon: Building2, text: '10+ years trusted company', color: '#8B5CF6' },
-								].map((item) => (
-									<div key={item.text} className="flex items-center gap-3">
-										<div className="flex h-10 w-10 items-center justify-center rounded-lg" style={{ backgroundColor: `${item.color}15` }}>
-											<item.icon className="h-5 w-5" style={{ color: item.color }} />
-										</div>
-										<span className="font-medium text-[#0F172A]">{item.text}</span>
-									</div>
-								))}
-							</div>
-						</div>
-
-						<div className="mt-8 space-y-4">
-							<h4 className="text-sm font-bold uppercase text-[#64748B]">Our Offices</h4>
-							<div className="grid grid-cols-2 gap-4">
-								{[
-									{ city: 'Mumbai', area: 'Andheri East' },
-									{ city: 'Pune', area: 'Kharadi' },
-									{ city: 'Delhi', area: 'Connaught Place' },
-									{ city: 'Bangalore', area: 'Whitefield' },
-								].map((office) => (
-									<div key={office.city} className="flex items-start gap-2 text-sm">
-										<MapPin className="mt-0.5 h-4 w-4 text-[#F97316]" />
-										<div>
-											<p className="font-medium text-[#0F172A]">{office.city}</p>
-											<p className="text-[#64748B]">{office.area}</p>
-										</div>
-									</div>
-								))}
-							</div>
+							<a href="mailto:support@tsplgroup.com" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+								<Mail className="h-5 w-5 text-blue-100" />
+								<span className="font-medium">support@tsplgroup.com</span>
+							</a>
 						</div>
 					</div>
 				</div>

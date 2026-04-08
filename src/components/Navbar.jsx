@@ -14,6 +14,8 @@ const navLinks = [
 const serviceLinks = [
   { href: '/nats', label: 'NATS' },
   { href: '/naps', label: 'NAPS' },
+  { href: '/bvoc', label: 'B.VOC' },
+  { href: '/dvoc', label: 'D.VOC' },
   { href: '/flexi-iti', label: 'FLEXI ITI' },
   { href: '/skilled', label: 'SKILLED JOB' },
   { href: '/housekeeping', label: 'HOUSEKEEPING' },
