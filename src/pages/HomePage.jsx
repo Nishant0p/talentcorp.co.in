@@ -1,7 +1,7 @@
-import React, { Suspense, lazy, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
 import { CheckCircle, Award, ArrowRight, Briefcase, Star } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import Navbar from '../components/Navbar';
 import WorkforceSection from '../components/WorkforceSection';
 import StatsSection, { CountUpNumber } from '../components/StatsSection';
 import JobBoard from '../components/JobBoard';
@@ -13,17 +13,6 @@ import AwardsSection from '../components/AwardsSection';
 const NewsSection = lazy(() => import('../components/NewsSection'));
 
 const HeroSection = ({ animateWords = false }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const navLinks = [
-    { href: '#services', label: 'Services' },
-    { href: '#about', label: 'About' },
-    { href: '#jobs', label: 'Jobs' },
-    { href: '#clients', label: 'Clients' },
-    { href: '#achievements', label: 'Achievements' },
-    { href: '/news-events', label: 'News & Events' },
-  ];
-
   const partnerLogos = [
     { name: 'JCB', src: '/JCB_(company)-Logo.wine.svg' },
     { name: 'LG', src: '/images-10.jpeg' },
@@ -65,128 +54,8 @@ const HeroSection = ({ animateWords = false }) => {
 
   return (
     <div className="relative bg-[#0f2a4d]">
+      <Navbar />
       <section className="relative min-h-screen flex items-center overflow-visible">
-        <nav className="absolute top-0 left-0 right-0 z-20 border-b border-[#d8e7f8] bg-white/95 backdrop-blur-md">
-          <div className="container mx-auto px-6 py-3.5 flex items-center justify-between">
-            <div className="h-10 w-[155px] overflow-hidden sm:h-12 sm:w-[180px]">
-              <img
-                src="/TSPL Logo (Sarang Sir) 1.png"
-                alt="TSPL"
-                className="h-full w-full object-cover object-center scale-[1.14] drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)] contrast-125 brightness-110"
-              />
-            </div>
-            <div className="hidden lg:flex items-center gap-7 text-sm font-semibold text-[#1a4f87]">
-              {navLinks.map((link) => (
-                link.href.startsWith('/') ? (
-                  <Link key={link.href} to={link.href} className="hover:text-[#0f2a4d] transition-colors">
-                    {link.label}
-                  </Link>
-                ) : (
-                  <a key={link.href} href={link.href} className="hover:text-[#0f2a4d] transition-colors">
-                    {link.label}
-                  </a>
-                )
-              ))}
-            </div>
-            <div className="flex items-center gap-2.5">
-              <motion.button
-                type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#b7cde6] bg-white text-[#174a7f] transition-all hover:bg-[#f3f8ff] sm:hidden"
-                aria-label="Toggle mobile menu"
-                aria-expanded={isMobileMenuOpen}
-                aria-controls="mobile-nav-menu"
-                onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-                whileTap={{ scale: 0.94 }}
-              >
-                <motion.span
-                  className="relative h-4 w-5"
-                  aria-hidden="true"
-                  initial={false}
-                  animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
-                  transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <motion.span
-                    className="absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current"
-                    initial={false}
-                    animate={{ y: isMobileMenuOpen ? 6 : 0, rotate: isMobileMenuOpen ? 45 : 0 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                  <motion.span
-                    className="absolute left-0 top-[7px] h-0.5 w-5 rounded-full bg-current"
-                    initial={false}
-                    animate={{ opacity: isMobileMenuOpen ? 0 : 1, scaleX: isMobileMenuOpen ? 0.2 : 1 }}
-                    transition={{ duration: 0.18 }}
-                  />
-                  <motion.span
-                    className="absolute left-0 top-[14px] h-0.5 w-5 rounded-full bg-current"
-                    initial={false}
-                    animate={{ y: isMobileMenuOpen ? -8 : 0, rotate: isMobileMenuOpen ? -45 : 0 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                </motion.span>
-              </motion.button>
-              <Link
-                to="/contact-us"
-                className="hidden sm:inline-flex bg-white hover:bg-[#f3f8ff] border border-[#b7cde6] text-[#174a7f] px-4 py-2 rounded-xl font-semibold transition-all"
-              >
-                Contact Us
-              </Link>
-              <button className="hidden sm:inline-flex bg-[#FF8C00] hover:bg-orange-600 text-white px-4 py-2 rounded-xl font-semibold transition-all">
-                Apply Job
-              </button>
-            </div>
-          </div>
-
-          <AnimatePresence initial={false}>
-            {isMobileMenuOpen && (
-              <motion.div
-                id="mobile-nav-menu"
-                className="overflow-hidden border-t border-[#d8e7f8] bg-white px-6 sm:hidden"
-                initial={{ height: 0, opacity: 0, y: -10, scaleY: 0.96 }}
-                animate={{ height: 'auto', opacity: 1, y: 0, scaleY: 1 }}
-                exit={{ height: 0, opacity: 0, y: -8, scaleY: 0.96 }}
-                transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
-                style={{ transformOrigin: 'top' }}
-              >
-                <div className="flex flex-col gap-2 py-3 text-sm font-semibold text-[#1a4f87]">
-                  {navLinks.map((link, index) => (
-                    link.href.startsWith('/') ? (
-                      <motion.div
-                        key={link.href}
-                        initial={{ opacity: 0, y: -6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -4 }}
-                        transition={{ duration: 0.18, delay: index * 0.03 }}
-                      >
-                        <Link
-                          to={link.href}
-                          className="block rounded-lg px-2 py-2 transition-colors hover:bg-[#f3f8ff] hover:text-[#0f2a4d]"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          {link.label}
-                        </Link>
-                      </motion.div>
-                    ) : (
-                      <motion.a
-                        key={link.href}
-                        href={link.href}
-                        className="rounded-lg px-2 py-2 transition-colors hover:bg-[#f3f8ff] hover:text-[#0f2a4d]"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        initial={{ opacity: 0, y: -6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -4 }}
-                        transition={{ duration: 0.18, delay: index * 0.03 }}
-                      >
-                        {link.label}
-                      </motion.a>
-                    )
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </nav>
-
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img 

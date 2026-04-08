@@ -5,6 +5,10 @@ import HomePage from './pages/HomePage'
 import JobDetailPage from './pages/JobDetailPage'
 import ContactUs from './pages/contactus'
 import NewsEventsPage from './pages/NewsEventsPage'
+import NatsLandingPage from './pages/nats'
+import NapsPage from './pages/naps'
+import FlexiItiPage from './pages/FLEXI'
+import AboutPage from './pages/about'
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -40,6 +44,10 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage animateWords={!isLoading} />} />
             <Route path="/job/:jobId" element={<JobDetailPage />} />
+            <Route path="/nats" element={<NatsLandingPage />} />
+            <Route path="/naps" element={<NapsPage />} />
+            <Route path="/flexi-iti" element={<FlexiItiPage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/news-events" element={<NewsEventsPage />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/contact-us" element={<ContactUs />} />
