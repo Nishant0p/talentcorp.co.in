@@ -10,6 +10,7 @@ import NapsPage from './pages/naps'
 import FlexiItiPage from './pages/FLEXI'
 import SkilledPage from './pages/skilled'
 import AboutPage from './pages/about'
+import HousekeepingPage from './pages/housekeeping'
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -49,6 +50,7 @@ function App() {
             <Route path="/naps" element={<NapsPage />} />
             <Route path="/flexi-iti" element={<FlexiItiPage />} />
             <Route path="/skilled" element={<SkilledPage />} />
+            <Route path="/housekeeping" element={<HousekeepingPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/news-events" element={<NewsEventsPage />} />
             <Route path="/contact" element={<ContactUs />} />
