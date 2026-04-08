@@ -328,6 +328,7 @@ const ContactUs = () => {
                   <option value="" disabled hidden>Select a Service</option>
                   <option>NATS PROGRAM</option>
                   <option>NAPS PROGRAM</option>
+                  <option>FLEXI ITI PROGRAM</option>
                   <option>TRANING & DEVELOPMENT</option>
                   <option>STAFF SOLUTIONS</option>
                 </select>

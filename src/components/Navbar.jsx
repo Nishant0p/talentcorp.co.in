@@ -14,6 +14,7 @@ const navLinks = [
 const serviceLinks = [
   { href: '/nats', label: 'NATS' },
   { href: '/naps', label: 'NAPS' },
+  { href: '/flexi-iti', label: 'FLEXI ITI' },
 ];
 
 const Navbar = () => {
@@ -36,6 +37,11 @@ const Navbar = () => {
   const closeMenu = () => {
     setIsMobileMenuOpen(false);
     setIsMobileServicesOpen(false);
+  };
+
+  const handleNavigation = () => {
+    setIsDesktopServicesOpen(false);
+    closeMenu();
   };
 
   return (
@@ -68,7 +74,7 @@ const Navbar = () => {
                   <Link
                     key={service.href}
                     to={service.href}
-                    onClick={() => setIsDesktopServicesOpen(false)}
+                    onClick={handleNavigation}
                     className="block rounded-lg px-3 py-2 text-sm font-semibold text-[#1a4f87] transition-colors hover:bg-[#f3f8ff] hover:text-[#0f2a4d]"
                   >
                     {service.label}
@@ -80,11 +86,11 @@ const Navbar = () => {
 
           {navLinks.map((link) => (
               link.href.startsWith('/') ? (
-                <Link key={link.href} to={link.href} className="hover:text-[#0f2a4d] transition-colors">
+                <Link key={link.href} to={link.href} onClick={handleNavigation} className="hover:text-[#0f2a4d] transition-colors">
                   {link.label}
                 </Link>
               ) : (
-                <a key={link.href} href={link.href} className="hover:text-[#0f2a4d] transition-colors">
+                <a key={link.href} href={link.href} onClick={handleNavigation} className="hover:text-[#0f2a4d] transition-colors">
                   {link.label}
                 </a>
               )
@@ -139,7 +145,7 @@ const Navbar = () => {
                     <Link
                       key={service.href}
                       to={service.href}
-                      onClick={closeMenu}
+                      onClick={handleNavigation}
                       className="rounded-lg px-2 py-1 text-sm hover:bg-[#f3f8ff]"
                     >
                       {service.label}
@@ -154,7 +160,7 @@ const Navbar = () => {
                 <Link
                   key={link.href}
                   to={link.href}
-                  onClick={closeMenu}
+                  onClick={handleNavigation}
                   className="rounded-lg px-2 py-1 hover:bg-[#f3f8ff]"
                 >
                   {link.label}
@@ -163,7 +169,7 @@ const Navbar = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={closeMenu}
+                  onClick={handleNavigation}
                   className="rounded-lg px-2 py-1 hover:bg-[#f3f8ff]"
                 >
                   {link.label}
