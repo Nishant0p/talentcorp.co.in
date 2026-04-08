@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 
 const navLinks = [
+  { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '#jobs', label: 'Jobs' },
-  { href: '#clients', label: 'Clients' },
-  { href: '#achievements', label: 'Achievements' },
+  { href: '/#jobs', label: 'Jobs' },
+  { href: '/#clients', label: 'Clients' },
+  { href: '/#achievements', label: 'Achievements' },
   { href: '/news-events', label: 'News & Events' },
 ];
 
