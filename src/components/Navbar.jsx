@@ -54,12 +54,12 @@ const Navbar = () => {
             <button
               type="button"
               onClick={() => setIsDesktopServicesOpen((prev) => !prev)}
-              className="inline-flex items-center gap-1.5 hover:text-[#0f2a4d] transition-colors"
+              className="inline-flex items-center gap-2 hover:text-[#0f2a4d] transition-colors font-bold"
               aria-expanded={isDesktopServicesOpen}
               aria-haspopup="menu"
             >
               Services
-              <ChevronDown className={`h-4 w-4 transition-transform ${isDesktopServicesOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${isDesktopServicesOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {isDesktopServicesOpen && (
@@ -126,11 +126,11 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={() => setIsMobileServicesOpen((prev) => !prev)}
-                className="flex w-full items-center justify-between rounded-lg px-2 py-1 text-left hover:bg-[#f3f8ff]"
+                className="flex w-full items-center justify-between rounded-lg px-2 py-1 text-left hover:bg-[#f3f8ff] font-bold"
                 aria-expanded={isMobileServicesOpen}
               >
                 <span>Services</span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${isMobileServicesOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${isMobileServicesOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {isMobileServicesOpen && (
