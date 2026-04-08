@@ -35,7 +35,7 @@ export default function NatsLandingPage() {
 		<div className="min-h-screen bg-slate-50 text-slate-800">
 			<Navbar />
 
-			<main className="pt-24 md:pt-28">
+			<main>
 				<header className="relative overflow-hidden bg-gradient-to-b from-[#0a0f25] via-[#101a35] to-[#1a2342] px-4 pb-28 pt-20 text-center md:pt-28">
 					<div className="pointer-events-none absolute inset-0 overflow-hidden">
 						<div className="absolute -left-24 top-16 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl" />

@@ -476,7 +476,7 @@ export default function NapsPage() {
 	return (
 		<div className="min-h-screen bg-slate-50 text-slate-800">
 			<Navbar />
-			<main className="pt-24 md:pt-28">
+			<main>
 				<NAPSHero />
 				<NAPSAbout />
 				<NAPSBenefits />

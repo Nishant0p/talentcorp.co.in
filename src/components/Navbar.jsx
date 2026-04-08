@@ -15,6 +15,9 @@ const serviceLinks = [
   { href: '/nats', label: 'NATS' },
   { href: '/naps', label: 'NAPS' },
   { href: '/flexi-iti', label: 'FLEXI ITI' },
+  { href: '/skilled', label: 'SKILLED JOB' },
+  { href: '/housekeeping', label: 'HOUSEKEEPING' },
+  { href: '/manpower', label: 'MANPOWER' },
 ];
 
 const Navbar = () => {

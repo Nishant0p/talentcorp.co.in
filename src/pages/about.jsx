@@ -368,7 +368,7 @@ export default function AboutPage() {
 	return (
 		<div className="min-h-screen bg-white text-slate-800">
 			<Navbar />
-			<main className="pt-24 md:pt-28">
+			<main>
 				<AboutHero />
 				<OurStory />
 				<OurValues />
