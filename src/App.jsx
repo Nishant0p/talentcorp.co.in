@@ -19,6 +19,7 @@ import ContractPage from './pages/contract'
 import B2BPage from './pages/b2b'
 import ClientPage from './pages/client'
 import CompliancePage from './pages/Compliance'
+import SecurityPage from './pages/security'
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -65,6 +66,7 @@ function App() {
             <Route path="/payroll" element={<PayrollPage />} />
             <Route path="/contract" element={<ContractPage />} />
             <Route path="/b2b" element={<B2BPage />} />
+            <Route path="/security" element={<SecurityPage />} />
             <Route path="/client" element={<ClientPage />} />
             <Route path="/compliance" element={<CompliancePage />} />
             <Route path="/about" element={<AboutPage />} />

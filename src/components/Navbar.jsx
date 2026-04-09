@@ -17,6 +17,7 @@ const serviceLinks = [
   { href: '/bvoc', label: 'B.VOC' },
   { href: '/dvoc', label: 'D.VOC' },
   { href: '/flexi-iti', label: 'FLEXI ITI' },
+  { href: '/security', label: 'SECURITY' },
   { href: '/skilled', label: 'SKILLED JOB' },
   { href: '/housekeeping', label: 'HOUSEKEEPING' },
   { href: '/manpower', label: 'MANPOWER' },
