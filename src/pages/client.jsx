@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import {
+	Award,
 	ArrowRight,
-	Building,
 	Building2,
+	Briefcase,
 	Car,
 	CheckCircle2,
 	ChevronLeft,
 	ChevronRight,
-	Clock,
 	Cpu,
 	Factory,
 	Handshake,
@@ -20,7 +20,6 @@ import {
 	TrendingUp,
 	Truck,
 	Users,
-	Wrench,
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -30,6 +29,19 @@ const stats = [
 	{ icon: Users, value: 50000, suffix: '+', label: 'Workers Deployed' },
 	{ icon: Handshake, value: 15, suffix: '+', label: 'Years Partnership' },
 	{ icon: TrendingUp, value: 98, suffix: '%', label: 'Client Retention' },
+]
+
+const partnerLogos = [
+	{ name: 'JCB', src: '/JCB_(company)-Logo.wine.svg' },
+	{ name: 'LG', src: '/images-10.jpeg' },
+	{ name: 'HAIER', src: '/haier-logo.png' },
+	{ name: 'MRF', src: '/Mrf-logo.png' },
+]
+
+const heroStats = [
+	{ value: 40000, isNumber: true, label: 'Successful Placements' },
+	{ value: 400, isNumber: true, label: 'Partner Employers' },
+	{ value: 'Govt', isNumber: false, label: 'Authorized' },
 ]
 
 const industries = [
@@ -220,64 +232,157 @@ function AnimatedCounter({ value, suffix }) {
 }
 
 function ClientsHero() {
-	const [isVisible, setIsVisible] = useState(false)
-
-	useEffect(() => {
-		setIsVisible(true)
-	}, [])
-
 	return (
-		<section className="relative min-h-[90vh] overflow-hidden bg-white pt-24">
-			<div className="absolute inset-0">
+		<section className="relative min-h-screen flex items-center overflow-visible bg-[#0f2a4d]">
+			<div className="absolute inset-0 z-0 overflow-hidden">
 				<img
-					src="/happy-excited-executive-business-team-600nw-2424450635.jpg.webp"
-					alt="Partnership"
-					className="h-full w-full object-cover"
+					src="/Gemini_Generated_Image_qskougqskougqsko.png"
+					alt="Office Background"
+					className="h-full w-full object-cover object-[78%_center] scale-[1.12] opacity-35"
 				/>
-				<div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/60" />
-				<div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-white" />
+				<div className="absolute left-0 top-0 bottom-0 w-[72%] bg-gradient-to-r from-[#0f2a4d]/90 via-[#0f2a4d]/60 to-transparent" />
+				<div className="absolute right-0 top-0 bottom-0 w-[58%] bg-gradient-to-l from-cyan-500/25 via-blue-500/20 to-transparent" />
+				<div className="absolute -right-24 top-20 h-72 w-72 rounded-full bg-orange-500/30 blur-3xl" />
+				<div className="absolute right-20 bottom-10 h-80 w-80 rounded-full bg-indigo-500/30 blur-3xl" />
 			</div>
 
-			<div className="absolute inset-0 bg-[linear-gradient(to_right,#2563eb08_1px,transparent_1px),linear-gradient(to_bottom,#2563eb08_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+			<div className="absolute -top-24 -left-24 z-0 h-96 w-96 rounded-full border border-white/10" />
 
-			<div className="relative z-10 container mx-auto px-4 py-16 lg:py-24">
-				<div className="max-w-3xl">
-					<div className={`inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white mb-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-						<Handshake className="h-4 w-4" />
-						Our Trusted Partners
+			<div className="container mx-auto px-6 relative z-10 py-16 pt-24 pb-16 md:pb-24">
+				<div className="max-w-3xl md:ml-8 lg:ml-12 text-white">
+					<div className="mb-8">
+						<div className="flex flex-wrap items-center gap-1.5 overflow-visible pb-1 md:flex-nowrap md:gap-2 md:overflow-x-auto">
+							<div className="flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-white/3 px-3 py-1 text-xs backdrop-blur-md md:gap-2 md:px-4 md:py-1.5 md:text-sm">
+								<Award size={14} className="text-orange-500 md:h-4 md:w-4" />
+								<span>Government Authorized</span>
+							</div>
+							<div className="flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-white/3 px-3 py-1 text-xs backdrop-blur-md md:gap-2 md:px-4 md:py-1.5 md:text-sm">
+								<CheckCircle2 size={14} className="text-emerald-500 md:h-4 md:w-4" />
+								<span>NAPS | NATS | MAPS</span>
+							</div>
+						</div>
 					</div>
 
-					<h1 className={`mb-6 text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-						Building Success
+					<h1 className="mb-6 text-5xl font-bold leading-tight text-white md:text-7xl">
+						Building India&apos;s
 						<br />
-						<span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Together</span>
+						<span className="text-[#FF8C00]">Future Workforce</span>
 					</h1>
 
-					<p className={`mb-8 max-w-xl text-lg md:text-xl text-gray-600 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-						Trusted by 500+ companies across India. We provide skilled manpower solutions that drive growth and efficiency.
+					<p className="mb-10 max-w-2xl text-lg leading-relaxed text-gray-300 md:text-xl">
+						India&apos;s leading government-authorized staffing partner connecting 40,000+ skilled
+						candidates with top employers through certified apprenticeship programs.
 					</p>
 
-					<div className={`flex flex-wrap gap-4 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-						<button className="h-12 rounded-xl bg-blue-600 px-8 text-white shadow-lg shadow-blue-500/25 transition-colors hover:bg-blue-700">Become a Partner</button>
-						<button className="h-12 rounded-xl border border-gray-300 px-8 text-gray-700 transition-colors hover:bg-gray-50">View Case Studies</button>
+					<div className="mb-12 flex items-center gap-6">
+						<div className="flex items-center -space-x-3">
+							{partnerLogos.map((brand) => (
+								<div
+									key={brand.name}
+									className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2 border-[#0f2a4d] bg-white shadow-md"
+								>
+									<img
+										src={brand.src}
+										alt={`${brand.name} logo`}
+										className={`${brand.name === 'MRF' ? 'h-8 w-8' : 'h-7 w-7'} object-contain`}
+										loading="lazy"
+									/>
+								</div>
+							))}
+						</div>
+						<div className="h-8 w-[1px] bg-white/15" />
+						<div className="flex flex-col">
+							<span className="text-sm font-medium">+400 Companies Trust Us</span>
+							<div className="flex items-center gap-1">
+								{[...Array(5)].map((_, i) => (
+									<Star key={i} size={14} className="fill-orange-500 text-orange-500" />
+								))}
+								<span className="ml-1 text-xs text-gray-400">4.9/5 Rating</span>
+							</div>
+						</div>
+					</div>
+
+					<div className="flex flex-col gap-4 sm:flex-row">
+						<button className="flex items-center justify-center gap-2 rounded-xl bg-[#FF8C00] px-8 py-4 font-semibold text-white transition-all hover:bg-orange-600">
+							Find Your Dream Job <ArrowRight size={20} />
+						</button>
+						<button className="flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/4 px-8 py-4 font-semibold text-white backdrop-blur-md transition-all hover:bg-white/8">
+							<Briefcase size={20} /> Hire Skilled Talent
+						</button>
 					</div>
 				</div>
 
-				<div className={`mt-16 grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-4 md:gap-6 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-					{stats.map((stat) => (
-						<div key={stat.label} className="group relative rounded-2xl border border-gray-100 bg-white/80 p-6 shadow-lg transition-all duration-300 hover:border-blue-200 hover:shadow-xl">
-							<div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-							<div className="relative">
-								<div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 transition-transform group-hover:scale-110">
-									<stat.icon className="h-5 w-5 text-blue-600" />
+				<div className="hidden md:block absolute left-1/2 bottom-0 z-30 w-full max-w-6xl -translate-x-1/2 translate-y-1/2 px-6">
+					<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+						{heroStats.map((card) => (
+							<div
+								key={card.label}
+								className="rounded-2xl border border-white/45 bg-white/28 p-6 text-center shadow-[0_24px_55px_rgba(7,22,49,0.42)] backdrop-blur-xl"
+							>
+								<div className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+									{card.isNumber ? <AnimatedCounter value={card.value} suffix="+" /> : card.value}
 								</div>
-								<p className="text-2xl md:text-3xl font-bold text-gray-900">
-									<AnimatedCounter value={stat.value} suffix={stat.suffix} />
-								</p>
-								<p className="mt-1 text-sm text-gray-500">{stat.label}</p>
+								<div className="mt-2 text-sm font-bold text-blue-900">{card.label}</div>
 							</div>
-						</div>
-					))}
+						))}
+					</div>
+				</div>
+			</div>
+		</section>
+	)
+}
+
+function LogoMarquee() {
+	const renderPartnerRow = (reverse = false) => (
+		<div className="logo-marquee-track gap-4" style={{ animationDirection: reverse ? 'reverse' : 'normal' }}>
+			{[...partnerLogos, ...partnerLogos, ...partnerLogos].map((brand, idx) => (
+				<div
+					key={`${brand.name}-${reverse ? 'rev' : 'fwd'}-${idx}`}
+					className="mx-2 flex h-20 w-52 shrink-0 items-center rounded-2xl border border-[#f7c99b] bg-[#fff7ed]/90 px-4 shadow-sm backdrop-blur-sm"
+				>
+					<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#fdba74] bg-white shadow-[0_6px_18px_rgba(249,115,22,0.12)]">
+						<img
+							src={brand.src}
+							alt={`${brand.name} logo`}
+							className={`${brand.name === 'MRF' ? 'h-8' : 'h-7'} w-auto object-contain`}
+							loading="lazy"
+						/>
+					</div>
+					<div className="ml-3 flex min-w-0 flex-col text-left">
+						<span className="truncate text-sm font-bold text-blue-700">{brand.name}</span>
+						<span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#fb923c]">Partner</span>
+					</div>
+				</div>
+			))}
+		</div>
+	)
+
+	return (
+		<section id="clients" className="relative overflow-hidden bg-white px-0 pb-16 pt-16 text-[#0f2a4d] md:pt-36">
+			<div
+				className="absolute inset-0 pointer-events-none"
+				style={{
+					backgroundImage:
+						'repeating-linear-gradient(135deg, rgba(37,99,235,0.04) 0px, rgba(37,99,235,0.04) 1px, transparent 1px, transparent 16px)',
+				}}
+			/>
+
+			<div className="relative w-full">
+				<h2 className="px-6 text-center text-2xl font-bold leading-snug text-[#103f78] md:px-10 md:text-3xl">
+					Trusted by 400+ leading companies across India
+				</h2>
+
+				<div
+					className="logo-marquee mt-10 overflow-hidden bg-gradient-to-b from-[#fffaf3] to-[#fff7ed] py-5"
+					style={{
+						backgroundImage:
+							'repeating-linear-gradient(135deg, rgba(249,115,22,0.05) 0px, rgba(249,115,22,0.05) 1px, transparent 1px, transparent 16px)',
+					}}
+				>
+					<div className="space-y-4">
+						{renderPartnerRow(false)}
+						{renderPartnerRow(true)}
+					</div>
 				</div>
 			</div>
 		</section>
@@ -460,64 +565,6 @@ function CaseStudies() {
 	)
 }
 
-function LogoCard({ name, industry }) {
-	return (
-		<div className="group mx-3 flex h-24 w-48 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:border-blue-200 hover:shadow-md">
-			<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 transition-transform group-hover:scale-110">
-				<Building2 className="h-5 w-5 text-blue-600" />
-			</div>
-			<div className="text-center">
-				<p className="text-sm font-semibold text-gray-800">{name}</p>
-				<p className="text-xs text-gray-400">{industry}</p>
-			</div>
-		</div>
-	)
-}
-
-function LogoMarquee() {
-	const [isVisible, setIsVisible] = useState(false)
-	const ref = useRef(null)
-
-	useEffect(() => {
-		const observer = new IntersectionObserver(([entry]) => {
-			if (entry.isIntersecting) setIsVisible(true)
-		}, { threshold: 0.2 })
-
-		if (ref.current) observer.observe(ref.current)
-		return () => observer.disconnect()
-	}, [])
-
-	return (
-		<section ref={ref} className="overflow-hidden bg-gradient-to-b from-white to-gray-50/50 py-16">
-			<div className="container mx-auto mb-10 px-4">
-				<div className={`text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-					<p className="mb-2 font-semibold text-blue-600">TRUSTED BY INDUSTRY LEADERS</p>
-					<h2 className="mb-2 text-3xl md:text-4xl font-bold text-gray-900">Our Valued Clients</h2>
-				</div>
-			</div>
-
-			<div className={`relative mb-6 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-				<div className="absolute left-0 top-0 bottom-0 z-10 w-32 bg-gradient-to-r from-white to-transparent" />
-				<div className="absolute right-0 top-0 bottom-0 z-10 w-32 bg-gradient-to-l from-white to-transparent" />
-				<div className="flex animate-marquee-slow">
-					{[...clients, ...clients].map((client, index) => (
-						<LogoCard key={`row1-${index}`} name={client.name} industry={client.industry} />
-					))}
-				</div>
-			</div>
-
-			<div className={`relative transition-all duration-700 delay-400 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-				<div className="absolute left-0 top-0 bottom-0 z-10 w-32 bg-gradient-to-r from-white to-transparent" />
-				<div className="absolute right-0 top-0 bottom-0 z-10 w-32 bg-gradient-to-l from-white to-transparent" />
-				<div className="flex animate-marquee-slow-reverse">
-					{[...clients.slice().reverse(), ...clients.slice().reverse()].map((client, index) => (
-						<LogoCard key={`row2-${index}`} name={client.name} industry={client.industry} />
-					))}
-				</div>
-			</div>
-		</section>
-	)
-}
 
 function Testimonials() {
 	const [isVisible, setIsVisible] = useState(false)
