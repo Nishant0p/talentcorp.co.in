@@ -118,7 +118,7 @@ const steps = [
 
 function BvocHero() {
 	return (
-		<section className="relative min-h-[90vh] overflow-hidden bg-[#0F172A] pt-24">
+		<section className="relative min-h-[82vh] overflow-hidden bg-[#0F172A] pt-20 lg:min-h-[calc(100vh-72px)] lg:pt-16">
 			<div className="absolute inset-0">
 				<img
 					src="https://images.prismic.io/tspl/7b91575d-3a91-4512-9c7b-8ae013dbcf9f_UGC_India_Logo.png?auto=compress,format&w=640"
@@ -131,44 +131,44 @@ function BvocHero() {
 			<div className="absolute right-20 top-20 h-72 w-72 rounded-full bg-[#2563EB]/20 blur-3xl" />
 			<div className="absolute bottom-20 left-20 h-96 w-96 rounded-full bg-[#F97316]/10 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-32">
-				<div className="grid items-center gap-12 lg:grid-cols-2">
-					<div className="space-y-8">
+			<div className="relative z-10 mx-auto max-w-7xl px-6 py-14 lg:px-8 lg:py-16">
+				<div className="grid items-center gap-10 lg:grid-cols-2">
+					<div className="space-y-6">
 						<div className="inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/20 px-4 py-2">
 							<span className="h-2 w-2 animate-pulse rounded-full bg-[#F97316]" />
 							<span className="text-sm font-bold text-[#F97316]">UGC SCHEME | NSQF FRAMEWORK</span>
 						</div>
 
-						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
 							Bachelor in Vocational Studies
 							<span className="mt-2 block text-[#2563EB]">(B. Voc)</span>
 							<span className="mt-2 block">UGC Skill Development Degree</span>
 						</h1>
 
-						<p className="max-w-xl text-lg leading-relaxed text-white/80 lg:text-xl">
+						<p className="max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
 							B. Voc is an undergraduate degree programme focused on practical skill development and industry-aligned learning. The UGC scheme combines traditional academic education with specific job roles and NSQF standards for enhanced employment potential.
 						</p>
 
-						<div className="flex flex-wrap gap-4">
+						<div className="flex flex-wrap gap-3">
 							{['Undergraduate Degree', 'NSQF Aligned', 'Industry-Focused'].map((item) => (
-								<div key={item} className="flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 backdrop-blur-sm">
+								<div key={item} className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 backdrop-blur-sm">
 									<CheckCircle2 className="h-5 w-5 text-[#22C55E]" />
 									<span className="font-medium text-white">{item}</span>
 								</div>
 							))}
 						</div>
 
-						<div className="flex flex-col gap-4 pt-4 sm:flex-row">
+						<div className="flex flex-col gap-3 pt-2 sm:flex-row">
 							<a
 								href="#enquiry"
-								className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]"
+								className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-7 py-3 text-base font-bold text-white shadow-2xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]"
 							>
 								Enquire for B. Voc
 								<ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
 							</a>
 						</div>
 
-						<div className="flex items-center gap-8 border-t border-white/10 pt-6">
+						<div className="flex items-center gap-6 border-t border-white/10 pt-4">
 							<div className="text-center">
 								<p className="text-3xl font-bold text-white">2 Years</p>
 								<p className="text-sm text-white/60">Training Duration</p>
@@ -187,7 +187,7 @@ function BvocHero() {
 					</div>
 
 					<div className="hidden lg:block">
-					<div className="relative rounded-3xl border border-white/20 bg-white/10 p-12 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-white/40 hover:bg-white/20 cursor-pointer group">
+					<div className="relative rounded-3xl border border-white/20 bg-white/10 p-8 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-white/40 hover:bg-white/20 cursor-pointer group">
 						<div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-[#F97316]/30 blur-2xl transition-all duration-300 group-hover:h-32 group-hover:w-32" />
 						<h3 className="mb-6 text-2xl font-bold text-white transition-colors group-hover:text-[#F97316]">Key Programme Features</h3>
 						<div className="grid grid-cols-2 gap-3">
@@ -290,10 +290,10 @@ function BvocProcess() {
 
 				<div className="relative">
 					<div className="absolute left-0 right-0 top-1/2 hidden h-1 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#2563EB] via-[#F97316] to-[#22C55E] lg:block" />
-					<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+					<div className="grid items-stretch gap-8 md:grid-cols-2 lg:grid-cols-4">
 						{steps.map((step, index) => (
-							<div key={step.number} className="relative">
-								<div className="group relative rounded-2xl border border-slate-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/30 hover:shadow-xl">
+							<div key={step.number} className="relative h-full">
+								<div className="group relative flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/30 hover:shadow-xl">
 									<div className="absolute -top-5 left-1/2 z-10 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full text-sm font-bold text-white shadow-lg" style={{ backgroundColor: step.color }}>
 										{step.number}
 									</div>
@@ -333,9 +333,9 @@ function BvocEligibility() {
 				</div>
 
 				<div className="grid gap-8 lg:grid-cols-2">
-					<div className="rounded-3xl border border-[#22C55E]/20 bg-[#22C55E]/5 p-8">
+					<div className="group rounded-3xl border border-[#22C55E]/20 bg-[#22C55E]/5 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#22C55E]/40 hover:bg-[#22C55E]/10 hover:shadow-xl">
 						<div className="mb-6 flex items-center gap-3">
-							<div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#22C55E]/20">
+							<div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#22C55E]/20 transition-transform duration-300 group-hover:scale-110">
 								<CheckCircle2 className="h-6 w-6 text-[#22C55E]" />
 							</div>
 							<h3 className="text-2xl font-bold text-[#0F172A]">Candidate Eligibility</h3>
@@ -357,9 +357,9 @@ function BvocEligibility() {
 						</ul>
 					</div>
 
-					<div className="rounded-3xl border border-[#2563EB]/20 bg-[#2563EB]/5 p-8">
+					<div className="group rounded-3xl border border-[#2563EB]/20 bg-[#2563EB]/5 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/40 hover:bg-[#2563EB]/10 hover:shadow-xl">
 						<div className="mb-6 flex items-center gap-3">
-							<div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#2563EB]/20">
+							<div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#2563EB]/20 transition-transform duration-300 group-hover:scale-110">
 								<FileText className="h-6 w-6 text-[#2563EB]" />
 							</div>
 							<h3 className="text-2xl font-bold text-[#0F172A]">Employer Compliance</h3>

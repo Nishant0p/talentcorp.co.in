@@ -15,6 +15,8 @@ import AboutPage from './pages/about'
 import HousekeepingPage from './pages/housekeeping'
 import ManpowerPage from './pages/manpower'
 import PayrollPage from './pages/payroll'
+import ContractPage from './pages/contract'
+import B2BPage from './pages/b2b'
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -59,6 +61,8 @@ function App() {
             <Route path="/housekeeping" element={<HousekeepingPage />} />
             <Route path="/manpower" element={<ManpowerPage />} />
             <Route path="/payroll" element={<PayrollPage />} />
+            <Route path="/contract" element={<ContractPage />} />
+            <Route path="/b2b" element={<B2BPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/news-events" element={<NewsEventsPage />} />
             <Route path="/contact" element={<ContactUs />} />
