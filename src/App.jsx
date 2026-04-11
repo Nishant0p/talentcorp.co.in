@@ -1,0 +1,92 @@
+import { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import './App.css'
+import GlobalTextureOverlay from './components/GlobalTextureOverlay'
+import HomePage from './pages/HomePage'
+import JobDetailPage from './pages/JobDetailPage'
+import ContactUs from './pages/contactus'
+import NewsEventsPage from './pages/NewsEventsPage'
+import NatsLandingPage from './pages/nats'
+import NapsPage from './pages/naps'
+import BvocPage from './pages/bvoc'
+import DvocPage from './pages/dvoc'
+import FlexiItiPage from './pages/FLEXI'
+import SkilledPage from './pages/skilled'
+import AboutPage from './pages/about'
+import HousekeepingPage from './pages/housekeeping'
+import ManpowerPage from './pages/manpower'
+import PayrollPage from './pages/payroll'
+import ContractPage from './pages/contract'
+import B2BPage from './pages/b2b'
+import ClientPage from './pages/client'
+import CompliancePage from './pages/Compliance'
+import SecurityPage from './pages/security'
+import MapsPage from './pages/MAPS'
+import AedpPage from './pages/AEDP'
+import AchimentPage from './pages/achiment'
+
+const PRELOADER_DURATION_MS = 2800
+
+function App() {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setIsLoading(false)
+    }, PRELOADER_DURATION_MS)
+
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  return (
+    <BrowserRouter>
+      <div className="page-shell">
+        <GlobalTextureOverlay />
+        {isLoading && (
+          <div className="preloader" role="status" aria-label="Loading TSPL website">
+            <div className="preloader-layer preloader-layer--orange" aria-hidden="true" />
+            <div className="preloader-layer preloader-layer--blue" aria-hidden="true" />
+            <div className="preloader-layer preloader-layer--white">
+              <img
+                src="/TSPL Logo preloader.png"
+                alt="TSPL logo"
+                className="preloader-logo"
+              />
+            </div>
+          </div>
+        )}
+
+        <main className={`home ${isLoading ? 'home--hidden' : ''}`}>
+          <Routes>
+            <Route path="/" element={<HomePage animateWords={!isLoading} />} />
+            <Route path="/job/:jobId" element={<JobDetailPage />} />
+            <Route path="/nats" element={<NatsLandingPage />} />
+            <Route path="/naps" element={<NapsPage />} />
+            <Route path="/bvoc" element={<BvocPage />} />
+            <Route path="/dvoc" element={<DvocPage />} />
+            <Route path="/flexi-iti" element={<FlexiItiPage />} />
+            <Route path="/skilled" element={<SkilledPage />} />
+            <Route path="/housekeeping" element={<HousekeepingPage />} />
+            <Route path="/manpower" element={<ManpowerPage />} />
+            <Route path="/payroll" element={<PayrollPage />} />
+            <Route path="/contract" element={<ContractPage />} />
+            <Route path="/b2b" element={<B2BPage />} />
+            <Route path="/security" element={<SecurityPage />} />
+            <Route path="/maps" element={<MapsPage />} />
+            <Route path="/aedp" element={<AedpPage />} />
+            <Route path="/client" element={<ClientPage />} />
+            <Route path="/compliance" element={<CompliancePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/achiment" element={<AchimentPage />} />
+            <Route path="/achievements" element={<AchimentPage />} />
+            <Route path="/news-events" element={<NewsEventsPage />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
+  )
+}
+
+export default App

@@ -1,0 +1,367 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: opacity;
+  animation: preloader-fade 0.36s ease 2.44s forwards;
+}
+
+.preloader-layer {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+  will-change: transform, opacity;
+}
+
+.preloader-layer--orange {
+  top: 0;
+  bottom: auto;
+  height: 50svh;
+  z-index: 1;
+  background: #f57f20;
+  animation: sweep-up 0.56s cubic-bezier(0.2, 0.75, 0.2, 1) 0.02s forwards;
+}
+
+.preloader-layer--blue {
+  top: 0;
+  bottom: 0;
+  height: auto;
+  z-index: 2;
+  background: #006bb8;
+  animation: sweep-up 0.56s cubic-bezier(0.2, 0.75, 0.2, 1) 0.24s forwards;
+}
+
+.preloader-layer--white {
+  z-index: 3;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  animation:
+    sweep-up 0.52s cubic-bezier(0.2, 0.75, 0.2, 1) 0.58s forwards,
+    sweep-out 0.62s cubic-bezier(0.58, 0, 0.35, 1) 2.08s forwards;
+}
+
+.preloader-logo {
+  width: clamp(200px, 30vw, 380px);
+  max-width: 65vw;
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+  filter: blur(8px);
+  will-change: transform, opacity, filter;
+  animation:
+    logo-reveal 0.82s cubic-bezier(0.16, 0.9, 0.2, 1) 0.9s forwards,
+    logo-drift 1.8s ease-in-out 1.78s 1;
+}
+
+@keyframes sweep-up {
+  from {
+    opacity: 0.98;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sweep-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes logo-reveal {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(10px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes logo-drift {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.015);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes preloader-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.page-shell {
+  min-height: 100svh;
+}
+
+.home {
+  transition: opacity 0.4s ease;
+}
+
+.home--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-content-wait,
+.hero-content-wait > * {
+  opacity: 0;
+}
+
+.hero-content-enter {
+  opacity: 0;
+  transform: translateX(-48px);
+  animation: hero-content-in 0.95s cubic-bezier(0.2, 0.75, 0.2, 1) 0.2s forwards;
+}
+
+.hero-content-enter > * {
+  opacity: 0;
+  transform: translateX(-22px);
+  animation: hero-item-in 0.8s cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
+}
+
+.hero-content-enter > *:nth-child(1) {
+  animation-delay: 0.34s;
+}
+
+.hero-content-enter > *:nth-child(2) {
+  animation-delay: 0.48s;
+}
+
+.hero-content-enter > *:nth-child(3) {
+  animation-delay: 0.62s;
+}
+
+.hero-content-enter > *:nth-child(4) {
+  animation-delay: 0.76s;
+}
+
+@keyframes hero-content-in {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hero-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(-22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hero-color-wash {
+  will-change: opacity, transform;
+  animation: color-wash-flow 9s ease-in-out infinite alternate;
+}
+
+.hero-color-blob-one {
+  will-change: transform, opacity;
+  animation: color-blob-one-float 8.2s ease-in-out infinite;
+}
+
+.hero-color-blob-two {
+  will-change: transform, opacity;
+  animation: color-blob-two-float 10.4s ease-in-out infinite;
+}
+
+@keyframes color-wash-flow {
+  0% {
+    opacity: 0.48;
+    transform: translateX(0) scale(1);
+  }
+  50% {
+    opacity: 0.62;
+    transform: translateX(-10px) scale(1.03);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes color-blob-one-float {
+  0% {
+    opacity: 0.42;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: translate3d(-28px, -14px, 0) scale(1.08);
+  }
+  100% {
+    opacity: 0.42;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes color-blob-two-float {
+  0% {
+    opacity: 0.38;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.58;
+    transform: translate3d(24px, -18px, 0) scale(1.06);
+  }
+  100% {
+    opacity: 0.38;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.logo-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: logo-marquee-slide 24s linear infinite;
+}
+
+.logo-marquee:hover .logo-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes logo-marquee-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.job-grid-switch {
+  animation: job-grid-fade 0.35s ease;
+}
+
+.job-card-animate {
+  opacity: 0;
+  animation: job-card-rise 0.45s cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
+}
+
+.job-grid-switch .job-card-animate:nth-child(1) { animation-delay: 0.02s; }
+.job-grid-switch .job-card-animate:nth-child(2) { animation-delay: 0.06s; }
+.job-grid-switch .job-card-animate:nth-child(3) { animation-delay: 0.1s; }
+.job-grid-switch .job-card-animate:nth-child(4) { animation-delay: 0.14s; }
+.job-grid-switch .job-card-animate:nth-child(5) { animation-delay: 0.18s; }
+.job-grid-switch .job-card-animate:nth-child(6) { animation-delay: 0.22s; }
+
+@keyframes job-grid-fade {
+  from {
+    opacity: 0.6;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes job-card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.testimonial-switch {
+  animation: testimonial-fade 0.35s ease;
+}
+
+.testimonial-card {
+  opacity: 0;
+  animation: testimonial-card-rise 0.45s cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
+}
+
+.testimonial-switch .testimonial-card:nth-child(1) { animation-delay: 0.03s; }
+.testimonial-switch .testimonial-card:nth-child(2) { animation-delay: 0.1s; }
+.testimonial-switch .testimonial-card:nth-child(3) { animation-delay: 0.17s; }
+.testimonial-switch .testimonial-card:nth-child(4) { animation-delay: 0.24s; }
+
+@keyframes testimonial-fade {
+  from {
+    opacity: 0.65;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes testimonial-card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Carousel Auto-Scroll Transition */
+.testimonial-switch {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .hero-color-wash,
+  .hero-color-blob-one,
+  .hero-color-blob-two {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-color-wash,
+  .hero-color-blob-one,
+  .hero-color-blob-two,
+  .logo-marquee-track,
+  .job-card-animate,
+  .testimonial-card {
+    animation: none !important;
+  }
+
+  .testimonial-switch,
+  .home,
+  .hero-content-enter,
+  .hero-content-enter > * {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
