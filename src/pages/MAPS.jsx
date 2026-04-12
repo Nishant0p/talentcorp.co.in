@@ -47,12 +47,12 @@ function MapsHero() {
 							<span className="text-sm font-bold text-[#F97316]">MAHARASHTRA APPRENTICESHIP PROMOTION SCHEME</span>
 						</div>
 
-						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+						<h1 className="hero-text-reveal text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
 							MAPS Scheme
 							<span className="mt-2 block text-[#60A5FA]">Build Skilled Workforce Faster</span>
 						</h1>
 
-						<p className="text-lg leading-relaxed text-white/80 lg:text-xl">
+						<p className="hero-text-reveal-delay text-lg leading-relaxed text-white/80 lg:text-xl">
 							The Apprenticeship Promotion Scheme was launched by the Government of Maharashtra on 03 June 2021 to promote apprenticeships and create strong skill
 							development opportunities for students and unemployed youth.
 						</p>

@@ -50,13 +50,13 @@ function ManpowerHero() {
 						<span className="text-sm font-medium text-white">Trusted by 400+ Companies</span>
 					</div>
 
-					<h1 className="mb-6 text-5xl font-bold leading-tight text-white animate-fade-in sm:text-6xl lg:text-7xl">
+					<h1 className="hero-text-reveal mb-6 text-5xl font-bold leading-tight text-white animate-fade-in sm:text-6xl lg:text-7xl">
 						We Provide
 						<span className="mt-2 block text-[#2563EB]">Right Workers</span>
 						<span className="block text-white">For Your Business</span>
 					</h1>
 
-					<p className="mb-10 max-w-2xl text-xl leading-relaxed text-white/80 animate-fade-in-up">
+					<p className="hero-text-reveal-delay mb-10 max-w-2xl text-xl leading-relaxed text-white/80 animate-fade-in-up">
 						Need workers for your factory, office, or any work? We find good workers for you.
 						<span className="font-semibold text-[#F97316]"> You focus on your business, we handle the hiring.</span>
 					</p>

@@ -7,6 +7,7 @@ import {
 	CheckCircle,
 	CheckCircle2,
 	FileCheck,
+	GraduationCap,
 	Mail,
 	Phone,
 	Shield,
@@ -95,12 +96,12 @@ function NAPSHero() {
 						<span className="text-sm font-semibold tracking-wide text-[#0F172A]">Premium Apprenticeship Program</span>
 					</div>
 
-					<h1 className="mb-6 text-5xl font-extrabold leading-[1.05] tracking-tight text-[#0F172A] sm:text-6xl md:text-7xl lg:text-8xl">
+					<h1 className="hero-text-reveal mb-6 text-5xl font-extrabold leading-[1.05] tracking-tight text-[#0F172A] sm:text-6xl md:text-7xl lg:text-8xl">
 						National Apprenticeship
 						<span className="mt-2 block bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-transparent">Programme Scheme</span>
 					</h1>
 
-					<p className="mx-auto mb-10 max-w-3xl text-xl font-medium leading-relaxed text-[#475569] sm:text-2xl lg:text-3xl">
+					<p className="hero-text-reveal-delay mx-auto mb-10 max-w-3xl text-xl font-medium leading-relaxed text-[#475569] sm:text-2xl lg:text-3xl">
 						Advance your career with <span className="font-bold text-[#2563EB]">world-class industry experience</span> and <span className="font-bold text-[#F97316]">competitive compensation</span>
 					</p>
 

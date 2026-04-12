@@ -119,13 +119,13 @@ function SkilledJobHero() {
 						<span className="text-sm font-bold text-white">SKILLED JOB WORK</span>
 					</div>
 
-					<h1 className="mb-6 text-5xl font-bold leading-tight text-white sm:text-6xl lg:text-7xl">
+					<h1 className="hero-text-reveal mb-6 text-5xl font-bold leading-tight text-white sm:text-6xl lg:text-7xl">
 						We Have
 						<span className="mt-2 block text-[#F97316]">Trained Workers</span>
 						<span className="block text-white">For Your Work</span>
 					</h1>
 
-					<p className="mb-10 max-w-2xl text-xl leading-relaxed text-white/90">
+					<p className="hero-text-reveal-delay mb-10 max-w-2xl text-xl leading-relaxed text-white/90">
 						Need trained workers like welders, electricians, or machine operators?
 						<span className="font-semibold text-[#F97316]"> TSPL provides skilled workers who know their job well.</span>
 						 They come trained and ready to work.

@@ -173,12 +173,12 @@ function SecurityHero() {
 						<span className="text-sm font-bold text-[#2563EB]">TRUSTED SECURITY PARTNER</span>
 					</div>
 
-					<h1 className="mb-6 text-5xl font-bold leading-[1.1] text-white animate-fade-in sm:text-6xl lg:text-7xl">
+					<h1 className="hero-text-reveal mb-6 text-5xl font-bold leading-[1.1] text-white animate-fade-in sm:text-6xl lg:text-7xl">
 						Protect What
 						<span className="mt-2 block text-[#2563EB]">Matters Most</span>
 					</h1>
 
-					<p className="mb-10 max-w-2xl text-xl leading-relaxed text-white/80 animate-fade-in-up animation-delay-100">
+					<p className="hero-text-reveal-delay mb-10 max-w-2xl text-xl leading-relaxed text-white/80 animate-fade-in-up animation-delay-100">
 						We provide trained, verified security guards for offices, factories, events, and homes. Your safety is our top priority.
 					</p>
 

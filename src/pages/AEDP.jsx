@@ -58,12 +58,12 @@ function AedpHero() {
 						<span className="text-sm font-bold text-[#F97316]">APPRENTICESHIP EMBEDDED DEGREE PROGRAM</span>
 					</div>
 
-					<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+					<h1 className="hero-text-reveal text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
 						Earn Your Degree
 						<span className="mt-2 block text-[#2563EB]">With Apprenticeship Experience</span>
 					</h1>
 
-					<p className="max-w-3xl text-lg leading-relaxed text-white/80 lg:text-xl">
+					<p className="hero-text-reveal-delay max-w-3xl text-lg leading-relaxed text-white/80 lg:text-xl">
 						An apprenticeship embedded degree program combines a traditional academic degree with practical on-the-job training. It helps students build strong theory,
 						strong skills, and strong career readiness at the same time.
 					</p>

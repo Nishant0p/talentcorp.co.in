@@ -130,13 +130,13 @@ function FlexiItiHero() {
 							<span className="text-sm font-bold text-[#F97316]">Government Recognized Program</span>
 						</div>
 
-						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+						<h1 className="hero-text-reveal text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
 							Learn Skills
 							<span className="mt-2 block text-[#2563EB]">At Your Own Pace</span>
 							<span className="mt-2 block">With FLEXI ITI</span>
 						</h1>
 
-						<p className="max-w-xl text-lg leading-relaxed text-white/80 lg:text-xl">
+						<p className="hero-text-reveal-delay max-w-xl text-lg leading-relaxed text-white/80 lg:text-xl">
 							FLEXI ITI lets you learn job skills while working. Study when you have time. Get a real certificate. Build a better future for yourself and your family.
 						</p>
 

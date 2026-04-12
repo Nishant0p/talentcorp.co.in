@@ -139,13 +139,13 @@ function BvocHero() {
 							<span className="text-sm font-bold text-[#F97316]">UGC SCHEME | NSQF FRAMEWORK</span>
 						</div>
 
-						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
+						<h1 className="hero-text-reveal text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
 							Bachelor in Vocational Studies
 							<span className="mt-2 block text-[#2563EB]">(B. Voc)</span>
 							<span className="mt-2 block">UGC Skill Development Degree</span>
 						</h1>
 
-						<p className="max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
+						<p className="hero-text-reveal-delay max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
 							B. Voc is an undergraduate degree programme focused on practical skill development and industry-aligned learning. The UGC scheme combines traditional academic education with specific job roles and NSQF standards for enhanced employment potential.
 						</p>
 

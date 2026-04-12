@@ -265,13 +265,13 @@ function ClientsHero() {
 						</div>
 					</div>
 
-					<h1 className="mb-6 text-5xl font-bold leading-tight text-white md:text-7xl">
+					<h1 className="hero-text-reveal mb-6 text-5xl font-bold leading-tight text-white md:text-7xl">
 						Building India&apos;s
 						<br />
 						<span className="text-[#FF8C00]">Future Workforce</span>
 					</h1>
 
-					<p className="mb-10 max-w-2xl text-lg leading-relaxed text-gray-300 md:text-xl">
+					<p className="hero-text-reveal-delay mb-10 max-w-2xl text-lg leading-relaxed text-gray-300 md:text-xl">
 						India&apos;s leading government-authorized staffing partner connecting 40,000+ skilled
 						candidates with top employers through certified apprenticeship programs.
 					</p>

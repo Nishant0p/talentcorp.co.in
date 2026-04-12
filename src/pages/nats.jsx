@@ -45,11 +45,11 @@ export default function NatsLandingPage() {
 					<div className="mx-auto mb-6 inline-block rounded-full border border-blue-500/30 bg-blue-900/50 px-4 py-1.5 text-sm text-blue-300">
 						Ministry of Education, Govt. of India
 					</div>
-					<h1 className="mb-4 text-5xl font-extrabold text-white md:text-6xl">
+					<h1 className="hero-text-reveal mb-4 text-5xl font-extrabold text-white md:text-6xl">
 						National <br /> Apprenticeship <br />
 						<span className="text-blue-400">Training Scheme</span>
 					</h1>
-					<p className="mx-auto mb-8 max-w-2xl text-lg text-slate-300">
+					<p className="hero-text-reveal-delay mx-auto mb-8 max-w-2xl text-lg text-slate-300">
 						Earn <span className="font-bold text-orange-400">Rs. 9,000/month</span> while gaining{' '}
 						<span className="text-blue-400">real industry experience</span>
 					</p>

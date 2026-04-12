@@ -183,13 +183,13 @@ function PayrollSection() {
               </span>
               Premium Benefits
             </div>
-            <h1 className="mb-6 text-5xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">
+            <h1 className="hero-text-reveal mb-6 text-5xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">
               Everyone Wins with
               <span className="mt-2 block bg-gradient-to-r from-[#2563EB] via-[#60A5FA] to-[#93C5FD] bg-clip-text text-transparent">
                 TSPL Payroll
               </span>
             </h1>
-            <p className="max-w-xl text-lg leading-relaxed text-white/60">
+            <p className="hero-text-reveal-delay max-w-xl text-lg leading-relaxed text-white/60">
               A seamless payroll ecosystem engineered for modern companies and their workforce. We handle the math, compliance, and payouts so you don't have to.
             </p>
           </div>

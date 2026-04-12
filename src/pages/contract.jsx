@@ -203,7 +203,7 @@ function ContractHero() {
 						<span className="text-sm font-semibold text-blue-700">Flexible Workforce Solutions</span>
 					</div>
 
-					<h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+					<h1 className="hero-text-reveal text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
 						<span className="text-gray-900">Contract Staffing</span>
 						<br />
 						<span className="text-gray-900">That&apos;s </span>
@@ -220,7 +220,7 @@ function ContractHero() {
 						</span>
 					</h1>
 
-					<p className="max-w-xl text-lg leading-relaxed text-gray-600 lg:text-xl">
+					<p className="hero-text-reveal-delay max-w-xl text-lg leading-relaxed text-gray-600 lg:text-xl">
 						Scale your workforce up or down based on project needs.
 						<span className="font-medium text-gray-900"> No long-term commitments, no HR hassles</span> - just the right people at the right time.
 					</p>

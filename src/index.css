@@ -58,12 +58,52 @@ body {
   animation: tspl-plane-send 1s ease-in-out infinite;
 }
 
+@keyframes tspl-hero-text-rise {
+  0% {
+    opacity: 0;
+    transform: translateX(-52px) scale(0.985);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes tspl-hero-text-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 0 rgba(37, 99, 235, 0);
+  }
+  50% {
+    text-shadow: 0 0 28px rgba(37, 99, 235, 0.24);
+  }
+}
+
+.hero-text-reveal {
+  opacity: 0;
+  animation: tspl-hero-text-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    tspl-hero-text-glow 3.2s ease-in-out 800ms infinite;
+}
+
+.hero-text-reveal-delay {
+  opacity: 0;
+  animation: tspl-hero-text-rise 780ms cubic-bezier(0.22, 1, 0.36, 1) 180ms forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tspl-marquee__track {
     animation: none;
   }
 
   .animate-plane-send {
+    animation: none;
+  }
+
+  .hero-text-reveal,
+  .hero-text-reveal-delay {
+    opacity: 1;
     animation: none;
   }
 }

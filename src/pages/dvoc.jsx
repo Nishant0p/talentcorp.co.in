@@ -144,13 +144,13 @@ function DvocHero() {
 							<span className="text-sm font-bold text-[#F97316]">NSQF Level-5 | Dual Education Model</span>
 						</div>
 
-						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
+						<h1 className="hero-text-reveal text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
 							Diploma in Vocational Studies
 							<span className="mt-2 block text-[#2563EB]">(D. Voc)</span>
 							<span className="mt-2 block">3-Year Industry Integrated Programme</span>
 						</h1>
 
-						<p className="max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
+						<p className="hero-text-reveal-delay max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
 							D. Voc is a three-year diploma in professional domains for candidates who want practical learning over theory. The programme supports meaningful participation in India&apos;s economy through employment, entrepreneurship, and industry-ready skilling.
 						</p>
 

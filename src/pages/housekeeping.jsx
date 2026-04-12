@@ -54,12 +54,12 @@ function HousekeepingHero() {
 						<span className="text-sm font-medium text-white">Professional Cleaning Solutions</span>
 					</div>
 
-					<h1 className="mb-6 text-4xl font-bold leading-tight text-white animate-fade-in sm:text-5xl lg:text-6xl">
+					<h1 className="hero-text-reveal mb-6 text-4xl font-bold leading-tight text-white animate-fade-in sm:text-5xl lg:text-6xl">
 						Keep Your Space
 						<span className="mt-2 block text-[#2563EB]">Clean &amp; Healthy</span>
 					</h1>
 
-					<p className="mb-10 max-w-2xl text-lg leading-relaxed text-white/80 animate-fade-in-up lg:text-xl">
+					<p className="hero-text-reveal-delay mb-10 max-w-2xl text-lg leading-relaxed text-white/80 animate-fade-in-up lg:text-xl">
 						We provide trained housekeeping staff to keep your office, factory, hospital or hotel spotless. Our workers are verified, skilled, and ready to serve.
 					</p>
 

@@ -321,7 +321,7 @@ function ComplianceHero() {
 							<span className="text-sm font-medium text-white">Legal Protection Partner</span>
 						</div>
 
-						<h1 className="text-5xl font-bold leading-tight lg:text-7xl">
+						<h1 className="hero-text-reveal text-5xl font-bold leading-tight lg:text-7xl">
 							<span className="text-gray-900">Stay</span>
 							<br />
 							<span className="relative">
@@ -331,12 +331,11 @@ function ComplianceHero() {
 							<span className="text-gray-900">Stay Protected</span>
 						</h1>
 
-						<p className="max-w-lg text-xl leading-relaxed text-gray-600">
+						<p className="hero-text-reveal-delay max-w-lg text-xl leading-relaxed text-gray-600">
 							Complete statutory compliance management for your business.
 							<span className="font-medium text-gray-900"> PF, ESI, Labor Laws, Factory Act</span> - we handle everything so you can focus on growth.
 						</p>
 
-						<p className="border-l-2 border-blue-500 pl-4 italic text-gray-500">कानूनी अनुपालन में पूर्ण सहायता - PF, ESI, श्रम कानून सब कुछ हम संभालते हैं</p>
 
 						<div className="flex flex-wrap gap-4 pt-4">
 							<button className="group h-14 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 text-lg font-semibold text-white shadow-xl shadow-blue-500/30 transition-all hover:from-blue-700 hover:to-blue-800">
@@ -422,7 +421,7 @@ function WhyCompliance() {
 				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-2">
 						<AlertTriangle className="h-4 w-4 text-red-400" />
-						<span className="text-sm font-medium text-red-300">Risk Alert / जोखिम चेतावनी</span>
+						<span className="text-sm font-medium text-red-300">Risk Alert</span>
 					</div>
 					<h2 className="mb-6 text-4xl font-bold text-white lg:text-5xl">What Happens Without <span className="text-red-400">Compliance?</span></h2>
 					<p className="mx-auto max-w-2xl text-lg text-gray-400">Don&apos;t let non-compliance cost your business. These are the real risks companies face.</p>
@@ -445,7 +444,6 @@ function WhyCompliance() {
 									<div className="flex-1">
 										<p className={`mb-1 text-2xl font-bold ${colors.text}`}>{risk.amount}</p>
 										<h3 className="text-lg font-semibold text-white">{risk.title}</h3>
-										<p className="text-sm text-gray-500">{risk.titleHindi}</p>
 									</div>
 								</div>
 								<p className="mt-4 text-sm leading-relaxed text-gray-400">{risk.description}</p>
@@ -480,7 +478,7 @@ function ComplianceServices() {
 		<section ref={sectionRef} className="bg-[#0a0a0a] py-24">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-					<p className="mb-4 font-medium text-blue-400">Our Services / हमारी सेवाएं</p>
+					<p className="mb-4 font-medium text-blue-400">Our Services</p>
 					<h2 className="mb-6 text-4xl font-bold text-white lg:text-5xl">Complete Compliance Solutions</h2>
 					<p className="mx-auto max-w-2xl text-lg text-gray-400">From PF to Factory Act - we cover all statutory requirements so you never face penalties.</p>
 				</div>
@@ -507,7 +505,6 @@ function ComplianceServices() {
 												<h3 className={`font-semibold ${isActive ? 'text-white' : 'text-gray-300'}`}>{service.title}</h3>
 												<ArrowUpRight className={`h-5 w-5 transition-all ${isActive ? `${sColors.text} rotate-0` : '-rotate-45 text-gray-600'}`} />
 											</div>
-											<p className="mt-1 text-sm text-gray-500">{service.titleHindi}</p>
 										</div>
 									</div>
 								</button>
@@ -528,7 +525,6 @@ function ComplianceServices() {
 									<currentService.icon className={`h-6 w-6 ${colors.text}`} />
 									<h3 className="text-2xl font-bold text-white">{currentService.title}</h3>
 								</div>
-								<p className="mb-4 italic text-gray-500">{currentService.titleHindi}</p>
 								<p className="mb-6 text-gray-400">{currentService.description}</p>
 								<div className="grid grid-cols-2 gap-3">
 									{currentService.features.map((feature) => (
@@ -579,7 +575,6 @@ function LawsCovered() {
 							<div className="absolute -left-4 -top-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-600 text-lg font-bold text-white shadow-lg">{categoryIndex + 1}</div>
 							<div className="mb-6 pl-4">
 								<h3 className="text-xl font-bold text-gray-900 transition-colors group-hover:text-blue-600">{category.title}</h3>
-								<p className="text-sm text-gray-500">{category.titleHindi}</p>
 							</div>
 
 							<ul className="space-y-3">
@@ -656,7 +651,6 @@ function ComplianceProcess() {
 											<Icon className={`h-8 w-8 ${isActive ? colors.text : 'text-gray-400'}`} />
 										</div>
 										<h3 className={`mb-1 text-xl font-bold ${isActive ? 'text-gray-900' : 'text-gray-700'}`}>{step.title}</h3>
-										<p className={`mb-3 text-sm ${isActive ? colors.text : 'text-gray-400'}`}>{step.titleHindi}</p>
 										<p className="text-sm leading-relaxed text-gray-600">{step.description}</p>
 										{isActive && <div className={`absolute bottom-0 left-6 right-6 h-1 rounded-t-full bg-gradient-to-r ${colors.gradient}`} />}
 									</div>
