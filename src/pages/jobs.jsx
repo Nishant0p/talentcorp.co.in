@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { fetchJobs, submitLead } from '../utils/strapi';
 
 const allJobs = [
 	{
@@ -119,6 +120,40 @@ const allJobs = [
 		applyBy: 'May 5, 2026',
 	},
 ];
+
+const parseSalaryText = (salaryText) => {
+	const digits = String(salaryText || '').replace(/,/g, '').match(/\d+/g) || [];
+	if (digits.length >= 2) {
+		return { salaryMin: Number(digits[0]), salaryMax: Number(digits[1]) };
+	}
+	if (digits.length === 1) {
+		const amount = Number(digits[0]);
+		return { salaryMin: amount, salaryMax: amount };
+	}
+	return { salaryMin: 15000, salaryMax: 25000 };
+};
+
+const mapApiJobToListing = (job, index) => {
+	const { salaryMin, salaryMax } = parseSalaryText(job.salary);
+	const normalizedType = String(job.type || 'full-time').toLowerCase();
+
+	return {
+		id: String(job.id),
+		title: job.title || `Job ${job.id}`,
+		company: job.company || 'TSPL Group',
+		image: allJobs[index % allJobs.length]?.image || 'https://picsum.photos/seed/tspl-job/1200/800',
+		location: job.location || 'India',
+		salaryMin,
+		salaryMax,
+		jobType: normalizedType,
+		experience: job.experience || '1-2',
+		skills: Array.isArray(job.skills) && job.skills.length ? job.skills : ['Teamwork', 'Communication'],
+		description: job.description || 'Apply now to join TSPL Group.',
+		applyBy: job.applyBy || 'Open until filled',
+		urgent: Boolean(job.urgent),
+		featured: Boolean(job.featured),
+	};
+};
 
 const jobTypeOptions = [
 	{ value: 'welder', label: 'Welder' },
@@ -509,25 +544,42 @@ function JobCard({ job }) {
 }
 
 function JobsListing({ filters }) {
+	const [jobs, setJobs] = useState(allJobs);
+	const [loading, setLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [viewMode, setViewMode] = useState('grid');
 	const jobsPerPage = 6;
 
+	useEffect(() => {
+		const loadJobs = async () => {
+			setLoading(true);
+			const data = await fetchJobs();
+			if (data.length > 0) {
+				setJobs(data.map(mapApiJobToListing));
+			} else {
+				setJobs(allJobs);
+			}
+			setLoading(false);
+		};
+
+		loadJobs();
+	}, []);
+
 	const filteredJobs = useMemo(() => {
-		let jobs = [...allJobs];
+		let filtered = [...jobs];
 
 		if (filters.jobType.length > 0) {
-			jobs = jobs.filter((job) => filters.jobType.some((type) => job.title.toLowerCase().includes(type) || job.skills.some((skill) => skill.toLowerCase().includes(type))));
+			filtered = filtered.filter((job) => filters.jobType.some((type) => job.title.toLowerCase().includes(type) || job.skills.some((skill) => skill.toLowerCase().includes(type))));
 		}
 
 		if (filters.location.length > 0) {
-			jobs = jobs.filter((job) => filters.location.some((location) => job.location.toLowerCase().includes(location)));
+			filtered = filtered.filter((job) => filters.location.some((location) => job.location.toLowerCase().includes(location)));
 		}
 
 		if (filters.salary) {
 			const range = parseSalaryRange(filters.salary);
 			if (range) {
-				jobs = jobs.filter((job) => {
+				filtered = filtered.filter((job) => {
 					const midpoint = (job.salaryMin + job.salaryMax) / 2;
 					return midpoint >= range.min && midpoint <= range.max;
 				});
@@ -535,11 +587,11 @@ function JobsListing({ filters }) {
 		}
 
 		if (filters.experience) {
-			jobs = jobs.filter((job) => job.experience === filters.experience);
+			filtered = filtered.filter((job) => job.experience === filters.experience);
 		}
 
-		return jobs;
-	}, [filters]);
+		return filtered;
+	}, [filters, jobs]);
 
 	useEffect(() => {
 		setCurrentPage(1);
@@ -578,7 +630,11 @@ function JobsListing({ filters }) {
 					</div>
 				</div>
 
-				{filteredJobs.length > 0 ? (
+				{loading ? (
+					<div className="rounded-2xl border border-slate-200 bg-white py-16 text-center">
+						<p className="text-slate-600">Loading jobs...</p>
+					</div>
+				) : filteredJobs.length > 0 ? (
 					<div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
 						{currentJobs.map((job) => (
 							<JobCard key={job.id} job={job} />
@@ -633,6 +689,7 @@ function JobsListing({ filters }) {
 function ApplyCTA() {
 	const [isVisible, setIsVisible] = useState(false);
 	const [isSubmitted, setIsSubmitted] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const sectionRef = useRef(null);
 	const [formData, setFormData] = useState({
 		name: '',
@@ -655,10 +712,32 @@ function ApplyCTA() {
 		return () => observer.disconnect();
 	}, []);
 
-	const submitForm = (event) => {
+	const submitForm = async (event) => {
 		event.preventDefault();
-		setIsSubmitted(true);
-		window.setTimeout(() => setIsSubmitted(false), 3000);
+		setIsSubmitting(true);
+
+		try {
+			await submitLead({
+				name: formData.name,
+				mobile: formData.phone,
+				email: formData.email,
+				subject: `Jobs page interest${formData.jobType ? ` - ${formData.jobType}` : ''}`,
+				message: `Experience: ${formData.experience || 'N/A'}\nPreferred role: ${formData.jobType || 'N/A'}\n${formData.message || ''}`,
+			});
+
+			setIsSubmitted(true);
+			setFormData({
+				name: '',
+				phone: '',
+				email: '',
+				experience: '',
+				jobType: '',
+				message: '',
+			});
+			window.setTimeout(() => setIsSubmitted(false), 3000);
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	const quickRoles = ['Welder', 'Electrician', 'Helper', 'Supervisor', 'Technician', 'Fitter', 'Driver', 'Other'];
@@ -754,6 +833,19 @@ function ApplyCTA() {
 											/>
 										</div>
 									</div>
+									<div>
+										<label className="mb-2 block text-sm font-medium text-slate-700">Email</label>
+										<div className="relative">
+											<Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+											<input
+												type="email"
+												value={formData.email}
+												onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
+												className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm outline-none focus:border-blue-400"
+												placeholder="you@example.com"
+											/>
+										</div>
+									</div>
 								</div>
 
 								<div>
@@ -796,8 +888,8 @@ function ApplyCTA() {
 									</div>
 								</div>
 
-								<button type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3.5 text-base font-semibold text-white transition hover:bg-blue-700">
-									Submit Application
+								<button disabled={isSubmitting} type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3.5 text-base font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70">
+									{isSubmitting ? 'Submitting...' : 'Submit Application'}
 									<Send className="h-4 w-4" />
 								</button>
 

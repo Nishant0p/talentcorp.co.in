@@ -13,7 +13,7 @@ const fallbackJobs = [
   { id: 6, title: 'Assembly Line Worker', company: 'Hero MotoCorp', location: 'Haridwar, Uttarakhand', salary: '₹16,000 - ₹20,000', type: 'Contract', urgent: true },
 ];
 
-const filters = ['All Jobs', 'Apprenticeship', 'Full-time', 'Contract'];
+const filters = ['All Jobs', 'Apprenticeship', 'Full-time', 'Contract', 'Part-time'];
 
 const JobBoard = () => {
   const navigate = useNavigate();
@@ -44,12 +44,17 @@ const JobBoard = () => {
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
-      const byType = filter === 'All Jobs' || job.type === filter;
+      const jobType = (job.type || '').trim();
+      if (jobType.toLowerCase() === 'overseas') {
+        return false;
+      }
+
+      const byType = filter === 'All Jobs' || jobType === filter;
       const normalized = query.trim().toLowerCase();
       if (!normalized) {
         return byType;
       }
-      const haystack = `${job.title} ${job.company} ${job.location} ${job.type}`.toLowerCase();
+      const haystack = `${job.title} ${job.company} ${job.location} ${jobType}`.toLowerCase();
       return byType && haystack.includes(normalized);
     });
   }, [filter, query]);

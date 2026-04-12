@@ -1,19 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { STRAPI_BASE_URL } from '../utils/strapi';
+import { STRAPI_BASE_URL, fetchCollection, extractMediaUrl } from '../utils/strapi';
 
 const FALLBACK_LOGOS = [
   { src: '/JCB_(company)-Logo.wine.svg', alt: 'JCB' },
   { src: '/Mrf-logo.png', alt: 'MRF' },
   { src: '/haier-logo.png', alt: 'Haier' },
 ];
-
-function resolveStrapiUrl(url) {
-  if (!url) return '';
-  if (/^https?:\/\//i.test(url)) return url;
-  if (!STRAPI_BASE_URL) return url;
-  return `${STRAPI_BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
-}
 
 function withCacheBuster(url, version) {
   if (!url || !version) return url;
@@ -31,29 +24,27 @@ export default function CompanyMarquee() {
 
     (async () => {
       try {
-        const res = await fetch(
-          `${STRAPI_BASE_URL}/api/client-logos?populate=logo&sort=order:asc&pagination[pageSize]=100`,
-          { signal: controller.signal, cache: 'no-store' }
-        );
-
-        if (!res.ok) return;
-        const json = await res.json();
-        const data = Array.isArray(json?.data) ? json.data : [];
+        const data = await fetchCollection('/api/client-logos?populate=logo&sort=order:asc&pagination[pageSize]=100');
         const mapped = data
           .map((entry) => {
-            const attributes = entry?.attributes || {};
-            const logoAttributes = attributes?.logo?.data?.attributes || {};
-            const logoUrl = logoAttributes?.url;
-            const name = attributes?.name;
-            const version = logoAttributes?.updatedAt || attributes?.updatedAt || entry?.id;
+            const logoUrl = extractMediaUrl(entry.logo);
+            const name = entry.name;
+            const version = entry.updatedAt || entry.logo?.updatedAt || entry.documentId || entry.id;
             return {
-              src: withCacheBuster(resolveStrapiUrl(logoUrl), version),
+              src: withCacheBuster(logoUrl, version),
               alt: name || 'Company logo',
             };
           })
           .filter((item) => Boolean(item.src));
 
-        if (mapped.length) setLogos(mapped);
+        if (mapped.length) {
+          const merged = [...mapped, ...FALLBACK_LOGOS].filter(
+            (logo, index, array) =>
+              array.findIndex((candidate) => candidate.src === logo.src) === index
+          );
+
+          setLogos(merged);
+        }
       } catch {
         // keep fallback logos
       }

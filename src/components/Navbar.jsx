@@ -5,7 +5,7 @@ import { ChevronDown } from 'lucide-react';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/#jobs', label: 'Jobs' },
+  { href: '/jobs', label: 'Jobs' },
   { href: '/client', label: 'Clients' },
   { href: '/achievements', label: 'Achievements' },
   { href: '/news-events', label: 'News & Events' },

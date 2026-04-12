@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, IndianRupee, Clock, Users, Briefcase, Calendar } from 'lucide-react';
+import { fetchJobs, submitApplicant } from '../utils/strapi';
 
 const jobs = [
   { id: 1, title: 'Production Operator', company: 'Tata Motors', location: 'Pune, Maharashtra', salary: '₹18,000 - ₹25,000', type: 'Full-time', urgent: true },
@@ -14,7 +15,65 @@ const jobs = [
 const JobDetailPage = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
-  const job = jobs.find(j => j.id === parseInt(jobId));
+  const [job, setJob] = useState(() => jobs.find(j => j.id === parseInt(jobId, 10)));
+  const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ name: '', mobile: '', email: '' });
+
+  useEffect(() => {
+    const loadJob = async () => {
+      setLoading(true);
+      const data = await fetchJobs();
+      if (data.length > 0) {
+        const found = data.find((entry) => String(entry.id) === String(jobId));
+        if (found) {
+          setJob({
+            id: found.id,
+            title: found.title || `Job ${found.id}`,
+            company: found.company || 'TSPL Group',
+            location: found.location || 'India',
+            salary: found.salary || 'Competitive salary',
+            type: found.type || 'Full-time',
+            urgent: Boolean(found.urgent),
+          });
+        }
+      }
+      setLoading(false);
+    };
+
+    loadJob();
+  }, [jobId]);
+
+  const handleApply = async (event) => {
+    event.preventDefault();
+    if (!job?.id) return;
+
+    setIsSubmitting(true);
+    try {
+      await submitApplicant({
+        jobId: job.id,
+        name: formData.name,
+        mobile: formData.mobile,
+        email: formData.email,
+      });
+      setSubmitted(true);
+      setFormData({ name: '', mobile: '', email: '' });
+      window.setTimeout(() => setSubmitted(false), 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="min-h-screen bg-white px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl">
+          <p className="text-center text-gray-500">Loading job details...</p>
+        </div>
+      </section>
+    );
+  }
 
   if (!job) {
     return (
@@ -199,13 +258,56 @@ const JobDetailPage = () => {
             </div>
           </div>
 
+          <div className="mb-12 rounded-2xl border border-gray-200 bg-gray-50 p-6">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">Apply for this Job</h2>
+            {submitted ? (
+              <p className="rounded-lg bg-green-50 px-4 py-3 text-sm font-semibold text-green-700">Application submitted successfully.</p>
+            ) : (
+              <form onSubmit={handleApply} className="grid gap-4 sm:grid-cols-2">
+                <input
+                  required
+                  type="text"
+                  value={formData.name}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
+                  placeholder="Full name"
+                  className="rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500"
+                />
+                <input
+                  required
+                  type="tel"
+                  value={formData.mobile}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, mobile: event.target.value }))}
+                  placeholder="Mobile number"
+                  className="rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500"
+                />
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
+                  placeholder="Email (optional)"
+                  className="rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 sm:col-span-2"
+                />
+                <button
+                  disabled={isSubmitting}
+                  type="submit"
+                  className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 sm:col-span-2"
+                >
+                  {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                </button>
+              </form>
+            )}
+          </div>
+
           {/* CTA Buttons */}
           <div className="flex flex-col gap-4 sm:flex-row">
-            <button className="flex-1 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:from-blue-700 hover:to-blue-800 active:scale-[0.98]">
-              Apply Now
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="flex-1 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:from-blue-700 hover:to-blue-800 active:scale-[0.98]"
+            >
+              Apply Now Above
             </button>
             <button
-              onClick={() => navigate('/#job-board')}
+              onClick={() => navigate('/jobs')}
               className="flex-1 rounded-xl border-2 border-gray-200 bg-white px-8 py-4 text-lg font-bold text-gray-700 transition-all hover:border-blue-400 hover:bg-blue-50"
             >
               View Other Jobs

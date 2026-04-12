@@ -113,3 +113,38 @@ export const submitLead = async (leadData) => {
   return response.json();
 };
 
+export const submitApplicant = async ({ jobId, name, mobile, email }) => {
+  const response = await fetch(`${STRAPI_BASE_URL}/api/applicants`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      data: {
+        job: Number(jobId),
+        name,
+        mobile,
+        email,
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const responseText = await response.text();
+    throw new Error(`Applicant submit failed (${response.status}): ${responseText || 'no response body'}`);
+  }
+
+  return response.json();
+};
+
+export const getApplicantsExportUrl = (jobId, clearAfterDownload = false) => {
+  const params = new URLSearchParams();
+  if (jobId !== undefined && jobId !== null && jobId !== '') {
+    params.set('jobId', String(jobId));
+  }
+  if (clearAfterDownload) {
+    params.set('clearAfterDownload', 'true');
+  }
+
+  const query = params.toString();
+  return `${STRAPI_BASE_URL}/api/applicants/export${query ? `?${query}` : ''}`;
+};
+
