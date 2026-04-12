@@ -2,28 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { ArrowRight, Target } from 'lucide-react';
 import { fetchHeroSection, extractMediaUrl } from '../utils/strapi';
 
-const fallbackHero = {
+const heroCopy = {
   eyebrow: 'Government Authorized Staffing',
   titleTop: "Build India's",
   titleBottom: 'Future Workforce',
   description: 'We help skilled talent in India to land, launch, and level up with top employers; faster, smarter, and friction-free.',
-  backgroundImage: 'https://media.gettyimages.com/id/1277949331/video/two-male-engineers-celebrating-success-at-factory.jpg?s=640x640&k=20&c=hF1BY1imveumk1jEF3BbOI_YNXHYK3t-kotudyt40Eg=',
   primaryCtaLabel: 'Find Your Dream Job',
   secondaryCtaLabel: 'Hire Talent',
 };
 
+const fallbackBackgroundImage = 'https://media.gettyimages.com/id/1277949331/video/two-male-engineers-celebrating-success-at-factory.jpg?s=640x640&k=20&c=hF1BY1imveumk1jEF3BbOI_YNXHYK3t-kotudyt40Eg=';
+
 const HeroSection = ({ onFindJobs, onHireTalent }) => {
-  const [hero, setHero] = useState(fallbackHero);
+  const [backgroundImage, setBackgroundImage] = useState(fallbackBackgroundImage);
 
   useEffect(() => {
     const loadHero = async () => {
       const data = await fetchHeroSection();
       if (!data) return;
-      setHero({
-        ...fallbackHero,
-        ...data,
-        backgroundImage: data.backgroundImage ? extractMediaUrl(data.backgroundImage) : fallbackHero.backgroundImage,
-      });
+      setBackgroundImage(data.backgroundImage ? extractMediaUrl(data.backgroundImage) : fallbackBackgroundImage);
     };
 
     loadHero();
@@ -33,7 +30,7 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
     <section className="relative flex h-screen min-h-[700px] w-full items-center overflow-hidden font-sans">
       <div className="absolute inset-0 z-0">
         <img
-          src={hero.backgroundImage}
+          src={backgroundImage}
           alt="TSPL Group"
           className="h-full w-full scale-[1.18] object-cover object-[20%_center] md:scale-[1.3]"
           loading="eager"
@@ -56,18 +53,18 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
               </div>
 
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-white/85 backdrop-blur-md">
-                {hero.eyebrow}
+                {heroCopy.eyebrow}
               </div>
 
               <h1 className="text-5xl font-bold leading-[0.9] tracking-tighter text-white sm:text-6xl md:text-8xl lg:text-[110px]">
-                {hero.titleTop}
+                {heroCopy.titleTop}
                 <br />
-                {hero.titleBottom}
+                {heroCopy.titleBottom}
               </h1>
             </div>
 
             <p className="max-w-xl pt-4 text-base font-medium leading-relaxed text-white/90 sm:text-lg md:pt-6 md:text-xl">
-              {hero.description}
+              {heroCopy.description}
             </p>
 
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
@@ -76,7 +73,7 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
                 onClick={onFindJobs}
                 className="group inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-10 py-4 font-bold text-white shadow-lg shadow-orange-950 transition-all active:scale-95"
               >
-                {hero.primaryCtaLabel}
+                {heroCopy.primaryCtaLabel}
                 <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
               </button>
 
@@ -85,7 +82,7 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
                 onClick={onHireTalent}
                 className="inline-flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-900 px-10 py-4 font-bold text-white transition-all hover:bg-slate-800"
               >
-                <Target size={20} className="text-blue-400" /> {hero.secondaryCtaLabel}
+                <Target size={20} className="text-blue-400" /> {heroCopy.secondaryCtaLabel}
               </button>
             </div>
           </div>

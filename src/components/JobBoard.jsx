@@ -29,8 +29,9 @@ const JobBoard = () => {
       if (data.length > 0) {
         setJobs(data.map(job => ({
           id: job.id,
-          title: job.documentId || job.title,
+        title: job.title || job.documentId || `Job ${job.id}`,
           company: job.company || '',
+        category: job.category || job.type || '',
           location: job.location || '',
           salary: job.salary || '',
           type: job.type || '',
@@ -54,7 +55,7 @@ const JobBoard = () => {
       if (!normalized) {
         return byType;
       }
-      const haystack = `${job.title} ${job.company} ${job.location} ${jobType}`.toLowerCase();
+      const haystack = `${job.title} ${job.company} ${job.location} ${job.category} ${jobType}`.toLowerCase();
       return byType && haystack.includes(normalized);
     });
   }, [filter, query]);

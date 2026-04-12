@@ -32,6 +32,7 @@ const JobDetailPage = () => {
             id: found.id,
             title: found.title || `Job ${found.id}`,
             company: found.company || 'TSPL Group',
+            category: found.category || found.type || 'General',
             location: found.location || 'India',
             salary: found.salary || 'Competitive salary',
             type: found.type || 'Full-time',
@@ -170,6 +171,14 @@ const JobDetailPage = () => {
 
           {/* Key Details Grid */}
           <div className="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="rounded-xl bg-indigo-50 p-6">
+              <div className="mb-2 flex items-center gap-2 text-indigo-600">
+              <Briefcase size={20} />
+              <span className="font-semibold">Category</span>
+              </div>
+              <p className="text-lg text-gray-900">{job.category}</p>
+            </div>
+
             <div className="rounded-xl bg-blue-50 p-6">
               <div className="mb-2 flex items-center gap-2 text-blue-600">
                 <MapPin size={20} />

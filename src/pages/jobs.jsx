@@ -36,6 +36,7 @@ const allJobs = [
 		title: 'Welder (TIG & ARC)',
 		company: 'TSPL Group',
 		image: 'https://picsum.photos/seed/welder-industrial/1200/800',
+		category: 'Welding',
 		location: 'Maharashtra, India',
 		salaryMin: 25000,
 		salaryMax: 35000,
@@ -52,6 +53,7 @@ const allJobs = [
 		title: 'Electrician',
 		company: 'TSPL Group',
 		image: 'https://picsum.photos/seed/electrician-panel/1200/800',
+		category: 'Electrical',
 		location: 'Gujarat, India',
 		salaryMin: 20000,
 		salaryMax: 30000,
@@ -67,6 +69,7 @@ const allJobs = [
 		title: 'Production Supervisor',
 		company: 'TSPL Group',
 		image: 'https://picsum.photos/seed/production-supervisor/1200/800',
+		category: 'Supervision',
 		location: 'Tamil Nadu, India',
 		salaryMin: 35000,
 		salaryMax: 50000,
@@ -81,6 +84,7 @@ const allJobs = [
 		title: 'CNC Machine Operator',
 		company: 'TSPL Group',
 		image: 'https://picsum.photos/seed/cnc-operator/1200/800',
+		category: 'Machine Operation',
 		location: 'Karnataka, India',
 		salaryMin: 22000,
 		salaryMax: 32000,
@@ -96,6 +100,7 @@ const allJobs = [
 		title: 'Factory Helper',
 		company: 'TSPL Group',
 		image: 'https://picsum.photos/seed/factory-helper/1200/800',
+		category: 'Helper',
 		location: 'Delhi NCR, India',
 		salaryMin: 12000,
 		salaryMax: 18000,
@@ -110,6 +115,7 @@ const allJobs = [
 		title: 'Maintenance Technician',
 		company: 'TSPL Group',
 		image: 'https://picsum.photos/seed/maintenance-tech/1200/800',
+		category: 'Maintenance',
 		location: 'Maharashtra, India',
 		salaryMin: 28000,
 		salaryMax: 40000,
@@ -136,18 +142,22 @@ const parseSalaryText = (salaryText) => {
 const mapApiJobToListing = (job, index) => {
 	const { salaryMin, salaryMax } = parseSalaryText(job.salary);
 	const normalizedType = String(job.type || 'full-time').toLowerCase();
+	const category = String(job.category || job.jobCategory || job.type || job.title || 'General').trim();
+	const location = String(job.location || 'India').trim();
+	const skills = Array.isArray(job.skills) && job.skills.length ? job.skills : ['Teamwork', 'Communication'];
 
 	return {
 		id: String(job.id),
 		title: job.title || `Job ${job.id}`,
 		company: job.company || 'TSPL Group',
 		image: allJobs[index % allJobs.length]?.image || 'https://picsum.photos/seed/tspl-job/1200/800',
-		location: job.location || 'India',
+		category,
+		location,
 		salaryMin,
 		salaryMax,
 		jobType: normalizedType,
 		experience: job.experience || '1-2',
-		skills: Array.isArray(job.skills) && job.skills.length ? job.skills : ['Teamwork', 'Communication'],
+		skills,
 		description: job.description || 'Apply now to join TSPL Group.',
 		applyBy: job.applyBy || 'Open until filled',
 		urgent: Boolean(job.urgent),
@@ -174,6 +184,22 @@ const locationOptions = [
 	{ value: 'delhi', label: 'Delhi NCR' },
 	{ value: 'overseas', label: 'Overseas' },
 ];
+
+const normalizeText = (value) => String(value || '').trim().toLowerCase();
+
+const toOptionValue = (value) => normalizeText(value).replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+const uniqueOptionsFromJobs = (jobs, key) => {
+	const seen = new Map();
+	jobs.forEach((job) => {
+		const value = String(job[key] || '').trim();
+		if (!value) return;
+		const normalized = toOptionValue(value);
+		if (!normalized || seen.has(normalized)) return;
+		seen.set(normalized, { value: normalized, label: value });
+	});
+	return Array.from(seen.values()).sort((a, b) => a.label.localeCompare(b.label));
+};
 
 const salaryOptions = [
 	{ value: '', label: 'Any Salary' },
@@ -204,8 +230,7 @@ function formatSalary(min, max) {
 	return `INR ${min.toLocaleString('en-IN')} - INR ${max.toLocaleString('en-IN')}`;
 }
 
-function JobsHero() {
-	const [searchQuery, setSearchQuery] = useState('');
+function JobsHero({ searchQuery, onSearchChange, onSearchSubmit }) {
 	const words = ['Dream Job', 'New Career', 'Better Future', 'Right Opportunity'];
 	const [wordIndex, setWordIndex] = useState(0);
 	const [typedText, setTypedText] = useState('');
@@ -269,22 +294,28 @@ function JobsHero() {
 					</p>
 
 					<div className="mt-6 rounded-3xl border border-slate-200 bg-white p-3 shadow-xl shadow-slate-200/40">
-						<div className="flex flex-col gap-3 sm:flex-row">
+						<form
+							onSubmit={(event) => {
+								event.preventDefault();
+								onSearchSubmit?.();
+							}}
+							className="flex flex-col gap-3 sm:flex-row"
+						>
 							<div className="relative flex-1">
 								<Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
 								<input
 									type="text"
 									value={searchQuery}
-									onChange={(event) => setSearchQuery(event.target.value)}
-									placeholder="Job title, skill, or keyword"
+									onChange={(event) => onSearchChange(event.target.value)}
+									placeholder="Search by title, category, location, skill..."
 									className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3.5 pl-12 pr-4 text-slate-800 outline-none transition focus:border-blue-400 focus:bg-white"
 								/>
 							</div>
-							<button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3.5 font-semibold text-white transition hover:bg-blue-700">
+							<button type="submit" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3.5 font-semibold text-white transition hover:bg-blue-700">
 								Search Jobs
 								<ArrowRight className="h-4 w-4" />
 							</button>
-						</div>
+						</form>
 					</div>
 				</div>
 
@@ -310,13 +341,20 @@ function JobsHero() {
 	);
 }
 
-function JobsFilters({ filters, setFilters }) {
+function JobsFilters({ filters, setFilters, categoryOptions, locationOptions }) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const toggleJobType = (value) => {
 		setFilters((prev) => ({
 			...prev,
 			jobType: prev.jobType.includes(value) ? prev.jobType.filter((entry) => entry !== value) : [...prev.jobType, value],
+		}));
+	};
+
+	const toggleCategory = (value) => {
+		setFilters((prev) => ({
+			...prev,
+			category: prev.category.includes(value) ? prev.category.filter((entry) => entry !== value) : [...prev.category, value],
 		}));
 	};
 
@@ -330,13 +368,14 @@ function JobsFilters({ filters, setFilters }) {
 	const clearFilters = () => {
 		setFilters({
 			jobType: [],
+			category: [],
 			location: [],
 			salary: '',
 			experience: '',
 		});
 	};
 
-	const activeFilterCount = filters.jobType.length + filters.location.length + (filters.salary ? 1 : 0) + (filters.experience ? 1 : 0);
+	const activeFilterCount = filters.jobType.length + filters.category.length + filters.location.length + (filters.salary ? 1 : 0) + (filters.experience ? 1 : 0);
 
 	return (
 		<div className="sticky top-20 z-40 border-y border-slate-200 bg-white/95 backdrop-blur">
@@ -366,6 +405,21 @@ function JobsFilters({ filters, setFilters }) {
 										className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${filters.jobType.includes(type.value) ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
 									>
 										{type.label}
+									</button>
+								))}
+							</div>
+						</div>
+
+						<div>
+							<h3 className="mb-3 text-sm font-bold text-slate-900">Category</h3>
+							<div className="flex flex-wrap gap-2">
+								{categoryOptions.map((category) => (
+									<button
+										key={category.value}
+										onClick={() => toggleCategory(category.value)}
+										className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${filters.category.includes(category.value) ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+									>
+										{category.label}
 									</button>
 								))}
 							</div>
@@ -432,6 +486,14 @@ function JobsFilters({ filters, setFilters }) {
 								<span key={location} className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-sm text-blue-700">
 									{locationOptions.find((entry) => entry.value === location)?.label || location}
 									<button onClick={() => toggleLocation(location)}>
+										<X className="h-3 w-3" />
+									</button>
+								</span>
+							))}
+							{filters.category.map((category) => (
+								<span key={category} className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-sm text-blue-700">
+									{categoryOptions.find((entry) => entry.value === category)?.label || category}
+									<button onClick={() => toggleCategory(category)}>
 										<X className="h-3 w-3" />
 									</button>
 								</span>
@@ -543,37 +605,25 @@ function JobCard({ job }) {
 	);
 }
 
-function JobsListing({ filters }) {
-	const [jobs, setJobs] = useState(allJobs);
-	const [loading, setLoading] = useState(true);
+function JobsListing({ filters, searchQuery, jobs, loading }) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [viewMode, setViewMode] = useState('grid');
 	const jobsPerPage = 6;
 
-	useEffect(() => {
-		const loadJobs = async () => {
-			setLoading(true);
-			const data = await fetchJobs();
-			if (data.length > 0) {
-				setJobs(data.map(mapApiJobToListing));
-			} else {
-				setJobs(allJobs);
-			}
-			setLoading(false);
-		};
-
-		loadJobs();
-	}, []);
-
 	const filteredJobs = useMemo(() => {
 		let filtered = [...jobs];
+		const normalizedSearch = normalizeText(searchQuery);
 
 		if (filters.jobType.length > 0) {
-			filtered = filtered.filter((job) => filters.jobType.some((type) => job.title.toLowerCase().includes(type) || job.skills.some((skill) => skill.toLowerCase().includes(type))));
+			filtered = filtered.filter((job) => filters.jobType.some((type) => normalizeText(job.title).includes(type) || job.skills.some((skill) => normalizeText(skill).includes(type))));
+		}
+
+		if (filters.category.length > 0) {
+			filtered = filtered.filter((job) => filters.category.some((category) => toOptionValue(job.category) === category || normalizeText(job.category).includes(category)));
 		}
 
 		if (filters.location.length > 0) {
-			filtered = filtered.filter((job) => filters.location.some((location) => job.location.toLowerCase().includes(location)));
+			filtered = filtered.filter((job) => filters.location.some((location) => toOptionValue(job.location).includes(location) || normalizeText(job.location).includes(location)));
 		}
 
 		if (filters.salary) {
@@ -590,12 +640,21 @@ function JobsListing({ filters }) {
 			filtered = filtered.filter((job) => job.experience === filters.experience);
 		}
 
+		if (normalizedSearch) {
+			filtered = filtered.filter((job) => {
+				const searchTarget = [job.title, job.company, job.category, job.location, job.jobType, job.description, ...(job.skills || [])]
+					.map(normalizeText)
+					.join(' ');
+				return searchTarget.includes(normalizedSearch);
+			});
+		}
+
 		return filtered;
-	}, [filters, jobs]);
+	}, [filters, jobs, searchQuery]);
 
 	useEffect(() => {
 		setCurrentPage(1);
-	}, [filters]);
+	}, [filters, searchQuery]);
 
 	const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 	const start = (currentPage - 1) * jobsPerPage;
@@ -608,7 +667,7 @@ function JobsListing({ filters }) {
 					<div>
 						<h2 className="text-2xl font-bold text-slate-900">Available Jobs</h2>
 						<p className="mt-1 text-slate-600">
-							Showing {filteredJobs.length === 0 ? 0 : start + 1}-{Math.min(start + jobsPerPage, filteredJobs.length)} of {filteredJobs.length}
+									Showing {filteredJobs.length === 0 ? 0 : start + 1}-{Math.min(start + jobsPerPage, filteredJobs.length)} of {filteredJobs.length}
 						</p>
 					</div>
 
@@ -904,19 +963,46 @@ function ApplyCTA() {
 }
 
 export default function JobsPage() {
+	const [searchQuery, setSearchQuery] = useState('');
 	const [filters, setFilters] = useState({
 		jobType: [],
+		category: [],
 		location: [],
 		salary: '',
 		experience: '',
 	});
+	const [jobs, setJobs] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const loadJobs = async () => {
+			setLoading(true);
+			const data = await fetchJobs();
+			setJobs(data.length > 0 ? data.map(mapApiJobToListing) : allJobs);
+			setLoading(false);
+		};
+
+		loadJobs();
+	}, []);
+
+	const categoryOptions = useMemo(() => uniqueOptionsFromJobs(jobs, 'category'), [jobs]);
+	const locationOptions = useMemo(() => uniqueOptionsFromJobs(jobs, 'location'), [jobs]);
+
+	const handleSearchSubmit = () => {
+		const jobSection = document.getElementById('jobs-listing');
+		if (jobSection) {
+			jobSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
+	};
 
 	return (
 		<div className="relative bg-slate-50">
 			<Navbar />
-			<JobsHero />
-			<JobsFilters filters={filters} setFilters={setFilters} />
-			<JobsListing filters={filters} />
+			<JobsHero searchQuery={searchQuery} onSearchChange={setSearchQuery} onSearchSubmit={handleSearchSubmit} />
+			<JobsFilters filters={filters} setFilters={setFilters} categoryOptions={categoryOptions} locationOptions={locationOptions} />
+			<div id="jobs-listing">
+				<JobsListing filters={filters} searchQuery={searchQuery} jobs={jobs} loading={loading} />
+			</div>
 			<ApplyCTA />
 
 			<Footer />
