@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { STRAPI_BASE_URL, submitLead } from '../utils/strapi';
 import { 
   Phone, 
   Mail, 
@@ -12,6 +11,29 @@ import {
   Check,
   Send
 } from 'lucide-react';
+
+const STRAPI_BASE_URL =
+  import.meta.env.VITE_STRAPI_API_URL ||
+  import.meta.env.NEXT_PUBLIC_STRAPI_API_URL ||
+  'http://localhost:1337';
+
+const serviceOptions = [
+  { value: 'NATS', label: 'NATS' },
+  { value: 'NAPS', label: 'NAPS' },
+  { value: 'B.VOC', label: 'B.VOC' },
+  { value: 'D.VOC', label: 'D.VOC' },
+  { value: 'FLEXI ITI', label: 'FLEXI ITI' },
+  { value: 'AEDP', label: 'AEDP' },
+  { value: 'MAPS', label: 'MAPS' },
+  { value: 'SECURITY', label: 'SECURITY' },
+  { value: 'SKILLED JOB', label: 'SKILLED JOB' },
+  { value: 'HOUSEKEEPING', label: 'HOUSEKEEPING' },
+  { value: 'MANPOWER', label: 'MANPOWER' },
+  { value: 'CONTRACT', label: 'CONTRACT' },
+  { value: 'COMPLIANCE', label: 'COMPLIANCE' },
+  { value: 'PAYROLL', label: 'PAYROLL' },
+  { value: 'B2B', label: 'B2B' },
+];
 
 const ContactUs = () => {
   const [isFormHovered, setIsFormHovered] = useState(false);
@@ -33,12 +55,14 @@ const ContactUs = () => {
 
     const formData = new FormData(formElement);
     const leadPayload = {
-      name: formData.get('fullName') || '',
-      email: formData.get('email') || '',
-      phone: formData.get('phone') || '',
-      subject: formData.get('service') || '',
-      message: formData.get('message') || '',
-      consent: Boolean(formData.get('consent')),
+      data: {
+        name: formData.get('fullName') || '',
+        email: formData.get('email') || '',
+        phone: formData.get('phone') || '',
+        subject: formData.get('service') || '',
+        message: formData.get('message') || '',
+        consent: Boolean(formData.get('consent')),
+      },
     };
 
     const manifestEntries = [
@@ -55,7 +79,18 @@ const ContactUs = () => {
     setFlightManifest(manifestEntries.length ? manifestEntries : [{ label: 'Status', value: 'Sending...' }]);
 
     try {
-      await submitLead(leadPayload);
+      const response = await fetch(`${STRAPI_BASE_URL}/api/leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(leadPayload),
+      });
+
+      if (!response.ok) {
+        const responseText = await response.text();
+        throw new Error(`Submit failed (${response.status}): ${responseText || 'no response body'}`);
+      }
 
       formElement.reset();
       setFlightManifest(manifestEntries.slice(0, 5));
@@ -312,11 +347,11 @@ const ContactUs = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Service Interested In</label>
                 <select name="service" required defaultValue="" className="w-full px-5 py-3 border border-gray-200 rounded-full outline-none transition-all duration-300 focus:border-blue-300 focus:ring-4 focus:ring-blue-200/70 focus:shadow-[0_0_0_1px_rgba(147,197,253,0.28)] text-gray-500">
                   <option value="" disabled hidden>Select a Service</option>
-                  <option>NATS PROGRAM</option>
-                  <option>NAPS PROGRAM</option>
-                  <option>FLEXI ITI PROGRAM</option>
-                  <option>TRANING & DEVELOPMENT</option>
-                  <option>STAFF SOLUTIONS</option>
+                  {serviceOptions.map((service) => (
+                    <option key={service.value} value={service.value}>
+                      {service.label}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
