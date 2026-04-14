@@ -394,7 +394,7 @@ function OurProcess() {
 	)
 }
 
-function WhyChooseUs() {
+function WhyChooseUs({ resolveAsset }) {
 	const [openReasonIndex, setOpenReasonIndex] = useState(0)
 
 	return (
@@ -696,7 +696,7 @@ export default function SecurityPage() {
 			<WhatWeProvide resolveAsset={resolveAsset} />
 			<SecurityTypes />
 			<OurProcess />
-			<WhyChooseUs />
+			<WhyChooseUs resolveAsset={resolveAsset} />
 			<SecurityEnquiry />
 			<Footer />
 		</div>

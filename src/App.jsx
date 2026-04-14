@@ -1,5 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 import './App.css'
 import GlobalTextureOverlay from './components/GlobalTextureOverlay'
 const HomePage = lazy(() => import('./pages/HomePage'))
@@ -39,6 +40,51 @@ function ScrollToTop() {
   return null
 }
 
+function AnimatedRoutes({ isLoading }) {
+  const location = useLocation()
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Routes location={location}>
+          <Route path="/" element={<HomePage animateWords={!isLoading} />} />
+          <Route path="/job/:jobId" element={<JobDetailPage />} />
+          <Route path="/nats" element={<NatsLandingPage />} />
+          <Route path="/naps" element={<NapsPage />} />
+          <Route path="/bvoc" element={<BvocPage />} />
+          <Route path="/dvoc" element={<DvocPage />} />
+          <Route path="/flexi-iti" element={<FlexiItiPage />} />
+          <Route path="/skilled" element={<SkilledPage />} />
+          <Route path="/housekeeping" element={<HousekeepingPage />} />
+          <Route path="/manpower" element={<ManpowerPage />} />
+          <Route path="/payroll" element={<PayrollPage />} />
+          <Route path="/contract" element={<ContractPage />} />
+          <Route path="/b2b" element={<B2BPage />} />
+          <Route path="/security" element={<SecurityPage />} />
+          <Route path="/maps" element={<MapsPage />} />
+          <Route path="/aedp" element={<AedpPage />} />
+          <Route path="/client" element={<ClientPage />} />
+          <Route path="/compliance" element={<CompliancePage />} />
+          <Route path="/achievements" element={<AchimentPage />} />
+          <Route path="/achiment" element={<AchimentPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/news-events" element={<NewsEventsPage />} />
+          <Route path="/news-events/:newsId" element={<NewsDetailPage />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
+  )
+}
+
 function App() {
   const [isLoading, setIsLoading] = useState(true)
 
@@ -71,34 +117,7 @@ function App() {
 
         <main className={`home ${isLoading ? 'home--hidden' : ''}`}>
           <Suspense fallback={<div className="route-loading" aria-live="polite">Loading...</div>}>
-            <Routes>
-              <Route path="/" element={<HomePage animateWords={!isLoading} />} />
-              <Route path="/job/:jobId" element={<JobDetailPage />} />
-              <Route path="/nats" element={<NatsLandingPage />} />
-              <Route path="/naps" element={<NapsPage />} />
-              <Route path="/bvoc" element={<BvocPage />} />
-              <Route path="/dvoc" element={<DvocPage />} />
-              <Route path="/flexi-iti" element={<FlexiItiPage />} />
-              <Route path="/skilled" element={<SkilledPage />} />
-              <Route path="/housekeeping" element={<HousekeepingPage />} />
-              <Route path="/manpower" element={<ManpowerPage />} />
-              <Route path="/payroll" element={<PayrollPage />} />
-              <Route path="/contract" element={<ContractPage />} />
-              <Route path="/b2b" element={<B2BPage />} />
-              <Route path="/security" element={<SecurityPage />} />
-              <Route path="/maps" element={<MapsPage />} />
-              <Route path="/aedp" element={<AedpPage />} />
-              <Route path="/client" element={<ClientPage />} />
-              <Route path="/compliance" element={<CompliancePage />} />
-              <Route path="/achievements" element={<AchimentPage />} />
-              <Route path="/achiment" element={<AchimentPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/jobs" element={<JobsPage />} />
-              <Route path="/news-events" element={<NewsEventsPage />} />
-              <Route path="/news-events/:newsId" element={<NewsDetailPage />} />
-              <Route path="/contact" element={<ContactUs />} />
-              <Route path="/contact-us" element={<ContactUs />} />
-            </Routes>
+            <AnimatedRoutes isLoading={isLoading} />
           </Suspense>
         </main>
       </div>
