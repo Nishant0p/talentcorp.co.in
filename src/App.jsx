@@ -40,17 +40,19 @@ function ScrollToTop() {
   return null
 }
 
-function PageLoader() {
+function PageLoader({ showLogo = false }) {
   return (
     <div className="page-transition-overlay" role="status" aria-label="Loading page">
       <div className="preloader-layer preloader-layer--orange route-preloader-layer--orange" aria-hidden="true" />
       <div className="preloader-layer preloader-layer--blue route-preloader-layer--blue" aria-hidden="true" />
       <div className="preloader-layer preloader-layer--white route-preloader-layer--white" aria-hidden="true">
-        <img
-          src="/TSPL Logo preloader.png"
-          alt="TSPL logo"
-          className="preloader-logo route-preloader-logo"
-        />
+        {showLogo ? (
+          <img
+            src="/TSPL Logo preloader.png"
+            alt="TSPL logo"
+            className="preloader-logo route-preloader-logo"
+          />
+        ) : null}
       </div>
     </div>
   )
@@ -60,6 +62,7 @@ function AnimatedRoutes({ isLoading }) {
   const location = useLocation()
   const hasAnimatedInitialRoute = useRef(false)
   const [isPageTransitioning, setIsPageTransitioning] = useState(false)
+  const showLogo = location.pathname === '/'
 
   useEffect(() => {
     if (isLoading) return
@@ -93,11 +96,13 @@ function AnimatedRoutes({ isLoading }) {
             <div className="preloader-layer preloader-layer--orange route-preloader-layer--orange" />
             <div className="preloader-layer preloader-layer--blue route-preloader-layer--blue" />
             <div className="preloader-layer preloader-layer--white route-preloader-layer--white">
-              <img
-                src="/TSPL Logo preloader.png"
-                alt="TSPL logo"
-                className="preloader-logo route-preloader-logo"
-              />
+              {showLogo ? (
+                <img
+                  src="/TSPL Logo preloader.png"
+                  alt="TSPL logo"
+                  className="preloader-logo route-preloader-logo"
+                />
+              ) : null}
             </div>
           </motion.div>
         )}
