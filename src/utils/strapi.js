@@ -27,11 +27,10 @@ export const extractMediaUrl = (media) => {
   if (!media) return '';
 
   const node = media?.data?.attributes || media?.data || media;
-  const optimizedCandidate =
-    node?.formats?.large?.url ||
-    node?.formats?.medium?.url ||
-    node?.formats?.small?.url ||
-    node?.formats?.thumbnail?.url;
+  const isSmallViewport = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const optimizedCandidate = isSmallViewport
+    ? node?.formats?.medium?.url || node?.formats?.small?.url || node?.formats?.thumbnail?.url || node?.formats?.large?.url
+    : node?.formats?.large?.url || node?.formats?.medium?.url || node?.formats?.small?.url || node?.formats?.thumbnail?.url;
 
   const candidate = optimizedCandidate || node?.url || media?.url || media;
   return resolveStrapiUrl(candidate);

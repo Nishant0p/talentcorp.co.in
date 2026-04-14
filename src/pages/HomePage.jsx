@@ -13,7 +13,7 @@ const FAQSection = lazy(() => import('../components/FAQSection'));
 const Footer = lazy(() => import('../components/Footer'));
 const Testimonials = lazy(() => import('../components/Testimonials'));
 
-function DeferredSection({ children, minHeight = 0, rootMargin = '320px 0px' }) {
+function DeferredSection({ children, minHeight = 0, rootMargin = '320px 0px', sectionId, className }) {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -36,7 +36,7 @@ function DeferredSection({ children, minHeight = 0, rootMargin = '320px 0px' }) 
   }, [isVisible, rootMargin]);
 
   return (
-    <section ref={ref} style={!isVisible && minHeight ? { minHeight } : undefined}>
+    <section id={sectionId} className={className} ref={ref} style={!isVisible && minHeight ? { minHeight } : undefined}>
       {isVisible ? children : null}
     </section>
   );
@@ -93,19 +93,25 @@ export default function HomePage() {
         onHireTalent={(e) => startWhirlpool('hire', e)}
       />
 
-      <Suspense fallback={null}>
-        <CompanyMarquee />
-      </Suspense>
+      <DeferredSection minHeight={140} rootMargin="120px 0px">
+        <Suspense fallback={null}>
+          <CompanyMarquee />
+        </Suspense>
+      </DeferredSection>
 
-      <Suspense fallback={null}>
-        <WorkforceSection />
-      </Suspense>
+      <DeferredSection minHeight={520} rootMargin="120px 0px">
+        <Suspense fallback={null}>
+          <WorkforceSection />
+        </Suspense>
+      </DeferredSection>
 
-      <Suspense fallback={null}>
-        <StrengthsAccordion />
-      </Suspense>
+      <DeferredSection minHeight={440} rootMargin="110px 0px">
+        <Suspense fallback={null}>
+          <StrengthsAccordion />
+        </Suspense>
+      </DeferredSection>
 
-      <section id="open-jobs" className="bg-white px-4 py-14 sm:px-6 lg:px-8">
+      <DeferredSection sectionId="open-jobs" className="bg-white px-4 py-14 sm:px-6 lg:px-8" minHeight={340} rootMargin="100px 0px">
         <div className="mx-auto max-w-7xl">
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Open Jobs</h2>
           <p className="mt-2 max-w-2xl text-slate-600">
@@ -117,7 +123,7 @@ export default function HomePage() {
             </Suspense>
           </div>
         </div>
-      </section>
+      </DeferredSection>
 
       <DeferredSection minHeight={420}>
         <Suspense fallback={null}>
