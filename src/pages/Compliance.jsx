@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
 	AlertTriangle,
 	ArrowRight,
@@ -339,11 +340,11 @@ function ComplianceHero() {
 						<p className="border-l-2 border-blue-500 pl-4 italic text-gray-500">कानूनी अनुपालन में पूर्ण सहायता - PF, ESI, श्रम कानून सब कुछ हम संभालते हैं</p>
 
 						<div className="flex flex-wrap gap-4 pt-4">
-							<button className="group h-14 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 text-lg font-semibold text-white shadow-xl shadow-blue-500/30 transition-all hover:from-blue-700 hover:to-blue-800">
+							<Link to="/contact-us" className="group inline-flex h-14 items-center rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 text-lg font-semibold text-white shadow-xl shadow-blue-500/30 transition-all hover:from-blue-700 hover:to-blue-800">
 								Get Compliance Audit
 								<ArrowRight className="ml-2 inline h-5 w-5 transition-transform group-hover:translate-x-1" />
-							</button>
-							<button className="h-14 rounded-xl border border-gray-300 bg-white/80 px-8 text-lg text-gray-700 backdrop-blur-sm transition-all hover:border-gray-400 hover:bg-gray-50">Learn More</button>
+							</Link>
+							<a href="#services" className="inline-flex h-14 items-center rounded-xl border border-gray-300 bg-white/80 px-8 text-lg text-gray-700 backdrop-blur-sm transition-all hover:border-gray-400 hover:bg-gray-50">Learn More</a>
 						</div>
 
 						<div className="flex items-center gap-6 pt-4">
@@ -537,7 +538,7 @@ function ComplianceServices() {
 										</div>
 									))}
 								</div>
-								<button className={`mt-6 w-full rounded-xl border py-4 font-semibold transition-all ${colors.bg} ${colors.border} ${colors.text} ${colors.glow} hover:shadow-lg`}>Get Started with {currentService.title.split(' ')[0]}</button>
+								<Link to="/contact-us" className={`mt-6 w-full rounded-xl border py-4 font-semibold transition-all ${colors.bg} ${colors.border} ${colors.text} ${colors.glow} hover:shadow-lg inline-flex items-center justify-center`}>Get Started with {currentService.title.split(' ')[0]}</Link>
 							</div>
 						</div>
 					</div>

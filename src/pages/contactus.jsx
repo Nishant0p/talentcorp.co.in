@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
 import { 
   Phone, 
   Mail, 
@@ -102,6 +104,13 @@ const officeLocations = [
 ];
 
 const ContactUs = () => {
+  const pageAssets = usePageAssets();
+  const contactHeroAsset = getPageAsset(
+    pageAssets,
+    'contact.hero',
+    'https://v0-improve-ui-design-weld-six.vercel.app/images/contact-hero-bg.jpg',
+    'Office Meeting'
+  );
   const [isFormHovered, setIsFormHovered] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
@@ -192,8 +201,8 @@ const ContactUs = () => {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://v0-improve-ui-design-weld-six.vercel.app/images/contact-hero-bg.jpg" 
-            alt="Office Meeting" 
+            src={contactHeroAsset.url} 
+            alt={contactHeroAsset.alt || 'Office Meeting'} 
             className="w-full h-full object-cover object-center opacity-55"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/40 to-black/65"></div>
@@ -215,12 +224,12 @@ const ContactUs = () => {
 
             <div className="lg:justify-self-end lg:text-right">
               <div className="mb-10 flex flex-wrap gap-4 lg:justify-end">
-                <button className="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-full shadow-lg transition-colors flex items-center gap-2">
+                <Link to="/jobs" className="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-full shadow-lg transition-colors flex items-center gap-2">
                   Scale Fast <ArrowRight size={18} />
-                </button>
-                <button className="px-8 py-3 bg-transparent border border-gray-400 hover:border-white text-white font-medium rounded-full transition-colors flex items-center gap-2">
+                </Link>
+                <Link to="/nats" className="px-8 py-3 bg-transparent border border-gray-400 hover:border-white text-white font-medium rounded-full transition-colors flex items-center gap-2">
                   Explore Training <ArrowRight size={18} />
-                </button>
+                </Link>
               </div>
               <div className="flex gap-12 text-white lg:justify-end">
                 <div>

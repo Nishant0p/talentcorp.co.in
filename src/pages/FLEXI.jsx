@@ -19,6 +19,7 @@ import {
 	UserCheck,
 	XCircle,
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
@@ -150,17 +151,14 @@ function FlexiItiHero() {
 						</div>
 
 						<div className="flex flex-col gap-4 pt-4 sm:flex-row">
-							<a
-								href="#enquiry"
-								className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]"
-							>
+							<Link to="/contact-us" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
 								Apply Now - It's Free
 								<ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-							</a>
-							<button className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-white/5 px-8 py-4 text-lg font-bold text-white backdrop-blur-md transition-all duration-300 hover:border-white/60 hover:bg-white/10">
+							</Link>
+							<a href="#benefits" className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-white/5 px-8 py-4 text-lg font-bold text-white backdrop-blur-md transition-all duration-300 hover:border-white/60 hover:bg-white/10">
 								<Play className="h-5 w-5" />
 								Watch Video
-							</button>
+							</a>
 						</div>
 
 						<div className="flex items-center gap-8 border-t border-white/10 pt-6">
@@ -364,11 +362,11 @@ function FlexiItiEligibility() {
 						))}
 					</div>
 
-					<div className="mt-10 text-center">
-						<p className="mb-4 text-white/70">Don't have all documents? No problem!</p>
-						<a href="#enquiry" className="inline-flex items-center gap-2 rounded-xl bg-[#F97316] px-6 py-3 font-bold text-white transition-colors hover:bg-[#EA580C]">
+						<div className="mt-10 text-center">
+							<p className="mb-4 text-white/70">Don't have all documents? No problem!</p>
+							<Link to="/contact-us" className="inline-flex items-center gap-2 rounded-xl bg-[#F97316] px-6 py-3 font-bold text-white transition-colors hover:bg-[#EA580C]">
 							Talk to Our Team
-						</a>
+							</Link>
 					</div>
 				</div>
 			</div>
@@ -454,16 +452,16 @@ function FlexiItiEnquiry() {
 						<p className="mb-8 text-lg text-blue-100">Join thousands who transformed their careers through NATS.</p>
 
 						<div className="flex flex-wrap gap-4">
-							<button className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
+							<Link to="/contact-us" className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
 								<GraduationCap className="h-5 w-5" />
 								Join Now
 								<ArrowRight className="h-5 w-5" />
-							</button>
+							</Link>
 
-							<button className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
+							<Link to="/contact-us" className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
 								<Building2 className="h-5 w-5 text-blue-100" />
 								For Employers
-							</button>
+							</Link>
 						</div>
 					</div>
 

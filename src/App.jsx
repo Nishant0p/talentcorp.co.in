@@ -1,30 +1,31 @@
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import './App.css'
 import GlobalTextureOverlay from './components/GlobalTextureOverlay'
-import HomePage from './pages/HomePage'
-import JobDetailPage from './pages/JobDetailPage'
-import ContactUs from './pages/contactus'
-import NewsEventsPage from './pages/NewsEventsPage'
-import NatsLandingPage from './pages/nats'
-import NapsPage from './pages/naps'
-import BvocPage from './pages/bvoc'
-import DvocPage from './pages/dvoc'
-import FlexiItiPage from './pages/FLEXI'
-import SkilledPage from './pages/skilled'
-import AboutPage from './pages/about'
-import HousekeepingPage from './pages/housekeeping'
-import ManpowerPage from './pages/manpower'
-import PayrollPage from './pages/payroll'
-import ContractPage from './pages/contract'
-import B2BPage from './pages/b2b'
-import ClientPage from './pages/client'
-import CompliancePage from './pages/Compliance'
-import SecurityPage from './pages/security'
-import MapsPage from './pages/MAPS'
-import AedpPage from './pages/AEDP'
-import AchimentPage from './pages/achiment'
-import JobsPage from './pages/jobs'
+const HomePage = lazy(() => import('./pages/HomePage'))
+const JobDetailPage = lazy(() => import('./pages/JobDetailPage'))
+const ContactUs = lazy(() => import('./pages/contactus'))
+const NewsEventsPage = lazy(() => import('./pages/NewsEventsPage'))
+const NatsLandingPage = lazy(() => import('./pages/nats'))
+const NapsPage = lazy(() => import('./pages/naps'))
+const BvocPage = lazy(() => import('./pages/bvoc'))
+const DvocPage = lazy(() => import('./pages/dvoc'))
+const FlexiItiPage = lazy(() => import('./pages/FLEXI'))
+const SkilledPage = lazy(() => import('./pages/skilled'))
+const AboutPage = lazy(() => import('./pages/about'))
+const HousekeepingPage = lazy(() => import('./pages/housekeeping'))
+const ManpowerPage = lazy(() => import('./pages/manpower'))
+const PayrollPage = lazy(() => import('./pages/payroll'))
+const ContractPage = lazy(() => import('./pages/contract'))
+const B2BPage = lazy(() => import('./pages/b2b'))
+const ClientPage = lazy(() => import('./pages/client'))
+const CompliancePage = lazy(() => import('./pages/Compliance'))
+const SecurityPage = lazy(() => import('./pages/security'))
+const MapsPage = lazy(() => import('./pages/MAPS'))
+const AedpPage = lazy(() => import('./pages/AEDP'))
+const AchimentPage = lazy(() => import('./pages/achiment'))
+const JobsPage = lazy(() => import('./pages/jobs'))
+const NewsDetailPage = lazy(() => import('./pages/news/NewsDetailPage'))
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -69,33 +70,36 @@ function App() {
         )}
 
         <main className={`home ${isLoading ? 'home--hidden' : ''}`}>
-          <Routes>
-            <Route path="/" element={<HomePage animateWords={!isLoading} />} />
-            <Route path="/job/:jobId" element={<JobDetailPage />} />
-            <Route path="/nats" element={<NatsLandingPage />} />
-            <Route path="/naps" element={<NapsPage />} />
-            <Route path="/bvoc" element={<BvocPage />} />
-            <Route path="/dvoc" element={<DvocPage />} />
-            <Route path="/flexi-iti" element={<FlexiItiPage />} />
-            <Route path="/skilled" element={<SkilledPage />} />
-            <Route path="/housekeeping" element={<HousekeepingPage />} />
-            <Route path="/manpower" element={<ManpowerPage />} />
-            <Route path="/payroll" element={<PayrollPage />} />
-            <Route path="/contract" element={<ContractPage />} />
-            <Route path="/b2b" element={<B2BPage />} />
-            <Route path="/security" element={<SecurityPage />} />
-            <Route path="/maps" element={<MapsPage />} />
-            <Route path="/aedp" element={<AedpPage />} />
-            <Route path="/client" element={<ClientPage />} />
-            <Route path="/compliance" element={<CompliancePage />} />
-            <Route path="/achievements" element={<AchimentPage />} />
-            <Route path="/achiment" element={<AchimentPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/jobs" element={<JobsPage />} />
-            <Route path="/news-events" element={<NewsEventsPage />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/contact-us" element={<ContactUs />} />
-          </Routes>
+          <Suspense fallback={<div className="route-loading" aria-live="polite">Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<HomePage animateWords={!isLoading} />} />
+              <Route path="/job/:jobId" element={<JobDetailPage />} />
+              <Route path="/nats" element={<NatsLandingPage />} />
+              <Route path="/naps" element={<NapsPage />} />
+              <Route path="/bvoc" element={<BvocPage />} />
+              <Route path="/dvoc" element={<DvocPage />} />
+              <Route path="/flexi-iti" element={<FlexiItiPage />} />
+              <Route path="/skilled" element={<SkilledPage />} />
+              <Route path="/housekeeping" element={<HousekeepingPage />} />
+              <Route path="/manpower" element={<ManpowerPage />} />
+              <Route path="/payroll" element={<PayrollPage />} />
+              <Route path="/contract" element={<ContractPage />} />
+              <Route path="/b2b" element={<B2BPage />} />
+              <Route path="/security" element={<SecurityPage />} />
+              <Route path="/maps" element={<MapsPage />} />
+              <Route path="/aedp" element={<AedpPage />} />
+              <Route path="/client" element={<ClientPage />} />
+              <Route path="/compliance" element={<CompliancePage />} />
+              <Route path="/achievements" element={<AchimentPage />} />
+              <Route path="/achiment" element={<AchimentPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/jobs" element={<JobsPage />} />
+              <Route path="/news-events" element={<NewsEventsPage />} />
+              <Route path="/news-events/:newsId" element={<NewsDetailPage />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/contact-us" element={<ContactUs />} />
+            </Routes>
+          </Suspense>
         </main>
       </div>
     </BrowserRouter>

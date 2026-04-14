@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
 	Award,
 	ArrowRight,
@@ -305,12 +306,12 @@ function ClientsHero() {
 					</div>
 
 					<div className="flex flex-col gap-4 sm:flex-row">
-						<button className="flex items-center justify-center gap-2 rounded-xl bg-[#FF8C00] px-8 py-4 font-semibold text-white transition-all hover:bg-orange-600">
+						<Link to="/jobs" className="flex items-center justify-center gap-2 rounded-xl bg-[#FF8C00] px-8 py-4 font-semibold text-white transition-all hover:bg-orange-600">
 							Find Your Dream Job <ArrowRight size={20} />
-						</button>
-						<button className="flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/4 px-8 py-4 font-semibold text-white backdrop-blur-md transition-all hover:bg-white/8">
+						</Link>
+						<Link to="/contact-us" className="flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/4 px-8 py-4 font-semibold text-white backdrop-blur-md transition-all hover:bg-white/8">
 							<Briefcase size={20} /> Hire Skilled Talent
-						</button>
+						</Link>
 					</div>
 				</div>
 
@@ -555,10 +556,10 @@ function CaseStudies() {
 								&ldquo;{caseStudies[activeCase].testimonial}&rdquo;
 							</div>
 
-							<button className="group inline-flex items-center rounded-xl bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700">
+							<Link to="/contact-us" className="group inline-flex items-center rounded-xl bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700">
 								Read Full Case Study
 								<ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-							</button>
+							</Link>
 						</div>
 					</div>
 				</div>

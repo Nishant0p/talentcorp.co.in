@@ -89,7 +89,9 @@ export const fetchSingleType = async (path) => {
 };
 
 export const fetchJobs = async () => fetchCollection('/api/jobs?sort=createdAt:desc&pagination[pageSize]=50');
-export const fetchNews = async () => fetchCollection('/api/news-events?sort=order:asc,date:desc&pagination[pageSize]=10&populate=image');
+export const fetchNews = async () => fetchCollection('/api/news-events?sort=order:asc,date:desc&pagination[pageSize]=100&populate=image');
+export const fetchPageAssets = async () =>
+  fetchCollection('/api/page-assets?sort=order:asc,name:asc&pagination[pageSize]=300&populate=image');
 export const fetchStrengths = async () => fetchCollection('/api/strengths?sort=order:asc&pagination[pageSize]=10&populate=image');
 export const fetchHeroSection = async () => fetchSingleType('/api/hero-section?populate=backgroundImage');
 export const fetchHomeStats = async () => fetchCollection('/api/home-stats?sort=order:asc&pagination[pageSize]=20');

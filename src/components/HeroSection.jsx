@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Target } from 'lucide-react';
 import { fetchHeroSection, extractMediaUrl } from '../utils/strapi';
+import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
 
 const fallbackHero = {
   eyebrow: 'Government Authorized Staffing',
@@ -13,7 +14,9 @@ const fallbackHero = {
 };
 
 const HeroSection = ({ onFindJobs, onHireTalent }) => {
-  const [hero, setHero] = useState(fallbackHero);
+  const pageAssets = usePageAssets();
+  const fallbackBackgroundImage = getPageAsset(pageAssets, 'home.hero.fallback', fallbackHero.backgroundImage).url;
+  const [hero, setHero] = useState({ ...fallbackHero, backgroundImage: fallbackBackgroundImage });
 
   useEffect(() => {
     const loadHero = async () => {
@@ -22,12 +25,12 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
       setHero({
         ...fallbackHero,
         ...data,
-        backgroundImage: data.backgroundImage ? extractMediaUrl(data.backgroundImage) : fallbackHero.backgroundImage,
+        backgroundImage: data.backgroundImage ? extractMediaUrl(data.backgroundImage) : fallbackBackgroundImage,
       });
     };
 
     loadHero();
-  }, []);
+  }, [fallbackBackgroundImage]);
 
   return (
     <section className="relative flex h-screen min-h-[700px] w-full items-center overflow-hidden font-sans">
@@ -37,6 +40,8 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
           alt="TSPL Group"
           className="h-full w-full scale-[1.18] object-cover object-[20%_center] md:scale-[1.3]"
           loading="eager"
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-black/40 lg:bg-gradient-to-r lg:from-black/60 lg:via-black/40 lg:to-transparent" />
       </div>

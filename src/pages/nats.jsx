@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ChevronRight, CheckCircle2, GraduationCap, Briefcase, FileText, CheckSquare, Award, Building2, ArrowRight, Phone, Mail } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -55,14 +56,14 @@ export default function NatsLandingPage() {
 					</p>
 
 					<div className="mb-16 flex flex-col justify-center gap-4 sm:flex-row">
-						<button className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-7 py-3 font-semibold text-white shadow-[0_18px_40px_rgba(37,99,235,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-[0_24px_50px_rgba(37,99,235,0.36)] active:translate-y-0">
+						<Link to="/jobs" className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-7 py-3 font-semibold text-white shadow-[0_18px_40px_rgba(37,99,235,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-[0_24px_50px_rgba(37,99,235,0.36)] active:translate-y-0">
 							<GraduationCap className="h-5 w-5" />
 							Start Your Career <ChevronRight className="h-4 w-4" />
-						</button>
-						<button className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-600 bg-white/10 px-7 py-3 font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/20 hover:shadow-lg active:translate-y-0">
+						</Link>
+						<Link to="/contact-us" className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-600 bg-white/10 px-7 py-3 font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/20 hover:shadow-lg active:translate-y-0">
 							<Building2 className="h-5 w-5 text-blue-100" />
 							Hire Apprentices
-						</button>
+						</Link>
 					</div>
 
 					<div className="mx-auto grid max-w-5xl gap-4 px-4 text-white sm:grid-cols-3">
@@ -101,9 +102,9 @@ export default function NatsLandingPage() {
 								</li>
 							))}
 						</ul>
-						<button className="rounded-lg border border-yellow-300 bg-yellow-100 px-4 py-2 font-medium text-yellow-800 transition-all duration-300 hover:-translate-y-0.5 hover:bg-yellow-200 hover:shadow-md">
+						<a href="https://nats.education.gov.in" target="_blank" rel="noreferrer" className="rounded-lg border border-yellow-300 bg-yellow-100 px-4 py-2 font-medium text-yellow-800 transition-all duration-300 hover:-translate-y-0.5 hover:bg-yellow-200 hover:shadow-md">
 							Ministry of Education, Govt. of India
-						</button>
+						</a>
 					</div>
 
 					<div>
@@ -291,9 +292,9 @@ export default function NatsLandingPage() {
                 </p>
 
                 {/* Gradient Button */}
-                <button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 px-10 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5">
+						<Link to="/contact-us" className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-10 py-3 font-bold text-white shadow-md transition-all transform hover:-translate-y-0.5 hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg">
                     Begin Your Journey
-                </button>
+						</Link>
 
                 </section>
   
@@ -309,16 +310,16 @@ export default function NatsLandingPage() {
 								</p>
 
 								<div className="flex flex-wrap gap-4">
-									<button className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
+									<Link to="/jobs" className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
 										<GraduationCap className="h-5 w-5" />
 										Join Now
 										<ArrowRight className="h-5 w-5" />
-									</button>
+									</Link>
 
-									<button className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
+									<Link to="/contact-us" className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
 										<Building2 className="h-5 w-5 text-blue-100" />
 										For Employers
-									</button>
+									</Link>
 								</div>
 							</div>
 

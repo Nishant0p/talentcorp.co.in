@@ -34,12 +34,13 @@ import {
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 
-function HousekeepingHero() {
+function HousekeepingHero({ resolveAsset }) {
 	return (
 		<section className="relative min-h-[700px] overflow-hidden pb-20 pt-32">
 			<div className="absolute inset-0">
-				<img src="/images/housekeeping-hero.jpg" alt="Professional housekeeping team" className="h-full w-full object-cover" />
+				<img src={resolveAsset('housekeeping.hero', '/images/housekeeping-hero.jpg').url} alt={resolveAsset('housekeeping.hero', '/images/housekeeping-hero.jpg', 'Professional housekeeping team').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-[#0F172A]/60" />
 			</div>
 
@@ -245,7 +246,7 @@ const services = [
 	},
 ]
 
-function OurServices() {
+function OurServices({ resolveAsset }) {
 	return (
 		<section className="relative overflow-hidden bg-[#0F172A] py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-10">
@@ -265,7 +266,7 @@ function OurServices() {
 				<div className="grid items-center gap-16 lg:grid-cols-2">
 					<div className="relative animate-fade-in-left">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src="/images/housekeeping-services.jpg" alt="Housekeeping services" className="h-auto w-full object-cover" />
+							<img src={resolveAsset('housekeeping.services', '/images/housekeeping-services.jpg').url} alt={resolveAsset('housekeeping.services', '/images/housekeeping-services.jpg', 'Housekeeping services').alt} className="h-auto w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 to-transparent" />
 						</div>
 
@@ -466,7 +467,7 @@ const reasons = [
 	},
 ]
 
-function WhyChooseUs() {
+function WhyChooseUs({ resolveAsset }) {
 	return (
 		<section className="relative overflow-hidden bg-slate-50 py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-30">
@@ -508,7 +509,7 @@ function WhyChooseUs() {
 
 					<div className="relative animate-fade-in-right">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src="/images/housekeeping-staff.jpg" alt="Happy housekeeping staff" className="h-auto w-full object-cover" />
+							<img src={resolveAsset('housekeeping.staff', '/images/housekeeping-staff.jpg').url} alt={resolveAsset('housekeeping.staff', '/images/housekeeping-staff.jpg', 'Happy housekeeping staff').alt} className="h-auto w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/80 via-transparent to-transparent" />
 
 							<div className="absolute bottom-0 left-0 right-0 p-8">
@@ -593,14 +594,17 @@ function Enquiry() {
 }
 
 export default function HousekeepingPage() {
+	const pageAssets = usePageAssets()
+	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
+
 	return (
 		<div className="min-h-screen bg-white text-slate-800">
 			<Navbar />
 			<main>
-				<HousekeepingHero />
+				<HousekeepingHero resolveAsset={resolveAsset} />
                 <WhatWeClean />
-				<OurServices />				
-				<WhyChooseUs />
+				<OurServices resolveAsset={resolveAsset} />				
+				<WhyChooseUs resolveAsset={resolveAsset} />
 				<OurProcess />
 				<Enquiry />
 			</main>

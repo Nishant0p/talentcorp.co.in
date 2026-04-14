@@ -1,16 +1,46 @@
-import React from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
-import JobBoard from '../components/JobBoard';
 import Navbar from '../components/Navbar';
-import CompanyMarquee from '../components/CompanyMarquee';
-import StrengthsAccordion from '../components/StrengthsAccordion';
-import WorkforceSection from '../components/WorkforceSection';
-import NewsSection from '../components/NewsSection';
-import FAQSection from '../components/FAQSection';
-import Footer from '../components/Footer';
-import Testimonials from '../components/Testimonials';
+
+const JobBoard = lazy(() => import('../components/JobBoard'));
+const CompanyMarquee = lazy(() => import('../components/CompanyMarquee'));
+const StrengthsAccordion = lazy(() => import('../components/StrengthsAccordion'));
+const WorkforceSection = lazy(() => import('../components/WorkforceSection'));
+const NewsSection = lazy(() => import('../components/NewsSection'));
+const FAQSection = lazy(() => import('../components/FAQSection'));
+const Footer = lazy(() => import('../components/Footer'));
+const Testimonials = lazy(() => import('../components/Testimonials'));
+
+function DeferredSection({ children, minHeight = 0, rootMargin = '320px 0px' }) {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node || isVisible) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [isVisible, rootMargin]);
+
+  return (
+    <section ref={ref} style={!isVisible && minHeight ? { minHeight } : undefined}>
+      {isVisible ? children : null}
+    </section>
+  );
+}
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -63,11 +93,17 @@ export default function HomePage() {
         onHireTalent={(e) => startWhirlpool('hire', e)}
       />
 
-      <CompanyMarquee />
+      <Suspense fallback={null}>
+        <CompanyMarquee />
+      </Suspense>
 
-      <WorkforceSection />
+      <Suspense fallback={null}>
+        <WorkforceSection />
+      </Suspense>
 
-      <StrengthsAccordion />
+      <Suspense fallback={null}>
+        <StrengthsAccordion />
+      </Suspense>
 
       <section id="open-jobs" className="bg-white px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
@@ -76,18 +112,36 @@ export default function HomePage() {
             Browse current openings and apply in minutes.
           </p>
           <div className="mt-8">
-            <JobBoard />
+            <Suspense fallback={null}>
+              <JobBoard />
+            </Suspense>
           </div>
         </div>
       </section>
 
-      <NewsSection />
+      <DeferredSection minHeight={420}>
+        <Suspense fallback={null}>
+          <NewsSection />
+        </Suspense>
+      </DeferredSection>
 
-      <Testimonials />
+      <DeferredSection minHeight={360}>
+        <Suspense fallback={null}>
+          <Testimonials />
+        </Suspense>
+      </DeferredSection>
 
-      <FAQSection />
+      <DeferredSection minHeight={300}>
+        <Suspense fallback={null}>
+          <FAQSection />
+        </Suspense>
+      </DeferredSection>
 
-      <Footer />
+      <DeferredSection minHeight={260} rootMargin="160px 0px">
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
+      </DeferredSection>
 
       <AnimatePresence>
         {transition && (

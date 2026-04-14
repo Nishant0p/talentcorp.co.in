@@ -1,6 +1,8 @@
 import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Shield, Users, Lightbulb, HandHeart, Award } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 
 const milestones = [
 	{ year: '2014', title: 'Company Founded', description: 'Started with a small team of 5 people' },
@@ -64,11 +66,11 @@ function Leaf({ className = '', style = {} }) {
 	)
 }
 
-function AboutHero() {
+function AboutHero({ resolveAsset }) {
 	return (
 		<section className="relative min-h-[600px] overflow-hidden pb-20 pt-32">
 			<div className="absolute inset-0">
-				<img src="/images/about-hero.jpg" alt="TSPL Group team" className="h-full w-full object-cover" />
+				<img src={resolveAsset('about.hero', '/images/about-hero.jpg').url} alt={resolveAsset('about.hero', '/images/about-hero.jpg', 'TSPL Group team').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
 			</div>
 
@@ -90,10 +92,10 @@ function AboutHero() {
 						We are a government-authorized staffing and skilling company dedicated to empowering workers and transforming businesses across India.
 					</p>
 
-					<button className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/40 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
+					<Link to="/contact-us" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/40 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
 						Our Services
 						<ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-					</button>
+					</Link>
 
 					<div className="mt-16 grid grid-cols-2 gap-8 sm:grid-cols-4">
 						<div>
@@ -119,7 +121,7 @@ function AboutHero() {
 	)
 }
 
-function OurStory() {
+function OurStory({ resolveAsset }) {
 	return (
 		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
@@ -138,7 +140,7 @@ function OurStory() {
 
 				<div className="mb-20 grid items-center gap-12 lg:grid-cols-2">
 					<div className="relative h-[400px] overflow-hidden rounded-3xl shadow-2xl">
-						<img src="/images/mission.jpg" alt="TSPL Group mission - Training workers" className="h-full w-full object-cover" />
+						<img src={resolveAsset('about.mission', '/images/mission.jpg').url} alt={resolveAsset('about.mission', '/images/mission.jpg', 'TSPL Group mission - Training workers').alt} className="h-full w-full object-cover" />
 						<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/40 to-transparent" />
 					</div>
 
@@ -274,16 +276,16 @@ function Achievements() {
 
 				<div className="mt-20 text-center">
 					<p className="mb-6 text-xl text-white/70">Ready to be part of our success story?</p>
-					<button className="rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/40 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
+					<Link to="/contact-us" className="rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/40 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
 						Join Us Today
-					</button>
+					</Link>
 				</div>
 			</div>
 		</section>
 	)
 }
 
-function TeamTree() {
+function TeamTree({ teamData }) {
 	return (
 		<section className="relative overflow-hidden py-20 lg:py-28">
 			<div className="absolute inset-0 bg-gradient-to-b from-[#E8F5E9] via-[#F1F8E9] to-[#C8E6C9]" />
@@ -365,15 +367,49 @@ function TeamTree() {
 }
 
 export default function AboutPage() {
+	const pageAssets = usePageAssets()
+	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
+	const managedTeamData = {
+		...teamData,
+		ceo: {
+			...teamData.ceo,
+			image: resolveAsset('about.team.ceo', teamData.ceo.image).url,
+		},
+		directors: [
+			{
+				...teamData.directors[0],
+				image: resolveAsset('about.team.director1', teamData.directors[0].image).url,
+			},
+			{
+				...teamData.directors[1],
+				image: resolveAsset('about.team.director2', teamData.directors[1].image).url,
+			},
+		],
+		managers: [
+			{
+				...teamData.managers[0],
+				image: resolveAsset('about.team.manager1', teamData.managers[0].image).url,
+			},
+			{
+				...teamData.managers[1],
+				image: resolveAsset('about.team.manager2', teamData.managers[1].image).url,
+			},
+			{
+				...teamData.managers[2],
+				image: resolveAsset('about.team.manager3', teamData.managers[2].image).url,
+			},
+		],
+	}
+
 	return (
 		<div className="min-h-screen bg-white text-slate-800">
 			<Navbar />
 			<main>
-				<AboutHero />
-				<OurStory />
+				<AboutHero resolveAsset={resolveAsset} />
+				<OurStory resolveAsset={resolveAsset} />
 				<OurValues />
 				<Achievements />
-				<TeamTree />
+				<TeamTree teamData={managedTeamData} />
 			</main>
 			<Footer />
 		</div>

@@ -29,6 +29,7 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { fetchJobs, submitLead } from '../utils/strapi';
+import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
 
 const allJobs = [
 	{
@@ -139,7 +140,7 @@ const parseSalaryText = (salaryText) => {
 	return { salaryMin: 15000, salaryMax: 25000 };
 };
 
-const mapApiJobToListing = (job, index) => {
+const mapApiJobToListing = (job, index, placeholderImages, fallbackImage) => {
 	const { salaryMin, salaryMax } = parseSalaryText(job.salary);
 	const normalizedType = String(job.type || 'full-time').toLowerCase();
 	const category = String(job.category || job.jobCategory || job.type || job.title || 'General').trim();
@@ -150,7 +151,7 @@ const mapApiJobToListing = (job, index) => {
 		id: String(job.id),
 		title: job.title || `Job ${job.id}`,
 		company: job.company || 'TSPL Group',
-		image: allJobs[index % allJobs.length]?.image || 'https://picsum.photos/seed/tspl-job/1200/800',
+		image: placeholderImages[index % placeholderImages.length] || fallbackImage,
 		category,
 		location,
 		salaryMin,
@@ -963,6 +964,20 @@ function ApplyCTA() {
 }
 
 export default function JobsPage() {
+	const pageAssets = usePageAssets();
+	const managedPlaceholders = useMemo(
+		() => [
+			getPageAsset(pageAssets, 'jobs.welder', allJobs[0].image).url,
+			getPageAsset(pageAssets, 'jobs.electrician', allJobs[1].image).url,
+			getPageAsset(pageAssets, 'jobs.supervisor', allJobs[2].image).url,
+			getPageAsset(pageAssets, 'jobs.cnc', allJobs[3].image).url,
+			getPageAsset(pageAssets, 'jobs.helper', allJobs[4].image).url,
+			getPageAsset(pageAssets, 'jobs.maintenance', allJobs[5].image).url,
+		],
+		[pageAssets]
+	);
+	const fallbackJobImage = getPageAsset(pageAssets, 'jobs.fallback', 'https://picsum.photos/seed/tspl-job/1200/800').url;
+
 	const [searchQuery, setSearchQuery] = useState('');
 	const [filters, setFilters] = useState({
 		jobType: [],
@@ -978,12 +993,16 @@ export default function JobsPage() {
 		const loadJobs = async () => {
 			setLoading(true);
 			const data = await fetchJobs();
-			setJobs(data.length > 0 ? data.map(mapApiJobToListing) : allJobs);
+			setJobs(
+				data.length > 0
+					? data.map((job, index) => mapApiJobToListing(job, index, managedPlaceholders, fallbackJobImage))
+					: allJobs.map((job, index) => ({ ...job, image: managedPlaceholders[index % managedPlaceholders.length] || fallbackJobImage }))
+			);
 			setLoading(false);
 		};
 
 		loadJobs();
-	}, []);
+	}, [managedPlaceholders, fallbackJobImage]);
 
 	const categoryOptions = useMemo(() => uniqueOptionsFromJobs(jobs, 'category'), [jobs]);
 	const locationOptions = useMemo(() => uniqueOptionsFromJobs(jobs, 'location'), [jobs]);

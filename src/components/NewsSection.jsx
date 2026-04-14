@@ -90,6 +90,7 @@ const NewsSection = () => {
       const data = await fetchNews();
       if (data.length > 0) {
         setNewsItems(data.map(item => ({
+          id: item.documentId || item.id,
           date: item.date || new Date().toLocaleDateString(),
           tag: item.tag || 'News',
           title: item.title || '',
@@ -187,7 +188,7 @@ const NewsSection = () => {
         >
           {newsItems.map((item, i) => (
             <motion.article
-              key={item.title}
+              key={item.id || item.title}
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
@@ -259,7 +260,8 @@ const NewsSection = () => {
                   {item.desc}
                 </motion.p>
 
-                <motion.button
+                <MotionLink
+                  to={item.id ? `/news-events/${item.id}` : '/news-events'}
                   className="mt-auto flex w-full items-center justify-center gap-2 rounded-2xl border border-orange-200 bg-gray-50 py-3 md:py-4 font-bold text-orange-500 transition-all group-hover:border-orange-500 group-hover:bg-orange-500 group-hover:text-white text-sm md:text-base"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -269,7 +271,7 @@ const NewsSection = () => {
                   whileTap={{ scale: 0.98 }}
                 >
                   Read More <ExternalLink size={18} />
-                </motion.button>
+                </MotionLink>
               </motion.div>
             </motion.article>
           ))}

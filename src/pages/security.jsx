@@ -26,6 +26,7 @@ import {
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { submitLead } from '../utils/strapi'
+import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 
 const placeTypes = [
 	'Office Building',
@@ -144,11 +145,11 @@ const reasons = [
 	{ title: 'Monthly Reports', desc: 'We give you monthly report of guard attendance and work' },
 ]
 
-function SecurityHero() {
+function SecurityHero({ resolveAsset }) {
 	return (
 		<section className="relative flex min-h-[90vh] items-center overflow-hidden">
 			<div className="absolute inset-0">
-				<img src="/images/security-hero.jpg" alt="Professional security team" className="h-full w-full object-cover" />
+				<img src={resolveAsset('security.hero', '/images/security-hero.jpg').url} alt={resolveAsset('security.hero', '/images/security-hero.jpg', 'Professional security team').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-[#0F172A]/70" />
 			</div>
 
@@ -223,7 +224,7 @@ function SecurityHero() {
 	)
 }
 
-function WhatWeProvide() {
+function WhatWeProvide({ resolveAsset }) {
 	return (
 		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
@@ -233,7 +234,7 @@ function WhatWeProvide() {
 				<div className="grid items-center gap-16 lg:grid-cols-2">
 					<div className="relative animate-fade-in">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src="/images/security-guard.jpg" alt="Professional security guard" className="h-[500px] w-full object-cover" />
+							<img src={resolveAsset('security.guard', '/images/security-guard.jpg').url} alt={resolveAsset('security.guard', '/images/security-guard.jpg', 'Professional security guard').alt} className="h-[500px] w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 to-transparent" />
 						</div>
 
@@ -449,7 +450,7 @@ function WhyChooseUs() {
 
 					<div className="relative animate-fade-in-right">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src="/images/security-training.jpg" alt="Security guard training" className="h-[600px] w-full object-cover" />
+							<img src={resolveAsset('security.training', '/images/security-training.jpg').url} alt={resolveAsset('security.training', '/images/security-training.jpg', 'Security guard training').alt} className="h-[600px] w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 to-transparent" />
 
 							<div className="absolute bottom-0 left-0 right-0 p-8">
@@ -685,11 +686,14 @@ function SecurityEnquiry() {
 }
 
 export default function SecurityPage() {
+	const pageAssets = usePageAssets()
+	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
+
 	return (
 		<div className="bg-white text-[#0F172A]">
 			<Navbar />
-			<SecurityHero />
-			<WhatWeProvide />
+			<SecurityHero resolveAsset={resolveAsset} />
+			<WhatWeProvide resolveAsset={resolveAsset} />
 			<SecurityTypes />
 			<OurProcess />
 			<WhyChooseUs />

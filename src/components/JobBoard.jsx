@@ -116,13 +116,15 @@ const JobBoard = () => {
               <motion.article
                 key={job.id}
                 className="rounded-md border border-slate-200 bg-white p-4 shadow-sm transition-colors hover:border-blue-300"
-                initial={{ opacity: 0, x: -50, y: 20 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                exit={{ opacity: 0, x: 50, y: -20 }}
+                initial={{ opacity: 0, y: 44 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                exit={{ opacity: 0, y: -20 }}
+                whileHover={{ y: -4 }}
                 transition={{
-                  duration: 0.4,
-                  delay: index * 0.08,
-                  ease: [0.23, 1, 0.320, 1]
+                  duration: 0.55,
+                  delay: index * 0.09,
+                  ease: [0.22, 1, 0.36, 1]
                 }}
               >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">

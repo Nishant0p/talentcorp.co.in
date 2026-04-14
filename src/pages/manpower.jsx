@@ -31,12 +31,13 @@ import {
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 
-function ManpowerHero() {
+function ManpowerHero({ resolveAsset }) {
 	return (
 		<section className="relative flex min-h-[72vh] items-center overflow-hidden lg:min-h-[78vh]">
 			<div className="absolute inset-0">
-				<img src="/images/manpower-hero.jpg" alt="Manpower Supply" className="h-full w-full object-cover" />
+				<img src={resolveAsset('manpower.hero', '/images/manpower-hero.jpg').url} alt={resolveAsset('manpower.hero', '/images/manpower-hero.jpg', 'Manpower Supply').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
 			</div>
 
@@ -103,7 +104,7 @@ function ManpowerHero() {
 	)
 }
 
-function WhatIsManpower() {
+function WhatIsManpower({ resolveAsset }) {
 	const benefits = [
 		'No need to search for workers yourself',
 		'We handle all paperwork and compliance',
@@ -121,7 +122,7 @@ function WhatIsManpower() {
 				<div className="grid items-center gap-16 lg:grid-cols-2">
 					<div className="relative animate-fade-in">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src="/images/manpower-workers.jpg" alt="Workers at job" className="h-[500px] w-full object-cover" />
+							<img src={resolveAsset('manpower.workers', '/images/manpower-workers.jpg').url} alt={resolveAsset('manpower.workers', '/images/manpower-workers.jpg', 'Workers at job').alt} className="h-[500px] w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 to-transparent" />
 						</div>
 
@@ -509,7 +510,7 @@ const reasons = [
 	},
 ]
 
-function ManpowerWhyChooseUs() {
+function ManpowerWhyChooseUs({ resolveAsset }) {
 	return (
 		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-[#2563EB]/5 blur-3xl" />
@@ -555,7 +556,7 @@ function ManpowerWhyChooseUs() {
 
 					<div className="relative animate-fade-in-right">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src="/images/manpower-industries.jpg" alt="Industries we serve" className="h-[600px] w-full object-cover" />
+							<img src={resolveAsset('manpower.industries', '/images/manpower-industries.jpg').url} alt={resolveAsset('manpower.industries', '/images/manpower-industries.jpg', 'Industries we serve').alt} className="h-[600px] w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent" />
 
 							<div className="absolute bottom-0 left-0 right-0 p-6">
@@ -639,15 +640,18 @@ function Enquiry() {
 }
 
 export default function ManpowerPage() {
+	const pageAssets = usePageAssets()
+	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
+
 	return (
 		<div className="min-h-screen bg-white text-slate-800">
 			<Navbar />
 			<main>
-				<ManpowerHero />
-				<WhatIsManpower />
+				<ManpowerHero resolveAsset={resolveAsset} />
+				<WhatIsManpower resolveAsset={resolveAsset} />
                 <Industries />
 				<WorkerTypes />
-				<ManpowerWhyChooseUs />
+				<ManpowerWhyChooseUs resolveAsset={resolveAsset} />
 				<HowItWorks />		
 				<Enquiry />
 			</main>

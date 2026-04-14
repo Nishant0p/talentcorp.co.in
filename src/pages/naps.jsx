@@ -17,6 +17,7 @@ import {
 	Users,
 	Wallet,
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
@@ -105,15 +106,15 @@ function NAPSHero() {
 					</p>
 
 					<div className="mb-14 flex flex-col justify-center gap-4 sm:flex-row">
-						<button className="group inline-flex items-center rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] px-10 py-5 text-lg font-semibold text-white shadow-2xl shadow-[#2563EB]/40 transition-all duration-300 hover:scale-105">
+						<Link to="/jobs" className="group inline-flex items-center rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] px-10 py-5 text-lg font-semibold text-white shadow-2xl shadow-[#2563EB]/40 transition-all duration-300 hover:scale-105">
 							<Briefcase className="mr-2 h-5 w-5" />
 							Apply Now
 							<ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-						</button>
-						<button className="inline-flex items-center rounded-2xl border-2 border-[#2563EB] bg-white px-10 py-5 text-lg font-semibold text-[#2563EB] transition-all duration-300 hover:bg-[#2563EB] hover:text-white">
+						</Link>
+						<Link to="/contact-us" className="inline-flex items-center rounded-2xl border-2 border-[#2563EB] bg-white px-10 py-5 text-lg font-semibold text-[#2563EB] transition-all duration-300 hover:bg-[#2563EB] hover:text-white">
 							<TrendingUp className="mr-2 h-5 w-5" />
 							Learn More
-						</button>
+						</Link>
 					</div>
 
 					<div className="flex flex-col justify-center gap-6 sm:flex-row">
@@ -417,9 +418,9 @@ function NAPSProcess() {
 
 				<div className="mt-16 text-center lg:mt-20">
 					<p className="mb-6 text-[#64748B]">Ready to advance your career?</p>
-					<button className="rounded-lg bg-gradient-to-r from-[#2563EB] to-[#F97316] px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg">
+						<Link to="/contact-us" className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#2563EB] to-[#F97316] px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg">
 						Start Your Journey
-					</button>
+						</Link>
 				</div>
 			</div>
 		</section>
@@ -436,16 +437,16 @@ function NAPSCTA() {
 						<p className="mb-8 text-lg text-blue-100">Join thousands who transformed their careers through NATS.</p>
 
 						<div className="flex flex-wrap gap-4">
-							<button className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
+							<Link to="/jobs" className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
 								<GraduationCap className="h-5 w-5" />
 								Join Now
 								<ArrowRight className="h-5 w-5" />
-							</button>
+							</Link>
 
-							<button className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
+							<Link to="/contact-us" className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
 								<Building2 className="h-5 w-5 text-blue-100" />
 								For Employers
-							</button>
+							</Link>
 						</div>
 					</div>
 

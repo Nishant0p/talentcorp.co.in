@@ -31,6 +31,7 @@ import {
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { submitLead } from '../utils/strapi'
+import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 
 const benefits = [
 	{
@@ -177,7 +178,7 @@ const explainerPoints = [
 	},
 ]
 
-function ContractHero() {
+function ContractHero({ resolveAsset }) {
 	const [activeWord, setActiveWord] = useState(0)
 	const rotatingWords = ['Flexible', 'Reliable', 'Scalable', 'Efficient']
 
@@ -191,7 +192,7 @@ function ContractHero() {
 	return (
 		<section className="relative min-h-screen overflow-hidden bg-white pt-24">
 			<div className="absolute inset-0">
-				<img src="/images/contract-hero.jpg" alt="Contract Staffing" className="h-full w-full object-cover" />
+				<img src={resolveAsset('contract.hero', '/images/contract-hero.jpg').url} alt={resolveAsset('contract.hero', '/images/contract-hero.jpg', 'Contract Staffing').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/80" />
 				<div className="absolute inset-0 bg-gradient-to-b from-white via-white/50 to-white" />
 			</div>
@@ -252,7 +253,7 @@ function ContractHero() {
 				<div className="relative">
 					<div className="mx-auto aspect-square max-w-lg">
 						<div className="absolute inset-8 overflow-hidden rounded-3xl border border-gray-100 shadow-2xl shadow-blue-500/10">
-							<img src="/images/contract-flexible.jpg" alt="Contract Workers" className="h-full w-full object-cover" />
+							<img src={resolveAsset('contract.flexible', '/images/contract-flexible.jpg').url} alt={resolveAsset('contract.flexible', '/images/contract-flexible.jpg', 'Contract Workers').alt} className="h-full w-full object-cover" />
 						</div>
 					</div>
 				</div>
@@ -261,13 +262,13 @@ function ContractHero() {
 	)
 }
 
-function WhatIsContract() {
+function WhatIsContract({ resolveAsset }) {
 	return (
 		<section className="bg-slate-50 py-20 lg:py-28">
 			<div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
 				<div className="relative">
 					<div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl">
-						<img src="/images/contract-project.jpg" alt="Contract Staffing Explained" className="h-full w-full object-cover" />
+						<img src={resolveAsset('contract.project', '/images/contract-project.jpg').url} alt={resolveAsset('contract.project', '/images/contract-project.jpg', 'Contract Staffing Explained').alt} className="h-full w-full object-cover" />
 					</div>
 				</div>
 
@@ -308,7 +309,7 @@ function WhatIsContract() {
 	)
 }
 
-function StaffingTypes() {
+function StaffingTypes({ staffingData }) {
 	const [activeType, setActiveType] = useState(0)
 
 	return (
@@ -325,7 +326,7 @@ function StaffingTypes() {
 
 				<div className="grid items-stretch gap-8 lg:grid-cols-2">
 					<div className="space-y-4">
-						{staffingTypes.map((type, index) => {
+						{staffingData.map((type, index) => {
 							const Icon = type.icon
 							const isActive = activeType === index
 							return (
@@ -350,18 +351,18 @@ function StaffingTypes() {
 
 					<div className="sticky top-28 overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xl">
 						<div className="relative aspect-video">
-							<img src={staffingTypes[activeType].image} alt={staffingTypes[activeType].title} className="h-full w-full object-cover" />
+							<img src={staffingData[activeType].image} alt={staffingData[activeType].title} className="h-full w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 							<div className="absolute bottom-6 left-6 right-6">
-								<h3 className="text-2xl font-bold text-white">{staffingTypes[activeType].title}</h3>
-								<p className="text-white/80">{staffingTypes[activeType].duration}</p>
+								<h3 className="text-2xl font-bold text-white">{staffingData[activeType].title}</h3>
+								<p className="text-white/80">{staffingData[activeType].duration}</p>
 							</div>
 						</div>
 
 						<div className="p-8">
-							<p className="mb-6 text-gray-600">{staffingTypes[activeType].description}</p>
+							<p className="mb-6 text-gray-600">{staffingData[activeType].description}</p>
 							<div className="flex flex-wrap gap-3">
-								{staffingTypes[activeType].features.map((feature) => (
+								{staffingData[activeType].features.map((feature) => (
 									<span key={feature} className="rounded-full bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600">
 										{feature}
 									</span>
@@ -462,7 +463,7 @@ function ContractIndustries() {
 	)
 }
 
-function ContractBenefits() {
+function ContractBenefits({ resolveAsset }) {
 	return (
 		<section className="relative overflow-hidden bg-slate-50 py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-full w-1/2">
@@ -509,7 +510,7 @@ function ContractBenefits() {
 
 					<div className="relative">
 						<div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl">
-							<img src="/images/contract-scale.jpg" alt="Contract Staffing Benefits" className="h-full w-full object-cover" />
+							<img src={resolveAsset('contract.scale', '/images/contract-scale.jpg').url} alt={resolveAsset('contract.scale', '/images/contract-scale.jpg', 'Contract Staffing Benefits').alt} className="h-full w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-transparent to-transparent" />
 							<div className="absolute bottom-0 left-0 right-0 p-8 text-white">
 								<p className="mb-2 text-lg font-medium">Trusted by</p>
@@ -524,7 +525,7 @@ function ContractBenefits() {
 	)
 }
 
-function ContractCTA() {
+function ContractCTA({ resolveAsset }) {
 	const [formData, setFormData] = useState({
 		name: '',
 		company: '',
@@ -581,7 +582,7 @@ function ContractCTA() {
 	return (
 		<section id="contract-cta" className="relative overflow-hidden bg-white py-20 lg:py-28">
 			<div className="absolute inset-0">
-				<img src="/images/contract-hero.jpg" alt="Contact Background" className="h-full w-full object-cover opacity-5" />
+				<img src={resolveAsset('contract.contactBackground', '/images/contract-hero.jpg').url} alt={resolveAsset('contract.contactBackground', '/images/contract-hero.jpg', 'Contact Background').alt} className="h-full w-full object-cover opacity-5" />
 			</div>
 
 			<div className="relative mx-auto max-w-7xl px-6 lg:px-8">
@@ -688,17 +689,33 @@ function ContractCTA() {
 }
 
 export default function ContractPage() {
+	const pageAssets = usePageAssets()
+	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
+	const staffingData = staffingTypes.map((type) => {
+		const keyMap = {
+			1: 'contract.project',
+			2: 'contract.scale',
+			3: 'contract.onboard',
+			4: 'contract.seasonal',
+		}
+
+		return {
+			...type,
+			image: resolveAsset(keyMap[type.id], type.image).url,
+		}
+	})
+
 	return (
 		<div className="bg-white text-[#0A0A0B]">
 			<Navbar />
 			<main>
-				<ContractHero />
-				<WhatIsContract />
-				<StaffingTypes />
+				<ContractHero resolveAsset={resolveAsset} />
+				<WhatIsContract resolveAsset={resolveAsset} />
+				<StaffingTypes staffingData={staffingData} />
 				<ContractProcess />
 				<ContractIndustries />
-				<ContractBenefits />
-				<ContractCTA />
+				<ContractBenefits resolveAsset={resolveAsset} />
+				<ContractCTA resolveAsset={resolveAsset} />
 			</main>
 			<Footer />
 		</div>

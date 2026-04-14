@@ -1,8 +1,10 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Sparkles, Award, Calendar, MapPin, ChevronRight, Cake, Star } from 'lucide-react';
+import { extractMediaUrl, fetchNews } from '../utils/strapi';
 
 const defaultNewsEventsContent = {
   pageContent: {
@@ -171,6 +173,11 @@ const defaultNewsEventsContent = {
   },
   ],
 };
+const quickAccessTargets = {
+  Announcements: 'announcements',
+  Calendar: 'calendar',
+  Gallery: 'gallery',
+};
 
 const resolveNewsEventsContent = (prismicData) => {
   if (!prismicData) return defaultNewsEventsContent;
@@ -208,6 +215,7 @@ const resolveNewsEventsContent = (prismicData) => {
 const NewsEventsPage = ({ prismicData = null }) => {
   const heroParallaxRef = useRef(null);
   const content = useMemo(() => resolveNewsEventsContent(prismicData), [prismicData]);
+  const [latestNews, setLatestNews] = useState([]);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroParallaxRef,
@@ -219,6 +227,15 @@ const NewsEventsPage = ({ prismicData = null }) => {
   const heroQuickX = useTransform(heroProgress, [0, 1], reduceMotion ? [0, 0] : [24, -20]);
   const heroMilestonesX = useTransform(heroProgress, [0, 1], reduceMotion ? [0, 0] : [-18, 16]);
   const heroAwardY = useTransform(heroProgress, [0, 1], reduceMotion ? [0, 0] : [22, -18]);
+
+  useEffect(() => {
+    const loadLatestNews = async () => {
+      const items = await fetchNews();
+      setLatestNews(items.slice(0, 6));
+    };
+
+    loadLatestNews();
+  }, []);
 
   return (
     <div className="min-h-screen bg-white px-6 pt-28 font-sans md:px-12 md:pt-32">
@@ -302,6 +319,10 @@ const NewsEventsPage = ({ prismicData = null }) => {
               <button
                 key={item}
                 type="button"
+                onClick={() => {
+                  const targetId = quickAccessTargets[item];
+                  document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
                 className="rounded-full border border-white/20 px-4 py-2 text-xs transition-colors hover:bg-white hover:text-slate-900"
               >
                 {item}
@@ -340,7 +361,39 @@ const NewsEventsPage = ({ prismicData = null }) => {
         </motion.div>
       </motion.div>
 
+      {latestNews.length > 0 && (
+        <section className="mx-auto mt-14 max-w-7xl">
+          <div className="mb-8 flex items-center justify-between gap-4">
+            <h2 className="text-3xl font-bold text-[#006bb8]">Latest From Admin</h2>
+            <Link to="/news-events" className="text-sm font-semibold text-orange-500 hover:text-orange-600">
+              View all
+            </Link>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {latestNews.map((item) => {
+              const itemId = item.documentId || item.id;
+              return (
+                <Link key={itemId} to={`/news-events/${itemId}`} className="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+                  <img
+                    src={item.image ? extractMediaUrl(item.image) : content.hero.featureImage}
+                    alt={item.title || 'News image'}
+                    className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="p-5">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'News'}</p>
+                    <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900">{item.title}</h3>
+                    <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       <motion.section
+        id="announcements"
         className="mx-auto mt-20 max-w-7xl"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -380,9 +433,9 @@ const NewsEventsPage = ({ prismicData = null }) => {
               <p className="mb-6 max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
                 {content.spotlightFeature.description}
               </p>
-              <button className="flex items-center gap-2 font-semibold text-orange-500 transition-colors hover:text-orange-400">
-                Read More <ArrowRight size={18} />
-              </button>
+              <Link to="/news-events" className="flex items-center gap-2 font-semibold text-orange-500 transition-colors hover:text-orange-400">
+              Read More <ArrowRight size={18} />
+              </Link>
             </div>
           </motion.article>
 
@@ -473,13 +526,14 @@ const NewsEventsPage = ({ prismicData = null }) => {
         </div>
 
         <div className="mt-16 flex justify-center">
-          <button className="rounded-full border border-orange-500 px-8 py-3 font-semibold text-[#006bb8] transition-colors hover:bg-orange-500 hover:text-white">
+          <Link to="/news-events" className="inline-flex items-center rounded-full border border-orange-500 px-8 py-3 font-semibold text-[#006bb8] transition-colors hover:bg-orange-500 hover:text-white">
             Load More Updates <ArrowRight size={18} className="ml-2 inline-block align-[-2px]" />
-          </button>
+          </Link>
         </div>
       </motion.section>
 
       <motion.section
+        id="gallery"
         className="mx-auto mt-24 max-w-7xl rounded-[2.5rem] bg-slate-50 px-6 py-10 md:px-10 md:py-12"
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -568,9 +622,9 @@ const NewsEventsPage = ({ prismicData = null }) => {
                   <p className="text-xs font-bold uppercase tracking-[0.22em] text-orange-500">Birthday Spotlight</p>
                   <p className="mt-1 text-sm text-slate-500">{content.birthdaySpotlight.role}</p>
                 </div>
-                <button className="inline-flex items-center gap-2 rounded-full border border-orange-200 px-4 py-2 text-sm font-semibold text-[#006bb8] transition-colors hover:bg-orange-500 hover:text-white">
+                <Link to="/contact-us" className="inline-flex items-center gap-2 rounded-full border border-orange-200 px-4 py-2 text-sm font-semibold text-[#006bb8] transition-colors hover:bg-orange-500 hover:text-white">
                   Send Wishes <ChevronRight size={16} />
-                </button>
+                </Link>
               </div>
             </div>
           </motion.div>
@@ -578,6 +632,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
       </motion.section>
 
       <motion.section
+        id="calendar"
         className="mx-auto mt-24 max-w-7xl"
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -671,9 +726,9 @@ const NewsEventsPage = ({ prismicData = null }) => {
                       <MapPin size={14} className="text-orange-500" />
                       {event.loc}
                     </div>
-                    <button className="mt-3 inline-flex w-fit items-center gap-1 text-sm font-semibold text-[#006bb8] opacity-0 transition-all group-hover:opacity-100">
+                    <Link to="/contact-us" className="mt-3 inline-flex w-fit items-center gap-1 text-sm font-semibold text-[#006bb8] opacity-0 transition-all group-hover:opacity-100">
                       Register <ChevronRight size={14} />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               ))}
