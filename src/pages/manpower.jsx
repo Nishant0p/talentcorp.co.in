@@ -34,44 +34,44 @@ import Footer from '../components/Footer'
 
 function ManpowerHero() {
 	return (
-		<section className="relative flex min-h-[90vh] items-center overflow-hidden">
+		<section className="relative flex min-h-[72vh] items-center overflow-hidden lg:min-h-[78vh]">
 			<div className="absolute inset-0">
 				<img src="/images/manpower-hero.jpg" alt="Manpower Supply" className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
 			</div>
 
-			<div className="absolute right-20 top-20 h-72 w-72 animate-pulse rounded-full bg-[#2563EB]/20 blur-3xl" />
-			<div className="absolute bottom-20 left-1/4 h-96 w-96 animate-pulse rounded-full bg-[#F97316]/10 blur-3xl" style={{ animationDelay: '1s' }} />
+			<div className="absolute right-20 top-16 h-56 w-56 animate-pulse rounded-full bg-[#2563EB]/20 blur-3xl" />
+			<div className="absolute bottom-16 left-1/4 h-72 w-72 animate-pulse rounded-full bg-[#F97316]/10 blur-3xl" style={{ animationDelay: '1s' }} />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 py-32 lg:px-8">
-				<div className="max-w-3xl">
+			<div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-20 lg:px-8 lg:py-24">
+				<div className="max-w-2xl text-left">
 					<div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-sm animate-fade-in">
 						<Users className="h-4 w-4 text-[#F97316]" />
 						<span className="text-sm font-medium text-white">Trusted by 400+ Companies</span>
 					</div>
 
-					<h1 className="hero-text-reveal mb-6 text-5xl font-bold leading-tight text-white animate-fade-in sm:text-6xl lg:text-7xl">
+					<h1 className="hero-text-reveal mb-5 text-4xl font-bold leading-tight text-white animate-fade-in sm:text-5xl lg:text-6xl">
 						We Provide
 						<span className="mt-2 block text-[#2563EB]">Right Workers</span>
 						<span className="block text-white">For Your Business</span>
 					</h1>
 
-					<p className="hero-text-reveal-delay mb-10 max-w-2xl text-xl leading-relaxed text-white/80 animate-fade-in-up">
+					<p className="hero-text-reveal-delay mb-8 max-w-xl text-lg leading-relaxed text-white/80 animate-fade-in-up">
 						Need workers for your factory, office, or any work? We find good workers for you.
 						<span className="font-semibold text-[#F97316]"> You focus on your business, we handle the hiring.</span>
 					</p>
 
-					<div className="mb-12 flex flex-col gap-4 animate-fade-in-up animation-delay-200 sm:flex-row">
+					<div className="mb-10 flex flex-col gap-4 animate-fade-in-up animation-delay-200 sm:flex-row">
 						<a
 							href="#enquiry"
-							className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C] hover:shadow-[#F97316]/50"
+							className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-7 py-3.5 text-base font-bold text-white shadow-2xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C] hover:shadow-[#F97316]/50"
 						>
 							Get Workers Now
 							<ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
 						</a>
 						<a
 							href="tel:+919876543210"
-							className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-white/5 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/50 hover:bg-white/10"
+							className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-white/5 px-7 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/50 hover:bg-white/10"
 						>
 							Call: +91 98765 43210
 						</a>
