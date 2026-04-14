@@ -74,6 +74,8 @@ const WorkforceSection = () => {
                   alt={card.title}
                   className="absolute inset-0 h-full w-full object-cover object-center grayscale-[0.05] contrast-[1.03] brightness-[0.94] transition-transform duration-700 group-hover:scale-110"
                   loading="lazy"
+                  width="1200"
+                  height="800"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-white/88 via-white/62 to-black/56" />
                 <div className={`absolute inset-0 ${accentClass}`} />

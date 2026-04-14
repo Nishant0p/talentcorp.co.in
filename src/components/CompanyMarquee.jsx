@@ -96,6 +96,8 @@ export default function CompanyMarquee() {
                     alt={logo.alt}
                     className="max-h-10 w-auto max-w-full object-contain opacity-70 grayscale"
                     loading="lazy"
+                    width="160"
+                    height="56"
                     draggable={false}
                   />
                 </div>

@@ -25,7 +25,15 @@ export const normalizeStrapiCollection = (data) => {
 
 export const extractMediaUrl = (media) => {
   if (!media) return '';
-  const candidate = media?.data?.attributes?.url || media?.data?.url || media?.url || media;
+
+  const node = media?.data?.attributes || media?.data || media;
+  const optimizedCandidate =
+    node?.formats?.large?.url ||
+    node?.formats?.medium?.url ||
+    node?.formats?.small?.url ||
+    node?.formats?.thumbnail?.url;
+
+  const candidate = optimizedCandidate || node?.url || media?.url || media;
   return resolveStrapiUrl(candidate);
 };
 

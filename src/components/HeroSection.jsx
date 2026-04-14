@@ -42,6 +42,8 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
           loading="eager"
           fetchPriority="high"
           decoding="async"
+          width="1920"
+          height="1080"
         />
         <div className="absolute inset-0 bg-black/40 lg:bg-gradient-to-r lg:from-black/60 lg:via-black/40 lg:to-transparent" />
       </div>
