@@ -117,6 +117,7 @@ export default function Footer() {
                 { href: '#clients', label: 'Clients' },
                 { href: '#achievements', label: 'Achievements' },
                 { href: '/news-events', label: 'News & Events' },
+                { href: '/terms-and-conditions', label: 'Terms & Conditions' },
               ].map((link) => (
                 <li key={link.href}>
                   {link.href.startsWith('/') ? (
