@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { fetchStrengths, extractMediaUrl } from '../utils/strapi';
 
 const fallbackStrengths = [
@@ -180,10 +181,13 @@ export default function StrengthsAccordion() {
                       transition={{ delay: 0.2 }}
                     >
                       <p className="mb-3 max-w-md leading-relaxed text-white/90 drop-shadow-md font-medium">{item.desc}</p>
-                      <button className="group flex items-center gap-2 font-black text-white drop-shadow-md hover:text-orange-300 transition-colors">
+                      <Link
+                        to="/achiment"
+                        className="group inline-flex items-center gap-2 font-black text-white drop-shadow-md transition-colors hover:text-orange-300"
+                      >
                         Learn More
                         <span className="transition-transform group-hover:translate-x-1">{'->'}</span>
-                      </button>
+                      </Link>
                     </motion.div>
                   )}
                 </div>

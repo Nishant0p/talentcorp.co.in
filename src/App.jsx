@@ -27,6 +27,8 @@ const AedpPage = lazy(() => import('./pages/AEDP'))
 const AchimentPage = lazy(() => import('./pages/achiment'))
 const JobsPage = lazy(() => import('./pages/jobs'))
 const NewsDetailPage = lazy(() => import('./pages/news/NewsDetailPage'))
+const TermsPage = lazy(() => import('./pages/terms'))
+const PrivacyPolicyPage = lazy(() => import('./pages/privacy'))
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -95,6 +97,8 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="jobs" path="/jobs" element={<JobsPage />} />
           <Route key="news-events" path="/news-events" element={<NewsEventsPage />} />
           <Route key="news-detail" path="/news-events/:newsId" element={<NewsDetailPage />} />
+          <Route key="terms" path="/terms-and-conditions" element={<TermsPage />} />
+          <Route key="privacy" path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route key="contact" path="/contact" element={<ContactUs />} />
           <Route key="contact-us" path="/contact-us" element={<ContactUs />} />
         </Routes>
