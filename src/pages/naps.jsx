@@ -18,8 +18,10 @@ import {
 	Wallet,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { StaggerContainer, StaggerItem } from '../components/AnimatedContent'
 
 const heroStats = [
 	{ value: '15,000+', label: 'Professionals Trained' },
@@ -118,14 +120,18 @@ function NAPSHero() {
 					</div>
 
 					<div className="flex flex-col justify-center gap-6 sm:flex-row">
-						{heroStats.map((stat) => (
-							<div key={stat.label} className="flex items-center gap-4 rounded-2xl border border-[#2563EB]/20 bg-white/80 px-8 py-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-[#2563EB]/50 hover:bg-white hover:shadow-md">
-								<div className="text-left">
-									<p className="bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">{stat.value}</p>
-									<p className="text-sm font-medium text-[#64748B]">{stat.label}</p>
-								</div>
-							</div>
-						))}
+						<StaggerContainer staggerDelay={0.08}>
+							{heroStats.map((stat) => (
+								<StaggerItem key={stat.label}>
+									<div className="flex items-center gap-4 rounded-2xl border border-[#2563EB]/20 bg-white/80 px-8 py-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-[#2563EB]/50 hover:bg-white hover:shadow-md">
+										<div className="text-left">
+											<p className="bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">{stat.value}</p>
+											<p className="text-sm font-medium text-[#64748B]">{stat.label}</p>
+										</div>
+									</div>
+								</StaggerItem>
+							))}
+						</StaggerContainer>
 					</div>
 				</div>
 			</div>
@@ -181,19 +187,19 @@ function NAPSAbout() {
 						</div>
 
 						<div className="grid grid-cols-3 gap-4">
-							{aboutFeatures.map((feature, i) => (
-								<div
-									key={feature.title}
-									className="rounded-2xl border border-[#E2E8F0] bg-white p-5 text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#2563EB]/40 hover:shadow-xl"
-									style={{ animationDelay: `${i * 100}ms` }}
-								>
-									<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] shadow-lg shadow-[#2563EB]/30">
-										<feature.icon className="h-6 w-6 text-white" />
-									</div>
-									<h3 className="mb-1 text-base font-bold text-[#0F172A]">{feature.title}</h3>
-									<p className="text-sm text-[#64748B]">{feature.desc}</p>
-								</div>
-							))}
+							<StaggerContainer staggerDelay={0.1}>
+								{aboutFeatures.map((feature) => (
+									<StaggerItem key={feature.title}>
+										<div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#2563EB]/40 hover:shadow-xl">
+											<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] shadow-lg shadow-[#2563EB]/30">
+												<feature.icon className="h-6 w-6 text-white" />
+											</div>
+											<h3 className="mb-1 text-base font-bold text-[#0F172A]">{feature.title}</h3>
+											<p className="text-sm text-[#64748B]">{feature.desc}</p>
+										</div>
+									</StaggerItem>
+								))}
+							</StaggerContainer>
 						</div>
 					</div>
 				</div>
