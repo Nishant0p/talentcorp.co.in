@@ -13,7 +13,14 @@ const FAQSection = lazy(() => import('../components/FAQSection'));
 const Footer = lazy(() => import('../components/Footer'));
 const Testimonials = lazy(() => import('../components/Testimonials'));
 
-function DeferredSection({ children, minHeight = 0, rootMargin = '320px 0px', sectionId, className }) {
+function DeferredSection({
+  children,
+  minHeight = 0,
+  rootMargin = '320px 0px',
+  sectionId,
+  className,
+  tone = 'blue',
+}) {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -35,9 +42,49 @@ function DeferredSection({ children, minHeight = 0, rootMargin = '320px 0px', se
     return () => observer.disconnect();
   }, [isVisible, rootMargin]);
 
+  const toneClass =
+    tone === 'orange'
+      ? 'bg-[#fff4ec] border-y border-orange-100'
+      : tone === 'blue'
+        ? 'bg-[#edf5ff] border-y border-blue-100'
+        : 'bg-white';
+
+  const textureStyle =
+    tone === 'orange'
+      ? {
+          backgroundImage:
+            'radial-gradient(circle at 20% 25%, rgba(249,115,22,0.13) 0, rgba(249,115,22,0) 45%), repeating-linear-gradient(135deg, rgba(249,115,22,0.06) 0, rgba(249,115,22,0.06) 1px, transparent 1px, transparent 13px)',
+        }
+      : tone === 'blue'
+        ? {
+            backgroundImage:
+              'radial-gradient(circle at 82% 22%, rgba(37,99,235,0.13) 0, rgba(37,99,235,0) 45%), repeating-linear-gradient(135deg, rgba(37,99,235,0.06) 0, rgba(37,99,235,0.06) 1px, transparent 1px, transparent 13px)',
+          }
+        : undefined;
+
   return (
-    <section id={sectionId} className={className} ref={ref} style={!isVisible && minHeight ? { minHeight } : undefined}>
-      {isVisible ? children : null}
+    <section
+      id={sectionId}
+      className={`relative overflow-hidden ${toneClass} ${className || ''}`}
+      ref={ref}
+      style={!isVisible && minHeight ? { minHeight } : undefined}
+    >
+      {tone !== 'neutral' && (
+        <>
+          <div className="pointer-events-none absolute inset-0 opacity-90" style={textureStyle} />
+          <div
+            className={`pointer-events-none absolute -left-16 -top-16 h-44 w-44 rounded-full blur-2xl ${
+              tone === 'orange' ? 'bg-orange-200/50' : 'bg-blue-200/55'
+            }`}
+          />
+          <div
+            className={`pointer-events-none absolute -bottom-20 right-0 h-56 w-56 rounded-full blur-2xl ${
+              tone === 'orange' ? 'bg-orange-300/35' : 'bg-blue-300/35'
+            }`}
+          />
+        </>
+      )}
+      <div className="relative z-10">{isVisible ? children : null}</div>
     </section>
   );
 }
@@ -93,25 +140,25 @@ export default function HomePage() {
         onHireTalent={(e) => startWhirlpool('hire', e)}
       />
 
-      <DeferredSection minHeight={140} rootMargin="120px 0px">
+      <DeferredSection minHeight={140} rootMargin="120px 0px" tone="orange">
         <Suspense fallback={null}>
           <CompanyMarquee />
         </Suspense>
       </DeferredSection>
 
-      <DeferredSection minHeight={520} rootMargin="120px 0px">
+      <DeferredSection minHeight={520} rootMargin="120px 0px" tone="blue">
         <Suspense fallback={null}>
           <WorkforceSection />
         </Suspense>
       </DeferredSection>
 
-      <DeferredSection minHeight={440} rootMargin="110px 0px">
+      <DeferredSection minHeight={440} rootMargin="110px 0px" tone="orange">
         <Suspense fallback={null}>
           <StrengthsAccordion />
         </Suspense>
       </DeferredSection>
 
-      <DeferredSection sectionId="open-jobs" className="bg-white px-4 py-14 sm:px-6 lg:px-8" minHeight={340} rootMargin="100px 0px">
+      <DeferredSection sectionId="open-jobs" className="px-4 py-14 sm:px-6 lg:px-8" minHeight={340} rootMargin="100px 0px" tone="blue">
         <div className="mx-auto max-w-7xl">
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Open Jobs</h2>
           <p className="mt-2 max-w-2xl text-slate-600">
@@ -125,25 +172,25 @@ export default function HomePage() {
         </div>
       </DeferredSection>
 
-      <DeferredSection minHeight={420}>
+      <DeferredSection minHeight={420} tone="orange">
         <Suspense fallback={null}>
           <NewsSection />
         </Suspense>
       </DeferredSection>
 
-      <DeferredSection minHeight={360}>
+      <DeferredSection minHeight={360} tone="blue">
         <Suspense fallback={null}>
           <Testimonials />
         </Suspense>
       </DeferredSection>
 
-      <DeferredSection minHeight={300}>
+      <DeferredSection minHeight={300} tone="orange">
         <Suspense fallback={null}>
           <FAQSection />
         </Suspense>
       </DeferredSection>
 
-      <DeferredSection minHeight={260} rootMargin="160px 0px">
+      <DeferredSection minHeight={260} rootMargin="160px 0px" tone="blue">
         <Suspense fallback={null}>
           <Footer />
         </Suspense>

@@ -29,7 +29,7 @@ const fallbackStrengths = [
     stat: '25+',
     sub: 'States',
     desc: 'Operations spanning 25+ states ensuring nationwide coverage and support.',
-    color: 'bg-slate-900',
+    color: 'bg-blue-600',
     image: 'https://images.unsplash.com/photo-1553531088-18a882b8ffff?auto=format&fit=crop&q=80&w=800',
   },
   {
@@ -56,10 +56,40 @@ const fallbackStrengths = [
     stat: '3x',
     sub: 'Growth',
     desc: 'We scale with your business, providing flexible staffing solutions.',
-    color: 'bg-slate-900',
+    color: 'bg-orange-600',
     image: 'https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&q=80&w=800',
   },
 ];
+
+const colorClassToHex = {
+  'bg-orange-600': '#ea580c',
+  'bg-blue-600': '#2563eb',
+  'bg-slate-900': '#0f172a',
+};
+
+const resolveColorHex = (colorValue = '') => {
+  const value = String(colorValue).trim();
+  if (!value) return '#2563eb';
+  if (value.startsWith('#')) return value;
+  if (value.startsWith('rgb') || value.startsWith('hsl')) return value;
+  if (colorClassToHex[value]) return colorClassToHex[value];
+  return '#2563eb';
+};
+
+const buildCardTintStyle = (colorValue, isHovered) => {
+  const accent = resolveColorHex(colorValue);
+  return {
+    backgroundColor: isHovered ? `${accent}2f` : `${accent}20`,
+  };
+};
+
+const buildAccentPillStyle = (colorValue, isHovered) => {
+  const accent = resolveColorHex(colorValue);
+  return {
+    backgroundColor: isHovered ? 'rgba(255,255,255,0.96)' : `${accent}1f`,
+    color: isHovered ? accent : '#1f2937',
+  };
+};
 
 export default function StrengthsAccordion() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -104,12 +134,23 @@ export default function StrengthsAccordion() {
               key={item.id}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
+              initial={{ opacity: 0, y: 68 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.28 }}
+              transition={{ duration: 0.65, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className={`relative cursor-pointer overflow-hidden rounded-3xl border border-gray-100 bg-[#f8f9fa] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                 hoveredIndex === index ? 'lg:flex-[4]' : 'lg:flex-[1]'
               } ${
                 hoveredIndex !== null && hoveredIndex !== index ? 'opacity-50 grayscale' : 'opacity-100'
               }`}
+              style={buildCardTintStyle(item.color, hoveredIndex === index)}
             >
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background: `linear-gradient(135deg, ${resolveColorHex(item.color)}1a 0%, transparent 58%, ${resolveColorHex(item.color)}12 100%)`,
+                }}
+              />
               {hoveredIndex === index && (
                 <>
                   <motion.img
@@ -133,7 +174,8 @@ export default function StrengthsAccordion() {
                     <motion.div
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="rounded-full bg-white p-3 text-blue-600 shadow-lg"
+                      className="rounded-full p-3 shadow-lg"
+                      style={buildAccentPillStyle(item.color, hoveredIndex === index)}
                     >
                       <ArrowUpRight size={24} />
                     </motion.div>

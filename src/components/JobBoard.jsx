@@ -61,14 +61,26 @@ const JobBoard = () => {
   }, [filter, query]);
 
   return (
-    <section className="bg-white px-0 py-6" id="job-board">
+    <section className="px-0 py-6" id="job-board">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8">
-          <span className="rounded-md border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-600">
-            Latest Openings
-          </span>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Find Your Perfect Role</h2>
-          <p className="mt-1 text-base text-slate-600">Explore opportunities across India&apos;s leading companies.</p>
+        <div className="relative overflow-hidden rounded-[2.25rem] border border-white/70 bg-white/40 px-5 py-6 shadow-[0_22px_55px_rgba(15,23,42,0.14)] backdrop-blur-xl sm:px-8 sm:py-8">
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.55)_0%,rgba(255,255,255,0.12)_42%,rgba(59,130,246,0.10)_100%)]" />
+          <div className="pointer-events-none absolute -left-16 -top-20 h-52 w-52 rounded-full bg-blue-300/30 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -right-16 h-56 w-56 rounded-full bg-orange-300/30 blur-3xl" />
+
+          <div className="relative z-10">
+        <div className="relative mb-8 overflow-hidden rounded-[2rem] border border-white/65 bg-white/45 px-6 py-6 shadow-[0_16px_45px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:px-8">
+          <div className="pointer-events-none absolute -left-10 -top-12 h-36 w-36 rounded-full bg-blue-300/35 blur-2xl" />
+          <div className="pointer-events-none absolute -right-14 bottom-[-4.5rem] h-44 w-44 rounded-full bg-orange-300/35 blur-2xl" />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(125deg,rgba(255,255,255,0.52)_0%,rgba(255,255,255,0.18)_48%,rgba(59,130,246,0.10)_100%)]" />
+
+          <div className="relative z-10">
+            <span className="rounded-full border border-slate-300/70 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-700">
+              Latest Openings
+            </span>
+            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Find Your Perfect Role</h2>
+            <p className="mt-1 text-base text-slate-700/90">Explore opportunities across India&apos;s leading companies.</p>
+          </div>
         </div>
 
         <div className="mb-8 grid gap-3 lg:grid-cols-[1fr_auto] lg:items-center">
@@ -79,7 +91,7 @@ const JobBoard = () => {
               placeholder="Search jobs, companies, locations..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full rounded-md border border-slate-300 bg-white py-3 pl-10 pr-4 text-sm outline-none transition-all focus:border-blue-500"
+              className="w-full rounded-xl border border-white/70 bg-white/75 py-3 pl-10 pr-4 text-sm outline-none transition-all focus:border-blue-500"
             />
           </div>
 
@@ -91,13 +103,13 @@ const JobBoard = () => {
                 className={`rounded-md border px-4 py-2 text-sm font-semibold transition-colors ${
                   filter === type
                     ? 'border-blue-600 bg-blue-600 text-white'
-                    : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
+                    : 'border-white/80 bg-white/80 text-slate-700 hover:border-slate-300'
                 }`}
               >
                 {type}
               </button>
             ))}
-            <button className="rounded-md border border-slate-300 bg-white p-2.5 text-slate-600 hover:bg-slate-50" aria-label="Open filters">
+            <button className="rounded-md border border-white/80 bg-white/80 p-2.5 text-slate-600 hover:bg-white" aria-label="Open filters">
               <Filter size={18} />
             </button>
           </div>
@@ -115,7 +127,7 @@ const JobBoard = () => {
             {filteredJobs.map((job, index) => (
               <motion.article
                 key={job.id}
-                className="rounded-md border border-slate-200 bg-white p-4 shadow-sm transition-colors hover:border-blue-300"
+                className="rounded-2xl border border-white/80 bg-white/78 p-4 shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition-colors hover:border-blue-300"
                 initial={{ opacity: 0, y: 44 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
@@ -177,6 +189,8 @@ const JobBoard = () => {
           <button className="rounded-md bg-slate-900 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-slate-800">
             View All Jobs
           </button>
+        </div>
+          </div>
         </div>
       </div>
     </section>
