@@ -30,43 +30,43 @@ const awards = [
 		title: 'Best Manpower Company',
 		year: '2023',
 		organization: 'HR Excellence Awards',
-		icon: Trophy,
-		color: 'from-yellow-400 to-orange-500',
+		description: 'Recognized for our outstanding contribution to the staffing industry and maintaining the highest standards of workforce management.',
+		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
 	},
 	{
 		title: 'ISO 9001:2015 Certified',
 		year: '2015',
 		organization: 'International Organization',
-		icon: Shield,
-		color: 'from-blue-500 to-blue-600',
+		description: 'Achieved international standards for our quality management systems, ensuring consistent and reliable service delivery to all our clients.',
+		image: '/images-10.jpeg',
 	},
 	{
 		title: 'Top Employer Partner',
 		year: '2022',
 		organization: 'Industry Association',
-		icon: BadgeCheck,
-		color: 'from-green-400 to-emerald-500',
+		description: 'Awarded for being a preferred employer partner by consistently providing excellent benefits and working conditions for our workforce.',
+		image: heroImage,
 	},
 	{
 		title: 'Excellence in Compliance',
 		year: '2023',
 		organization: 'Labor Ministry Recognition',
-		icon: Medal,
-		color: 'from-purple-500 to-purple-600',
+		description: 'Acknowledged for maintaining 100% statutory compliance and strictly adhering to all labor laws and employment regulations.',
+		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
 	},
 	{
 		title: 'Best Service Provider',
 		year: '2021',
 		organization: 'Manufacturing Sector',
-		icon: Star,
-		color: 'from-orange-400 to-red-500',
+		description: 'Awarded best service provider in the manufacturing sector for delivering highly skilled and trained workforce.',
+		image: '/images-10.jpeg',
 	},
 	{
 		title: 'Growth Leadership',
 		year: '2024',
 		organization: 'Business Awards India',
-		icon: Award,
-		color: 'from-cyan-500 to-blue-500',
+		description: 'Recognized for exceptional business growth and expanding our footprint across multiple states in India.',
+		image: heroImage,
 	},
 ]
 
@@ -484,35 +484,45 @@ function AwardsSection() {
 					</p>
 				</div>
 
-				<div className="mb-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-					{awards.map((award, index) => {
-						const Icon = award.icon
-
-						return (
-							<div
-								key={award.title}
-								className={`group relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 shadow-lg transition-all duration-500 hover:shadow-2xl ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
-								style={{ transitionDelay: `${index * 100}ms` }}
-							>
-								<div className={`absolute inset-0 bg-gradient-to-br ${award.color} opacity-0 transition-opacity duration-300 group-hover:opacity-5`} />
-								<div className="relative">
-									<div className="mb-4 flex items-start justify-between">
-										<div className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${award.color} shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-											<Icon className="h-7 w-7 text-white" />
-										</div>
-										<span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-600">
-											{award.year}
-										</span>
-									</div>
-									<h3 className="mb-2 text-xl font-bold text-gray-900 transition-colors group-hover:text-blue-600">
-										{award.title}
-									</h3>
-									<p className="text-sm text-gray-500">{award.organization}</p>
+				<div className="mb-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+					{awards.map((award, index) => (
+						<div
+							key={award.title}
+							className={`group flex flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
+							style={{ transitionDelay: `${index * 100}ms` }}
+						>
+							<div className="relative h-60 w-full overflow-hidden">
+								<img
+									src={award.image}
+									alt={award.title}
+									className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								/>
+								<div className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-blue-600 shadow-sm backdrop-blur-sm">
+									{award.year}
 								</div>
-								<div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-gradient-to-br from-blue-50 to-orange-50 opacity-50 transition-transform duration-500 group-hover:scale-150" />
 							</div>
-						)
-					})}
+							<div className="flex flex-1 flex-col p-6">
+								<div className="mb-2">
+									<p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{award.organization}</p>
+								</div>
+								<h3 className="mb-3 line-clamp-2 text-xl font-bold text-gray-900 transition-colors group-hover:text-blue-600">
+									{award.title}
+								</h3>
+								<p className="mb-6 line-clamp-3 text-sm text-gray-500">
+									{award.description}
+								</p>
+								<div className="mt-auto">
+									<button className="group/btn inline-flex items-center gap-1 text-sm font-bold text-blue-600 transition-colors hover:text-blue-800">
+										<span className="relative">
+											Read More
+											<span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover/btn:w-full"></span>
+										</span>
+										<ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+									</button>
+								</div>
+							</div>
+						</div>
+					))}
 				</div>
 
 				<div className={`rounded-3xl bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 p-8 transition-all duration-700 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
@@ -758,7 +768,7 @@ export default function AchimentPage() {
 			<Navbar />
 			<main>
 				<AwardsHero />
-				<Milestones />
+				
 				<AwardsSection />
 				<TestimonialsSection />
 				<AchievementsCta />

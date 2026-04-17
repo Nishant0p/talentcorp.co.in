@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import './App.css'
 import GlobalTextureOverlay from './components/GlobalTextureOverlay'
+import AchimentPage from './pages/achiment'
 const HomePage = lazy(() => import('./pages/HomePage'))
 const JobDetailPage = lazy(() => import('./pages/JobDetailPage'))
 const ContactUs = lazy(() => import('./pages/contactus'))
@@ -24,7 +25,6 @@ const CompliancePage = lazy(() => import('./pages/Compliance'))
 const SecurityPage = lazy(() => import('./pages/security'))
 const MapsPage = lazy(() => import('./pages/MAPS'))
 const AedpPage = lazy(() => import('./pages/AEDP'))
-const AchimentPage = lazy(() => import('./pages/achiment'))
 const JobsPage = lazy(() => import('./pages/jobs'))
 const NewsDetailPage = lazy(() => import('./pages/news/NewsDetailPage'))
 const TermsPage = lazy(() => import('./pages/terms'))
