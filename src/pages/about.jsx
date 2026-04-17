@@ -67,10 +67,16 @@ function Leaf({ className = '', style = {} }) {
 }
 
 function AboutHero({ resolveAsset }) {
+	const aboutHeroAsset = resolveAsset(
+		'about.hero',
+		'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_25_3_1d589b7f92.jpeg',
+		'TSPL Group team'
+	)
+
 	return (
 		<section className="relative min-h-[600px] overflow-hidden pb-20 pt-32">
 			<div className="absolute inset-0">
-				<img src={resolveAsset('about.hero', '/images/about-hero.jpg').url} alt={resolveAsset('about.hero', '/images/about-hero.jpg', 'TSPL Group team').alt} className="h-full w-full object-cover" />
+				<img src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
 			</div>
 
@@ -122,6 +128,12 @@ function AboutHero({ resolveAsset }) {
 }
 
 function OurStory({ resolveAsset }) {
+	const whoWeAreAsset = resolveAsset(
+		'about.mission',
+		'https://backend.tsplgroup.co.in/uploads/TSPL_Logo_Sarang_Sir_1_55253e4a30.png',
+		'TSPL Group mission - Training workers'
+	)
+
 	return (
 		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
@@ -139,8 +151,8 @@ function OurStory({ resolveAsset }) {
 				</div>
 
 				<div className="mb-20 grid items-center gap-12 lg:grid-cols-2">
-					<div className="relative h-[400px] overflow-hidden rounded-3xl shadow-2xl">
-						<img src={resolveAsset('about.mission', '/images/mission.jpg').url} alt={resolveAsset('about.mission', '/images/mission.jpg', 'TSPL Group mission - Training workers').alt} className="h-full w-full object-cover" />
+					<div className="relative h-[400px] overflow-hidden rounded-3xl bg-white shadow-2xl">
+						<img src={whoWeAreAsset.url} alt={whoWeAreAsset.alt} className="h-full w-full object-contain p-6 sm:p-8" />
 						<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/40 to-transparent" />
 					</div>
 

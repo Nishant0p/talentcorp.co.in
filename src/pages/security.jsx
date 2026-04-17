@@ -139,17 +139,20 @@ const reasons = [
 	{ title: 'Proper Uniform', desc: 'All guards wear clean, professional uniform while on duty' },
 	{ title: 'Training Certificate', desc: 'Guards complete security training and get proper certificate' },
 	{ title: 'Supervisor Visit', desc: 'Our supervisor visits regularly to check guard performance' },
-	{ title: 'Quick Replacement', desc: 'If guard is absent, we send replacement within few hours' },
-	{ title: '24/7 Control Room', desc: 'Our control room is always active to handle any emergency' },
-	{ title: 'Insurance Coverage', desc: 'All guards are covered under proper insurance policy' },
 	{ title: 'Monthly Reports', desc: 'We give you monthly report of guard attendance and work' },
 ]
 
 function SecurityHero({ resolveAsset }) {
+	const heroAsset = resolveAsset(
+		'security.hero',
+		'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1c7e8e2473.jpeg',
+		'Professional security team'
+	)
+
 	return (
 		<section className="relative flex min-h-[90vh] items-center overflow-hidden">
 			<div className="absolute inset-0">
-				<img src={resolveAsset('security.hero', '/images/security-hero.jpg').url} alt={resolveAsset('security.hero', '/images/security-hero.jpg', 'Professional security team').alt} className="h-full w-full object-cover" />
+				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-[#0F172A]/70" />
 			</div>
 
@@ -167,8 +170,8 @@ function SecurityHero({ resolveAsset }) {
 				))}
 			</div>
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 py-20 lg:px-8">
-				<div className="max-w-3xl">
+			<div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-20 lg:px-8">
+				<div className="max-w-3xl text-left">
 					<div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/40 bg-[#2563EB]/20 px-4 py-2 animate-fade-in">
 						<Shield className="h-5 w-5 text-[#2563EB]" />
 						<span className="text-sm font-bold text-[#2563EB]">TRUSTED SECURITY PARTNER</span>
@@ -196,24 +199,24 @@ function SecurityHero({ resolveAsset }) {
 						))}
 					</div>
 
-					<div className="flex flex-col gap-4 animate-fade-in-up animation-delay-300 sm:flex-row">
-						<a href="#enquiry" className="inline-flex items-center justify-center rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C] hover:shadow-2xl">
+					<div className="flex flex-col gap-4 animate-fade-in-up animation-delay-300 sm:flex-row sm:items-center sm:justify-start">
+						<a href="#enquiry" className="inline-flex w-full items-center justify-center rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C] hover:shadow-2xl sm:w-auto">
 							Get Security Now
 						</a>
-						<a href="tel:+919876543210" className="inline-flex items-center justify-center rounded-xl border-2 border-white/40 px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:bg-white/10">
+						<a href="tel:+919876543210" className="inline-flex w-full items-center justify-center rounded-xl border-2 border-white/40 px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:bg-white/10 sm:w-auto">
 							Call: +91 98765 43210
 						</a>
 					</div>
 				</div>
 
-				<div className="mt-16 grid grid-cols-2 gap-6 animate-fade-in-up animation-delay-400 md:grid-cols-4">
+				<div className="mt-16 grid max-w-4xl grid-cols-2 gap-4 text-left animate-fade-in-up animation-delay-400 md:grid-cols-4 md:gap-6">
 					{[
 						{ number: '15,000+', label: 'Guards Deployed' },
 						{ number: '500+', label: 'Happy Clients' },
 						{ number: '20+', label: 'Cities Covered' },
 						{ number: '99%', label: 'Client Retention' },
 					].map((stat) => (
-						<div key={stat.label} className="rounded-xl border border-white/10 bg-white/5 p-4 text-center backdrop-blur-sm">
+						<div key={stat.label} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
 							<p className="text-3xl font-bold text-[#F97316] lg:text-4xl">{stat.number}</p>
 							<p className="mt-1 text-white/70">{stat.label}</p>
 						</div>
@@ -225,6 +228,12 @@ function SecurityHero({ resolveAsset }) {
 }
 
 function WhatWeProvide({ resolveAsset }) {
+	const guardAsset = resolveAsset(
+		'security.guard',
+		'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1_a9d1da85a2.jpeg',
+		'Professional security guard'
+	)
+
 	return (
 		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
@@ -234,7 +243,7 @@ function WhatWeProvide({ resolveAsset }) {
 				<div className="grid items-center gap-16 lg:grid-cols-2">
 					<div className="relative animate-fade-in">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src={resolveAsset('security.guard', '/images/security-guard.jpg').url} alt={resolveAsset('security.guard', '/images/security-guard.jpg', 'Professional security guard').alt} className="h-[500px] w-full object-cover" />
+							<img src={guardAsset.url} alt={guardAsset.alt} className="h-[360px] w-full object-cover sm:h-[420px] lg:h-[500px]" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 to-transparent" />
 						</div>
 
@@ -396,6 +405,11 @@ function OurProcess() {
 
 function WhyChooseUs({ resolveAsset }) {
 	const [openReasonIndex, setOpenReasonIndex] = useState(0)
+	const trustAsset = resolveAsset(
+		'security.training',
+		'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1c7e8e2473.jpeg',
+		'Security guard training'
+	)
 
 	return (
 		<section className="relative overflow-hidden bg-slate-50 py-20 lg:py-28">
@@ -450,7 +464,7 @@ function WhyChooseUs({ resolveAsset }) {
 
 					<div className="relative animate-fade-in-right">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src={resolveAsset('security.training', '/images/security-training.jpg').url} alt={resolveAsset('security.training', '/images/security-training.jpg', 'Security guard training').alt} className="h-[600px] w-full object-cover" />
+							<img src={trustAsset.url} alt={trustAsset.alt} className="h-[600px] w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 to-transparent" />
 
 							<div className="absolute bottom-0 left-0 right-0 p-8">
