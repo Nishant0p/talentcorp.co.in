@@ -276,7 +276,7 @@ function ComplianceHero() {
 	}, [])
 
 	return (
-		<section className="relative min-h-screen overflow-hidden bg-white pt-24">
+		<section className="relative min-h-screen overflow-hidden bg-white pt-16 sm:pt-24">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/70" />
@@ -297,15 +297,15 @@ function ComplianceHero() {
 				<div className="flex h-12 w-12 items-center justify-center rounded-xl border border-orange-100 bg-white shadow-xl shadow-orange-500/10"><Building2 className="h-6 w-6 text-orange-600" /></div>
 			</div>
 
-			<div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8">
-				<div className="grid items-center gap-16 lg:grid-cols-2">
-					<div className={`space-y-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
-						<div className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 shadow-lg shadow-blue-500/25">
+			<div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+				<div className="grid items-center gap-8 sm:gap-12 lg:gap-16 lg:grid-cols-2">
+					<div className={`space-y-6 sm:space-y-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
+						<div className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-3 py-1.5 sm:px-4 sm:py-2 shadow-lg shadow-blue-500/25">
 							<Shield className="h-4 w-4 text-white" />
-							<span className="text-sm font-medium text-white">Legal Protection Partner</span>
+							<span className="text-xs sm:text-sm font-medium text-white">Legal Protection Partner</span>
 						</div>
 
-						<h1 className="text-5xl font-bold leading-tight lg:text-7xl">
+						<h1 className="text-4xl sm:text-5xl font-bold leading-tight lg:text-7xl">
 							<span className="text-gray-900">Stay</span>
 							<br />
 							<span className="relative">
@@ -315,32 +315,32 @@ function ComplianceHero() {
 							<span className="text-gray-900">Stay Protected</span>
 						</h1>
 
-						<p className="max-w-lg text-xl leading-relaxed text-gray-600">
+						<p className="max-w-lg text-base sm:text-lg lg:text-xl leading-relaxed text-gray-600">
 							Complete statutory compliance management for your business.
 							<span className="font-medium text-gray-900"> PF, ESI, Labor Laws, Factory Act</span> - we handle everything so you can focus on growth.
 						</p>
 
-						<p className="border-l-2 border-blue-500 pl-4 italic text-gray-500">End-to-end legal compliance support for PF, ESI, labor law, and factory regulations.</p>
+						<p className="border-l-2 border-blue-500 pl-3 sm:pl-4 italic text-sm sm:text-base text-gray-500">End-to-end legal compliance support for PF, ESI, labor law, and factory regulations.</p>
 
-						<div className="flex flex-wrap gap-4 pt-4">
-							<Link to="/contact-us" className="group inline-flex h-14 items-center rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 text-lg font-semibold text-white shadow-xl shadow-blue-500/30 transition-all hover:from-blue-700 hover:to-blue-800">
+						<div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 pt-2 sm:pt-4">
+							<Link to="/contact-us" className="group inline-flex h-12 sm:h-14 items-center justify-center sm:justify-start rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 sm:px-8 text-base sm:text-lg font-semibold text-white shadow-xl shadow-blue-500/30 transition-all hover:from-blue-700 hover:to-blue-800 w-full sm:w-auto">
 								Get Compliance Audit
 								<ArrowRight className="ml-2 inline h-5 w-5 transition-transform group-hover:translate-x-1" />
 							</Link>
-							<a href="#services" className="inline-flex h-14 items-center rounded-xl border border-gray-300 bg-white/80 px-8 text-lg text-gray-700 backdrop-blur-sm transition-all hover:border-gray-400 hover:bg-gray-50">Learn More</a>
+							<a href="#services" className="inline-flex h-12 sm:h-14 items-center justify-center rounded-xl border border-gray-300 bg-white/80 px-6 sm:px-8 text-base sm:text-lg text-gray-700 backdrop-blur-sm transition-all hover:border-gray-400 hover:bg-gray-50 w-full sm:w-auto">Learn More</a>
 						</div>
 
-						<div className="flex items-center gap-6 pt-4">
+						<div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-3 sm:pt-4">
 							{['PF Registered', 'ESI Approved', 'ISO Certified'].map((badge) => (
-								<div key={badge} className="flex items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 shadow-sm backdrop-blur-sm">
-									<CheckCircle2 className="h-5 w-5 text-green-600" />
-									<span className="text-sm font-medium text-gray-700">{badge}</span>
+								<div key={badge} className="flex items-center gap-2 rounded-full bg-white/80 px-2.5 sm:px-3 py-1 sm:py-1.5 shadow-sm backdrop-blur-sm">
+									<CheckCircle2 className="h-4 sm:h-5 w-4 sm:w-5 text-green-600" />
+									<span className="text-xs sm:text-sm font-medium text-gray-700">{badge}</span>
 								</div>
 							))}
 						</div>
 					</div>
 
-					<div className={`relative transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}>
+					<div className={`relative hidden lg:block transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}>
 						<div className="relative mx-auto flex aspect-square max-w-lg items-center justify-center">
 							<div className="relative">
 								<div className="flex h-32 w-32 items-center justify-center rounded-3xl border border-blue-100 bg-white shadow-2xl shadow-blue-500/20">
@@ -373,12 +373,12 @@ function ComplianceHero() {
 					</div>
 				</div>
 
-				<div className={`mt-20 grid grid-cols-2 gap-6 md:grid-cols-4 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+				<div className={`mt-12 sm:mt-16 lg:mt-20 grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 md:grid-cols-4 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
 					{heroStats.map((stat) => (
-						<div key={stat.label} className="group relative rounded-2xl border border-gray-200 bg-white/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/10">
-							<div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-							<p className="relative bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-4xl font-bold text-transparent lg:text-5xl">{stat.value}</p>
-							<p className="relative mt-2 text-gray-600">{stat.label}</p>
+						<div key={stat.label} className="group relative rounded-lg sm:rounded-2xl border border-gray-200 bg-white/80 p-3 sm:p-4 md:p-6 backdrop-blur-sm transition-all duration-300 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/10">
+							<div className="absolute inset-0 rounded-lg sm:rounded-2xl bg-gradient-to-br from-blue-50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+							<p className="relative bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-transparent">{stat.value}</p>
+							<p className="relative mt-1 sm:mt-2 text-xs sm:text-sm md:text-base text-gray-600">{stat.label}</p>
 						</div>
 					))}
 				</div>
