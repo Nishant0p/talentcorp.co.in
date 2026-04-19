@@ -1,3 +1,17 @@
+<IfModule mod_headers.c>
+  # Always revalidate HTML entry point so new deploys appear immediately.
+  <FilesMatch "^index\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
+  # Cache static build assets aggressively (filenames are content-hashed by Vite).
+  <FilesMatch "\.(?:js|css|png|jpg|jpeg|gif|svg|webp|avif|ico|woff|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
