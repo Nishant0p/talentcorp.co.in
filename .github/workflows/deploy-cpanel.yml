@@ -30,13 +30,13 @@ jobs:
       - name: Build frontend
         run: npm run build
 
-      - name: Upload via FTP
+      - name: Upload via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.CPANEL_FTP_HOST }}
           username: ${{ secrets.CPANEL_FTP_USERNAME }}
           password: ${{ secrets.CPANEL_FTP_PASSWORD }}
           port: 21
-          protocol: ftp
+          protocol: ftps
           local-dir: dist/
           server-dir: ${{ secrets.CPANEL_FTP_TARGET_DIR }}
