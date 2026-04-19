@@ -47,4 +47,4 @@ jobs:
           security: loose
           timeout: 120000
           local-dir: dist/
-          server-dir: ${{ secrets.CPANEL_FTP_TARGET_DIR }}
+          server-dir: /public_html/
