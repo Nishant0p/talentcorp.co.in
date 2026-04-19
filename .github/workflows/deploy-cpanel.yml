@@ -38,5 +38,7 @@ jobs:
           password: ${{ secrets.CPANEL_FTP_PASSWORD }}
           port: 21
           protocol: ftps
+          security: loose
+          timeout: 120000
           local-dir: dist/
           server-dir: ${{ secrets.CPANEL_FTP_TARGET_DIR }}
