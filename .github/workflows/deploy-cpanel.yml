@@ -30,13 +30,13 @@ jobs:
       - name: Build frontend
         run: npm run build
 
-      - name: Upload via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Upload via SSH/SFTP
+        uses: appleboy/scp-action@v1.0.0
         with:
-          server: ${{ secrets.CPANEL_FTP_HOST }}
-          username: ${{ secrets.CPANEL_FTP_USERNAME }}
-          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
-          port: 21
-          protocol: ftp
-          local-dir: dist/
-          server-dir: ${{ secrets.CPANEL_FTP_TARGET_DIR }}
+          host: ${{ secrets.CPANEL_SSH_HOST }}
+          username: ${{ secrets.CPANEL_SSH_USERNAME }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          port: ${{ secrets.CPANEL_SSH_PORT }}
+          source: "dist/*,dist/.htaccess"
+          target: ${{ secrets.CPANEL_SSH_TARGET_DIR }}
+          strip_components: 1
