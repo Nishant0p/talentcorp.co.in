@@ -30,17 +30,13 @@ jobs:
       - name: Build frontend
         run: npm run build
 
-      - name: Deploy dist to cPanel via FTP
+      - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.CPANEL_FTP_HOST }}
           username: ${{ secrets.CPANEL_FTP_USERNAME }}
           password: ${{ secrets.CPANEL_FTP_PASSWORD }}
-          protocol: ftps
           port: 21
-          local-dir: ./dist/
+          protocol: ftp
+          local-dir: dist/
           server-dir: ${{ secrets.CPANEL_FTP_TARGET_DIR }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
