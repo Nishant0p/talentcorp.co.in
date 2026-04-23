@@ -40,15 +40,15 @@ const officeLocations = [
     company: 'TalentCorp Solutions Private Limited',
     address:
       'Office No. 111,112,113,103 First Floor, Shree Gajanan Commercial Complex, Chakan- Talegaon Road, Chakan Tal. Khed, Dist. Pune, Maharashtra 410501',
-    calls: ['+91 7397926734'],
-    emails: ['info@tsplgroup.in'],
+    calls: ['+91 7397971322'],
+    emails: ['info@tsplgroup.in', 'hrd1@tsplgroup.in'],
   },
   {
     city: 'Mumbai',
     company: 'TalentCorp Solutions Private Limited',
     address:
       'White House, Six Floor, Office No. 605, SV Road, Opposite to Andheri Metro Station West, Mumbai, Maharashtra - 400 058, India',
-    calls: ['+91 7397926734'],
+    calls: ['+91 7397971322'],
     emails: ['mumbai@tsplgroup.in'],
   },
   {
@@ -64,7 +64,7 @@ const officeLocations = [
     company: 'TalentCorp Solutions Private Limited',
     address:
       '2nd Floor, Soham Apartment, Opposite to ICICI Bank, Ranjangaon (Pune), Maharashtra, India',
-    calls: ['+91 7397926734'],
+    calls: ['+91 7397971322'],
     emails: ['ranjangaon@tsplgroup.in'],
   },
   {
@@ -79,7 +79,7 @@ const officeLocations = [
     company: 'TalentCorp Solutions Private Limited',
     address:
       'Maha Laxmi Bhawan, Jai Dev Vihar, Near Hotel MAYFAIR Lagoon, Bhubaneswar, Odisha - 751013, India',
-    calls: ['+91 7397926734'],
+    calls: ['+91 7397971322'],
     emails: ['bhubaneswar@tsplgroup.in'],
   },
   {
@@ -87,7 +87,7 @@ const officeLocations = [
     company: 'TalentCorp Solutions Private Limited',
     address:
       'Office No- 2, Mahalaxmi Complex, Opposite Collector Office, Osmanabad, Maharashtra - 413501, India',
-    calls: ['+91 7397926734'],
+    calls: ['+91 7397971322'],
     emails: ['osmanabad@tsplgroup.in'],
   },
   {
@@ -570,8 +570,8 @@ const ContactUs = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Call Us</p>
-                  <a href="tel:+917397926734" className="font-bold text-lg transition-colors group-hover:text-blue-700">+91 7397926734</a>
-                  <a href="tel:+918624817374" className="font-bold text-lg transition-colors group-hover:text-blue-700 block">+91 8624817374</a>
+                  <a href="tel:+917397971322" className="font-bold text-lg transition-colors group-hover:text-blue-700">+91 7397971322</a>
+                  <a href="tel:+919561504911" className="font-bold text-lg transition-colors group-hover:text-blue-700 block">+91 9561504911</a>
                   <p className="text-sm text-gray-500">Mon - Fri, 9AM - 6PM</p>
                 </div>
               </div>
@@ -582,6 +582,7 @@ const ContactUs = () => {
                 <div>
                   <p className="text-sm text-gray-500">Email Us</p>
                   <a href="mailto:info@tsplgroup.in" className="font-bold text-lg transition-colors group-hover:text-orange-600">info@tsplgroup.in</a>
+                  <a href="mailto:hrd1@tsplgroup.in" className="font-bold text-lg transition-colors group-hover:text-orange-600 block">hrd1@tsplgroup.in</a>
                   <p className="text-sm text-gray-500">We aim to reply in 24 hours</p>
                 </div>
               </div>
