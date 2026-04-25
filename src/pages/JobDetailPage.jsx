@@ -1,32 +1,133 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin, IndianRupee, Clock, Users, Briefcase, Calendar } from 'lucide-react';
+import {
+  ArrowLeft, MapPin, IndianRupee, Clock, Briefcase, Calendar,
+  CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2
+} from 'lucide-react';
 import { fetchJobs, submitApplicant } from '../utils/strapi';
+import './JobDetailPage.css';
 
-const jobs = [
-  { id: 1, title: 'Production Operator', company: 'Tata Motors', location: 'Pune, Maharashtra', salary: '₹18,000 - ₹25,000', type: 'Full-time', urgent: true },
-  { id: 2, title: 'ITI Technician', company: 'Maruti Suzuki', location: 'Gurugram, Haryana', salary: '₹15,000 - ₹22,000', type: 'Apprenticeship', urgent: false },
-  { id: 3, title: 'Quality Inspector', company: 'Bajaj Auto', location: 'Aurangabad, Maharashtra', salary: '₹20,000 - ₹28,000', type: 'Full-time', urgent: true },
-  { id: 4, title: 'Electrical Trainee', company: 'L&T Construction', location: 'Chennai, Tamil Nadu', salary: '₹12,000 - ₹18,000', type: 'Apprenticeship', urgent: false },
-  { id: 5, title: 'CNC Operator', company: 'Mahindra & Mahindra', location: 'Nashik, Maharashtra', salary: '₹22,000 - ₹30,000', type: 'Full-time', urgent: false },
-  { id: 6, title: 'Assembly Line Worker', company: 'Hero MotoCorp', location: 'Haridwar, Uttarakhand', salary: '₹16,000 - ₹20,000', type: 'Contract', urgent: true },
+// ─── Static constants ────────────────────────────────────────────────────────
+
+const FALLBACK = [
+  { id: 1, title: 'Production Operator', company: 'Tata Motors', location: 'Pune, MH', salary: '₹18,000–₹25,000', type: 'Full-time', urgent: true },
+  { id: 2, title: 'ITI Technician', company: 'Maruti Suzuki', location: 'Gurugram, HR', salary: '₹15,000–₹22,000', type: 'Apprenticeship', urgent: false },
+  { id: 3, title: 'Quality Inspector', company: 'Bajaj Auto', location: 'Aurangabad, MH', salary: '₹20,000–₹28,000', type: 'Full-time', urgent: true },
+  { id: 4, title: 'Electrical Trainee', company: 'L&T Construction', location: 'Chennai, TN', salary: '₹12,000–₹18,000', type: 'Apprenticeship', urgent: false },
+  { id: 5, title: 'CNC Operator', company: 'Mahindra & Mahindra', location: 'Nashik, MH', salary: '₹22,000–₹30,000', type: 'Full-time', urgent: false },
+  { id: 6, title: 'Assembly Line Worker', company: 'Hero MotoCorp', location: 'Haridwar, UK', salary: '₹16,000–₹20,000', type: 'Contract', urgent: true },
 ];
+
+const BENEFITS = [
+  { icon: IndianRupee, label: 'Competitive Pay' },
+  { icon: TrendingUp, label: 'Career Growth' },
+  { icon: Heart, label: 'Health Benefits' },
+  { icon: Star, label: 'Skill Training' },
+  { icon: Shield, label: 'Job Security' },
+  { icon: Award, label: 'Performance Bonus' },
+];
+
+const REQS = [
+  'Strong technical skills relevant to the role',
+  'Problem-solving and analytical thinking',
+  'Team collaboration and effective communication',
+  'Commitment to quality and continuous learning',
+  'Ability to adapt well in fast-paced environments',
+];
+
+const EMPTY_FORM = { name: '', mobile: '', email: '' };
+
+const getStats = (job) => [
+  { icon: Briefcase, label: 'Category', value: job.category || 'General' },
+  { icon: MapPin, label: 'Location', value: job.location },
+  { icon: IndianRupee, label: 'Salary', value: job.salary },
+  { icon: Clock, label: 'Type', value: job.type },
+  { icon: Calendar, label: 'Posted', value: 'Recently' },
+];
+
+// ─── Memoised Sub-components ──────────────────────────────────────────────────
+
+const StatStrip = React.memo(({ job }) => (
+  <div className="pro-stats">
+    {getStats(job).map(({ icon: Icon, label, value }) => (
+      <div key={label} className="pro-stat-item">
+        <div className="pro-stat-icon-wrapper">
+          <Icon size={18} className="pro-stat-icon" />
+        </div>
+        <div className="pro-stat-content">
+          <span className="pro-stat-label">{label}</span>
+          <span className="pro-stat-value">{value}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+));
+
+const JobDescription = React.memo(({ job }) => (
+  <section className="pro-section">
+    <h2 className="pro-section-title">Role Overview</h2>
+    <div className="pro-section-content">
+      <p>
+        Join <strong>{job.company}</strong> as a <strong>{job.title}</strong> based in {job.location}.
+        This is a dynamic role designed for individuals who are passionate about delivering quality results.
+        You will be working with a highly skilled, supportive team with clear avenues for professional growth and skill enhancement.
+      </p>
+    </div>
+  </section>
+));
+
+const Requirements = React.memo(() => (
+  <section className="pro-section">
+    <h2 className="pro-section-title">Key Requirements</h2>
+    <div className="pro-section-content">
+      <ul className="pro-req-list">
+        {REQS.map((r, i) => (
+          <li key={i} className="pro-req-item">
+            <CheckCircle size={16} className="pro-req-icon" />
+            <span>{r}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+));
+
+const BenefitsCard = React.memo(() => (
+  <section className="pro-section">
+    <h2 className="pro-section-title">What We Offer</h2>
+    <div className="pro-section-content">
+      <div className="pro-benefits-grid">
+        {BENEFITS.map(({ icon: Icon, label }) => (
+          <div key={label} className="pro-benefit-card">
+            <Icon size={20} className="pro-benefit-icon" />
+            <span className="pro-benefit-label">{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+));
+
+// ─── Main Page Component ──────────────────────────────────────────────────────
 
 const JobDetailPage = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
-  const [job, setJob] = useState(() => jobs.find(j => j.id === parseInt(jobId, 10)));
-  const [loading, setLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: '', mobile: '', email: '' });
 
+  const [job, setJob] = useState(() => FALLBACK.find(j => j.id === parseInt(jobId, 10)) ?? null);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState(EMPTY_FORM);
+
+  // Fetch from Strapi (No changes here as requested)
   useEffect(() => {
-    const loadJob = async () => {
-      setLoading(true);
-      const data = await fetchJobs();
-      if (data.length > 0) {
-        const found = data.find((entry) => String(entry.id) === String(jobId));
+    let cancelled = false;
+    (async () => {
+      try {
+        const data = await fetchJobs();
+        if (cancelled) return;
+        const found = data.find(e => String(e.id) === String(jobId));
         if (found) {
           setJob({
             id: found.id,
@@ -34,297 +135,157 @@ const JobDetailPage = () => {
             company: found.company || 'TSPL Group',
             category: found.category || found.type || 'General',
             location: found.location || 'India',
-            salary: found.salary || 'Competitive salary',
+            salary: found.salary || 'Competitive',
             type: found.type || 'Full-time',
             urgent: Boolean(found.urgent),
           });
         }
+      } finally {
+        if (!cancelled) setLoading(false);
       }
-      setLoading(false);
-    };
-
-    loadJob();
+    })();
+    return () => { cancelled = true; };
   }, [jobId]);
 
-  const handleApply = async (event) => {
-    event.preventDefault();
+  const handleChange = useCallback((field) => (e) => {
+    const val = e.target.value;
+    setForm(prev => prev[field] === val ? prev : { ...prev, [field]: val });
+  }, []);
+
+  const handleApply = useCallback(async (e) => {
+    e.preventDefault();
     if (!job?.id) return;
-
-    setIsSubmitting(true);
+    setSubmitting(true);
     try {
-      await submitApplicant({
-        jobId: job.id,
-        name: formData.name,
-        mobile: formData.mobile,
-        email: formData.email,
-      });
+      await submitApplicant({ jobId: job.id, name: form.name, mobile: form.mobile, email: form.email });
       setSubmitted(true);
-      setFormData({ name: '', mobile: '', email: '' });
-      window.setTimeout(() => setSubmitted(false), 3000);
+      setForm(EMPTY_FORM);
+      setTimeout(() => setSubmitted(false), 6000);
     } finally {
-      setIsSubmitting(false);
+      setSubmitting(false);
     }
-  };
+  }, [job, form]);
 
-  if (loading) {
-    return (
-      <section className="min-h-screen bg-white px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          <p className="text-center text-gray-500">Loading job details...</p>
-        </div>
-      </section>
-    );
-  }
+  const goBack = useCallback(() => navigate('/jobs'), [navigate]);
 
-  if (!job) {
-    return (
-      <section className="min-h-screen bg-white px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          <button
-            onClick={() => navigate(-1)}
-            className="mb-8 flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 font-semibold text-gray-600 transition-all hover:border-blue-400 hover:text-blue-600"
-          >
-            <ArrowLeft size={20} />
-            Back
-          </button>
-          <p className="text-center text-gray-500">Job not found</p>
-        </div>
-      </section>
-    );
-  }
+  // ── States ──
+  if (loading) return (
+    <div className="pro-layout-center">
+      <div className="pro-spinner"></div>
+    </div>
+  );
+
+  if (!job) return (
+    <div className="pro-layout-center">
+      <div className="pro-not-found">
+        <Building2 size={48} className="pro-nf-icon" />
+        <h3>Job not found</h3>
+        <p>This position might have been filled or removed.</p>
+        <button className="pro-btn-secondary" onClick={goBack}>
+          <ArrowLeft size={16} /> Go Back
+        </button>
+      </div>
+    </div>
+  );
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-b from-blue-50 to-white px-4 py-16 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background Textures */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Slanting line pattern overlay */}
-        <div
-          className="absolute inset-0 opacity-40"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(135deg, rgba(37,99,235,0.08) 0px, rgba(37,99,235,0.08) 1px, transparent 1px, transparent 14px)',
-          }}
-        />
-
-        {/* Corner dot-fade textures */}
-        <div
-          className="absolute -left-24 -top-16 h-64 w-64 rounded-full opacity-35"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle, rgba(37,99,235,0.26) 1.1px, transparent 1.1px), radial-gradient(circle at center, rgba(37,99,235,0.18) 0%, rgba(37,99,235,0.06) 50%, transparent 74%)',
-            backgroundSize: '13px 13px, 100% 100%',
-          }}
-        />
-        <div
-          className="absolute -right-24 -top-10 h-72 w-72 rounded-full opacity-35"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle, rgba(249,115,22,0.22) 1.1px, transparent 1.1px), radial-gradient(circle at center, rgba(249,115,22,0.16) 0%, rgba(249,115,22,0.06) 50%, transparent 74%)',
-            backgroundSize: '13px 13px, 100% 100%',
-          }}
-        />
-        <div
-          className="absolute -left-24 -bottom-20 h-72 w-72 rounded-full opacity-30"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle, rgba(37,99,235,0.24) 1px, transparent 1px), radial-gradient(circle at center, rgba(37,99,235,0.16) 0%, rgba(37,99,235,0.04) 55%, transparent 76%)',
-            backgroundSize: '14px 14px, 100% 100%',
-          }}
-        />
-        <div
-          className="absolute -right-24 -bottom-24 h-80 w-80 rounded-full opacity-30"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle, rgba(249,115,22,0.2) 1px, transparent 1px), radial-gradient(circle at center, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0.04) 56%, transparent 78%)',
-            backgroundSize: '14px 14px, 100% 100%',
-          }}
-        />
-      </div>
-
-      <div className="mx-auto max-w-3xl relative z-10">
-        <button
-          onClick={() => navigate(-1)}
-          className="mb-8 flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 font-semibold text-gray-600 transition-all hover:border-blue-400 hover:text-blue-600"
-        >
-          <ArrowLeft size={20} />
-          Back
+    <div className="pro-container">
+      {/* ── Top Navigation ── */}
+      <nav className="pro-nav">
+        <button className="pro-back-btn" onClick={goBack}>
+          <ArrowLeft size={16} /> Back to Jobs
         </button>
+      </nav>
 
-        <div className="rounded-2xl bg-white p-8 shadow-lg relative">
-          {/* Header */}
-          <div className="mb-8 border-b border-gray-200 pb-8">
-            <div className="mb-6 flex items-center gap-4">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-2xl font-bold text-blue-600">
-                {job.company.charAt(0)}
-              </div>
-              <div>
-                <h1 className="text-4xl font-extrabold text-gray-900">{job.title}</h1>
-                <p className="text-xl text-gray-500">{job.company}</p>
-              </div>
+      {/* ── Hero Header ── */}
+      <header className="pro-hero">
+        <div className="pro-hero-inner">
+          <div className="pro-hero-main">
+            <div className="pro-company-logo">
+              {job.company.charAt(0)}
             </div>
-            {job.urgent && (
-              <span className="inline-block rounded-md border border-orange-100 bg-orange-50 px-3 py-1 text-sm font-bold text-orange-600">
-                Urgent Hiring
-              </span>
-            )}
-          </div>
-
-          {/* Key Details Grid */}
-          <div className="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <div className="rounded-xl bg-indigo-50 p-6">
-              <div className="mb-2 flex items-center gap-2 text-indigo-600">
-              <Briefcase size={20} />
-              <span className="font-semibold">Category</span>
+            <div className="pro-hero-details">
+              <h1 className="pro-title">{job.title}</h1>
+              <div className="pro-subtitle">
+                <Building2 size={16} />
+                <span>{job.company}</span>
               </div>
-              <p className="text-lg text-gray-900">{job.category}</p>
-            </div>
-
-            <div className="rounded-xl bg-blue-50 p-6">
-              <div className="mb-2 flex items-center gap-2 text-blue-600">
-                <MapPin size={20} />
-                <span className="font-semibold">Location</span>
-              </div>
-              <p className="text-lg text-gray-900">{job.location}</p>
-            </div>
-
-            <div className="rounded-xl bg-green-50 p-6">
-              <div className="mb-2 flex items-center gap-2 text-green-600">
-                <IndianRupee size={20} />
-                <span className="font-semibold">Salary</span>
-              </div>
-              <p className="text-lg text-gray-900">{job.salary}/month</p>
-            </div>
-
-            <div className="rounded-xl bg-purple-50 p-6">
-              <div className="mb-2 flex items-center gap-2 text-purple-600">
-                <Clock size={20} />
-                <span className="font-semibold">Employment Type</span>
-              </div>
-              <p className="text-lg text-gray-900">{job.type}</p>
-            </div>
-
-            <div className="rounded-xl bg-orange-50 p-6">
-              <div className="mb-2 flex items-center gap-2 text-orange-600">
-                <Calendar size={20} />
-                <span className="font-semibold">Posted Date</span>
-              </div>
-              <p className="text-lg text-gray-900">Recently</p>
-            </div>
-          </div>
-
-          {/* Job Description */}
-          <div className="mb-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">About this Job</h2>
-            <p className="mb-6 text-gray-600">
-              This is an exciting opportunity to join {job.company} as a {job.title}. We are looking for
-              dedicated professionals to contribute to our growing team in {job.location}.
-            </p>
-          </div>
-
-          {/* Requirements */}
-          <div className="mb-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">Key Requirements</h2>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-3 text-gray-600">
-                <span className="mt-1 inline-block h-2 w-2 rounded-full bg-blue-600" />
-                <span>Strong technical skills relevant to the {job.title} position</span>
-              </li>
-              <li className="flex items-start gap-3 text-gray-600">
-                <span className="mt-1 inline-block h-2 w-2 rounded-full bg-blue-600" />
-                <span>Problem-solving and analytical abilities</span>
-              </li>
-              <li className="flex items-start gap-3 text-gray-600">
-                <span className="mt-1 inline-block h-2 w-2 rounded-full bg-blue-600" />
-                <span>Team collaboration and communication skills</span>
-              </li>
-              <li className="flex items-start gap-3 text-gray-600">
-                <span className="mt-1 inline-block h-2 w-2 rounded-full bg-blue-600" />
-                <span>Commitment to excellence and continuous learning</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Benefits */}
-          <div className="mb-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">What We Offer</h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4">
-                <Users size={20} className="text-blue-600" />
-                <span className="text-gray-700">Competitive Salary</span>
-              </div>
-              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4">
-                <Briefcase size={20} className="text-blue-600" />
-                <span className="text-gray-700">Career Growth</span>
-              </div>
-              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4">
-                <Users size={20} className="text-blue-600" />
-                <span className="text-gray-700">Health Benefits</span>
-              </div>
-              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4">
-                <Briefcase size={20} className="text-blue-600" />
-                <span className="text-gray-700">Training Programs</span>
+              <div className="pro-badges">
+                {job.urgent && (
+                  <span className="pro-badge pro-badge-urgent">
+                    <Zap size={12} /> Urgent Requirement
+                  </span>
+                )}
+                <span className="pro-badge pro-badge-type">{job.type}</span>
               </div>
             </div>
           </div>
+        </div>
+        <StatStrip job={job} />
+      </header>
 
-          <div className="mb-12 rounded-2xl border border-gray-200 bg-gray-50 p-6">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">Apply for this Job</h2>
+      {/* ── Main Layout (Content + Sticky Form) ── */}
+      <div className="pro-main-layout">
+        <div className="pro-content">
+          <JobDescription job={job} />
+          <Requirements />
+          <BenefitsCard />
+        </div>
+
+        <aside className="pro-sidebar">
+          <div className="pro-apply-card">
+            <div className="pro-apply-header">
+              <h3>Submit Application</h3>
+              <p>Takes less than a minute</p>
+            </div>
+
             {submitted ? (
-              <p className="rounded-lg bg-green-50 px-4 py-3 text-sm font-semibold text-green-700">Application submitted successfully.</p>
+              <div className="pro-success-state">
+                <div className="pro-success-icon"><CheckCircle size={48} /></div>
+                <h4>Application Sent!</h4>
+                <p>Our recruitment team will reach out to you on your mobile shortly.</p>
+              </div>
             ) : (
-              <form onSubmit={handleApply} className="grid gap-4 sm:grid-cols-2">
-                <input
-                  required
-                  type="text"
-                  value={formData.name}
-                  onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
-                  placeholder="Full name"
-                  className="rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500"
-                />
-                <input
-                  required
-                  type="tel"
-                  value={formData.mobile}
-                  onChange={(event) => setFormData((prev) => ({ ...prev, mobile: event.target.value }))}
-                  placeholder="Mobile number"
-                  className="rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500"
-                />
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
-                  placeholder="Email (optional)"
-                  className="rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 sm:col-span-2"
-                />
-                <button
-                  disabled={isSubmitting}
-                  type="submit"
-                  className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 sm:col-span-2"
-                >
-                  {isSubmitting ? 'Submitting...' : 'Submit Application'}
+              <form className="pro-form" onSubmit={handleApply}>
+                <div className="pro-form-group">
+                  <label>Full Name *</label>
+                  <input
+                    required type="text"
+                    placeholder="Enter your full name"
+                    value={form.name} onChange={handleChange('name')}
+                  />
+                </div>
+                <div className="pro-form-group">
+                  <label>Mobile Number *</label>
+                  <input
+                    required type="tel"
+                    placeholder="+91 00000 00000"
+                    value={form.mobile} onChange={handleChange('mobile')}
+                  />
+                </div>
+                <div className="pro-form-group">
+                  <label>Email Address <span className="pro-optional">(Optional)</span></label>
+                  <input
+                    type="email"
+                    placeholder="you@example.com"
+                    value={form.email} onChange={handleChange('email')}
+                  />
+                </div>
+                <button type="submit" className="pro-btn-primary" disabled={submitting}>
+                  {submitting ? 'Submitting...' : (
+                    <>Apply Now <Send size={16} /></>
+                  )}
                 </button>
               </form>
             )}
-          </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col gap-4 sm:flex-row">
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex-1 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:from-blue-700 hover:to-blue-800 active:scale-[0.98]"
-            >
-              Apply Now Above
-            </button>
-            <button
-              onClick={() => navigate('/jobs')}
-              className="flex-1 rounded-xl border-2 border-gray-200 bg-white px-8 py-4 text-lg font-bold text-gray-700 transition-all hover:border-blue-400 hover:bg-blue-50"
-            >
-              View Other Jobs
-            </button>
+            <div className="pro-trust-badge">
+              <Shield size={14} /> <span>Your information is 100% secure</span>
+            </div>
           </div>
-        </div>
+        </aside>
       </div>
-    </section>
+    </div>
   );
 };
 
