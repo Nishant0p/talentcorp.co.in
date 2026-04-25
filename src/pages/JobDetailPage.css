@@ -1,0 +1,533 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border-light: #e2e8f0;
+
+    --brand-primary: #2563eb;
+    --brand-primary-hover: #1d4ed8;
+    --brand-light: #eff6ff;
+
+    --success: #10b981;
+    --success-bg: #d1fae5;
+    --warning: #f59e0b;
+    --warning-bg: #fef3c7;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-main);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+}
+
+.pro-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ── Utilities ── */
+.pro-layout-center {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-main);
+}
+
+/* ── Navigation ── */
+.pro-nav {
+    padding: 24px 0 0 0;
+}
+
+.pro-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    font-family: inherit;
+}
+
+.pro-back-btn:hover {
+    color: var(--brand-primary);
+}
+
+/* ── Hero Section ── */
+.pro-hero {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.pro-hero-inner {
+    padding: 32px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.pro-hero-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.pro-company-logo {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, var(--brand-primary), #60a5fa);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-md);
+}
+
+.pro-hero-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pro-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-primary);
+}
+
+.pro-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.pro-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.pro-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.pro-badge-urgent {
+    background-color: var(--warning-bg);
+    color: #b45309;
+}
+
+.pro-badge-type {
+    background-color: var(--brand-light);
+    color: var(--brand-primary);
+}
+
+/* ── Stat Strip ── */
+.pro-stats {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #fafafa;
+}
+
+.pro-stat-item {
+    flex: 1;
+    min-width: 150px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-right: 1px solid var(--border-light);
+}
+
+.pro-stat-item:last-child {
+    border-right: none;
+}
+
+.pro-stat-icon-wrapper {
+    background: var(--brand-light);
+    color: var(--brand-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pro-stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.pro-stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pro-stat-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 2px;
+}
+
+/* ── Main Layout ── */
+.pro-main-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+    align-items: start;
+}
+
+.pro-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ── Sections ── */
+.pro-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-sm);
+}
+
+.pro-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.pro-section-content {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.pro-req-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pro-req-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.pro-req-icon {
+    color: var(--success);
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+.pro-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.pro-benefit-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg-main);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.pro-benefit-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--brand-primary);
+}
+
+.pro-benefit-icon {
+    color: var(--brand-primary);
+}
+
+.pro-benefit-label {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* ── Sidebar & Form ── */
+.pro-sidebar {
+    position: sticky;
+    top: 24px;
+}
+
+.pro-apply-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-lg);
+}
+
+.pro-apply-header {
+    margin-bottom: 24px;
+}
+
+.pro-apply-header h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.pro-apply-header p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.pro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pro-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pro-form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.pro-optional {
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.pro-form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--bg-main);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    color: var(--text-primary);
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.pro-form-group input:focus {
+    outline: none;
+    background: var(--bg-card);
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px var(--brand-light);
+}
+
+.pro-btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    background: var(--brand-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-family: inherit;
+    margin-top: 8px;
+}
+
+.pro-btn-primary:hover:not(:disabled) {
+    background: var(--brand-primary-hover);
+}
+
+.pro-btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.pro-trust-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ── Success State ── */
+.pro-success-state {
+    text-align: center;
+    padding: 32px 16px;
+}
+
+.pro-success-icon {
+    color: var(--success);
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.pro-success-state h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.pro-success-state p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* ── Fallback States ── */
+.pro-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-light);
+    border-top-color: var(--brand-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.pro-not-found {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.pro-nf-icon {
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.pro-not-found h3 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.pro-not-found p {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.pro-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pro-btn-secondary:hover {
+    background: var(--bg-main);
+    border-color: #cbd5e1;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── Responsive adjustments ── */
+@media (max-width: 968px) {
+    .pro-main-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .pro-sidebar {
+        position: static;
+    }
+
+    .pro-stats {
+        flex-direction: column;
+    }
+
+    .pro-stat-item {
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .pro-stat-item:last-child {
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .pro-hero-main {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .pro-badges {
+        justify-content: center;
+    }
+}

@@ -72,23 +72,24 @@ const styles = `
     gap: 20px;
   }
 
-  /* 3D Card Logic */
+  /* Card Logic */
   .card-container {
-    perspective: 1500px;
     cursor: pointer;
     width: 100%;
+    position: relative;
+    perspective: 1000px;
   }
 
   .card-wrapper {
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     width: 100%;
     height: 100%;
+    transition: transform 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+    transform-style: preserve-3d;
+    will-change: transform;
   }
 
   .card-container:hover .card-wrapper {
-    transform: rotateY(-20deg) rotateX(8deg);
+    transform: translateZ(30px) scale(1.01);
   }
 
   /* Layers Base */
@@ -97,8 +98,9 @@ const styles = `
     background: rgba(20, 30, 50, 0.85);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(135, 206, 235, 0.2);
-    overflow: hidden;
-    transition: all 0.6s ease;
+    overflow: visible;
+    transition: border-color 0.25s cubic-bezier(0.0, 0.0, 0.2, 1),
+                box-shadow 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
     height: 100%;
   }
 
@@ -116,19 +118,16 @@ const styles = `
 
   /* Hover Animations */
   .card-container:hover .layer-1 {
-    opacity: 0.6;
-    transform: translateZ(15px) translateX(25px);
+    opacity: 0;
   }
 
   .card-container:hover .layer-2 {
-    opacity: 0.3;
-    transform: translateZ(-15px) translateX(50px);
+    opacity: 0;
   }
 
   .card-container:hover .main-layer {
-    transform: translateZ(40px);
-    border-color: rgba(135, 206, 235, 0.6);
-    box-shadow: -10px 15px 30px rgba(0, 0, 0, 0.8);
+    border-color: rgba(135, 206, 235, 0.5);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 24px rgba(135, 206, 235, 0.12);
   }
 
   /* Content Styling */
@@ -142,10 +141,25 @@ const styles = `
 
   .profile-img {
     width: 100%;
-    height: 200px;
+    height: 250px;
     object-fit: cover;
+    object-position: top;
     filter: grayscale(10%) brightness(0.9);
     border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+    border-radius: 10px 10px 0 0;
+    transition: transform 0.25s cubic-bezier(0.0, 0.0, 0.2, 1),
+                box-shadow 0.25s cubic-bezier(0.0, 0.0, 0.2, 1),
+                filter 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+    position: relative;
+    z-index: 3;
+    transform-origin: center top;
+    will-change: transform;
+  }
+
+  .card-container:hover .profile-img {
+    transform: scale(1.08);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(135, 206, 235, 0.2);
+    filter: grayscale(0%) brightness(1.06);
   }
 
   .big-card .profile-img {
@@ -227,18 +241,18 @@ function VisionarySection() {
     name: "Dr. Mehboob Sayyad", 
     role: "Founder & Chairman", 
     desc: "Visionary leader driving innovation in talent acquisition. Dedicated to building transformative relationships.", 
-    img: "https://i.pinimg.com/736x/f6/55/bd/f655bdeb413bd8366df948e23520ef3e.jpg" 
+    img: "/visionaries/Untitled design (3).png" 
   };
 
   const teamMembers = [
     // Upar ke 4
-    { name: "Sunil Chavan", role: "Director", img: "https://i.pinimg.com/736x/10/0d/d6/100dd68bb6efd1d013c75be5f0570958.jpg" },
-    { name: "Deshbhushan Jain", role: "Director", img: "https://i.pinimg.com/736x/ce/34/57/ce34572a8697115400d550d5bd330aae.jpg" },
-    { name: "Vikas Patil", role: "Director", img: "https://i.pinimg.com/736x/eb/e4/97/ebe49719a0ec0a81c4370153e9a1eaac.jpg" },
-    { name: "Prakash Rathod", role: "Director", img: "https://i.pinimg.com/736x/d4/77/21/d47721308ff9e92cc546bc57c28c8276.jpg" },
+    { name: "Sunil Chavan", role: "Director", img: "/visionaries/Untitled design (4).png" },
+    { name: "Deshbhushan Jain", role: "Director", img: "/visionaries/Untitled design (5).png" },
+    { name: "Vikas Patil", role: "Director", img: "/visionaries/Untitled design (6).png" },
+    { name: "Prakash Rathod", role: "Director", img: "/visionaries/Untitled design (7).png" },
     // Niche ke 4
-    { name: "Sarang Chavan", role: "Director", img: "https://i.pinimg.com/736x/19/4b/ad/194bad38e54e07a04fabc16aadf21666.jpg" },
-    { name: "Babasaheb Khillari", role: "Director", img: "https://i.pravatar.cc/400?img=12" },
+    { name: "Sarang Chavan", role: "Director", img: "/visionaries/Untitled design (14).png" },
+    { name: "Babasaheb Khillari", role: "Director", img: "/visionaries/Untitled design (15).png" },
     { name: "Dheepan Chakravarthi", role: "Director", img: "https://i.pravatar.cc/400?img=33" }
     
   ];
@@ -352,7 +366,7 @@ function OurStory({ resolveAsset }) {
 
 				<div className="mb-20 grid items-center gap-12 lg:grid-cols-2">
 					<div className="relative h-[400px] overflow-hidden rounded-3xl bg-white shadow-2xl">
-						<img src={whoWeAreAsset.url} alt={whoWeAreAsset.alt} className="h-full w-full object-contain p-6 sm:p-8" />
+						<img src={whoWeAreAsset.url} alt={whoWeAreAsset.alt} className="h-full w-full object-cover p-6 sm:p-8" />
 						<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/40 to-transparent" />
 					</div>
 

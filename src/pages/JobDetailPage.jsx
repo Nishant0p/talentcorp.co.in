@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   ArrowLeft, MapPin, IndianRupee, Clock, Briefcase, Calendar,
   CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2
@@ -112,7 +112,6 @@ const BenefitsCard = React.memo(() => (
 
 const JobDetailPage = () => {
   const { jobId } = useParams();
-  const navigate = useNavigate();
 
   const [job, setJob] = useState(() => FALLBACK.find(j => j.id === parseInt(jobId, 10)) ?? null);
   const [loading, setLoading] = useState(true);
@@ -166,7 +165,9 @@ const JobDetailPage = () => {
     }
   }, [job, form]);
 
-  const goBack = useCallback(() => navigate('/jobs'), [navigate]);
+  const goBack = useCallback(() => {
+    window.location.href = '/jobs';
+  }, []);
 
   // ── States ──
   if (loading) return (
