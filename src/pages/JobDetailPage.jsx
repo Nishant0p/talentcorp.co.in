@@ -156,7 +156,21 @@ const JobDetailPage = () => {
     if (!job?.id) return;
     setSubmitting(true);
     try {
-      await submitApplicant({ jobId: job.id, name: form.name, mobile: form.mobile, email: form.email });
+      await submitApplicant({
+        jobId: job.id,
+        name: form.name,
+        mobile: form.mobile,
+        email: form.email,
+        googleSheetsPayload: {
+          service: `Job Application - ${job.title || 'Open Position'}`,
+          message: [
+            `Job ID: ${String(job.id || '')}`,
+            `Job Title: ${job.title || ''}`,
+            `Company: ${job.company || ''}`,
+            `Location: ${job.location || ''}`,
+          ].join(' | '),
+        },
+      });
       setSubmitted(true);
       setForm(EMPTY_FORM);
       setTimeout(() => setSubmitted(false), 6000);

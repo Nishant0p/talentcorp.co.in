@@ -1,10 +1,9 @@
-import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Shield, Users, Lightbulb, HandHeart, Award, Mail } from 'lucide-react'
+import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Shield, Users, Lightbulb, HandHeart, Award } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 import React from 'react';
-import { motion } from 'framer-motion';
 
 const milestones = [
 	{ year: '2014', title: 'Company Founded', description: 'Started with a small team of 5 people' },
@@ -37,7 +36,7 @@ function VisionarySection() {
 		name: "Dr. Mehboob Sayyad,",
 		role: "Founder & Chairman",
 		img: "/visionaries/Untitled design (3).png",
-		bio: "Driving the future of web innovation."
+		bio: "Visionary leader driving innovation and excellence. Committed to building a future-proof organization through strategic growth and integrity."
 	};
 
 	const directors = [
@@ -51,104 +50,86 @@ function VisionarySection() {
 		//{ name: "Rohan Desai", role: "Board Director", img: "https://i.pravatar.cc/400?img=52" },
 	];
 
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-	};
-
-	const itemVariants = {
-		hidden: { y: 20, opacity: 0 },
-		visible: { y: 0, opacity: 1 }
-	};
-
 	return (
-		<section className="relative bg-[#0f172a] text-white py-24 px-4 overflow-hidden">
-			<div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
-				<div className="absolute top-[-10%] left-[20%] w-72 h-72 bg-blue-600/20 blur-[120px] rounded-full" />
-				<div className="absolute bottom-[10%] right-[20%] w-96 h-96 bg-purple-600/10 blur-[150px] rounded-full" />
+		<section className="relative overflow-hidden bg-slate-50 px-4 py-20 text-slate-800 lg:px-8">
+			<div className="pointer-events-none absolute inset-0">
+				<div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-[#2563EB]/10 blur-3xl" />
+				<div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-[#F97316]/10 blur-3xl" />
 			</div>
 
-			<div className="max-w-7xl mx-auto relative z-10">
-				<div className="text-center mb-20">
-					<motion.h2
-						initial={{ opacity: 0, y: -20 }}
-						animate={{ opacity: 1, y: 0 }}
-						className="text-blue-500 font-bold tracking-widest uppercase text-sm mb-4"
-					>
-						Our Leadership
-					</motion.h2>
-					<motion.h1
-						initial={{ opacity: 0, y: -20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: 0.1 }}
-						className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight"
-					>
-						MEET OUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">VISIONARIES</span>
-					</motion.h1>
-					<motion.p
-						initial={{ opacity: 0, y: -20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: 0.2 }}
-						className="mt-6 max-w-2xl mx-auto text-white/70"
-					>
-						Discover the team shaping the mission and delivering exceptional results for our partners and communities.
-					</motion.p>
+			<div className="relative z-10 mx-auto max-w-6xl">
+				<header className="mb-12 flex items-center justify-between border-b border-slate-200 pb-4">
+					<h2 className="text-sm font-bold uppercase tracking-widest text-orange-600">About Us</h2>
+					<h3 className="text-center text-lg font-black uppercase tracking-tight text-slate-700 md:text-2xl">The Corporate Hierarchy</h3>
+					<div className="space-y-1" aria-hidden="true">
+						<div className="h-0.5 w-6 bg-orange-500" />
+						<div className="h-0.5 w-6 bg-orange-500" />
+					</div>
+				</header>
+
+				<div className="mx-auto mb-16 max-w-4xl">
+					<div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-orange-500 via-orange-400 to-blue-900 p-1 shadow-lg shadow-slate-300/30">
+						<div className="flex flex-col items-center gap-8 rounded-[22px] bg-white/10 p-8 backdrop-blur-sm md:flex-row">
+							<div className="h-40 w-40 shrink-0 overflow-hidden rounded-2xl border-4 border-white/20 bg-slate-200 shadow-lg md:h-44 md:w-44">
+								<img src={founder.img} alt={founder.name} className="h-full w-full object-cover" />
+							</div>
+							<div className="text-center text-white md:text-left">
+								<p className="mb-1 text-sm font-semibold uppercase tracking-[0.2em] text-blue-100">Founder</p>
+								<h3 className="mb-1 text-2xl font-bold md:text-3xl">{founder.name}</h3>
+								<p className="mb-3 text-orange-100">{founder.role}</p>
+								<p className="mb-6 max-w-md leading-relaxed text-blue-50">{founder.bio}</p>
+								<button type="button" className="rounded-full bg-orange-500 px-6 py-2 text-sm font-semibold text-white shadow-md">
+									View Profile
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
 
-				<motion.div
-					initial={{ scale: 0.95, opacity: 0 }}
-					animate={{ scale: 1, opacity: 1 }}
-					transition={{ duration: 0.5 }}
-					className="flex flex-col items-center mb-20"
-				>
-					<div className="group relative">
-						<div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full blur opacity-40 group-hover:opacity-100 transition duration-1000" />
-						<div className="relative bg-slate-900 rounded-full p-2">
-							<img
-								src={founder.img}
-								alt={founder.name}
-								className="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-slate-800"
-							/>
-						</div>
+				<div className="mb-10 flex flex-col items-center">
+					<div className="h-10 w-px bg-orange-300" />
+					<div className="flex items-center gap-4">
+						<div className="h-px w-16 bg-orange-300 md:w-24" />
+						<span className="text-xs font-bold uppercase tracking-[0.3em] text-slate-400">Our Leadership</span>
+						<div className="h-px w-16 bg-orange-300 md:w-24" />
 					</div>
+				</div>
 
-					<div className="mt-8 text-center max-w-xl">
-						<h3 className="text-3xl font-bold">{founder.name}</h3>
-						<p className="text-blue-400 text-lg mb-3">{founder.role}</p>
-						<p className="text-white/75 mb-4">{founder.bio}</p>
-						<div className="flex justify-center gap-4 text-gray-400">
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hover:text-white cursor-pointer transition-colors"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-							<Mail size={20} className="hover:text-white cursor-pointer transition-colors" />
-						</div>
-					</div>
-				</motion.div>
-
-				<motion.div
-					variants={containerVariants}
-					initial="hidden"
-					whileInView="visible"
-					viewport={{ once: true }}
-					className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16"
-				>
-					{directors.map((director, index) => (
-						<motion.div
-							key={index}
-							variants={itemVariants}
-							className="text-center group"
-						>
-							<div className="relative inline-block mb-4">
-								<img
-									src={director.img}
-									alt={director.name}
-									className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
-								/>
-								<div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 group-hover:ring-blue-500/50 transition-all" />
+				<div className="mx-auto max-w-6xl">
+					<div className="mb-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+						{directors.slice(0, 4).map((director) => (
+							<div key={director.name} className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+								<div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-200">
+									<img src={director.img} alt={director.name} className="h-full w-full object-cover" />
+								</div>
+								<div>
+									<h4 className="text-base font-bold leading-tight text-blue-900">{director.name}</h4>
+									<p className="mb-1 text-xs font-semibold uppercase text-orange-500">{director.role}</p>
+									<p className="text-[10px] leading-tight text-slate-400">Experienced in corporate management and strategic planning.</p>
+								</div>
 							</div>
-							<h4 className="text-xl font-semibold group-hover:text-blue-400 transition-colors">{director.name}</h4>
-							<p className="text-gray-500 text-sm">{director.role}</p>
-						</motion.div>
-					))}
-				</motion.div>
+						))}
+					</div>
+
+					<div className="mb-8 flex justify-center">
+						<div className="rounded-full bg-slate-200 px-4 py-1 text-[10px] font-bold uppercase text-slate-500">3 Directors</div>
+					</div>
+
+					<div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
+						{directors.slice(4, 7).map((director) => (
+							<div key={director.name} className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+								<div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-200">
+									<img src={director.img} alt={director.name} className="h-full w-full object-cover" />
+								</div>
+								<div>
+									<h4 className="text-base font-bold leading-tight text-blue-900">{director.name}</h4>
+									<p className="mb-1 text-xs font-semibold uppercase text-orange-500">{director.role}</p>
+									<p className="text-[10px] leading-tight text-slate-400">Experienced in corporate management and strategic planning.</p>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
 			</div>
 		</section>
 	);

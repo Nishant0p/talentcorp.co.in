@@ -26,7 +26,7 @@
 const CONFIG = {
   // Optional: set this to force writes to one exact spreadsheet.
   // Example: '1AbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcd'
-  SPREADSHEET_ID: '1u_waqw6eghaqDRqgwVusmMWcjOwWEHo_cjX4Vei0PLM',
+  SPREADSHEET_ID: '1_597GX2yNMdkfGpD-bCDig5S_-wlxubZLoEQ7zFMQrk',
 
   // Email notifications
   SEND_NOTIFICATIONS: false,
@@ -36,6 +36,11 @@ const CONFIG = {
   // Sheet names
   RESPONSES_SHEET: 'Responses',
   LOGS_SHEET: 'Logs',
+  RESUME_UPLOADS_SHEET: 'ResumeUploads',
+
+  // Optional: Google Drive folder where resumes will be stored.
+  // Keep empty to save in My Drive root.
+  DRIVE_FOLDER_ID: '1q0Srrc5WNRwwqzf3Avrl8JL_0vtgDAiK',
   
   // Timezone
   TIMEZONE: 'Asia/Kolkata',
@@ -55,6 +60,11 @@ function doPost(e) {
 
     // Always ensure required sheets exist before write
     initializeSheets();
+
+    // Handle resume uploads independently from contact submissions.
+    if (String(data.action || '').toLowerCase() === 'uploadresume') {
+      return handleResumeUpload(data);
+    }
     
     // Validate data
     const validation = validateData(data);
@@ -87,6 +97,99 @@ function doPost(e) {
     
     // Return error response
     return createResponse('error', `Server error: ${error.toString()}`, 500);
+  }
+}
+
+function handleResumeUpload(data) {
+  try {
+    if (!data || !data.fileContentBase64 || !data.fileName) {
+      return createResponse('error', 'Missing resume file data', 400);
+    }
+
+    const safeName = sanitizeFileName(data.fileName);
+    const mimeType = sanitizeString(data.mimeType) || 'application/octet-stream';
+    const decoded = decodeBase64Payload(data.fileContentBase64);
+    const blob = Utilities.newBlob(decoded, mimeType, safeName);
+    const stampedName = `${Utilities.formatDate(new Date(), CONFIG.TIMEZONE, 'yyyyMMdd-HHmmss')}_${safeName}`;
+
+    const folder = resolveDriveFolder();
+
+    const file = folder.createFile(blob).setName(stampedName);
+    const fileUrl = file.getUrl();
+
+    const uploadsSheet = getOrCreateSheet(CONFIG.RESUME_UPLOADS_SHEET);
+    uploadsSheet.appendRow([
+      Utilities.formatDate(new Date(), CONFIG.TIMEZONE, 'dd/MM/yyyy, HH:mm:ss'),
+      sanitizeString(data.fullName),
+      sanitizeString(data.email),
+      sanitizeString(data.phone),
+      sanitizeString(data.jobType),
+      safeName,
+      Number(data.fileSize || 0),
+      file.getId(),
+      fileUrl,
+      sanitizeString(data.source || 'website'),
+    ]);
+
+    logAction('RESUME_UPLOAD_SUCCESS', `File uploaded: ${safeName}`, sanitizeString(data.email));
+    return createResponse('success', 'Resume uploaded to Google Drive', 200);
+  } catch (error) {
+    const errorText = String(error);
+    const hint = errorText.includes('getFolderById') || errorText.includes('DriveApp')
+      ? ' Drive access issue: re-authorize script and verify DRIVE_FOLDER_ID permissions.'
+      : '';
+    logAction('RESUME_UPLOAD_ERROR', `${errorText}${hint}`, sanitizeString(data && data.email));
+    return createResponse('error', `Resume upload failed: ${errorText}${hint}`, 500);
+  }
+}
+
+function resolveDriveFolder() {
+  const configured = String(CONFIG.DRIVE_FOLDER_ID || '').trim();
+  if (!configured) {
+    return DriveApp.getRootFolder();
+  }
+
+  const folderId = extractDriveFolderId(configured);
+  if (!folderId) {
+    logAction('RESUME_UPLOAD_WARNING', 'Invalid DRIVE_FOLDER_ID format. Falling back to root folder.', 'system');
+    return DriveApp.getRootFolder();
+  }
+
+  try {
+    return DriveApp.getFolderById(folderId);
+  } catch (error) {
+    logAction('RESUME_UPLOAD_WARNING', `Folder access failed (${folderId}). Falling back to root folder. ${error}`, 'system');
+    return DriveApp.getRootFolder();
+  }
+}
+
+function extractDriveFolderId(value) {
+  const input = String(value || '').trim();
+  if (!input) return '';
+
+  // Accept both raw folder IDs and full folder URLs.
+  const idMatch = input.match(/[-\w]{25,}/);
+  return idMatch ? idMatch[0] : '';
+}
+
+function decodeBase64Payload(fileContentBase64) {
+  const raw = String(fileContentBase64 || '').trim();
+  if (!raw) {
+    throw new Error('Empty file content');
+  }
+
+  // If a data URL was sent, strip the prefix.
+  const sanitized = raw.includes(',') ? raw.split(',').pop() : raw;
+
+  try {
+    return Utilities.base64Decode(sanitized);
+  } catch (firstError) {
+    // Some clients may send URL-safe base64.
+    try {
+      return Utilities.base64DecodeWebSafe(sanitized);
+    } catch (secondError) {
+      throw new Error(`Base64 decode failed: ${secondError}`);
+    }
   }
 }
 
@@ -228,6 +331,11 @@ function sanitizeString(str) {
   return str.trim().substring(0, 500); // Max 500 chars
 }
 
+function sanitizeFileName(fileName) {
+  const cleaned = String(fileName || 'resume').replace(/[^a-zA-Z0-9._-]/g, '_');
+  return cleaned.slice(0, 120) || 'resume';
+}
+
 // =====================================================
 // SHEET OPERATIONS
 // =====================================================
@@ -277,6 +385,24 @@ function initializeSheets() {
       'Action',
       'Details',
       'Email'
+    ]);
+  }
+
+  // Initialize ResumeUploads sheet
+  let resumeUploadsSheet = ss.getSheetByName(CONFIG.RESUME_UPLOADS_SHEET);
+  if (!resumeUploadsSheet) {
+    resumeUploadsSheet = ss.insertSheet(CONFIG.RESUME_UPLOADS_SHEET);
+    resumeUploadsSheet.appendRow([
+      'Timestamp',
+      'Full Name',
+      'Email',
+      'Phone',
+      'Job Type',
+      'Original File Name',
+      'File Size (Bytes)',
+      'Drive File ID',
+      'Drive File URL',
+      'Source'
     ]);
   }
 }
@@ -436,6 +562,32 @@ function testFormSubmission() {
 function setupSheets() {
   initializeSheets();
   Logger.log('Sheets setup completed!');
+}
+
+/**
+ * Verify Drive access and target folder permissions.
+ * Run this manually from Apps Script editor after updating config.
+ */
+function testDriveFolderAccess() {
+  try {
+    const root = DriveApp.getRootFolder();
+    Logger.log('Drive root access: OK. Root name: ' + root.getName());
+
+    const configured = String(CONFIG.DRIVE_FOLDER_ID || '').trim();
+    if (!configured) {
+      Logger.log('DRIVE_FOLDER_ID is empty; uploads will go to My Drive root.');
+      return;
+    }
+
+    const folderId = extractDriveFolderId(configured);
+    Logger.log('Resolved folder ID: ' + folderId);
+
+    const folder = DriveApp.getFolderById(folderId);
+    Logger.log('Folder access: OK. Folder name: ' + folder.getName());
+  } catch (error) {
+    Logger.log('Drive folder test failed: ' + error);
+    throw error;
+  }
 }
 
 /**

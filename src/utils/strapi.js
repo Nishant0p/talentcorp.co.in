@@ -1,4 +1,5 @@
 export const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL || 'https://backend.tsplgroup.co.in';
+import { submitToGoogleSheet } from './googleSheets';
 
 export const resolveStrapiUrl = (url) => {
   if (!url) return '';
@@ -145,6 +146,20 @@ export const submitLead = async (leadData) => {
   };
   delete normalizedPayload.mobile;
 
+  const googleSheetsPayload = {
+    fullName: normalizedPayload?.name || '',
+    email: normalizedPayload?.email || '',
+    phone: normalizedPayload?.phone || '',
+    service: normalizedPayload?.subject || normalizedPayload?.service || 'Service enquiry',
+    message: normalizedPayload?.message || '',
+    consent: true,
+  };
+
+  const googleSubmitPromise = submitToGoogleSheet(googleSheetsPayload).catch((error) => {
+    console.warn('Google Sheets lead sync failed:', error);
+    return null;
+  });
+
   const response = await fetch(`${STRAPI_BASE_URL}/api/leads`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -152,14 +167,34 @@ export const submitLead = async (leadData) => {
   });
 
   if (!response.ok) {
+    await googleSubmitPromise;
     const responseText = await response.text();
     throw new Error(`Submit failed (${response.status}): ${responseText || 'no response body'}`);
   }
 
-  return response.json();
+  const result = await response.json();
+  await googleSubmitPromise;
+  return result;
 };
 
-export const submitApplicant = async ({ jobId, name, mobile, email }) => {
+export const submitApplicant = async ({ jobId, name, mobile, email, googleSheetsPayload: googleSheetsPayloadOverride, skipGoogleSheet = false }) => {
+  const googleSheetsPayload = {
+    fullName: name || '',
+    email: email || '',
+    phone: mobile || '',
+    service: 'Job application',
+    message: `Job ID: ${String(jobId || '')}`,
+    consent: true,
+    ...(googleSheetsPayloadOverride || {}),
+  };
+
+  const googleSubmitPromise = skipGoogleSheet
+    ? Promise.resolve(null)
+    : submitToGoogleSheet(googleSheetsPayload).catch((error) => {
+      console.warn('Google Sheets applicant sync failed:', error);
+      return null;
+    });
+
   const response = await fetch(`${STRAPI_BASE_URL}/api/applicants`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -174,11 +209,14 @@ export const submitApplicant = async ({ jobId, name, mobile, email }) => {
   });
 
   if (!response.ok) {
+    await googleSubmitPromise;
     const responseText = await response.text();
     throw new Error(`Applicant submit failed (${response.status}): ${responseText || 'no response body'}`);
   }
 
-  return response.json();
+  const result = await response.json();
+  await googleSubmitPromise;
+  return result;
 };
 
 export const getApplicantsExportUrl = (jobId, clearAfterDownload = false) => {

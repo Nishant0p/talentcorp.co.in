@@ -11,9 +11,9 @@
  */
 export const submitToGoogleSheet = async (formData) => {
   const GOOGLE_SHEETS_URL =
-    'https://script.google.com/macros/s/AKfycbyCBjRRmEES-x4jYYb0RoMxur2LUbYPxBrfdwfXRUf--3mRNpP3BnUCk6LTKtSlqVyYhQ/exec' ||
     import.meta.env.VITE_GOOGLE_SHEETS_URL?.trim() ||
-    import.meta.env.NEXT_PUBLIC_GOOGLE_SHEETS_URL?.trim();
+    import.meta.env.NEXT_PUBLIC_GOOGLE_SHEETS_URL?.trim() ||
+    'https://script.google.com/macros/s/AKfycbzuOOUsz4ArLU-oYOQ3n3GL7ddtr5sFkIhXJbj6LJ1qas4c5FgUcwSHkoqnim6doJwQwQ/exec';
   const submittedAt = new Date().toISOString();
   
   if (!GOOGLE_SHEETS_URL) {
@@ -116,6 +116,78 @@ export const submitToGoogleSheet = async (formData) => {
       };
     }
   }
+};
+
+const readFileAsBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = String(reader.result || '');
+      const commaIndex = result.indexOf(',');
+      if (commaIndex === -1) {
+        reject(new Error('Invalid file encoding')); 
+        return;
+      }
+      resolve(result.slice(commaIndex + 1));
+    };
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'));
+    };
+    reader.readAsDataURL(file);
+  });
+
+/**
+ * Upload resume to Google Drive via Apps Script Web App
+ * @param {File} file - Resume file selected by user
+ * @param {Object} metadata - Optional metadata for traceability
+ * @returns {Promise<Object>} - Upload status
+ */
+export const uploadResumeToGoogleDrive = async (file, metadata = {}) => {
+  const GOOGLE_DRIVE_UPLOAD_URL =
+    import.meta.env.VITE_GOOGLE_DRIVE_UPLOAD_URL?.trim() ||
+    import.meta.env.VITE_GOOGLE_SHEETS_URL?.trim() ||
+    import.meta.env.NEXT_PUBLIC_GOOGLE_DRIVE_UPLOAD_URL?.trim() ||
+    import.meta.env.NEXT_PUBLIC_GOOGLE_SHEETS_URL?.trim() ||
+    'https://script.google.com/macros/s/AKfycbzuOOUsz4ArLU-oYOQ3n3GL7ddtr5sFkIhXJbj6LJ1qas4c5FgUcwSHkoqnim6doJwQwQ/exec';
+
+  if (!file) {
+    return { status: 'skipped', message: 'No resume selected' };
+  }
+
+  if (!GOOGLE_DRIVE_UPLOAD_URL) {
+    return { status: 'skipped', message: 'Google Drive upload URL not configured' };
+  }
+
+  const base64Content = await readFileAsBase64(file);
+  const payload = {
+    action: 'uploadResume',
+    fileName: String(file.name || 'resume'),
+    mimeType: String(file.type || 'application/octet-stream'),
+    fileSize: Number(file.size || 0),
+    fileContentBase64: base64Content,
+    fullName: String(metadata.fullName || ''),
+    email: String(metadata.email || ''),
+    phone: String(metadata.phone || ''),
+    jobType: String(metadata.jobType || ''),
+    source: 'jobs-page',
+  };
+
+  // Use text/plain + no-cors to keep the request browser-compatible for Apps Script web apps.
+  await fetch(GOOGLE_DRIVE_UPLOAD_URL, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8',
+    },
+    mode: 'no-cors',
+    keepalive: false,
+  });
+
+  return {
+    status: 'queued',
+    message: 'Resume upload request sent. Confirm in Apps Script Logs/ResumeUploads sheet.',
+    fileName: payload.fileName,
+  };
 };
 
 const submitViaHiddenForm = (url, payload) => {

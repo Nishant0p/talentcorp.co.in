@@ -29,6 +29,7 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { fetchJobs, submitLead } from '../utils/strapi';
+import { uploadResumeToGoogleDrive } from '../utils/googleSheets';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
 
 const allJobs = [
@@ -842,9 +843,14 @@ function JobsListing({ filters, searchQuery, jobs, loading }) {
 }
 
 function ApplyCTA() {
+	const MAX_RESUME_SIZE_BYTES = 5 * 1024 * 1024;
+	const ALLOWED_RESUME_EXTENSIONS = ['pdf', 'doc', 'docx'];
+
 	const [isVisible, setIsVisible] = useState(false);
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [resumeFile, setResumeFile] = useState(null);
+	const [resumeStatusNote, setResumeStatusNote] = useState('');
 	const sectionRef = useRef(null);
 	const [formData, setFormData] = useState({
 		name: '',
@@ -867,20 +873,68 @@ function ApplyCTA() {
 		return () => observer.disconnect();
 	}, []);
 
+	const onResumeChange = (event) => {
+		const file = event.target.files?.[0] || null;
+		if (!file) {
+			setResumeFile(null);
+			setResumeStatusNote('');
+			return;
+		}
+
+		const extension = String(file.name || '').split('.').pop()?.toLowerCase() || '';
+		if (!ALLOWED_RESUME_EXTENSIONS.includes(extension)) {
+			setResumeFile(null);
+			setResumeStatusNote('Please upload a PDF or Word document (.pdf, .doc, .docx).');
+			event.target.value = '';
+			return;
+		}
+
+		if (file.size > MAX_RESUME_SIZE_BYTES) {
+			setResumeFile(null);
+			setResumeStatusNote('Resume file is too large. Max size is 5MB.');
+			event.target.value = '';
+			return;
+		}
+
+		setResumeFile(file);
+		setResumeStatusNote(`Selected: ${file.name}`);
+	};
+
 	const submitForm = async (event) => {
 		event.preventDefault();
 		setIsSubmitting(true);
+		setResumeStatusNote((prev) => (prev && !prev.startsWith('Selected:') ? prev : ''));
 
 		try {
+			let resumeLine = 'Resume: Not provided';
+			if (resumeFile) {
+				const uploadResult = await uploadResumeToGoogleDrive(resumeFile, {
+					fullName: formData.name,
+					email: formData.email,
+					phone: formData.phone,
+					jobType: formData.jobType,
+				});
+
+				if (uploadResult?.status === 'success' || uploadResult?.status === 'queued') {
+					resumeLine = `Resume: Upload request sent (${resumeFile.name})`;
+					setResumeStatusNote(uploadResult?.message || 'Resume upload request sent.');
+				} else {
+					resumeLine = `Resume: Upload failed (${resumeFile.name})`;
+					setResumeStatusNote(uploadResult?.message || 'Resume upload failed.');
+				}
+			}
+
 			await submitLead({
 				name: formData.name,
 				phone: formData.phone,
 				email: formData.email,
 				subject: `Jobs page interest${formData.jobType ? ` - ${formData.jobType}` : ''}`,
-				message: `Experience: ${formData.experience || 'N/A'}\nPreferred role: ${formData.jobType || 'N/A'}\n${formData.message || ''}`,
+				message: `Experience: ${formData.experience || 'N/A'}\nPreferred role: ${formData.jobType || 'N/A'}\n${resumeLine}\n${formData.message || ''}`,
 			});
 
 			setIsSubmitted(true);
+			setResumeFile(null);
+			setResumeStatusNote('');
 			setFormData({
 				name: '',
 				phone: '',
@@ -890,6 +944,8 @@ function ApplyCTA() {
 				message: '',
 			});
 			window.setTimeout(() => setIsSubmitted(false), 3000);
+		} catch (error) {
+			setResumeStatusNote(error?.message || 'Submission failed. Please try again.');
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -921,7 +977,7 @@ function ApplyCTA() {
 							</div>
 							<div>
 								<p className="text-xs text-slate-500">Call us</p>
-								<p className="text-lg font-semibold text-slate-900">+91 98765 43210</p>
+								<p className="text-lg font-semibold text-slate-900">+91 9561504911</p>
 							</div>
 						</div>
 						<div className="flex items-center gap-4 rounded-xl bg-emerald-50 p-4">
@@ -930,7 +986,7 @@ function ApplyCTA() {
 							</div>
 							<div>
 								<p className="text-xs text-slate-500">Email us</p>
-								<p className="text-lg font-semibold text-slate-900">jobs@tsplgroup.com</p>
+								<p className="text-lg font-semibold text-slate-900">info@tsplgroup.in</p>
 							</div>
 						</div>
 						<div className="flex items-center gap-4 rounded-xl bg-orange-50 p-4">
@@ -969,7 +1025,7 @@ function ApplyCTA() {
 												type="text"
 												value={formData.name}
 												onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
-												className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm outline-none focus:border-blue-400"
+												className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-400"
 												placeholder="Your name"
 											/>
 										</div>
@@ -983,7 +1039,7 @@ function ApplyCTA() {
 												type="tel"
 												value={formData.phone}
 												onChange={(event) => setFormData((prev) => ({ ...prev, phone: event.target.value }))}
-												className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm outline-none focus:border-blue-400"
+												className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-400"
 												placeholder="+91 XXXXX XXXXX"
 											/>
 										</div>
@@ -996,7 +1052,7 @@ function ApplyCTA() {
 												type="email"
 												value={formData.email}
 												onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
-												className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm outline-none focus:border-blue-400"
+												className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-400"
 												placeholder="you@example.com"
 											/>
 										</div>
@@ -1036,11 +1092,19 @@ function ApplyCTA() {
 
 								<div>
 									<label className="mb-2 block text-sm font-medium text-slate-700">Upload Resume (Optional)</label>
-									<div className="cursor-pointer rounded-xl border-2 border-dashed border-slate-200 p-5 text-center transition hover:border-blue-400">
+									<label htmlFor="jobs-resume-file" className="block cursor-pointer rounded-xl border-2 border-dashed border-slate-200 p-5 text-center transition hover:border-blue-400">
+										<input
+											id="jobs-resume-file"
+											type="file"
+											accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+											className="hidden"
+											onChange={onResumeChange}
+										/>
 										<Upload className="mx-auto mb-2 h-7 w-7 text-slate-400" />
-										<p className="text-sm text-slate-600">Click to upload or drag and drop</p>
+										<p className="text-sm text-slate-600">Click to upload resume</p>
 										<p className="mt-1 text-xs text-slate-400">PDF, DOC up to 5MB</p>
-									</div>
+									</label>
+									{resumeStatusNote ? <p className="mt-2 text-xs text-slate-500">{resumeStatusNote}</p> : null}
 								</div>
 
 								<button disabled={isSubmitting} type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3.5 text-base font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70">
