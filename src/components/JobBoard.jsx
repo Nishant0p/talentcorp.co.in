@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, IndianRupee, Clock, ArrowRight, Filter } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { fetchJobs } from '../utils/strapi';
 
 const fallbackJobs = [
@@ -15,12 +15,41 @@ const fallbackJobs = [
 
 const filters = ['All Jobs', 'Apprenticeship', 'Full-time', 'Contract', 'Part-time'];
 
+const normalizeType = (value) => String(value || '').trim().toLowerCase();
+
+const toNumber = (value) => {
+  if (value === null || value === undefined || value === '') return null;
+  const numeric = Number(String(value).replace(/,/g, ''));
+  return Number.isFinite(numeric) ? numeric : null;
+};
+
+const formatSalaryFromJob = (job) => {
+  const salaryText = String(job?.salary || '').trim();
+  if (salaryText) return salaryText;
+
+  const min = toNumber(job?.salaryMin ?? job?.minSalary ?? job?.salary_from ?? job?.salaryFrom);
+  const max = toNumber(job?.salaryMax ?? job?.maxSalary ?? job?.salary_to ?? job?.salaryTo);
+
+  if (min !== null && max !== null) {
+    return `INR ${min.toLocaleString('en-IN')} - INR ${max.toLocaleString('en-IN')}`;
+  }
+  if (min !== null) {
+    return `INR ${min.toLocaleString('en-IN')}+`;
+  }
+  if (max !== null) {
+    return `Up to INR ${max.toLocaleString('en-IN')}`;
+  }
+
+  return 'Salary on request';
+};
+
 const JobBoard = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState('All Jobs');
   const [query, setQuery] = useState('');
-  const [jobs, setJobs] = useState(fallbackJobs);
+  const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const loadJobs = async () => {
@@ -33,10 +62,12 @@ const JobBoard = () => {
           company: job.company || '',
         category: job.category || job.type || '',
           location: job.location || '',
-          salary: job.salary || '',
+          salary: formatSalaryFromJob(job),
           type: job.type || '',
           urgent: job.urgent || false,
         })));
+      } else {
+        setJobs(fallbackJobs);
       }
       setLoading(false);
     };
@@ -45,12 +76,12 @@ const JobBoard = () => {
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
-      const jobType = (job.type || '').trim();
-      if (jobType.toLowerCase() === 'overseas') {
+      const jobType = normalizeType(job.type);
+      if (jobType === 'overseas') {
         return false;
       }
 
-      const byType = filter === 'All Jobs' || jobType === filter;
+      const byType = normalizeType(filter) === 'all jobs' || jobType === normalizeType(filter);
       const normalized = query.trim().toLowerCase();
       if (!normalized) {
         return byType;
@@ -58,7 +89,7 @@ const JobBoard = () => {
       const haystack = `${job.title} ${job.company} ${job.location} ${job.category} ${jobType}`.toLowerCase();
       return byType && haystack.includes(normalized);
     });
-  }, [filter, query]);
+  }, [jobs, filter, query]);
 
   return (
     <section className="px-0 py-6" id="job-board">
@@ -119,23 +150,23 @@ const JobBoard = () => {
           <motion.div
             key={`${filter}-${query}`}
             className="space-y-3"
-            initial={{ opacity: 0 }}
+            initial={prefersReducedMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            exit={prefersReducedMotion ? {} : { opacity: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0.12 : 0.25 }}
           >
             {filteredJobs.map((job, index) => (
               <motion.article
                 key={job.id}
                 className="rounded-2xl border border-white/80 bg-white/78 p-4 shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition-colors hover:border-blue-300"
-                initial={{ opacity: 0, y: 44 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+                whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                exit={{ opacity: 0, y: -20 }}
-                whileHover={{ y: -4 }}
+                exit={prefersReducedMotion ? {} : { opacity: 0, y: -10 }}
+                whileHover={prefersReducedMotion ? {} : { y: -2 }}
                 transition={{
-                  duration: 0.55,
-                  delay: index * 0.09,
+                  duration: prefersReducedMotion ? 0.15 : 0.35,
+                  delay: prefersReducedMotion ? 0 : Math.min(index * 0.04, 0.16),
                   ease: [0.22, 1, 0.36, 1]
                 }}
               >
@@ -158,7 +189,7 @@ const JobBoard = () => {
                     </span>
                     <span className="inline-flex items-center gap-1.5">
                       <IndianRupee size={15} className="text-slate-400" />
-                      {job.salary}/month
+                      {job.salary}
                     </span>
                     <span className="inline-flex items-center gap-1.5">
                       <Clock size={15} className="text-slate-400" />
@@ -181,7 +212,7 @@ const JobBoard = () => {
           </motion.div>
         </AnimatePresence>
 
-        {filteredJobs.length === 0 && (
+        {!loading && filteredJobs.length === 0 && (
           <p className="mt-8 text-center text-slate-500">No jobs found for your current search/filter.</p>
         )}
 

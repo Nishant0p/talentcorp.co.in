@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchStrengths, extractMediaUrl } from '../utils/strapi';
@@ -95,6 +95,7 @@ export default function StrengthsAccordion() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [strengths, setStrengths] = useState(fallbackStrengths);
   const [loading, setLoading] = useState(true);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const loadStrengths = async () => {
@@ -134,14 +135,12 @@ export default function StrengthsAccordion() {
               key={item.id}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              initial={{ opacity: 0, y: 68 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+              whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.28 }}
-              transition={{ duration: 0.65, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: prefersReducedMotion ? 0.15 : 0.35, delay: prefersReducedMotion ? 0 : index * 0.03, ease: [0.22, 1, 0.36, 1] }}
               className={`relative cursor-pointer overflow-hidden rounded-3xl border border-gray-100 bg-[#f8f9fa] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                 hoveredIndex === index ? 'lg:flex-[4]' : 'lg:flex-[1]'
-              } ${
-                hoveredIndex !== null && hoveredIndex !== index ? 'opacity-50 grayscale' : 'opacity-100'
               }`}
               style={buildCardTintStyle(item.color, hoveredIndex === index)}
             >
@@ -153,13 +152,10 @@ export default function StrengthsAccordion() {
               />
               {hoveredIndex === index && (
                 <>
-                  <motion.img
+                  <img
                     src={item.image}
                     alt={item.title}
-                    className="absolute inset-0 h-full w-full object-cover"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.3 }}
-                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0 h-full w-full object-cover opacity-25 transition-opacity duration-300"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-900/60 via-gray-900/20 to-transparent" />
                   <div
@@ -235,11 +231,6 @@ export default function StrengthsAccordion() {
                 </div>
               </div>
 
-              {hoveredIndex === index && (
-                <div
-                  className={`clip-path-custom pointer-events-none absolute right-0 top-0 h-full w-1/2 opacity-5 ${item.color}`}
-                />
-              )}
             </motion.div>
           ))}
         </div>

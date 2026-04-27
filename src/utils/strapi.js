@@ -26,15 +26,63 @@ export const normalizeStrapiCollection = (data) => {
 
 export const extractMediaUrl = (media) => {
   if (!media) return '';
+  const variants = extractMediaVariants(media);
+  const isSmallViewport = typeof window !== 'undefined' && window.innerWidth <= 768;
+
+  if (isSmallViewport) {
+    return variants.medium || variants.small || variants.thumbnail || variants.large || variants.original || '';
+  }
+
+  return variants.large || variants.medium || variants.small || variants.original || variants.thumbnail || '';
+};
+
+export const extractMediaVariants = (media) => {
+  if (!media) {
+    return {
+      thumbnail: '',
+      small: '',
+      medium: '',
+      large: '',
+      original: '',
+      low: '',
+      high: '',
+    };
+  }
+
+  if (typeof media === 'string') {
+    const url = resolveStrapiUrl(media);
+    return {
+      thumbnail: url,
+      small: url,
+      medium: url,
+      large: url,
+      original: url,
+      low: url,
+      high: url,
+    };
+  }
 
   const node = media?.data?.attributes || media?.data || media;
-  const isSmallViewport = typeof window !== 'undefined' && window.innerWidth <= 768;
-  const optimizedCandidate = isSmallViewport
-    ? node?.formats?.medium?.url || node?.formats?.small?.url || node?.formats?.thumbnail?.url || node?.formats?.large?.url
-    : node?.formats?.large?.url || node?.formats?.medium?.url || node?.formats?.small?.url || node?.formats?.thumbnail?.url;
+  const formats = node?.formats || {};
 
-  const candidate = optimizedCandidate || node?.url || media?.url || media;
-  return resolveStrapiUrl(candidate);
+  const thumbnail = resolveStrapiUrl(formats?.thumbnail?.url || '');
+  const small = resolveStrapiUrl(formats?.small?.url || '');
+  const medium = resolveStrapiUrl(formats?.medium?.url || '');
+  const large = resolveStrapiUrl(formats?.large?.url || '');
+  const original = resolveStrapiUrl(node?.url || media?.url || '');
+
+  const low = thumbnail || small || medium || large || original;
+  const high = large || medium || small || original || thumbnail;
+
+  return {
+    thumbnail,
+    small,
+    medium,
+    large,
+    original,
+    low,
+    high,
+  };
 };
 
 const fetchJson = async (path) => {
@@ -44,6 +92,10 @@ const fetchJson = async (path) => {
   }
   return response.json();
 };
+
+let jobsCache = null;
+let jobsCacheAt = 0;
+const JOBS_CACHE_TTL_MS = 60 * 1000;
 
 const getPluralFallbackPath = (path) => {
   const [pathname, queryString = ''] = path.split('?');
@@ -96,8 +148,20 @@ export const fetchSingleType = async (path) => {
   }
 };
 
-export const fetchJobs = async () =>
-  fetchCollection('/api/jobs?sort=createdAt:asc,id:asc&pagination[pageSize]=50&populate=photo');
+export const fetchJobs = async ({ force = false } = {}) => {
+  const now = Date.now();
+  if (!force && jobsCache && now - jobsCacheAt < JOBS_CACHE_TTL_MS) {
+    return jobsCache;
+  }
+
+  const jobs = await fetchCollection(
+    '/api/jobs?filters[publishedAt][$notNull]=true&sort=createdAt:asc,id:asc&pagination[pageSize]=50&populate=*'
+  );
+
+  jobsCache = jobs;
+  jobsCacheAt = now;
+  return jobs;
+};
 export const fetchNews = async () => fetchCollection('/api/news-events?sort=order:asc,date:desc&pagination[pageSize]=100&populate=image');
 export const fetchPageAssets = async () =>
   fetchCollection('/api/page-assets?sort=order:asc,name:asc&pagination[pageSize]=300&populate=image');
@@ -105,7 +169,8 @@ export const fetchStrengths = async () => fetchCollection('/api/strengths?sort=o
 export const fetchHeroSection = async () => fetchSingleType('/api/hero-section?populate=backgroundImage');
 export const fetchHomeStats = async () => fetchCollection('/api/home-stats?sort=order:asc&pagination[pageSize]=20');
 export const fetchHomeHighlights = async () => fetchCollection('/api/home-highlights?sort=order:asc&pagination[pageSize]=20');
-export const fetchWorkforceCards = async () => fetchCollection('/api/workforce-cards?sort=order:asc&pagination[pageSize]=20&populate=image');
+export const fetchWorkforceCards = async () =>
+  fetchCollection('/api/workforce-cards?filters[publishedAt][$notNull]=true&sort=order:asc&pagination[pageSize]=20&populate=image');
 export const fetchFaqItems = async () => fetchCollection('/api/faq-items?sort=order:asc&pagination[pageSize]=50');
 export const fetchTestimonials = async () => fetchCollection('/api/testimonials?filters[reviewType][$ne]=company&sort=order:asc&pagination[pageSize]=50&populate=image');
 export const fetchFooterSettings = async () => fetchSingleType('/api/footer-setting?populate=logo');

@@ -53,12 +53,19 @@ export default function CompanyMarquee() {
     return () => controller.abort();
   }, []);
 
-  const base = React.useMemo(() => {
-    const repeated = Array.from({ length: 6 }, () => logos).flat();
-    return repeated;
-  }, [logos]);
+  const loop = React.useMemo(() => {
+    if (!logos.length) return FALLBACK_LOGOS;
 
-  const loop = React.useMemo(() => [...base, ...base], [base]);
+    // Keep one marquee cycle reasonably sized, then duplicate it once for seamless looping.
+    const minCards = 12;
+    const cycle = [...logos];
+    while (cycle.length < minCards) {
+      cycle.push(...logos);
+    }
+
+    const trimmedCycle = cycle.slice(0, Math.max(minCards, logos.length));
+    return [...trimmedCycle, ...trimmedCycle];
+  }, [logos]);
 
   return (
     <section id="clients" className="relative bg-white px-4 py-16 text-slate-900 sm:px-6 lg:px-8">
@@ -95,7 +102,8 @@ export default function CompanyMarquee() {
                     src={logo.src}
                     alt={logo.alt}
                     className="max-h-9 w-auto max-w-full object-contain"
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                     width="160"
                     height="56"
                     draggable={false}

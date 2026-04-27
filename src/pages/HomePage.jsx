@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import Navbar from '../components/Navbar';
@@ -144,6 +145,7 @@ function DeferredSection({
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const prefersReducedMotion = useReducedMotion();
   const [transition, setTransition] = React.useState(null);
 
   useEffect(() => {
@@ -178,6 +180,18 @@ export default function HomePage() {
   }, []);
 
   const startWhirlpool = React.useCallback((action, event) => {
+    if (prefersReducedMotion) {
+      if (action === 'jobs') {
+        const el = document.getElementById('open-jobs');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        navigate('/b2b');
+      }
+      return;
+    }
+
     const x = event?.clientX ?? window.innerWidth / 2;
     const y = event?.clientY ?? window.innerHeight / 2;
     const maxRadius = Math.hypot(window.innerWidth, window.innerHeight);
@@ -202,7 +216,7 @@ export default function HomePage() {
       if (current.action === 'jobs') {
         const el = document.getElementById('open-jobs');
         if (el) {
-          el.scrollIntoView({ behavior: 'auto', block: 'start' });
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         return { ...current, phase: 'fade' };
       }
@@ -281,7 +295,7 @@ export default function HomePage() {
       </DeferredSection>
 
       <AnimatePresence>
-        {transition && (
+        {transition && !prefersReducedMotion && (
           <div key="whirlpool" className="pointer-events-none fixed inset-0 z-[9999]">
             <div
               className="absolute"
@@ -312,8 +326,8 @@ export default function HomePage() {
                 exit={{ opacity: 0 }}
                 transition={
                   transition.phase === 'expand'
-                    ? { duration: 0.65, ease: [0.22, 1, 0.36, 1] }
-                    : { duration: 0.35, ease: 'easeOut' }
+                    ? { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
+                    : { duration: 0.2, ease: 'easeOut' }
                 }
                 onAnimationComplete={() => {
                   if (transition.phase === 'expand') onOverlayExpandComplete();

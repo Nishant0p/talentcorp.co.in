@@ -1,52 +1,90 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { fetchWorkforceCards, extractMediaUrl } from '../utils/strapi';
+import ProgressiveImage from './ProgressiveImage';
 
-const fallbackCards = [
+const DEFAULT_WORKFORCE_CARDS = [
   {
     cardType: 'job-seeker',
-    eyebrow: 'For Job Seekers',
+    eyebrow: 'FOR JOB SEEKERS',
     title: 'Launch Your Career',
     highlight: 'Career',
-    description: 'Get access to thousands of job opportunities with top companies. We help you build a successful career.',
-    buttonLabel: 'Apply Now',
-    buttonLink: '/contact-us',
-    points: 'We help you find your job easily.\nGet recognized training that works.\nBuild your skills and get a paper.\nMeet great employers directly.',
-    image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80',
+    description: 'Get access to thousands of job opportunities with top companies. We help you build a successful career path.',
+    buttonLabel: 'Find Jobs',
+    buttonLink: '/jobs',
+    points: [
+      'Get access to verified job openings quickly.',
+      'Apply faster with guided support at every step.',
+      'Build long-term growth with trusted employers.',
+    ],
+    image: '',
+    imageMedia: null,
   },
   {
     cardType: 'employer',
-    eyebrow: 'For Employers',
+    eyebrow: 'FOR EMPLOYERS',
     title: 'Build Your Team',
     highlight: 'Team',
-    description: 'Access a vast pool of skilled workers. Use government schemes to reduce costs while building a talented team.',
-    buttonLabel: 'Hire Now',
+    description: 'Recruit high-quality manpower with operational support, onboarding help, and better workforce flexibility.',
+    buttonLabel: 'Hire Talent',
     buttonLink: '/contact-us',
-    points: 'Find pre-screened people, fast.\nWe manage all paperwork for you.\nGet money-saving stipend benefits.\nFind flexible staff just for you.',
-    image: 'https://images.unsplash.com/photo-1542744173-8e7e5381bbb2?auto=format&fit=crop&q=80',
+    points: [
+      'Find pre-screened people, fast.',
+      'We manage all paperwork for you.',
+      'Get money-saving stipend benefits.',
+      'Find flexible staff just for you.',
+    ],
+    image: '',
+    imageMedia: null,
   },
 ];
 
+const normalizePoints = (points, fallbackPoints = []) => {
+  if (Array.isArray(points)) {
+    const rows = points.map((item) => String(item || '').trim()).filter(Boolean);
+    return rows.length ? rows : fallbackPoints;
+  }
+
+  const rows = String(points || '')
+    .split('\n')
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  return rows.length ? rows : fallbackPoints;
+};
+
 const WorkforceSection = () => {
-  const [cards, setCards] = useState(fallbackCards);
+  const [cards, setCards] = useState(DEFAULT_WORKFORCE_CARDS);
 
   useEffect(() => {
     const loadCards = async () => {
       const data = await fetchWorkforceCards();
       if (data.length > 0) {
-        setCards(
-          data.map((item, index) => ({
-            cardType: item.cardType || (index === 0 ? 'job-seeker' : 'employer'),
-            eyebrow: item.eyebrow || fallbackCards[index]?.eyebrow || '',
-            title: item.title || fallbackCards[index]?.title || '',
-            highlight: item.highlight || fallbackCards[index]?.highlight || '',
-            description: item.description || fallbackCards[index]?.description || '',
-            buttonLabel: item.buttonLabel || fallbackCards[index]?.buttonLabel || 'Learn More',
-            buttonLink: item.buttonLink || fallbackCards[index]?.buttonLink || '/contact-us',
-            points: item.points || fallbackCards[index]?.points || '',
-            image: item.image ? extractMediaUrl(item.image) : fallbackCards[index]?.image || '',
-          }))
-        );
+        const incoming = data.map((item, index) => {
+          const fallback = DEFAULT_WORKFORCE_CARDS[index] || DEFAULT_WORKFORCE_CARDS[0];
+          return {
+            cardType: item.cardType || fallback.cardType,
+            eyebrow: item.eyebrow || fallback.eyebrow,
+            title: item.title || fallback.title,
+            highlight: item.highlight || fallback.highlight,
+            description: item.description || fallback.description,
+            buttonLabel: item.buttonLabel || fallback.buttonLabel,
+            buttonLink: item.buttonLink || fallback.buttonLink,
+            points: normalizePoints(item.points, fallback.points),
+            image: item.image ? extractMediaUrl(item.image) : fallback.image,
+            imageMedia: item.image || fallback.imageMedia,
+          };
+        });
+
+        setCards((previous) => {
+          if (incoming.length === 1 && previous.length > 1) {
+            return [incoming[0], previous[1]];
+          }
+          if (incoming.length >= 2) {
+            return incoming.slice(0, 2);
+          }
+          return previous;
+        });
       }
     };
 
@@ -58,26 +96,40 @@ const WorkforceSection = () => {
       <div className="mx-auto max-w-6xl relative">
         <div className="grid items-stretch gap-8 lg:grid-cols-2">
           {cards.map((card, index) => {
-            const accentClass = index === 0 ? 'bg-orange-500/18' : 'bg-blue-600/16';
+            const accentClass = index === 0 ? 'bg-orange-500/22' : 'bg-blue-600/22';
             const pillClass = index === 0 ? 'bg-orange-500' : 'bg-blue-600';
             const textClass = index === 0 ? 'text-orange-500' : 'text-blue-600';
             const listClass = index === 0 ? 'text-orange-500' : 'text-blue-600';
+            const cardBackdropClass = index === 0
+              ? 'bg-gradient-to-br from-orange-50 via-white to-orange-100/70'
+              : 'bg-gradient-to-br from-blue-50 via-white to-blue-100/70';
             const actionClass = index === 0
               ? 'bg-gradient-to-r from-orange-500 to-orange-600 shadow-orange-500/25 hover:shadow-orange-500/40'
               : 'bg-gradient-to-r from-blue-600 to-blue-700 shadow-blue-600/25 hover:shadow-blue-600/40';
-            const lines = (card.points || '').split('\n').map((item) => item.trim()).filter(Boolean);
+            const lines = normalizePoints(card.points);
+            const highlight = card.highlight || card.title.split(' ').slice(-1)[0] || '';
+            const baseTitle = highlight ? card.title.replace(highlight, '').trim() : card.title;
 
             return (
-              <div key={card.cardType} className="group relative overflow-hidden rounded-[2.5rem] border border-slate-100 bg-white shadow-xl shadow-slate-200/50 transition-all duration-500 hover:shadow-2xl">
-                <img
-                  src={card.image}
-                  alt={card.title}
-                  className="absolute inset-0 h-full w-full object-cover object-center grayscale-[0.05] contrast-[1.03] brightness-[0.94] transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                  width="1200"
-                  height="800"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-white/88 via-white/62 to-black/56" />
+              <div
+                key={`${card.cardType}-${index}`}
+                className={`group relative overflow-hidden rounded-[2.5rem] border border-slate-100 shadow-lg shadow-slate-200/40 transition-all duration-300 hover:shadow-xl ${cardBackdropClass}`}
+                style={{ contentVisibility: 'auto', containIntrinsicSize: '560px' }}
+              >
+                {card.image && (
+                  <ProgressiveImage
+                    media={card.imageMedia}
+                    src={card.image}
+                    alt={card.title}
+                    className="object-center"
+                    highClassName="contrast-[1.02] brightness-[0.96] transition-transform duration-500 group-hover:scale-[1.03]"
+                    loading="lazy"
+                    decoding="async"
+                    width="1200"
+                    height="800"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-r from-white/92 via-white/70 to-black/48" />
                 <div className={`absolute inset-0 ${accentClass}`} />
 
                 <div className="relative z-10 flex min-h-[520px] flex-1 flex-col justify-between p-8 md:min-h-[560px] md:max-w-[86%]">
@@ -88,12 +140,8 @@ const WorkforceSection = () => {
                       </span>
                     </div>
                     <h2 className="mb-6 text-4xl font-bold leading-tight text-slate-900 md:text-5xl">
-                      {card.title.split(card.highlight || '').map((part, splitIndex) => (
-                        <React.Fragment key={`${part}-${splitIndex}`}>
-                          {part}
-                          {splitIndex === 0 && card.highlight ? <><br /><span className={textClass}>{card.highlight}</span></> : null}
-                        </React.Fragment>
-                      ))}
+                      {baseTitle}
+                      {highlight ? <><br /><span className={textClass}>{highlight}</span></> : null}
                     </h2>
                     <p className="mb-8 font-medium leading-relaxed text-slate-500">{card.description}</p>
                     <ul className="mb-10 space-y-4">

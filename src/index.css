@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 body {
-  background-color: #020617;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #0f172a;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -33,6 +33,12 @@ body {
 
 .tspl-marquee__track {
   animation: tspl-marquee 34s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.tspl-marquee img {
+  backface-visibility: hidden;
 }
 
 @keyframes tspl-plane-send {

@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import ProgressiveImage from '../components/ProgressiveImage';
 import { extractMediaUrl, fetchJobs, submitLead } from '../utils/strapi';
 import { uploadResumeToGoogleDrive } from '../utils/googleSheets';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
@@ -147,13 +148,15 @@ const mapApiJobToListing = (job, index, placeholderImages, fallbackImage) => {
 	const category = String(job.category || job.jobCategory || job.type || job.title || 'General').trim();
 	const location = String(job.location || 'India').trim();
 	const skills = Array.isArray(job.skills) && job.skills.length ? job.skills : ['Teamwork', 'Communication'];
-	const uploadedPhotoUrl = extractMediaUrl(job.photo);
+	const uploadedPhotoUrl = extractMediaUrl(job.photo || job.image);
+	const imageMedia = job.photo || job.image || null;
 
 	return {
 		id: String(job.id),
 		title: job.title || `Job ${job.id}`,
 		company: job.company || 'TSPL Group',
 		image: uploadedPhotoUrl || placeholderImages[index % placeholderImages.length] || fallbackImage,
+		imageMedia,
 		category,
 		location,
 		salaryMin,
@@ -636,10 +639,15 @@ function JobCard({ job }) {
 			</div>
 
 			<div className="relative h-40 overflow-hidden p-4 text-white">
-				<img
+				<ProgressiveImage
+					media={job.imageMedia}
 					src={job.image}
 					alt={job.title}
-					className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+					highClassName="transition-transform duration-500 group-hover:scale-110"
+					loading="lazy"
+					decoding="async"
+					width="1200"
+					height="800"
 				/>
 				<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-transparent" />
 				<div className="relative z-[1]">
