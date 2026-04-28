@@ -182,12 +182,12 @@ const jobTypeOptions = [
 	{ value: 'driver', label: 'Driver' },
 ];
 
-const locationOptions = [
+const presetLocationOptions = [
 	{ value: 'maharashtra', label: 'Maharashtra' },
 	{ value: 'gujarat', label: 'Gujarat' },
-	{ value: 'tamil nadu', label: 'Tamil Nadu' },
+	{ value: 'tamil-nadu', label: 'Tamil Nadu' },
 	{ value: 'karnataka', label: 'Karnataka' },
-	{ value: 'delhi', label: 'Delhi NCR' },
+	{ value: 'delhi-ncr', label: 'Delhi NCR' },
 	{ value: 'overseas', label: 'Overseas' },
 ];
 
@@ -437,7 +437,7 @@ function JobsFilters({ filters, setFilters, categoryOptions, locationOptions }) 
 								onChange={(event) => setSingleCategory(event.target.value)}
 								className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-400"
 							>
-								<option value="">Any Category</option>
+								<option value="">Any</option>
 								{categoryOptions.map((option) => (
 									<option key={option.value} value={option.value}>
 										{option.label}
@@ -453,7 +453,7 @@ function JobsFilters({ filters, setFilters, categoryOptions, locationOptions }) 
 								onChange={(event) => setSingleLocation(event.target.value)}
 								className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-400"
 							>
-								<option value="">Any Location</option>
+								<option value="">India</option>
 								{locationOptions.map((option) => (
 									<option key={option.value} value={option.value}>
 										{option.label}
@@ -496,15 +496,15 @@ function JobsFilters({ filters, setFilters, categoryOptions, locationOptions }) 
 
 				<div className="hidden lg:block">
 					<div className="rounded-2xl border border-white/60 bg-white/50 p-3 shadow-lg shadow-blue-100/30 backdrop-blur-xl">
-						<div className="flex items-center gap-3 overflow-x-auto whitespace-nowrap">
+						<div className="flex flex-wrap items-center gap-3">
 							<div className="inline-flex items-center gap-2 rounded-xl bg-white/70 px-3 py-2 text-sm font-semibold text-slate-700">
 								<Filter className="h-4 w-4 text-blue-600" />
 								Filters
 							</div>
 
-							<div className="inline-flex min-w-[440px] items-center gap-2 rounded-xl border border-white/60 bg-white/70 px-3 py-2">
+							<div className="inline-flex items-center gap-2 rounded-xl border border-white/60 bg-white/70 px-3 py-2">
 								<span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Job Type</span>
-								<div className="flex items-center gap-2 overflow-x-auto">
+								<div className="flex flex-wrap items-center gap-2">
 									{jobTypeOptions.map((type) => (
 										<button
 											key={type.value}
@@ -517,7 +517,7 @@ function JobsFilters({ filters, setFilters, categoryOptions, locationOptions }) 
 								</div>
 							</div>
 
-							<div className="inline-flex min-w-[220px] items-center gap-2 rounded-xl border border-white/60 bg-white/70 px-3 py-2">
+							<div className="inline-flex items-center gap-2 rounded-xl border border-white/60 bg-white/70 px-3 py-2">
 								<span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Category</span>
 								<select
 									value={filters.category[0] || ''}
@@ -533,7 +533,7 @@ function JobsFilters({ filters, setFilters, categoryOptions, locationOptions }) 
 								</select>
 							</div>
 
-							<div className="inline-flex min-w-[200px] items-center gap-2 rounded-xl border border-white/60 bg-white/70 px-3 py-2">
+							<div className="inline-flex items-center gap-2 rounded-xl border border-white/60 bg-white/70 px-3 py-2">
 								<span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Location</span>
 								<select
 									value={filters.location[0] || ''}
@@ -549,7 +549,7 @@ function JobsFilters({ filters, setFilters, categoryOptions, locationOptions }) 
 								</select>
 							</div>
 
-							<div className="inline-flex min-w-[220px] items-center gap-2 rounded-xl border border-white/60 bg-white/70 px-3 py-2">
+							<div className="inline-flex items-center gap-2 rounded-xl border border-white/60 bg-white/70 px-3 py-2">
 								<span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Salary</span>
 								<select
 									value={filters.salary}
@@ -729,7 +729,14 @@ function JobsListing({ filters, searchQuery, jobs, loading }) {
 		}
 
 		if (filters.location.length > 0) {
-			filtered = filtered.filter((job) => filters.location.some((location) => toOptionValue(job.location).includes(location) || normalizeText(job.location).includes(location)));
+			filtered = filtered.filter((job) => {
+				const locationSlug = toOptionValue(job.location);
+				const locationText = normalizeText(job.location);
+				return filters.location.some((selectedLocation) => {
+					const selectedText = normalizeText(String(selectedLocation).replace(/-/g, ' '));
+					return locationSlug.includes(selectedLocation) || locationText.includes(selectedText);
+				});
+			});
 		}
 
 		if (filters.salary) {
@@ -1173,7 +1180,7 @@ export default function JobsPage() {
 	}, [managedPlaceholders, fallbackJobImage]);
 
 	const categoryOptions = useMemo(() => uniqueOptionsFromJobs(jobs, 'category'), [jobs]);
-	const locationOptions = useMemo(() => uniqueOptionsFromJobs(jobs, 'location'), [jobs]);
+	const locationOptions = presetLocationOptions;
 
 	const handleSearchSubmit = () => {
 		const jobSection = document.getElementById('jobs-listing');

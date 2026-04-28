@@ -112,7 +112,7 @@ function VisionarySection() {
 					</div>
 
 					<div className="mb-8 flex justify-center">
-						<div className="rounded-full bg-slate-200 px-4 py-1 text-[10px] font-bold uppercase text-slate-500">3 Directors</div>
+						
 					</div>
 
 					<div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
