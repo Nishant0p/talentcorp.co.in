@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Sparkles, Award, Calendar, MapPin, ChevronRight, Cake, Star } from 'lucide-react';
-import { extractMediaUrl, fetchNews } from '../utils/strapi';
+import { extractMediaUrl, fetchNews, fetchSingleType } from '../utils/strapi';
 
 const defaultNewsEventsContent = {
   pageContent: {
@@ -214,7 +214,8 @@ const resolveNewsEventsContent = (prismicData) => {
 
 const NewsEventsPage = ({ prismicData = null }) => {
   const heroParallaxRef = useRef(null);
-  const content = useMemo(() => resolveNewsEventsContent(prismicData), [prismicData]);
+  const [pageData, setPageData] = useState(null);
+  const content = useMemo(() => resolveNewsEventsContent(pageData || prismicData), [pageData, prismicData]);
   const [latestNews, setLatestNews] = useState([]);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress: heroProgress } = useScroll({
@@ -235,6 +236,15 @@ const NewsEventsPage = ({ prismicData = null }) => {
     };
 
     loadLatestNews();
+  }, []);
+
+  useEffect(() => {
+    const loadPageContent = async () => {
+      const data = await fetchSingleType('/api/news-events-page?populate[birthdayUpcoming]=*&populate[birthdaySpotlight][populate]=image');
+      setPageData(data);
+    };
+
+    loadPageContent();
   }, []);
 
   return (
@@ -494,26 +504,49 @@ const NewsEventsPage = ({ prismicData = null }) => {
               transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.05 }}
             >
               {item.type === 'news' ? (
-                <>
-                  <div className="h-1/2 overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <div className="flex h-1/2 flex-col justify-between p-8">
-                    <div>
-                      <span className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">
-                        {item.category}
-                      </span>
-                      <h3 className="mt-2 text-xl font-bold leading-tight text-[#006bb8] line-clamp-3">
-                        {item.title}
-                      </h3>
+                item.id ? (
+                  <Link to={`/news-events/${item.id}`} className="block h-full">
+                    <div className="h-1/2 overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
                     </div>
-                    <p className="text-sm text-slate-400">{item.date}</p>
-                  </div>
-                </>
+                    <div className="flex h-1/2 flex-col justify-between p-8">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">
+                          {item.category}
+                        </span>
+                        <h3 className="mt-2 text-xl font-bold leading-tight text-[#006bb8] line-clamp-3">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <p className="text-sm text-slate-400">{item.date}</p>
+                    </div>
+                  </Link>
+                ) : (
+                  <>
+                    <div className="h-1/2 overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </div>
+                    <div className="flex h-1/2 flex-col justify-between p-8">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">
+                          {item.category}
+                        </span>
+                        <h3 className="mt-2 text-xl font-bold leading-tight text-[#006bb8] line-clamp-3">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <p className="text-sm text-slate-400">{item.date}</p>
+                    </div>
+                  </>
+                )
               ) : (
                 <div className="flex h-full items-center justify-center p-10 text-center">
                   <h3 className="max-w-sm text-2xl font-medium leading-relaxed text-white">

@@ -140,14 +140,15 @@ const NewsSection = () => {
           transition={{ duration: 0.4 }}
         >
           {newsItems.map((item, i) => (
-            <motion.article
+            <MotionLink
+              to={item.id ? `/news-events/${item.id}` : '/news-events'}
               key={item.id || item.title}
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' }}
               whileHover={{ y: -8 }}
-              className="group flex h-full flex-col overflow-hidden rounded-2xl md:rounded-[2.2rem] border border-gray-100 bg-white/45 shadow-sm backdrop-blur-md transition-all duration-500 hover:shadow-2xl hover:shadow-blue-100/60"
+              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white/45 shadow-sm backdrop-blur-md transition-all duration-500 hover:shadow-2xl hover:shadow-blue-100/60 md:rounded-[2.2rem]"
             >
               <motion.div
                 className="relative h-48 md:h-56 overflow-hidden"
@@ -215,20 +216,11 @@ const NewsSection = () => {
                   {item.desc}
                 </motion.p>
 
-                <MotionLink
-                  to={item.id ? `/news-events/${item.id}` : '/news-events'}
-                  className="mt-auto flex w-full items-center justify-center gap-2 rounded-2xl border border-orange-200 bg-gray-50 py-3 md:py-4 font-bold text-orange-500 transition-all group-hover:border-orange-500 group-hover:bg-orange-500 group-hover:text-white text-sm md:text-base"
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.5, delay: i * 0.1 + 0.35 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
+                <div className="mt-auto flex w-full items-center justify-center gap-2 rounded-2xl border border-orange-200 bg-gray-50 py-3 text-sm font-bold text-orange-500 transition-all group-hover:border-orange-500 group-hover:bg-orange-500 group-hover:text-white md:py-4 md:text-base">
                   Read More <ExternalLink size={18} />
-                </MotionLink>
+                </div>
               </motion.div>
-            </motion.article>
+            </MotionLink>
           ))}
         </motion.div>
       </div>
