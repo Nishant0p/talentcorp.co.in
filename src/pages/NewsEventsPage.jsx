@@ -635,7 +635,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
               <div className="relative flex h-[500px] items-end justify-center overflow-visible">
                 <div className="absolute bottom-12 h-[320px] w-[320px] rounded-full bg-[#006bb8]/12 blur-2xl" />
                 <img
-                  src={content.birthdaySpotlight.image}
+                  src={extractMediaUrl(content.birthdaySpotlight.image) || content.birthdaySpotlight.image}
                   alt={content.birthdaySpotlight.name}
                   className="animate-bounce-slow relative z-10 h-[520px] w-auto max-w-none object-contain object-top drop-shadow-[0_36px_46px_rgba(15,23,42,0.28)]"
                   style={{
