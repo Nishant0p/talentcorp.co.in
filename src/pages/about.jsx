@@ -35,13 +35,13 @@ const values = [
 function LeadershipSection() {
 	const leaders = [
 		{ id: '1', name: 'Er. Mehboob Sayyad', role: 'Founder & Chairman', imageUrl: '/visionaries/Untitled design (3).png' },
-		{ id: '2', name: 'Sunil Chavan', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (4).png' },
-		{ id: '3', name: 'Deshbhushan Jain', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (5).png' },
-		{ id: '4', name: 'Vikas Patil', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (6).png' },
-		{ id: '5', name: 'Prakash Rathod', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (7).png' },
-		{ id: '6', name: 'Sarang Chavan', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (14).png' },
-		{ id: '7', name: 'Babasaheb Khillari', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (15).png' },
-		{ id: '8', name: 'Dheepan Chakravarthy', role: 'Co-Founder & Director', imageUrl: 'https://i.pravatar.cc/400?img=33' },
+		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/sunil sir.png' },
+		{ id: '3', name: 'Deshbhushan Jain', role: 'Western Director', imageUrl: '/visionaries/Untitled design (5).png' },
+		{ id: '4', name: 'Vikas Patil', role: 'Western Director', imageUrl: '/visionaries/Untitled design (6).png' },
+		{ id: '5', name: 'Prakash Rathod', role: 'North Western Director', imageUrl: '/visionaries/Untitled design (7).png' },
+		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Untitled design (14).png' },
+		{ id: '7', name: 'Babasaheb Khillari', role: 'Board Director', imageUrl: '/visionaries/Untitled design (15).png' },
+		{ id: '8', name: 'Dheepan Chakravarthy', role: 'Southern Director', imageUrl: 'https://i.pravatar.cc/400?img=33' },
 	];
 
 	return (
@@ -71,11 +71,11 @@ function LeadershipSection() {
 								<img
 									src={leader.imageUrl}
 									alt={leader.name}
-									className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105"
+									className="w-full h-full object-cover transition-all duration-500 transform group-hover:scale-110 brightness-100 group-hover:brightness-110"
 									loading="lazy"
 								/>
-								{/* Subtle blue gradient overlay on hover */}
-								<div className="absolute inset-0 bg-blue-900 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
+								{/* Vibrant gradient overlay on hover */}
+								<div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 							</div>
 
 							{/* Text Details */}
