@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const milestones = [
 	{ year: '2014', title: 'Company Founded', description: 'Started with a small team of 5 people' },
@@ -31,104 +32,63 @@ const values = [
 ]
 
 
-function VisionarySection() {
-	const founder = {
-		name: "Dr. Mehboob Sayyad,",
-		role: "Founder & Chairman",
-		img: "/visionaries/Untitled design (3).png",
-		bio: "Visionary leader driving innovation and excellence. Committed to building a future-proof organization through strategic growth and integrity."
-	};
-
-	const directors = [
-		{ name: "Sunil Chavan", role: "Board Director", img: "/visionaries/Untitled design (4).png" },
-		{ name: "Deshbhushan Jain", role: "Board Director", img: "/visionaries/Untitled design (5).png" },
-		{ name: "Vikas Patil", role: "Board Director", img: "/visionaries/Untitled design (6).png" },
-		{ name: "Prakash Rathod", role: "Board Director", img: "/visionaries/Untitled design (7).png" },
-		{ name: "Sarang Chavan", role: "Board Director", img: "/visionaries/Untitled design (14).png" },
-		{ name: "Babasaheb Khillari", role: "Board Director", img: "/visionaries/Untitled design (15).png" },
-		{ name: "Dheepan Chakravarthi", role: "Board Director", img: "https://i.pravatar.cc/400?img=33" },
-		//{ name: "Rohan Desai", role: "Board Director", img: "https://i.pravatar.cc/400?img=52" },
+function LeadershipSection() {
+	const leaders = [
+		{ id: '1', name: 'Er. Mehboob Sayyad', role: 'Founder & Chairman', imageUrl: '/visionaries/Untitled design (3).png' },
+		{ id: '2', name: 'Sunil Chavan', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (4).png' },
+		{ id: '3', name: 'Deshbhushan Jain', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (5).png' },
+		{ id: '4', name: 'Vikas Patil', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (6).png' },
+		{ id: '5', name: 'Prakash Rathod', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (7).png' },
+		{ id: '6', name: 'Sarang Chavan', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (14).png' },
+		{ id: '7', name: 'Babasaheb Khillari', role: 'Co-Founder & Director', imageUrl: '/visionaries/Untitled design (15).png' },
+		{ id: '8', name: 'Dheepan Chakravarthy', role: 'Co-Founder & Director', imageUrl: 'https://i.pravatar.cc/400?img=33' },
 	];
 
 	return (
-		<section className="relative overflow-hidden bg-slate-50 px-4 py-20 text-slate-800 lg:px-8">
-			<div className="pointer-events-none absolute inset-0">
-				<div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-[#2563EB]/10 blur-3xl" />
-				<div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-[#F97316]/10 blur-3xl" />
-			</div>
+		<section className="py-20 bg-gradient-to-b from-slate-50 to-white">
+			<div className="mx-auto max-w-full px-4 lg:px-8 text-center">
+				{/* Section Heading */}
+				<h2 className="text-4xl font-extrabold text-slate-900 mb-4">
+					Our <span className="text-blue-600">Leadership Team</span>
+				</h2>
+				<p className="text-slate-500 mb-12 text-lg">
+					Meet the visionary leaders shaping TSPL Group's future.
+				</p>
 
-			<div className="relative z-10 mx-auto max-w-6xl">
-				<header className="mb-12 flex items-center justify-between border-b border-slate-200 pb-4">
-					<h2 className="text-sm font-bold uppercase tracking-widest text-orange-600">About Us</h2>
-					<h3 className="text-center text-lg font-black uppercase tracking-tight text-slate-700 md:text-2xl">The Corporate Hierarchy</h3>
-					<div className="space-y-1" aria-hidden="true">
-						<div className="h-0.5 w-6 bg-orange-500" />
-						<div className="h-0.5 w-6 bg-orange-500" />
-					</div>
-				</header>
-
-				<div className="mx-auto mb-16 max-w-4xl">
-					<div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-orange-500 via-orange-400 to-blue-900 p-1 shadow-lg shadow-slate-300/30">
-						<div className="flex flex-col items-center gap-8 rounded-[22px] bg-white/10 p-8 backdrop-blur-sm md:flex-row">
-							<div className="h-40 w-40 shrink-0 overflow-hidden rounded-2xl border-4 border-white/20 bg-slate-200 shadow-lg md:h-44 md:w-44">
-								<img src={founder.img} alt={founder.name} className="h-full w-full object-cover" />
+				{/* All Cards in 1 Line - No Scrolling */}
+				<div className="flex justify-center items-stretch gap-2 flex-nowrap w-full">
+					{leaders.map((leader) => (
+						<motion.div
+							key={leader.id}
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true, amount: 0.3 }}
+							transition={{ duration: 0.6 }}
+							className="flex-1 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-200 overflow-hidden group cursor-pointer"
+						>
+							{/* Image Container with Hover Effects */}
+							<div className="h-48 overflow-hidden relative bg-slate-100">
+								<img
+									src={leader.imageUrl}
+									alt={leader.name}
+									className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105"
+									loading="lazy"
+								/>
+								{/* Subtle blue gradient overlay on hover */}
+								<div className="absolute inset-0 bg-blue-900 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
 							</div>
-							<div className="text-center text-white md:text-left">
-								<p className="mb-1 text-sm font-semibold uppercase tracking-[0.2em] text-blue-100">Founder</p>
-								<h3 className="mb-1 text-2xl font-bold md:text-3xl">{founder.name}</h3>
-								<p className="mb-3 text-orange-100">{founder.role}</p>
-								<p className="mb-6 max-w-md leading-relaxed text-blue-50">{founder.bio}</p>
-								<button type="button" className="rounded-full bg-orange-500 px-6 py-2 text-sm font-semibold text-white shadow-md">
-									View Profile
-								</button>
+
+							{/* Text Details */}
+							<div className="p-3 text-center bg-white relative z-10 transition-colors duration-300 group-hover:bg-blue-50">
+								<h3 className="text-sm font-bold text-slate-900 mb-1 group-hover:text-blue-700 transition-colors line-clamp-2">
+									{leader.name}
+								</h3>
+								<p className="text-xs text-slate-500 font-medium group-hover:text-blue-600 transition-colors line-clamp-2">
+									{leader.role}
+								</p>
 							</div>
-						</div>
-					</div>
-				</div>
-
-				<div className="mb-10 flex flex-col items-center">
-					<div className="h-10 w-px bg-orange-300" />
-					<div className="flex items-center gap-4">
-						<div className="h-px w-16 bg-orange-300 md:w-24" />
-						<span className="text-xs font-bold uppercase tracking-[0.3em] text-slate-400">Our Leadership</span>
-						<div className="h-px w-16 bg-orange-300 md:w-24" />
-					</div>
-				</div>
-
-				<div className="mx-auto max-w-6xl">
-					<div className="mb-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-						{directors.slice(0, 4).map((director) => (
-							<div key={director.name} className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-								<div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-200">
-									<img src={director.img} alt={director.name} className="h-full w-full object-cover" />
-								</div>
-								<div>
-									<h4 className="text-base font-bold leading-tight text-blue-900">{director.name}</h4>
-									<p className="mb-1 text-xs font-semibold uppercase text-orange-500">{director.role}</p>
-									<p className="text-[10px] leading-tight text-slate-400">Experienced in corporate management and strategic planning.</p>
-								</div>
-							</div>
-						))}
-					</div>
-
-					<div className="mb-8 flex justify-center">
-						
-					</div>
-
-					<div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
-						{directors.slice(4, 7).map((director) => (
-							<div key={director.name} className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-								<div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-200">
-									<img src={director.img} alt={director.name} className="h-full w-full object-cover" />
-								</div>
-								<div>
-									<h4 className="text-base font-bold leading-tight text-blue-900">{director.name}</h4>
-									<p className="mb-1 text-xs font-semibold uppercase text-orange-500">{director.role}</p>
-									<p className="text-[10px] leading-tight text-slate-400">Experienced in corporate management and strategic planning.</p>
-								</div>
-							</div>
-						))}
-					</div>
+						</motion.div>
+					))}
 				</div>
 			</div>
 		</section>
@@ -379,7 +339,7 @@ export default function AboutPage() {
 				<OurStory resolveAsset={resolveAsset} />
 				<OurValues />
 				<Achievements />
-				<VisionarySection />
+				<LeadershipSection />
 			</main>
 			<Footer />
 		</div>
