@@ -78,14 +78,14 @@ const sourcingStrategy = [
 
 function LeadershipSection() {
 	const leaders = [
-		{ id: '1', name: 'Er. Mehboob Sayyad', role: 'Founder & Chairman', imageUrl: '/visionaries/Untitled design (3).png' },
-		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/sunil sir.png' },
-		{ id: '3', name: 'Deshbhushan Jain', role: 'Western Director', imageUrl: '/visionaries/Untitled design (5).png' },
-		{ id: '4', name: 'Vikas Patil', role: 'Western Director', imageUrl: '/visionaries/Untitled design (6).png' },
-		{ id: '5', name: 'Prakash Rathod', role: 'North Western Director', imageUrl: '/visionaries/Untitled design (7).png' },
-		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Untitled design (14).png' },
-		{ id: '7', name: 'Babasaheb Khillari', role: 'Board Director', imageUrl: '/visionaries/Untitled design (15).png' },
-		{ id: '8', name: 'Dheepan Chakravarthy', role: 'Southern Director', imageUrl: 'https://i.pravatar.cc/400?img=33' },
+		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Founder & Chairman', imageUrl: '/visionaries/Untitled design (3).png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/sunil sir.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '3', name: 'Deshbhushan Jain', role: 'Western Director', imageUrl: '/visionaries/Untitled design (5).png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '4', name: 'Vikas Patil', role: 'Western Director', imageUrl: '/visionaries/Untitled design (6).png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '5', name: 'Prakash Rathod', role: 'North Western Director', imageUrl: '/visionaries/Untitled design (7).png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Untitled design (14).png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		/* { id: '7', name: 'Babasaheb Khillari', role: 'Board Director', imageUrl: '/visionaries/Untitled design (15).png' }, */
+		{ id: '8', name: 'Dheepan Chakravarthy', role: 'Southern Director', imageUrl: 'https://i.pravatar.cc/400?img=33', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
 	];
 
 	return (
@@ -111,11 +111,11 @@ function LeadershipSection() {
 							className="flex-1 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-200 overflow-hidden group cursor-pointer"
 						>
 							{/* Image Container with Hover Effects */}
-							<div className="h-48 overflow-hidden relative bg-slate-100">
+								<div className={`overflow-hidden relative bg-slate-100 ${leader.imageContainerClassName || 'h-64'}`}>
 								<img
 									src={leader.imageUrl}
 									alt={leader.name}
-									className="w-full h-full object-cover transition-all duration-500 transform group-hover:scale-110 brightness-100 group-hover:brightness-110"
+									className={`w-full h-full transition-all duration-500 transform group-hover:scale-110 brightness-100 group-hover:brightness-110 ${leader.imageClassName || 'object-cover object-center'}`}
 									loading="lazy"
 								/>
 								{/* Vibrant gradient overlay on hover */}
@@ -148,7 +148,7 @@ function AboutHero({ resolveAsset }) {
 	)
 
 	return (
-		<section className="relative min-h-[600px] overflow-hidden pb-20 pt-32">
+			<section className="relative min-h-[680px] overflow-hidden pb-20 pt-32">
 			<div className="absolute inset-0">
 				<img src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
@@ -225,8 +225,8 @@ function OurStory({ resolveAsset }) {
 				</div>
 
 				<div className="mb-20 grid items-center gap-12 lg:grid-cols-2">
-					<div className="relative h-[400px] overflow-hidden rounded-3xl bg-white shadow-2xl">
-						<img src={whoWeAreAsset.url} alt={whoWeAreAsset.alt} className="h-full w-full object-cover p-6 sm:p-8" />
+					<div className="relative h-[460px] overflow-hidden rounded-3xl bg-white shadow-2xl">
+						<img src={whoWeAreAsset.url} alt={whoWeAreAsset.alt} className="h-full w-full object-cover p-4 sm:p-5" />
 						<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/40 to-transparent" />
 					</div>
 
