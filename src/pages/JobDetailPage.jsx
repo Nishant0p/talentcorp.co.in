@@ -35,7 +35,7 @@ const REQS = [
   'Ability to adapt well in fast-paced environments',
 ];
 
-const EMPTY_FORM = { name: '', mobile: '', email: '' };
+const EMPTY_FORM = { name: '', mobile: '', email: '', cv: null, pageName: '' };
 
 const getStats = (job) => [
   { icon: Briefcase, label: 'Category', value: job.category || 'General' },
@@ -67,11 +67,16 @@ const JobDescription = React.memo(({ job }) => (
   <section className="pro-section">
     <h2 className="pro-section-title">Role Overview</h2>
     <div className="pro-section-content">
-      <p>
-        Join <strong>{job.company}</strong> as a <strong>{job.title}</strong> based in {job.location}.
-        This is a dynamic role designed for individuals who are passionate about delivering quality results.
-        You will be working with a highly skilled, supportive team with clear avenues for professional growth and skill enhancement.
-      </p>
+      <div 
+        className="pro-description-text"
+        dangerouslySetInnerHTML={{
+          __html: `
+            Join <strong>${job.company}</strong> as a <strong>${job.title}</strong> based in ${job.location}.
+            This is a dynamic role designed for individuals who are passionate about delivering quality results.
+            You will be working with a highly skilled, supportive team with clear avenues for professional growth and skill enhancement.
+          `.replace(/\n/g, '<br />')
+        }}
+      />
     </div>
   </section>
 ));
@@ -129,7 +134,7 @@ const JobDetailPage = () => {
         if (cancelled) return;
         const found = data.find(e => String(e.id) === String(jobId));
         if (found) {
-          setJob({
+          const jobData = {
             id: found.id,
             title: found.title || `Job ${found.id}`,
             company: found.company || 'TSPL Group',
@@ -138,7 +143,9 @@ const JobDetailPage = () => {
             salary: found.salary || 'Competitive',
             type: found.type || 'Full-time',
             urgent: Boolean(found.urgent),
-          });
+          };
+          setJob(jobData);
+          setForm(prev => ({ ...prev, pageName: found.pageName || found.title || '' }));
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -148,7 +155,7 @@ const JobDetailPage = () => {
   }, [jobId]);
 
   const handleChange = useCallback((field) => (e) => {
-    const val = e.target.value;
+    const val = field === 'cv' ? e.target.files?.[0] || null : e.target.value;
     setForm(prev => prev[field] === val ? prev : { ...prev, [field]: val });
   }, []);
 
@@ -157,11 +164,19 @@ const JobDetailPage = () => {
     if (!job?.id) return;
     setSubmitting(true);
     try {
+      // Prepare FormData for file upload
+      const formData = new FormData();
+      if (form.cv) {
+        formData.append('cv', form.cv);
+      }
+
       await submitApplicant({
         jobId: job.id,
         name: form.name,
         mobile: form.mobile,
         email: form.email,
+        pageName: form.pageName,
+        cvFile: form.cv,
         googleSheetsPayload: {
           service: `Job Application - ${job.title || 'Open Position'}`,
           message: [
@@ -169,6 +184,7 @@ const JobDetailPage = () => {
             `Job Title: ${job.title || ''}`,
             `Company: ${job.company || ''}`,
             `Location: ${job.location || ''}`,
+            `Page Name: ${form.pageName || ''}`,
           ].join(' | '),
         },
       });
@@ -290,6 +306,29 @@ const JobDetailPage = () => {
                     placeholder="you@example.com"
                     value={form.email} onChange={handleChange('email')}
                   />
+                </div>
+                <div className="pro-form-group">
+                  <label>Page Name</label>
+                  <input
+                    type="text"
+                    disabled
+                    value={form.pageName}
+                    className="pro-form-input-disabled"
+                  />
+                </div>
+                <div className="pro-form-group">
+                  <label>Upload CV *</label>
+                  <input
+                    required type="file"
+                    accept=".pdf,.doc,.docx"
+                    onChange={handleChange('cv')}
+                    className="pro-form-file-input"
+                  />
+                  {form.cv && (
+                    <div className="pro-form-file-name">
+                      <span>📄 {form.cv.name}</span>
+                    </div>
+                  )}
                 </div>
                 <button type="submit" className="pro-btn-primary" disabled={submitting}>
                   {submitting ? 'Submitting...' : (
