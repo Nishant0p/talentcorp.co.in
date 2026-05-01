@@ -63,39 +63,49 @@ const StatStrip = React.memo(({ job }) => (
   </div>
 ));
 
-const JobDescription = React.memo(({ job }) => (
-  <section className="pro-section">
-    <h2 className="pro-section-title">Role Overview</h2>
-    <div className="pro-section-content">
-      <div 
-        className="pro-description-text"
-        dangerouslySetInnerHTML={{
-          __html: `
-            Join <strong>${job.company}</strong> as a <strong>${job.title}</strong> based in ${job.location}.
-            This is a dynamic role designed for individuals who are passionate about delivering quality results.
-            You will be working with a highly skilled, supportive team with clear avenues for professional growth and skill enhancement.
-          `.replace(/\n/g, '<br />')
-        }}
-      />
-    </div>
-  </section>
-));
+const JobDescription = React.memo(({ job }) => {
+  const description = job?.description || `Join <strong>${job.company}</strong> as a <strong>${job.title}</strong> based in ${job.location}. This is a dynamic role designed for individuals who are passionate about delivering quality results. You will be working with a highly skilled, supportive team with clear avenues for professional growth and skill enhancement.`;
+  
+  return (
+    <section className="pro-section">
+      <h2 className="pro-section-title">Role Overview</h2>
+      <div className="pro-section-content">
+        <div 
+          className="pro-description-text"
+          dangerouslySetInnerHTML={{
+            __html: description.replace(/\n/g, '<br />')
+          }}
+        />
+      </div>
+    </section>
+  );
+});
 
-const Requirements = React.memo(() => (
-  <section className="pro-section">
-    <h2 className="pro-section-title">Key Requirements</h2>
-    <div className="pro-section-content">
-      <ul className="pro-req-list">
-        {REQS.map((r, i) => (
-          <li key={i} className="pro-req-item">
-            <CheckCircle size={16} className="pro-req-icon" />
-            <span>{r}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-));
+const Requirements = React.memo(({ job }) => {
+  const requirements = job?.requirements && Array.isArray(job.requirements) 
+    ? job.requirements 
+    : REQS;
+  
+  return (
+    <section className="pro-section">
+      <h2 className="pro-section-title">Key Requirements</h2>
+      <div className="pro-section-content">
+        <ul className="pro-req-list">
+          {requirements.map((r, i) => {
+            // Handle both string items and objects with 'title' or 'name' property
+            const reqText = typeof r === 'string' ? r : (r?.title || r?.name || '');
+            return (
+              <li key={i} className="pro-req-item">
+                <CheckCircle size={16} className="pro-req-icon" />
+                <span>{reqText}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  );
+});
 
 const BenefitsCard = React.memo(() => (
   <section className="pro-section">
@@ -143,6 +153,8 @@ const JobDetailPage = () => {
             salary: found.salary || 'Competitive',
             type: found.type || 'Full-time',
             urgent: Boolean(found.urgent),
+            description: found.description || '',
+            requirements: found.requirements || [],
           };
           setJob(jobData);
           setForm(prev => ({ ...prev, pageName: found.pageName || found.title || '' }));
@@ -264,7 +276,7 @@ const JobDetailPage = () => {
       <div className="pro-main-layout">
         <div className="pro-content">
           <JobDescription job={job} />
-          <Requirements />
+          <Requirements job={job} />
           <BenefitsCard />
         </div>
 
