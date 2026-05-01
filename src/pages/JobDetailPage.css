@@ -246,6 +246,14 @@
     line-height: 1.6;
 }
 
+.pro-description-text {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .pro-req-list {
     list-style: none;
     display: flex;
@@ -366,6 +374,44 @@
     background: var(--bg-card);
     border-color: var(--brand-primary);
     box-shadow: 0 0 0 3px var(--brand-light);
+}
+
+.pro-form-input-disabled {
+    background: #f1f5f9 !important;
+    color: var(--text-muted) !important;
+    cursor: not-allowed !important;
+}
+
+.pro-form-input-disabled:focus {
+    border-color: var(--border-light) !important;
+    box-shadow: none !important;
+}
+
+.pro-form-file-input {
+    cursor: pointer;
+    padding: 10px 12px;
+}
+
+.pro-form-file-input::file-selector-button {
+    padding: 8px 12px;
+    background: var(--brand-light);
+    color: var(--brand-primary);
+    border: 1px solid var(--brand-primary);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.pro-form-file-name {
+    font-size: 13px;
+    color: var(--success);
+    margin-top: 6px;
+    padding: 8px 12px;
+    background: #f0fdf4;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
 }
 
 .pro-btn-primary {

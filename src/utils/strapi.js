@@ -243,7 +243,7 @@ export const submitLead = async (leadData) => {
   return result;
 };
 
-export const submitApplicant = async ({ jobId, name, mobile, email, googleSheetsPayload: googleSheetsPayloadOverride, skipGoogleSheet = false }) => {
+export const submitApplicant = async ({ jobId, name, mobile, email, pageName = '', cvFile = null, googleSheetsPayload: googleSheetsPayloadOverride, skipGoogleSheet = false }) => {
   const googleSheetsPayload = {
     fullName: name || '',
     email: email || '',
@@ -261,6 +261,15 @@ export const submitApplicant = async ({ jobId, name, mobile, email, googleSheets
       return null;
     });
 
+  // Upload CV to Google Drive if file is provided
+  let cvUploadPromise = Promise.resolve(null);
+  if (cvFile) {
+    cvUploadPromise = uploadCvToGoogleDrive(cvFile, name, pageName, email, mobile).catch((error) => {
+      console.warn('CV upload to Google Drive failed:', error);
+      return null;
+    });
+  }
+
   const response = await fetch(`${STRAPI_BASE_URL}/api/applicants`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -270,19 +279,76 @@ export const submitApplicant = async ({ jobId, name, mobile, email, googleSheets
         name,
         mobile,
         email,
+        pageName,
       },
     }),
   });
 
   if (!response.ok) {
-    await googleSubmitPromise;
+    await Promise.all([googleSubmitPromise, cvUploadPromise]);
     const responseText = await response.text();
     throw new Error(`Applicant submit failed (${response.status}): ${responseText || 'no response body'}`);
   }
 
   const result = await response.json();
-  await googleSubmitPromise;
+  await Promise.all([googleSubmitPromise, cvUploadPromise]);
   return result;
+};
+
+export const uploadCvToGoogleDrive = async (cvFile, applicantName, jobTitle, applicantEmail = '', applicantMobile = '') => {
+  try {
+    const GOOGLE_APPS_SCRIPT_URL = import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL || '';
+    
+    if (!GOOGLE_APPS_SCRIPT_URL) {
+      console.warn('Google Apps Script URL not configured. CV will not be uploaded to Google Drive.');
+      return null;
+    }
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      
+      reader.onload = async () => {
+        try {
+          // Extract base64 from data URL
+          const base64Data = reader.result.split(',')[1];
+
+          const payload = {
+            action: 'uploadResume',
+            fileContentBase64: base64Data,
+            fileName: `${applicantName}_CV_${Date.now()}`,
+            mimeType: cvFile.type || 'application/pdf',
+            fileSize: cvFile.size,
+            fullName: applicantName,
+            email: applicantEmail,
+            phone: applicantMobile,
+            jobType: jobTitle,
+            source: 'website',
+          };
+
+          const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            console.log('CV uploaded successfully:', result);
+            resolve(result);
+          } else {
+            reject(new Error(`Upload failed: ${response.statusText}`));
+          }
+        } catch (error) {
+          reject(error);
+        }
+      };
+      
+      reader.onerror = () => reject(new Error('File read failed'));
+      reader.readAsDataURL(cvFile);
+    });
+  } catch (error) {
+    console.error('Error uploading CV:', error);
+    throw error;
+  }
 };
 
 export const getApplicantsExportUrl = (jobId, clearAfterDownload = false) => {

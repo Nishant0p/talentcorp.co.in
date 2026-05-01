@@ -4,7 +4,7 @@ import {
   ArrowLeft, MapPin, IndianRupee, Clock, Briefcase, Calendar,
   CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2
 } from 'lucide-react';
-import { extractMediaUrl, fetchJobs, submitApplicant } from '../utils/strapi';
+import { fetchJobs, submitApplicant } from '../utils/strapi';
 import './JobDetailPage.css';
 
 // ─── Static constants ────────────────────────────────────────────────────────
@@ -35,7 +35,7 @@ const REQS = [
   'Ability to adapt well in fast-paced environments',
 ];
 
-const EMPTY_FORM = { name: '', mobile: '', email: '' };
+const EMPTY_FORM = { name: '', mobile: '', email: '', cv: null, pageName: '' };
 
 const getStats = (job) => [
   { icon: Briefcase, label: 'Category', value: job.category || 'General' },
@@ -85,38 +85,49 @@ const StatStrip = React.memo(({ job }) => (
   </div>
 ));
 
-const JobDescription = React.memo(({ job }) => (
-  <section className="pro-section">
-    <h2 className="pro-section-title">Role Overview</h2>
-    <div className="pro-section-content">
-      <p>
-        {job.description || (
-          <>
-            Join <strong>{job.company}</strong> as a <strong>{job.title}</strong> based in {job.location}.
-            This is a dynamic role designed for individuals who are passionate about delivering quality results.
-            You will be working with a highly skilled, supportive team with clear avenues for professional growth and skill enhancement.
-          </>
-        )}
-      </p>
-    </div>
-  </section>
-));
+const JobDescription = React.memo(({ job }) => {
+  const description = job?.description || `Join <strong>${job.company}</strong> as a <strong>${job.title}</strong> based in ${job.location}. This is a dynamic role designed for individuals who are passionate about delivering quality results. You will be working with a highly skilled, supportive team with clear avenues for professional growth and skill enhancement.`;
 
-const Requirements = React.memo(({ job }) => (
-  <section className="pro-section">
-    <h2 className="pro-section-title">Key Requirements</h2>
-    <div className="pro-section-content">
-      <ul className="pro-req-list">
-        {getReqs(job).map((r, i) => (
-          <li key={i} className="pro-req-item">
-            <CheckCircle size={16} className="pro-req-icon" />
-            <span>{r}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-));
+  return (
+    <section className="pro-section">
+      <h2 className="pro-section-title">Role Overview</h2>
+      <div className="pro-section-content">
+        <div
+          className="pro-description-text"
+          dangerouslySetInnerHTML={{
+            __html: description.replace(/\n/g, '<br />')
+          }}
+        />
+      </div>
+    </section>
+  );
+});
+
+const Requirements = React.memo(({ job }) => {
+  const requirements = job?.requirements && Array.isArray(job.requirements)
+    ? job.requirements
+    : REQS;
+
+  return (
+    <section className="pro-section">
+      <h2 className="pro-section-title">Key Requirements</h2>
+      <div className="pro-section-content">
+        <ul className="pro-req-list">
+          {requirements.map((r, i) => {
+            // Handle both string items and objects with 'title' or 'name' property
+            const reqText = typeof r === 'string' ? r : (r?.title || r?.name || '');
+            return (
+              <li key={i} className="pro-req-item">
+                <CheckCircle size={16} className="pro-req-icon" />
+                <span>{reqText}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  );
+});
 
 const BenefitsCard = React.memo(() => (
   <section className="pro-section">
@@ -155,22 +166,20 @@ const JobDetailPage = () => {
         if (cancelled) return;
         const found = data.find(e => String(e.id) === String(jobId));
         if (found) {
-          setJob({
+          const jobData = {
             id: found.id,
             title: found.title || `Job ${found.id}`,
             company: found.company || 'TSPL Group',
             category: found.category || found.type || 'General',
             location: found.location || 'India',
-            salary: formatSalary(found),
-            salaryMin: found.salaryMin,
-            salaryMax: found.salaryMax,
+            salary: found.salary || 'Competitive',
             type: found.type || 'Full-time',
             urgent: Boolean(found.urgent),
             description: found.description || '',
-            requirements: found.requirements || '',
-            photo: found.photo || null,
-            image: extractMediaUrl(found.photo),
-          });
+            requirements: found.requirements || [],
+          };
+          setJob(jobData);
+          setForm(prev => ({ ...prev, pageName: found.pageName || found.title || '' }));
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -180,7 +189,7 @@ const JobDetailPage = () => {
   }, [jobId]);
 
   const handleChange = useCallback((field) => (e) => {
-    const val = e.target.value;
+    const val = field === 'cv' ? e.target.files?.[0] || null : e.target.value;
     setForm(prev => prev[field] === val ? prev : { ...prev, [field]: val });
   }, []);
 
@@ -189,11 +198,19 @@ const JobDetailPage = () => {
     if (!job?.id) return;
     setSubmitting(true);
     try {
+      // Prepare FormData for file upload
+      const formData = new FormData();
+      if (form.cv) {
+        formData.append('cv', form.cv);
+      }
+
       await submitApplicant({
         jobId: job.id,
         name: form.name,
         mobile: form.mobile,
         email: form.email,
+        pageName: form.pageName,
+        cvFile: form.cv,
         googleSheetsPayload: {
           service: `Job Application - ${job.title || 'Open Position'}`,
           message: [
@@ -201,6 +218,7 @@ const JobDetailPage = () => {
             `Job Title: ${job.title || ''}`,
             `Company: ${job.company || ''}`,
             `Location: ${job.location || ''}`,
+            `Page Name: ${form.pageName || ''}`,
           ].join(' | '),
         },
       });
@@ -328,6 +346,29 @@ const JobDetailPage = () => {
                     placeholder="you@example.com"
                     value={form.email} onChange={handleChange('email')}
                   />
+                </div>
+                <div className="pro-form-group">
+                  <label>Page Name</label>
+                  <input
+                    type="text"
+                    disabled
+                    value={form.pageName}
+                    className="pro-form-input-disabled"
+                  />
+                </div>
+                <div className="pro-form-group">
+                  <label>Upload CV *</label>
+                  <input
+                    required type="file"
+                    accept=".pdf,.doc,.docx"
+                    onChange={handleChange('cv')}
+                    className="pro-form-file-input"
+                  />
+                  {form.cv && (
+                    <div className="pro-form-file-name">
+                      <span>📄 {form.cv.name}</span>
+                    </div>
+                  )}
                 </div>
                 <button type="submit" className="pro-btn-primary" disabled={submitting}>
                   {submitting ? 'Submitting...' : (
