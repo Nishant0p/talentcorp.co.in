@@ -1,4 +1,4 @@
-export const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL || 'https://backend.tsplgroup.co.in';
+export const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL || 'https://backend.tsplgroup.in';
 import { submitToGoogleSheet } from './googleSheets';
 
 export const resolveStrapiUrl = (url) => {

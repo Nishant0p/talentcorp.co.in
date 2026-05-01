@@ -130,7 +130,7 @@ const reasons = [
 function SecurityHero({ resolveAsset }) {
 	const heroAsset = resolveAsset(
 		'security.hero',
-		'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1c7e8e2473.jpeg',
+		'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1c7e8e2473.jpeg',
 		'Professional security team'
 	)
 
@@ -215,7 +215,7 @@ function SecurityHero({ resolveAsset }) {
 function WhatWeProvide({ resolveAsset }) {
 	const guardAsset = resolveAsset(
 		'security.guard',
-		'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1_a9d1da85a2.jpeg',
+		'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1_a9d1da85a2.jpeg',
 		'Professional security guard'
 	)
 
@@ -392,7 +392,7 @@ function WhyChooseUs({ resolveAsset }) {
 	const [openReasonIndex, setOpenReasonIndex] = useState(0)
 	const trustAsset = resolveAsset(
 		'security.training',
-		'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1c7e8e2473.jpeg',
+		'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1c7e8e2473.jpeg',
 		'Security guard training'
 	)
 

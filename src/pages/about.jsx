@@ -11,7 +11,7 @@ const milestones = [
 	{ year: '2016', title: '100+ Companies', description: 'Partnered with 100 businesses across India' },
 	{ year: '2018', title: '10,000 Workers', description: 'Helped 10,000 workers find jobs' },
 	{ year: '2020', title: 'NAPS Authorized', description: 'Became government authorized for NAPS' },
-	{ year: '2022', title: 'Pan-India Presence', description: 'Expanded to 20+ cities across India' },
+		/* { id: '8', name: 'Dheepan Chakravarthi', role: 'Southern Director', imageUrl: 'https://i.pravatar.cc/400?img=33' }, */
 	{ year: '2024', title: '40,000+ Placements', description: 'Crossed 40,000 successful placements' },
 ]
 
@@ -143,7 +143,7 @@ function LeadershipSection() {
 function AboutHero({ resolveAsset }) {
 	const aboutHeroAsset = resolveAsset(
 		'about.hero',
-		'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_25_3_1d589b7f92.jpeg',
+		'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_25_3_1d589b7f92.jpeg',
 		'TSPL Group team'
 	)
 
@@ -204,7 +204,7 @@ function AboutHero({ resolveAsset }) {
 function OurStory({ resolveAsset }) {
 	const whoWeAreAsset = resolveAsset(
 		'about.mission',
-		'https://backend.tsplgroup.co.in/uploads/TSPL_Logo_Sarang_Sir_1_55253e4a30.png',
+		'https://backend.tsplgroup.in/uploads/TSPL_Logo_Sarang_Sir_1_55253e4a30.png',
 		'TSPL Group mission - Training workers'
 	)
 

@@ -38,7 +38,7 @@ function ManpowerHero({ resolveAsset }) {
 	return (
 		<section className="relative flex h-[100svh] items-center overflow-hidden">
 			<div className="absolute inset-0">
-				<img src={resolveAsset('manpower.hero', 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_23_1_37194de30d.jpeg').url} alt={resolveAsset('manpower.hero', 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_23_1_37194de30d.jpeg', 'Manpower Supply').alt} className="h-full w-full object-cover" />
+				<img src={resolveAsset('manpower.hero', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_23_1_37194de30d.jpeg').url} alt={resolveAsset('manpower.hero', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_23_1_37194de30d.jpeg', 'Manpower Supply').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
 			</div>
 
@@ -552,7 +552,7 @@ function ManpowerWhyChooseUs({ resolveAsset }) {
 
 					<div className="relative animate-fade-in-right">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-								<img src={resolveAsset('manpower.industries', 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_25_3_1d589b7f92.jpeg').url} alt={resolveAsset('manpower.industries', 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_25_3_1d589b7f92.jpeg', 'Industries we serve').alt} className="h-[600px] w-full object-cover" />
+								<img src={resolveAsset('manpower.industries', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_25_3_1d589b7f92.jpeg').url} alt={resolveAsset('manpower.industries', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_25_3_1d589b7f92.jpeg', 'Industries we serve').alt} className="h-[600px] w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent" />
 
 							<div className="absolute bottom-0 left-0 right-0 p-6">
