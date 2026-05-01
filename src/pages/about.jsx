@@ -30,6 +30,50 @@ const values = [
 	{ icon: Award, title: 'Quality', description: 'We deliver the best results always', color: '#2563EB' },
 ]
 
+const awardHighlights = [
+	'World Book of Records holder (Delhi/London)',
+	'1st Rank Western Region (2023-24)',
+	'1st Rank TPA for NATS 2023-24 (Mumbai)',
+	'2nd Rank TPA for NATS 2022-23 (Mumbai)',
+	'Honorary Doctorates and international recognitions in Sri Lanka, Thailand, Dubai, and Gujarat',
+	'MOU with Ministry of Skill Development, Employment & Entrepreneurship, Government of Maharashtra',
+]
+
+const clientExperience = [
+	{ name: 'Haier Appliances', manpower: '4,500 (PIP 3000, NIP 1500)', period: '10 Years' },
+	{ name: 'Blue Star Ltd', manpower: '2,000', period: '5 Years' },
+	{ name: 'MRF Ltd', manpower: '1,500', period: '2 Years' },
+	{ name: 'FIAT Automotive', manpower: '1,100', period: '1 Year' },
+	{ name: 'Jabil Circuit', manpower: '1,100', period: '1 Year' },
+	{ name: 'Voltas Ltd', manpower: '1,000', period: '3 Years' },
+	{ name: 'Hyundai Motors India', manpower: '1,000', period: '1.5 Years' },
+	{ name: 'LG Electronics', manpower: '900', period: '7 Years' },
+	{ name: 'JCB India Pvt Ltd', manpower: '800', period: '4 Years' },
+	{ name: 'JSW', manpower: '300', period: '3 Years' },
+]
+
+const recruitmentSpeed = [
+	'Up to 25 students: 1 day',
+	'Up to 100 students: 3 days',
+	'Up to 200 students: 7 days',
+	'Up to 300 students: 10 days',
+	'Up to 400 students: 15 days',
+	'Up to 500 students: 25 days',
+	'500 to 1,000 students: 1 month',
+]
+
+const sourcingStrategy = [
+	'MaTPO associate network with 500+ diploma engineering colleges',
+	'Recruitment via training centers (IGTR, DDUGKVY, PMKVY, ICICI CSR, NGOs)',
+	'Campus drives for engineering, diploma, ITI, and 10th/12th candidates',
+	'Job fairs and bulk ATS databases',
+	'Social media hiring on LinkedIn, Naukri, Apna, Monster, Shine, and Indeed',
+	'Supervisor village networks via local employment officers',
+	'Auto-rickshaw audio/video/banner hiring campaigns',
+	'Audio/video promotion at bus stands and railway stations',
+	'Dedicated railway station advertisements',
+	'Bulk voice calls and messaging outreach',
+]
 
 function VisionarySection() {
 	const founder = {
@@ -58,7 +102,7 @@ function VisionarySection() {
 			</div>
 
 			<div className="relative z-10 mx-auto max-w-6xl">
-				<header className="mb-12 flex items-center justify-between border-b border-slate-200 pb-4">
+				<header className="mb-14 flex flex-col items-center gap-4 text-center">
 					<h2 className="text-sm font-bold uppercase tracking-widest text-orange-600">About Us</h2>
 					<h3 className="text-center text-lg font-black uppercase tracking-tight text-slate-700 md:text-2xl">The Corporate Hierarchy</h3>
 					<div className="space-y-1" aria-hidden="true">
@@ -239,27 +283,6 @@ function OurStory({ resolveAsset }) {
 					</div>
 				</div>
 
-				<div className="grid gap-8 md:grid-cols-2">
-					<div className="group rounded-3xl border border-[#2563EB]/20 bg-gradient-to-br from-[#DBEAFE] to-white p-8 transition-all duration-300 hover:shadow-xl">
-						<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#2563EB] transition-transform group-hover:scale-110">
-							<Target className="h-8 w-8 text-white" />
-						</div>
-						<h3 className="mb-4 text-2xl font-bold text-[#0F172A]">Our Mission</h3>
-						<p className="text-lg leading-relaxed text-[#475569]">
-							To empower every Indian worker with the skills and opportunities they need to build a better life for themselves and their families.
-						</p>
-					</div>
-
-					<div className="group rounded-3xl border border-[#F97316]/20 bg-gradient-to-br from-[#FED7AA]/50 to-white p-8 transition-all duration-300 hover:shadow-xl">
-						<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F97316] transition-transform group-hover:scale-110">
-							<Eye className="h-8 w-8 text-white" />
-						</div>
-						<h3 className="mb-4 text-2xl font-bold text-[#0F172A]">Our Vision</h3>
-						<p className="text-lg leading-relaxed text-[#475569]">
-							To become India&apos;s most trusted workforce solutions partner, creating one million job opportunities by 2030.
-						</p>
-					</div>
-				</div>
 			</div>
 		</section>
 	)
@@ -356,12 +379,15 @@ function Achievements() {
 					</div>
 				</div>
 
+				{/* Upstream version does not include extra panels here */}
+
 				<div className="mt-20 text-center">
 					<p className="mb-6 text-xl text-white/70">Ready to be part of our success story?</p>
 					<Link to="/contact-us" className="rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/40 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
 						Join Us Today
 					</Link>
 				</div>
+
 			</div>
 		</section>
 	)
@@ -379,7 +405,7 @@ export default function AboutPage() {
 				<OurStory resolveAsset={resolveAsset} />
 				<OurValues />
 				<Achievements />
-				<VisionarySection />
+				<LeadershipSection />
 			</main>
 			<Footer />
 		</div>

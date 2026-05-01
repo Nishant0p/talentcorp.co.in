@@ -14,7 +14,7 @@ const defaultNewsEventsContent = {
   hero: {
     featureImage: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80',
     featureTag: 'Featured',
-    featureTitle: 'World Book of Records Recognition',
+    featureTitle: 'NAPS/NATS Top Rank Recognition',
     eventCount: '247',
     eventCountLabel: 'Events This Year',
     quickAccessTitle: 'QUICK ACCESS',
@@ -22,16 +22,16 @@ const defaultNewsEventsContent = {
     milestonesLeft: 'Milestones, Moments',
     milestonesRight: 'Memories',
     milestonesSubtitle: 'All in one place',
-    awardTitle: 'Award Winning',
-    awardSubtitle: 'Excellence in Training',
+    awardTitle: 'Record and Rank Holder',
+    awardSubtitle: 'World Record and Top Regional Performance',
   },
   spotlightFeature: {
     image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&q=80',
     tag: 'Awards',
     date: 'March 15, 2026',
-    title: 'TSPL Group Receives World Book of Records Recognition for Excellence in Skilling',
+    title: 'TSPL Group Recognized with World Book of Records and Top TPA Rankings',
     description:
-      "A landmark achievement recognizing our commitment to transforming India's workforce through innovative skilling solutions.",
+      'Recognitions include World Book of Records holder status, 1st Rank Western Region, and top NATS TPA rankings in Mumbai.',
   },
   spotlightCards: [
     {
@@ -48,7 +48,7 @@ const defaultNewsEventsContent = {
     },
     {
       category: 'Awards',
-      title: 'TSPL Recognized for Excellence in Large-Scale Workforce Delivery',
+      title: 'TSPL Achieves 1st Rank Western Region and 1st Rank NATS TPA (2023-24)',
       date: 'March 1, 2026',
       img: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=400',
     },
@@ -82,7 +82,7 @@ const defaultNewsEventsContent = {
   },
   {
     type: 'quote',
-    text: '“Best Staffing Solutions Provider — Economic Times Awards 2026”',
+    text: '“World Book of Records holder with 40,000+ trainees and 450+ clients served”',
     bgColor: 'bg-orange-500',
   },
   {
