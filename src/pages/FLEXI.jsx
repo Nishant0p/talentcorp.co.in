@@ -118,7 +118,7 @@ function FlexiItiHero({ resolveAsset }) {
 	const heroAsset = resolveAsset('flexi.hero', '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp', 'FLEXI ITI training')
 
 	return (
-		<section className="relative min-h-[90vh] overflow-hidden bg-[#0F172A] pt-24">
+		<section className="relative min-h-[90vh] overflow-hidden bg-[#0F172A] pt-16">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
@@ -127,29 +127,29 @@ function FlexiItiHero({ resolveAsset }) {
 			<div className="absolute right-20 top-20 h-72 w-72 rounded-full bg-[#2563EB]/20 blur-3xl" />
 			<div className="absolute bottom-20 left-20 h-96 w-96 rounded-full bg-[#F97316]/10 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-32">
-				<div className="grid items-center gap-12 lg:grid-cols-2">
-					<div className="space-y-8">
+		<div className="relative z-10 mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-16">
+			<div className="grid items-center gap-12 lg:grid-cols-2">
+				<div className="space-y-6">
 						<div className="inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/20 px-4 py-2">
 							<span className="h-2 w-2 animate-pulse rounded-full bg-[#F97316]" />
 							<span className="text-sm font-bold text-[#F97316]">Government Recognized Program</span>
 						</div>
 
-						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-							Learn Skills
-							<span className="mt-2 block text-[#2563EB]">At Your Own Pace</span>
-							<span className="mt-2 block">With FLEXI ITI</span>
-						</h1>
+					<h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+						Learn Skills
+						<span className="mt-2 block text-[#2563EB]">At Your Own Pace</span>
+						<span className="mt-2 block">With FLEXI ITI</span>
+					</h1>
 
-						<p className="max-w-xl text-lg leading-relaxed text-white/80 lg:text-xl">
+					<p className="max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
 							FLEXI ITI lets you learn job skills while working. Study when you have time. Get a real certificate. Build a better future for yourself and your family.
 						</p>
 
-						<div className="flex flex-wrap gap-4">
+						<div className="flex flex-nowrap gap-3 overflow-x-auto">
 							{['Learn While Working', 'Government Certificate', 'Better Jobs'].map((item) => (
-								<div key={item} className="flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 backdrop-blur-sm">
-									<CheckCircle2 className="h-5 w-5 text-[#22C55E]" />
-									<span className="font-medium text-white">{item}</span>
+								<div key={item} className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 backdrop-blur-sm whitespace-nowrap">
+									<CheckCircle2 className="h-5 w-5 text-[#22C55E] shrink-0" />
+									<span className="font-medium text-white text-sm">{item}</span>
 								</div>
 							))}
 						</div>
@@ -163,23 +163,6 @@ function FlexiItiHero({ resolveAsset }) {
 								<Play className="h-5 w-5" />
 								Watch Video
 							</a>
-						</div>
-
-						<div className="flex items-center gap-8 border-t border-white/10 pt-6">
-							<div className="text-center">
-								<p className="text-3xl font-bold text-white">50,000+</p>
-								<p className="text-sm text-white/60">Students Trained</p>
-							</div>
-							<div className="h-12 w-px bg-white/20" />
-							<div className="text-center">
-								<p className="text-3xl font-bold text-[#2563EB]">100+</p>
-								<p className="text-sm text-white/60">ITI Centers</p>
-							</div>
-							<div className="h-12 w-px bg-white/20" />
-							<div className="text-center">
-								<p className="text-3xl font-bold text-[#F97316]">95%</p>
-								<p className="text-sm text-white/60">Job Placement</p>
-							</div>
 						</div>
 					</div>
 
