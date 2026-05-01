@@ -100,8 +100,8 @@ const FAQSection = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* === HEADER SECTION === */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-16">
-          <div className="max-w-2xl relative">
+        <div className="mb-16 flex flex-col justify-between gap-10 text-center lg:flex-row lg:items-end lg:text-left">
+          <div className="relative max-w-2xl">
             <div
               className="pointer-events-none absolute -inset-6 -z-10 rounded-[2rem] opacity-70"
               style={{
@@ -135,7 +135,7 @@ const FAQSection = () => {
           
           <Link
             to="/contact-us"
-            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl border-2 border-orange-300 font-bold shadow-[0_12px_24px_-8px_rgba(249,115,22,0.4)] transition-all duration-300"
+            className="group relative inline-flex items-center gap-3 self-center px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl border-2 border-orange-300 font-bold shadow-[0_12px_24px_-8px_rgba(249,115,22,0.4)] transition-all duration-300 lg:self-auto"
           >
             <span
               aria-hidden="true"
@@ -182,7 +182,7 @@ const FAQSection = () => {
                       exit={{ opacity: 0, scale: 0.95 }}
                       key={faq.id}
                       onClick={() => setActiveIndex(index)}
-                      className={`w-full text-left p-5 rounded-2xl transition-all duration-300 flex items-center gap-4 group relative overflow-hidden border ${
+                      className={`w-full rounded-2xl border p-5 transition-all duration-300 flex items-center gap-4 justify-center text-center lg:justify-start lg:text-left group relative overflow-hidden ${
                         isActive 
                           ? 'bg-blue-600 border-blue-600 shadow-xl shadow-blue-600/20 text-white' 
                           : 'bg-white border-blue-50 hover:border-blue-200 text-[#1e3a8a] hover:shadow-md'
@@ -191,7 +191,7 @@ const FAQSection = () => {
                       <span className={`font-mono text-sm font-bold shrink-0 ${isActive ? 'text-orange-300' : 'text-blue-300'}`}>
                         {faq.id}
                       </span>
-                      <span className="font-semibold text-base md:text-lg leading-snug">
+                      <span className="font-semibold text-base leading-snug md:text-lg">
                         {faq.question}
                       </span>
                       {isActive && (

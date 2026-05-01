@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, IndianRupee, Clock, ArrowRight, Filter } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { extractMediaUrl, fetchJobs } from '../utils/strapi';
+import { fetchJobs } from '../utils/strapi';
 
 const fallbackJobs = [
   { id: 1, title: 'Production Operator', company: 'Tata Motors', location: 'Pune, Maharashtra', salary: '₹18,000 - ₹25,000', type: 'Full-time', urgent: true },
@@ -65,8 +65,6 @@ const JobBoard = () => {
           salary: formatSalaryFromJob(job),
           type: job.type || '',
           urgent: job.urgent || false,
-          image: extractMediaUrl(job.photo),
-          imageMedia: job.photo || null,
         })));
       } else {
         setJobs(fallbackJobs);
@@ -174,11 +172,6 @@ const JobBoard = () => {
               >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div className="min-w-0">
-                  {job.image ? (
-                    <div className="mb-4 overflow-hidden rounded-2xl border border-white/70 bg-slate-50 shadow-sm">
-                      <img src={job.image} alt={job.title} className="h-40 w-full object-cover" />
-                    </div>
-                  ) : null}
                   <div className="flex items-center gap-2">
                     <h3 className="truncate text-lg font-bold text-slate-900">{job.title}</h3>
                     {job.urgent && (

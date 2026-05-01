@@ -79,7 +79,8 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="naps" path="/naps" element={<NapsPage />} />
           <Route key="bvoc" path="/bvoc" element={<BvocPage />} />
           <Route key="dvoc" path="/dvoc" element={<DvocPage />} />
-          <Route key="flexi" path="/flexi-iti" element={<FlexiItiPage />} />
+          <Route key="flexi" path="/services/flexi-iti" element={<FlexiItiPage />} />
+          <Route key="flexi-legacy" path="/flexi-iti" element={<FlexiItiPage />} />
           <Route key="skilled" path="/skilled" element={<SkilledPage />} />
           <Route key="housekeeping" path="/housekeeping" element={<HousekeepingPage />} />
           <Route key="manpower" path="/manpower" element={<ManpowerPage />} />

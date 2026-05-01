@@ -50,7 +50,7 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
 
       <div className="relative z-10 mx-auto h-full w-full">
         <div className="absolute bottom-8 left-0 right-0 max-w-4xl px-4 sm:px-6 md:bottom-12 md:px-12">
-          <div className="relative space-y-6">
+          <div className="relative space-y-6 text-center sm:text-left">
             <div className="pointer-events-none absolute -left-10 -bottom-10 h-56 w-56 rounded-full bg-orange-500/25 blur-3xl md:h-72 md:w-72" />
             <div className="pointer-events-none absolute left-40 -bottom-16 h-40 w-40 rounded-full bg-orange-400/15 blur-3xl md:left-56 md:h-52 md:w-52" />
 
@@ -62,7 +62,7 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
                 </svg>
               </div>
 
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-white/85 backdrop-blur-md">
+              <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-white/85 backdrop-blur-md sm:mx-0">
                 {hero.eyebrow}
               </div>
 
@@ -73,11 +73,11 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
               </h1>
             </div>
 
-            <p className="max-w-xl pt-4 text-base font-medium leading-relaxed text-white/90 sm:text-lg md:pt-6 md:text-xl">
+            <p className="mx-auto max-w-xl pt-4 text-base font-medium leading-relaxed text-white/90 sm:mx-0 sm:text-lg md:pt-6 md:text-xl">
               {hero.description}
             </p>
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-start sm:gap-5">
               <button
                 type="button"
                 onClick={onFindJobs}

@@ -16,7 +16,7 @@ const serviceLinks = [
   { href: '/naps', label: 'NAPS' },
   { href: '/bvoc', label: 'B.VOC' },
   { href: '/dvoc', label: 'D.VOC' },
-  { href: '/flexi-iti', label: 'FLEXI ITI' },
+  { href: '/services/flexi-iti', label: 'FLEXI ITI' },
   { href: '/aedp', label: 'AEDP' },
   { href: '/maps', label: 'MAPS' },
   { href: '/security', label: 'SECURITY' },
@@ -72,7 +72,7 @@ const Navbar = () => {
           <div className="px-6 py-3.5 flex items-center justify-between">
             <Link
               to="/"
-              className="inline-flex h-11 w-[168px] items-center justify-center overflow-hidden rounded-2xl bg-white px-2 sm:h-13 sm:w-[196px]"
+              className="inline-flex h-9 w-[140px] items-center justify-center overflow-hidden rounded-2xl bg-white px-2 sm:h-11 sm:w-[160px]"
               aria-label="TSPL home"
             >
               <img
@@ -168,12 +168,12 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden mt-3 max-h-[calc(100vh-7.5rem)] overflow-y-auto rounded-2xl border border-[#d8e7f8] bg-white/95 shadow-lg backdrop-blur-md">
             <div className="px-6 py-5">
-              <div className="flex flex-col gap-4 text-base font-semibold text-[#1a4f87]">
+              <div className="flex flex-col items-center gap-4 text-center text-base font-semibold text-[#1a4f87]">
                 <div>
                   <button
                     type="button"
                     onClick={() => setIsMobileServicesOpen((prev) => !prev)}
-                    className={`flex w-full items-center justify-between rounded-lg px-2 py-1 text-left hover:bg-[#f3f8ff] font-bold ${isServiceActive ? 'text-[#0f2a4d]' : ''}`}
+                    className={`flex w-full items-center justify-between rounded-lg px-2 py-1 text-center hover:bg-[#f3f8ff] font-bold ${isServiceActive ? 'text-[#0f2a4d]' : ''}`}
                     aria-expanded={isMobileServicesOpen}
                   >
                     <span className={`relative ${isServiceActive ? 'after:absolute after:left-0 after:-bottom-[2px] after:h-[2px] after:w-full after:rounded-full after:bg-[#FF8C00]' : ''}`}>Services</span>
@@ -181,7 +181,7 @@ const Navbar = () => {
                   </button>
 
                   {isMobileServicesOpen && (
-                    <div className="mt-2 ml-3 max-h-56 overflow-y-auto border-l border-[#d8e7f8] pl-3">
+                    <div className="mt-2 max-h-56 overflow-y-auto border-l border-[#d8e7f8] pl-3 text-center">
                       {serviceLinks.map((service) => {
                         const active = isLinkActive(service.href);
                         return (
@@ -209,7 +209,7 @@ const Navbar = () => {
                       key={link.href}
                       to={link.href}
                       onClick={handleNavigation}
-                      className={`${baseClasses} ${active ? activeClasses : ''}`}
+                      className={`${baseClasses} ${active ? activeClasses : ''} text-center`}
                     >
                       <span className={`relative ${active ? 'after:absolute after:left-0 after:-bottom-[2px] after:h-[2px] after:w-full after:rounded-full after:bg-[#FF8C00]' : ''}`}>{link.label}</span>
                     </Link>
@@ -218,7 +218,7 @@ const Navbar = () => {
                       key={link.href}
                       href={link.href}
                       onClick={handleNavigation}
-                      className={`${baseClasses} ${active ? activeClasses : ''}`}
+                      className={`${baseClasses} ${active ? activeClasses : ''} text-center`}
                     >
                       <span className={`relative ${active ? 'after:absolute after:left-0 after:-bottom-[2px] after:h-[2px] after:w-full after:rounded-full after:bg-[#FF8C00]' : ''}`}>{link.label}</span>
                     </a>

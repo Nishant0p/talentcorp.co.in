@@ -73,3 +73,24 @@ body {
     animation: none;
   }
 }
+
+@media (max-width: 767px) {
+  /* Improve reading flow on mobile by defaulting content blocks to left/start alignment. */
+  main section .text-center {
+    text-align: left !important;
+  }
+
+  main section .mx-auto.inline-flex,
+  main section .inline-flex.mx-auto {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  main section .flex.flex-col.items-center {
+    align-items: flex-start !important;
+  }
+
+  main section .flex.flex-col.justify-center {
+    justify-content: flex-start !important;
+  }
+}

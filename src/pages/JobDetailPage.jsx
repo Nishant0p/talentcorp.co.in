@@ -11,7 +11,7 @@ import './JobDetailPage.css';
 
 const FALLBACK = [
   { id: 1, title: 'Production Operator', company: 'Tata Motors', location: 'Pune, MH', salary: '₹18,000–₹25,000', type: 'Full-time', urgent: true },
-  { id: 2, title: 'ITI Technician', company: 'Maruti Suzuki', location: 'Gurugram, HR', salary: '₹15,000–₹22,000', type: 'Apprenticeship', urgent: false },
+  { id: 2, title: 'ITI Technician', company: 'Maruti Suzuki', location: 'Pune, MH', salary: '₹15,000–₹22,000', type: 'Apprenticeship', urgent: false },
   { id: 3, title: 'Quality Inspector', company: 'Bajaj Auto', location: 'Aurangabad, MH', salary: '₹20,000–₹28,000', type: 'Full-time', urgent: true },
   { id: 4, title: 'Electrical Trainee', company: 'L&T Construction', location: 'Chennai, TN', salary: '₹12,000–₹18,000', type: 'Apprenticeship', urgent: false },
   { id: 5, title: 'CNC Operator', company: 'Mahindra & Mahindra', location: 'Nashik, MH', salary: '₹22,000–₹30,000', type: 'Full-time', urgent: false },

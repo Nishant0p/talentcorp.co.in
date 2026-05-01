@@ -35,20 +35,20 @@ const sectors = [
 
 function MapsHero() {
 	return (
-		<section className="relative overflow-hidden bg-[#0F172A] pt-24">
+		<section className="relative min-h-[100svh] overflow-hidden bg-[#0F172A] pt-16">
 			<div className="absolute inset-0 bg-gradient-to-br from-[#0F172A] via-[#172554] to-[#1E3A8A]" />
 			<div className="absolute left-0 top-0 h-80 w-80 rounded-full bg-[#2563EB]/25 blur-3xl" />
 			<div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#F97316]/20 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
+			<div className="relative z-10 mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-16">
 				<div className="grid items-center gap-12 lg:grid-cols-2">
-					<div className="space-y-8">
+						<div className="space-y-6">
 						<div className="inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/20 px-4 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F97316]/30 hover:shadow-lg hover:shadow-[#F97316]/20">
 							<ShieldCheck className="h-5 w-5 text-[#F97316]" />
 							<span className="text-sm font-bold text-[#F97316]">MAHARASHTRA APPRENTICESHIP PROMOTION SCHEME</span>
 						</div>
 
-						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
 							MAPS Scheme
 							<span className="mt-2 block text-[#60A5FA]">Build Skilled Workforce Faster</span>
 						</h1>
@@ -58,30 +58,30 @@ function MapsHero() {
 							development opportunities for students and unemployed youth.
 						</p>
 
-						<div className="grid gap-4 sm:grid-cols-2">
+						<div className="grid gap-3 sm:grid-cols-2">
 							{[
 								'Existing EPP scheme has been converted into MAPS scheme.',
 								'MAPS portal rollout is expected this month.',
 								'Financial assistance available for establishments engaging apprentices.',
 								'Training cost reimbursement includes apprentice stipend support.',
 							].map((point) => (
-								<div key={point} className="group flex items-start gap-3 rounded-xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/35 hover:bg-white/20 hover:shadow-lg hover:shadow-black/20">
-									<CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#22C55E] transition-transform duration-300 group-hover:scale-110" />
+								<div key={point} className="group flex items-start gap-2 rounded-lg border border-white/15 bg-white/10 p-3 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/35 hover:bg-white/20 hover:shadow-lg hover:shadow-black/20">
+									<CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#22C55E] transition-transform duration-300 group-hover:scale-110" />
 									<p className="text-sm text-white/90">{point}</p>
 								</div>
 							))}
 						</div>
 					</div>
 
-					<div className="group mx-auto w-full max-w-md rounded-3xl border border-white/20 bg-white/10 p-8 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#60A5FA]/40 hover:bg-white/15 hover:shadow-2xl hover:shadow-[#2563EB]/20">
+					<div className="group mx-auto w-full max-w-md rounded-2xl border border-white/20 bg-white/10 p-8 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#60A5FA]/40 hover:bg-white/15 hover:shadow-2xl hover:shadow-[#2563EB]/20">
 						<img
 							src="https://images.prismic.io/tspl/d578a606-9734-47db-a73f-965d0ceab1c0_Seal_of_Maharashtra.svg.png?auto=compress,format&w=640"
 							alt="Seal of Maharashtra"
-							className="mx-auto h-52 w-52 object-contain transition-transform duration-500 group-hover:scale-105"
+							className="mx-auto h-48 w-48 object-contain transition-transform duration-500 group-hover:scale-105"
 						/>
-						<div className="mt-6 rounded-2xl border border-[#60A5FA]/30 bg-[#1D4ED8]/20 p-5 text-center transition-all duration-300 group-hover:bg-[#1D4ED8]/30">
-							<p className="text-lg font-bold text-white">Government of Maharashtra Initiative</p>
-							<p className="mt-1 text-sm text-white/75">Focused on employability and practical skilling through apprenticeship.</p>
+						<div className="mt-4 rounded-xl border border-[#60A5FA]/30 bg-[#1D4ED8]/20 p-4 text-center transition-all duration-300 group-hover:bg-[#1D4ED8]/30">
+							<p className="text-sm font-bold text-white">Government of Maharashtra Initiative</p>
+							<p className="mt-0.5 text-xs text-white/75">Focused on employability and practical skilling through apprenticeship.</p>
 						</div>
 					</div>
 				</div>
