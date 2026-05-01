@@ -165,7 +165,7 @@ const faqs = [
 function PayrollSection() {
   const [activeTab, setActiveTab] = useState('companies');
   const currentBenefits = activeTab === 'companies' ? benefits.forCompanies : benefits.forWorkers;
-  const payrollHeroImage = 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_2_b6307ded10.jpeg';
+  const payrollHeroImage = 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_2_b6307ded10.jpeg';
 
   return (
     <section id="payroll-benefits" className="relative overflow-hidden bg-[#0A0A0B] pb-20 pt-32 text-white lg:pb-24 lg:pt-36">

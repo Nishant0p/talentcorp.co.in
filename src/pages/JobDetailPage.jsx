@@ -45,6 +45,28 @@ const getStats = (job) => [
   { icon: Calendar, label: 'Posted', value: 'Recently' },
 ];
 
+const formatSalary = (job) => {
+  if (job?.salary) return job.salary;
+  const min = Number(job?.salaryMin);
+  const max = Number(job?.salaryMax);
+  if (Number.isFinite(min) && Number.isFinite(max)) {
+    return `INR ${min.toLocaleString('en-IN')} - INR ${max.toLocaleString('en-IN')}`;
+  }
+  if (Number.isFinite(min)) return `INR ${min.toLocaleString('en-IN')}+`;
+  if (Number.isFinite(max)) return `Up to INR ${max.toLocaleString('en-IN')}`;
+  return 'Competitive';
+};
+
+const getReqs = (job) => {
+  const raw = String(job?.requirements || '').trim();
+  if (!raw) return REQS;
+  const list = raw
+    .split(/\r?\n|•|\u2022|,/) 
+    .map((item) => item.trim())
+    .filter(Boolean);
+  return list.length ? list : REQS;
+};
+
 // ─── Memoised Sub-components ──────────────────────────────────────────────────
 
 const StatStrip = React.memo(({ job }) => (
@@ -65,12 +87,12 @@ const StatStrip = React.memo(({ job }) => (
 
 const JobDescription = React.memo(({ job }) => {
   const description = job?.description || `Join <strong>${job.company}</strong> as a <strong>${job.title}</strong> based in ${job.location}. This is a dynamic role designed for individuals who are passionate about delivering quality results. You will be working with a highly skilled, supportive team with clear avenues for professional growth and skill enhancement.`;
-  
+
   return (
     <section className="pro-section">
       <h2 className="pro-section-title">Role Overview</h2>
       <div className="pro-section-content">
-        <div 
+        <div
           className="pro-description-text"
           dangerouslySetInnerHTML={{
             __html: description.replace(/\n/g, '<br />')
@@ -82,10 +104,10 @@ const JobDescription = React.memo(({ job }) => {
 });
 
 const Requirements = React.memo(({ job }) => {
-  const requirements = job?.requirements && Array.isArray(job.requirements) 
-    ? job.requirements 
+  const requirements = job?.requirements && Array.isArray(job.requirements)
+    ? job.requirements
     : REQS;
-  
+
   return (
     <section className="pro-section">
       <h2 className="pro-section-title">Key Requirements</h2>
@@ -249,9 +271,15 @@ const JobDetailPage = () => {
       <header className="pro-hero">
         <div className="pro-hero-inner">
           <div className="pro-hero-main">
-            <div className="pro-company-logo">
-              {job.company.charAt(0)}
-            </div>
+            {job.image ? (
+              <div className="pro-company-logo overflow-hidden p-0">
+                <img src={job.image} alt={job.title} className="h-full w-full object-cover" />
+              </div>
+            ) : (
+              <div className="pro-company-logo">
+                {job.company.charAt(0)}
+              </div>
+            )}
             <div className="pro-hero-details">
               <h1 className="pro-title">{job.title}</h1>
               <div className="pro-subtitle">

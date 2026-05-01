@@ -27,3 +27,6 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# ignore backend runtime
+tspl backend/

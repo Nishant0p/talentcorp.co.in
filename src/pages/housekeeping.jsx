@@ -41,7 +41,7 @@ function HousekeepingHero({ resolveAsset }) {
 	return (
 		<section className="relative min-h-[700px] overflow-hidden pb-20 pt-32">
 			<div className="absolute inset-0">
-				<img src={resolveAsset('housekeeping.hero', 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_23_2_4abfc029f0.jpeg').url} alt={resolveAsset('housekeeping.hero', 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_23_2_4abfc029f0.jpeg', 'Professional housekeeping team').alt} className="h-full w-full object-cover" />
+				<img src={resolveAsset('housekeeping.hero', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_23_2_4abfc029f0.jpeg').url} alt={resolveAsset('housekeeping.hero', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_23_2_4abfc029f0.jpeg', 'Professional housekeeping team').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-[#0F172A]/60" />
 			</div>
 
@@ -267,7 +267,7 @@ function OurServices({ resolveAsset }) {
 				<div className="grid items-center gap-16 lg:grid-cols-2">
 					<div className="relative animate-fade-in-left">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src={resolveAsset('housekeeping.services', 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_2_897785d10d.jpeg').url} alt={resolveAsset('housekeeping.services', 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_2_897785d10d.jpeg', 'Housekeeping services').alt} className="h-auto w-full object-cover" />
+							<img src={resolveAsset('housekeeping.services', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_2_897785d10d.jpeg').url} alt={resolveAsset('housekeeping.services', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_2_897785d10d.jpeg', 'Housekeeping services').alt} className="h-auto w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 to-transparent" />
 						</div>
 
@@ -510,7 +510,7 @@ function WhyChooseUs({ resolveAsset }) {
 
 					<div className="relative animate-fade-in-right">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src={resolveAsset('housekeeping.staff', 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_ed2ab4e588.jpeg').url} alt={resolveAsset('housekeeping.staff', 'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_ed2ab4e588.jpeg', 'Happy housekeeping staff').alt} className="h-auto w-full object-cover" />
+							<img src={resolveAsset('housekeeping.staff', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_ed2ab4e588.jpeg').url} alt={resolveAsset('housekeeping.staff', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_ed2ab4e588.jpeg', 'Happy housekeeping staff').alt} className="h-auto w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/80 via-transparent to-transparent" />
 
 							<div className="absolute bottom-0 left-0 right-0 p-8">

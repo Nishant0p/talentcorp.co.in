@@ -11,7 +11,7 @@ const milestones = [
 	{ year: '2016', title: '100+ Companies', description: 'Partnered with 100 businesses across India' },
 	{ year: '2018', title: '10,000 Workers', description: 'Helped 10,000 workers find jobs' },
 	{ year: '2020', title: 'NAPS Authorized', description: 'Became government authorized for NAPS' },
-	{ year: '2022', title: 'Pan-India Presence', description: 'Expanded to 20+ cities across India' },
+		/* { id: '8', name: 'Dheepan Chakravarthi', role: 'Southern Director', imageUrl: 'https://i.pravatar.cc/400?img=33' }, */
 	{ year: '2024', title: '40,000+ Placements', description: 'Crossed 40,000 successful placements' },
 ]
 
@@ -31,6 +31,50 @@ const values = [
 	{ icon: Award, title: 'Quality', description: 'We deliver the best results always', color: '#2563EB' },
 ]
 
+const awardHighlights = [
+	'World Book of Records holder (Delhi/London)',
+	'1st Rank Western Region (2023-24)',
+	'1st Rank TPA for NATS 2023-24 (Mumbai)',
+	'2nd Rank TPA for NATS 2022-23 (Mumbai)',
+	'Honorary Doctorates and international recognitions in Sri Lanka, Thailand, Dubai, and Gujarat',
+	'MOU with Ministry of Skill Development, Employment & Entrepreneurship, Government of Maharashtra',
+]
+
+const clientExperience = [
+	{ name: 'Haier Appliances', manpower: '4,500 (PIP 3000, NIP 1500)', period: '10 Years' },
+	{ name: 'Blue Star Ltd', manpower: '2,000', period: '5 Years' },
+	{ name: 'MRF Ltd', manpower: '1,500', period: '2 Years' },
+	{ name: 'FIAT Automotive', manpower: '1,100', period: '1 Year' },
+	{ name: 'Jabil Circuit', manpower: '1,100', period: '1 Year' },
+	{ name: 'Voltas Ltd', manpower: '1,000', period: '3 Years' },
+	{ name: 'Hyundai Motors India', manpower: '1,000', period: '1.5 Years' },
+	{ name: 'LG Electronics', manpower: '900', period: '7 Years' },
+	{ name: 'JCB India Pvt Ltd', manpower: '800', period: '4 Years' },
+	{ name: 'JSW', manpower: '300', period: '3 Years' },
+]
+
+const recruitmentSpeed = [
+	'Up to 25 students: 1 day',
+	'Up to 100 students: 3 days',
+	'Up to 200 students: 7 days',
+	'Up to 300 students: 10 days',
+	'Up to 400 students: 15 days',
+	'Up to 500 students: 25 days',
+	'500 to 1,000 students: 1 month',
+]
+
+const sourcingStrategy = [
+	'MaTPO associate network with 500+ diploma engineering colleges',
+	'Recruitment via training centers (IGTR, DDUGKVY, PMKVY, ICICI CSR, NGOs)',
+	'Campus drives for engineering, diploma, ITI, and 10th/12th candidates',
+	'Job fairs and bulk ATS databases',
+	'Social media hiring on LinkedIn, Naukri, Apna, Monster, Shine, and Indeed',
+	'Supervisor village networks via local employment officers',
+	'Auto-rickshaw audio/video/banner hiring campaigns',
+	'Audio/video promotion at bus stands and railway stations',
+	'Dedicated railway station advertisements',
+	'Bulk voice calls and messaging outreach',
+]
 
 function LeadershipSection() {
 	const leaders = [
@@ -99,7 +143,7 @@ function LeadershipSection() {
 function AboutHero({ resolveAsset }) {
 	const aboutHeroAsset = resolveAsset(
 		'about.hero',
-		'https://backend.tsplgroup.co.in/uploads/Whats_App_Image_2026_04_16_at_10_53_25_3_1d589b7f92.jpeg',
+		'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_25_3_1d589b7f92.jpeg',
 		'TSPL Group team'
 	)
 
@@ -160,7 +204,7 @@ function AboutHero({ resolveAsset }) {
 function OurStory({ resolveAsset }) {
 	const whoWeAreAsset = resolveAsset(
 		'about.mission',
-		'https://backend.tsplgroup.co.in/uploads/TSPL_Logo_Sarang_Sir_1_55253e4a30.png',
+		'https://backend.tsplgroup.in/uploads/TSPL_Logo_Sarang_Sir_1_55253e4a30.png',
 		'TSPL Group mission - Training workers'
 	)
 
@@ -199,27 +243,6 @@ function OurStory({ resolveAsset }) {
 					</div>
 				</div>
 
-				<div className="grid gap-8 md:grid-cols-2">
-					<div className="group rounded-3xl border border-[#2563EB]/20 bg-gradient-to-br from-[#DBEAFE] to-white p-8 transition-all duration-300 hover:shadow-xl">
-						<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#2563EB] transition-transform group-hover:scale-110">
-							<Target className="h-8 w-8 text-white" />
-						</div>
-						<h3 className="mb-4 text-2xl font-bold text-[#0F172A]">Our Mission</h3>
-						<p className="text-lg leading-relaxed text-[#475569]">
-							To empower every Indian worker with the skills and opportunities they need to build a better life for themselves and their families.
-						</p>
-					</div>
-
-					<div className="group rounded-3xl border border-[#F97316]/20 bg-gradient-to-br from-[#FED7AA]/50 to-white p-8 transition-all duration-300 hover:shadow-xl">
-						<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F97316] transition-transform group-hover:scale-110">
-							<Eye className="h-8 w-8 text-white" />
-						</div>
-						<h3 className="mb-4 text-2xl font-bold text-[#0F172A]">Our Vision</h3>
-						<p className="text-lg leading-relaxed text-[#475569]">
-							To become India&apos;s most trusted workforce solutions partner, creating one million job opportunities by 2030.
-						</p>
-					</div>
-				</div>
 			</div>
 		</section>
 	)
@@ -316,12 +339,15 @@ function Achievements() {
 					</div>
 				</div>
 
+				{/* Upstream version does not include extra panels here */}
+
 				<div className="mt-20 text-center">
 					<p className="mb-6 text-xl text-white/70">Ready to be part of our success story?</p>
 					<Link to="/contact-us" className="rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/40 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
 						Join Us Today
 					</Link>
 				</div>
+
 			</div>
 		</section>
 	)

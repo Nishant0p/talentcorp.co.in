@@ -150,7 +150,7 @@ Enable public access for read-only endpoints:
 
 ### Environment Variable:
 ```
-VITE_STRAPI_API_URL=https://backend.tsplgroup.co.in
+VITE_STRAPI_API_URL=https://backend.tsplgroup.in
 ```
 
 ---

@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Sparkles, Award, Calendar, MapPin, ChevronRight, Cake, Star } from 'lucide-react';
-import { extractMediaUrl, fetchNews } from '../utils/strapi';
+import { extractMediaUrl, fetchNews, fetchSingleType } from '../utils/strapi';
 
 const defaultNewsEventsContent = {
   pageContent: {
@@ -14,7 +14,7 @@ const defaultNewsEventsContent = {
   hero: {
     featureImage: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80',
     featureTag: 'Featured',
-    featureTitle: 'World Book of Records Recognition',
+    featureTitle: 'NAPS/NATS Top Rank Recognition',
     eventCount: '247',
     eventCountLabel: 'Events This Year',
     quickAccessTitle: 'QUICK ACCESS',
@@ -22,16 +22,16 @@ const defaultNewsEventsContent = {
     milestonesLeft: 'Milestones, Moments',
     milestonesRight: 'Memories',
     milestonesSubtitle: 'All in one place',
-    awardTitle: 'Award Winning',
-    awardSubtitle: 'Excellence in Training',
+    awardTitle: 'Record and Rank Holder',
+    awardSubtitle: 'World Record and Top Regional Performance',
   },
   spotlightFeature: {
     image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&q=80',
     tag: 'Awards',
     date: 'March 15, 2026',
-    title: 'TSPL Group Receives World Book of Records Recognition for Excellence in Skilling',
+    title: 'TSPL Group Recognized with World Book of Records and Top TPA Rankings',
     description:
-      "A landmark achievement recognizing our commitment to transforming India's workforce through innovative skilling solutions.",
+      'Recognitions include World Book of Records holder status, 1st Rank Western Region, and top NATS TPA rankings in Mumbai.',
   },
   spotlightCards: [
     {
@@ -48,7 +48,7 @@ const defaultNewsEventsContent = {
     },
     {
       category: 'Awards',
-      title: 'TSPL Recognized for Excellence in Large-Scale Workforce Delivery',
+      title: 'TSPL Achieves 1st Rank Western Region and 1st Rank NATS TPA (2023-24)',
       date: 'March 1, 2026',
       img: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=400',
     },
@@ -82,7 +82,7 @@ const defaultNewsEventsContent = {
   },
   {
     type: 'quote',
-    text: '“Best Staffing Solutions Provider — Economic Times Awards 2026”',
+    text: '“World Book of Records holder with 40,000+ trainees and 450+ clients served”',
     bgColor: 'bg-orange-500',
   },
   {
@@ -214,7 +214,8 @@ const resolveNewsEventsContent = (prismicData) => {
 
 const NewsEventsPage = ({ prismicData = null }) => {
   const heroParallaxRef = useRef(null);
-  const content = useMemo(() => resolveNewsEventsContent(prismicData), [prismicData]);
+  const [pageData, setPageData] = useState(null);
+  const content = useMemo(() => resolveNewsEventsContent(pageData || prismicData), [pageData, prismicData]);
   const [latestNews, setLatestNews] = useState([]);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress: heroProgress } = useScroll({
@@ -235,6 +236,15 @@ const NewsEventsPage = ({ prismicData = null }) => {
     };
 
     loadLatestNews();
+  }, []);
+
+  useEffect(() => {
+    const loadPageContent = async () => {
+      const data = await fetchSingleType('/api/news-events-page?populate[birthdayUpcoming]=*&populate[birthdaySpotlight][populate]=image');
+      setPageData(data);
+    };
+
+    loadPageContent();
   }, []);
 
   return (
@@ -494,26 +504,49 @@ const NewsEventsPage = ({ prismicData = null }) => {
               transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.05 }}
             >
               {item.type === 'news' ? (
-                <>
-                  <div className="h-1/2 overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <div className="flex h-1/2 flex-col justify-between p-8">
-                    <div>
-                      <span className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">
-                        {item.category}
-                      </span>
-                      <h3 className="mt-2 text-xl font-bold leading-tight text-[#006bb8] line-clamp-3">
-                        {item.title}
-                      </h3>
+                item.id ? (
+                  <Link to={`/news-events/${item.id}`} className="block h-full">
+                    <div className="h-1/2 overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
                     </div>
-                    <p className="text-sm text-slate-400">{item.date}</p>
-                  </div>
-                </>
+                    <div className="flex h-1/2 flex-col justify-between p-8">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">
+                          {item.category}
+                        </span>
+                        <h3 className="mt-2 text-xl font-bold leading-tight text-[#006bb8] line-clamp-3">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <p className="text-sm text-slate-400">{item.date}</p>
+                    </div>
+                  </Link>
+                ) : (
+                  <>
+                    <div className="h-1/2 overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </div>
+                    <div className="flex h-1/2 flex-col justify-between p-8">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">
+                          {item.category}
+                        </span>
+                        <h3 className="mt-2 text-xl font-bold leading-tight text-[#006bb8] line-clamp-3">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <p className="text-sm text-slate-400">{item.date}</p>
+                    </div>
+                  </>
+                )
               ) : (
                 <div className="flex h-full items-center justify-center p-10 text-center">
                   <h3 className="max-w-sm text-2xl font-medium leading-relaxed text-white">
@@ -602,7 +635,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
               <div className="relative flex h-[500px] items-end justify-center overflow-visible">
                 <div className="absolute bottom-12 h-[320px] w-[320px] rounded-full bg-[#006bb8]/12 blur-2xl" />
                 <img
-                  src={content.birthdaySpotlight.image}
+                  src={extractMediaUrl(content.birthdaySpotlight.image) || content.birthdaySpotlight.image}
                   alt={content.birthdaySpotlight.name}
                   className="animate-bounce-slow relative z-10 h-[520px] w-auto max-w-none object-contain object-top drop-shadow-[0_36px_46px_rgba(15,23,42,0.28)]"
                   style={{
