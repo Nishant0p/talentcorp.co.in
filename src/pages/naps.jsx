@@ -1,22 +1,23 @@
+import React, { useEffect } from 'react'
 import {
-    ArrowRight,
-    Award,
-    BadgeCheck,
-    Briefcase,
-    Building2,
-    CheckCircle,
-    CheckCircle2,
-    FileCheck,
-    GraduationCap,
-    Mail,
-    Phone,
-    Shield,
-    Sparkles,
-    Target,
-    TrendingUp,
-    UserCheck,
-    Users,
-    Wallet,
+	ArrowRight,
+	Award,
+	BadgeCheck,
+	Briefcase,
+	Building2,
+	CheckCircle,
+	CheckCircle2,
+	FileCheck,
+	GraduationCap,
+	Mail,
+	Phone,
+	Shield,
+	Sparkles,
+	Target,
+	TrendingUp,
+	UserCheck,
+	Users,
+	Wallet,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -106,12 +107,12 @@ function NAPSHero() {
 					</p>
 
 					<div className="mb-14 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
-						<Link to="/jobs" className="group inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] px-8 py-4 text-base font-semibold text-white shadow-2xl shadow-[#2563EB]/40 transition-all duration-300 hover:scale-105 sm:px-10 sm:py-5 sm:text-lg">
+						<Link to="/jobs" className="group inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] px-8 py-4 text-base font-semibold text-white shadow-2xl shadow-[#2563EB]/40 transition-all duration-300 hover:scale-105 sm:px-10 sm:py-5 sm:text-lg apply-btn">
 							<Briefcase className="mr-2 h-5 w-5" />
 							Apply Now
 							<ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
 						</Link>
-						<Link to="/contact-us" className="inline-flex items-center justify-center rounded-2xl border-2 border-[#2563EB] bg-white px-8 py-4 text-base font-semibold text-[#2563EB] transition-all duration-300 hover:bg-[#2563EB] hover:text-white sm:px-10 sm:py-5 sm:text-lg">
+						<Link to="/contact-us" className="inline-flex items-center justify-center rounded-2xl border-2 border-[#2563EB] bg-white px-8 py-4 text-base font-semibold text-[#2563EB] transition-all duration-300 hover:bg-[#2563EB] hover:text-white sm:px-10 sm:py-5 sm:text-lg contact-btn">
 							<TrendingUp className="mr-2 h-5 w-5" />
 							Learn More
 						</Link>
@@ -123,7 +124,9 @@ function NAPSHero() {
 								<StaggerItem key={stat.label}>
 									<div className="flex items-center gap-3 rounded-2xl border border-[#2563EB]/20 bg-white/80 px-4 py-3 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-[#2563EB]/50 hover:bg-white hover:shadow-md sm:gap-4 sm:px-8 sm:py-5">
 										<div className="text-left">
-											<p className="bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-2xl font-extrabold text-transparent sm:text-4xl">{stat.value}</p>
+											<p className="bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-2xl font-extrabold text-transparent sm:text-4xl stat-number" data-target={parseInt(String(stat.value).replace(/\D/g, ''), 10)}>
+												0
+											</p>
 											<p className="text-sm font-medium text-[#64748B]">{stat.label}</p>
 										</div>
 									</div>
@@ -438,13 +441,13 @@ function NAPSCTA() {
 						<p className="mb-8 text-lg text-blue-100">Join thousands who transformed their careers through NATS.</p>
 
 						<div className="flex flex-wrap gap-4">
-							<Link to="/jobs" className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
+							<Link to="/jobs" className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c] apply-btn">
 								<GraduationCap className="h-5 w-5" />
 								Join Now
 								<ArrowRight className="h-5 w-5" />
 							</Link>
 
-							<Link to="/contact-us" className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10">
+							<Link to="/contact-us" className="flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-colors hover:bg-white/10 contact-btn">
 								<Building2 className="h-5 w-5 text-blue-100" />
 								For Employers
 							</Link>
@@ -473,6 +476,68 @@ function NAPSCTA() {
 }
 
 export default function NapsPage() {
+	useEffect(() => {
+		// Animated Counter for Statistics
+		const statNumbers = document.querySelectorAll('.stat-number');
+
+		const animateCounter = (element, target) => {
+			let count = 0;
+			const duration = 2000;
+			const frameDuration = 1000 / 60;
+			const totalFrames = Math.round(duration / frameDuration);
+			const easeOutQuad = (t) => t * (2 - t);
+			let frame = 0;
+
+			const counter = () => {
+				frame++;
+				const progress = easeOutQuad(frame / totalFrames);
+				const current = Math.round(target * progress);
+				if (current < target) {
+					element.innerText = current.toLocaleString('en-IN') + '+';
+					requestAnimationFrame(counter);
+				} else {
+					element.innerText = target.toLocaleString('en-IN') + '+';
+				}
+			};
+
+			requestAnimationFrame(counter);
+		};
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					const el = entry.target;
+					const value = parseInt(el.getAttribute('data-target') || '0', 10);
+					animateCounter(el, value);
+					observer.unobserve(el);
+				}
+			});
+		}, { threshold: 0.5 });
+
+		statNumbers.forEach((s) => {
+			s.textContent = '0';
+			observer.observe(s);
+		});
+
+		// Smooth Scrolling for CTA Buttons (only for hash links)
+		const ctaButtons = document.querySelectorAll('.apply-btn, .contact-btn, .action-btn');
+		const ctaClickHandler = function (e) {
+			const href = this.getAttribute('href') || this.getAttribute('to') || '';
+			if (href && href.startsWith('#')) {
+				e.preventDefault();
+				const targetSection = document.querySelector(href);
+				if (targetSection) targetSection.scrollIntoView({ behavior: 'smooth' });
+			}
+			// otherwise allow normal routing/navigation
+		};
+		ctaButtons.forEach((btn) => btn.addEventListener('click', ctaClickHandler));
+
+		return () => {
+			ctaButtons.forEach((btn) => btn.removeEventListener('click', ctaClickHandler));
+			observer.disconnect();
+		};
+	}, []);
+
 	return (
 		<div className="min-h-screen bg-slate-50 text-slate-800">
 			<Navbar />
