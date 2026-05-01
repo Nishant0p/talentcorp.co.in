@@ -46,7 +46,7 @@ function AedpHero({ resolveAsset }) {
 	const heroAsset = resolveAsset('aedp.hero', '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp', 'AEDP students in practical learning')
 
 	return (
-		<section className="relative overflow-hidden bg-[#0F172A] pt-24">
+		<section className="relative overflow-hidden bg-[#0F172A] pt-16">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/70" />
@@ -55,8 +55,8 @@ function AedpHero({ resolveAsset }) {
 			<div className="absolute -left-16 top-20 h-72 w-72 rounded-full bg-[#2563EB]/25 blur-3xl" />
 			<div className="absolute -right-10 bottom-0 h-80 w-80 rounded-full bg-[#F97316]/20 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
-				<div className="max-w-4xl space-y-8">
+			<div className="relative z-10 mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-16">
+				<div className="max-w-4xl space-y-6">
 					<div className="inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/20 px-4 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F97316]/30 hover:shadow-lg hover:shadow-[#F97316]/20">
 						<GraduationCap className="h-5 w-5 text-[#F97316]" />
 						<span className="text-sm font-bold text-[#F97316]">APPRENTICESHIP EMBEDDED DEGREE PROGRAM</span>
