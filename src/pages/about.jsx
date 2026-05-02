@@ -99,8 +99,7 @@ function LeadershipSection() {
 					Meet the visionary leaders shaping TSPL Group's future.
 				</p>
 
-				{/* All Cards in 1 Line - No Scrolling */}
-				<div className="flex justify-center items-stretch gap-2 flex-nowrap w-full">
+				<div className="flex w-full flex-col gap-6 lg:flex-row lg:justify-center lg:items-stretch lg:gap-2 lg:flex-nowrap">
 					{leaders.map((leader) => (
 						<motion.div
 							key={leader.id}
@@ -108,10 +107,10 @@ function LeadershipSection() {
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true, amount: 0.3 }}
 							transition={{ duration: 0.6 }}
-							className="flex-1 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-200 overflow-hidden group cursor-pointer"
+							className="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg transition-all duration-300 group cursor-pointer hover:shadow-2xl lg:flex-1"
 						>
 							{/* Image Container with Hover Effects */}
-								<div className={`overflow-hidden relative bg-slate-100 ${leader.imageContainerClassName || 'h-64'}`}>
+							<div className={`relative overflow-hidden bg-slate-100 ${leader.imageContainerClassName || 'h-64'} h-56 sm:h-64 lg:h-64`}>
 								<img
 									src={leader.imageUrl}
 									alt={leader.name}
@@ -319,13 +318,16 @@ function Achievements() {
 
 					<div className="relative space-y-8 lg:space-y-0">
 						{milestones.map((milestone, i) => (
-							<div
+							<motion.div
 								key={`${milestone.year}-${milestone.title}`}
-								className={`flex flex-col items-center gap-4 lg:flex-row lg:gap-8 ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
-								style={{ animationDelay: `${i * 150}ms` }}
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true, amount: 0.3 }}
+								transition={{ duration: 0.6, delay: i * 0.1 }}
+								className={`flex flex-col items-center gap-4 w-full lg:flex-row lg:gap-8 lg:w-auto ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
 							>
-								<div className={`flex-1 ${i % 2 === 0 ? 'lg:text-right' : 'lg:text-left'}`}>
-									<div className={`inline-block rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:bg-white/10 ${i % 2 === 0 ? 'lg:ml-auto' : 'lg:mr-auto'}`}>
+								<div className={`w-full lg:flex-1 ${i % 2 === 0 ? 'lg:text-right' : 'lg:text-left'}`}>
+									<div className={`min-h-[180px] w-full lg:w-auto inline-block rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:bg-white/10 flex flex-col justify-between ${i % 2 === 0 ? 'lg:ml-auto' : 'lg:mr-auto'}`}>
 										<p className="mb-2 text-sm font-bold text-[#F97316]">{milestone.year}</p>
 										<h4 className="mb-2 text-xl font-bold text-white">{milestone.title}</h4>
 										<p className="text-white/60">{milestone.description}</p>
@@ -334,7 +336,7 @@ function Achievements() {
 
 								<div className="z-10 hidden h-6 w-6 shrink-0 rounded-full border-4 border-[#0F172A] bg-[#2563EB] lg:block" />
 								<div className="hidden flex-1 lg:block" />
-							</div>
+							</motion.div>
 						))}
 					</div>
 				</div>

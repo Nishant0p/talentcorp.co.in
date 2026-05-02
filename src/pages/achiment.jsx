@@ -14,8 +14,6 @@ import {
 	Users,
 	Building2,
 	Quote,
-	ChevronLeft,
-	ChevronRight,
 	TrendingUp,
 	Rocket,
 	Globe,
@@ -23,181 +21,10 @@ import {
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import heroImage from '../assets/hero.png'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
-
-const awards = [
-	{
-		title: 'World Book of Records Holder (Delhi/London)',
-		year: '2024',
-		organization: 'World Book of Records',
-		description: 'Recognized for excellence in large-scale workforce skilling and apprenticeship-linked talent transformation.',
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
-	},
-	{
-		title: '1st Rank Western Region (2023-24)',
-		year: '2024',
-		organization: 'Regional Apprenticeship Performance',
-		description: 'Awarded top ranking for apprenticeship implementation and workforce outcomes across the western region.',
-		image: '/images-10.jpeg',
-	},
-	{
-		title: '1st Rank TPA for NATS (Mumbai)',
-		year: '2024',
-		organization: 'NATS Performance Ranking',
-		description: 'Recognized as top-performing third-party aggregator for NATS execution and successful candidate deployment.',
-		image: heroImage,
-	},
-	{
-		title: '2nd Rank TPA for NATS (Mumbai)',
-		year: '2023',
-		organization: 'NATS Performance Ranking',
-		description: 'Maintained consistent high rankings in consecutive years for apprenticeship process quality and implementation scale.',
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
-	},
-	{
-		title: 'International Recognitions and Honorary Doctorates',
-		year: '2024',
-		organization: 'Sri Lanka, Thailand, Dubai, Gujarat',
-		description: 'Honored internationally for impactful work in workforce development, skilling innovation, and employability transformation.',
-		image: '/images-10.jpeg',
-	},
-	{
-		title: 'MoU with Government of Maharashtra',
-		year: '2024',
-		organization: 'Skill Development, Employment & Entrepreneurship',
-		description: 'Signed strategic MoU to expand apprenticeship and skilling initiatives across Maharashtra with government collaboration.',
-		image: heroImage,
-	},
-]
-
-const certifications = [
-	{ name: 'ISO 9001:2015', desc: 'Quality Management' },
-	{ name: 'EPFO Registered', desc: 'PF Compliance' },
-	{ name: 'ESIC Approved', desc: 'ESI Compliance' },
-	{ name: 'CLRA Licensed', desc: 'Contract Labor' },
-	{ name: 'MSME Certified', desc: 'Government Recognized' },
-	{ name: 'GST Registered', desc: 'Tax Compliance' },
-]
-
-const milestones = [
-	{
-		year: '2011',
-		title: 'The Beginning',
-		description: 'TSPL Group was established to transform workforce deployment and apprenticeship-led skilling in India.',
-		icon: Rocket,
-		color: 'blue',
-		image: heroImage,
-	},
-	{
-		year: '2018',
-		title: 'Scale Expansion',
-		description: 'Expanded into major industrial hubs with structured staffing, payroll, and compliance operations.',
-		icon: Users,
-		color: 'orange',
-		image: '/images-10.jpeg',
-	},
-	{
-		year: '2022',
-		title: 'NATS Ranking Excellence',
-		description: 'Achieved top regional performance in NATS implementation and apprenticeship conversion outcomes.',
-		icon: Award,
-		color: 'green',
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
-	},
-	{
-		year: '2023',
-		title: 'Western Region 1st Rank',
-		description: 'Ranked 1st in Western Region for apprenticeship execution quality and performance.',
-		icon: Globe,
-		color: 'purple',
-		image: heroImage,
-	},
-	{
-		year: '2024',
-		title: 'World Book of Records',
-		description: 'Received World Book of Records recognition for skilling and workforce impact.',
-		icon: Star,
-		color: 'orange',
-		image: '/images-10.jpeg',
-	},
-	{
-		year: '2024',
-		title: '40,000+ Trainees and 450+ Clients',
-		description: 'Scaled to 40,000+ deployments and 450+ client relationships across sectors and geographies.',
-		icon: Building2,
-		color: 'blue',
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
-	},
-]
-
-const testimonials = [
-	{
-		quote:
-			'TSPL Group has been our trusted partner for over 5 years. Their commitment to quality and compliance is unmatched. They understand our requirements and deliver consistently.',
-		author: 'Rajesh Mehta',
-		position: 'HR Director',
-		company: 'Tata Motors',
-		image: '/images-10.jpeg',
-		rating: 5,
-	},
-	{
-		quote:
-			'We have reduced our HR overhead by 40% since partnering with TSPL. Their payroll and compliance management is seamless. Highly recommended for any manufacturing company.',
-		author: 'Priya Sharma',
-		position: 'Operations Head',
-		company: 'Mahindra & Mahindra',
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
-		rating: 5,
-	},
-	{
-		quote:
-			'The quality of workers provided by TSPL is excellent. They are well-trained, disciplined, and reliable. Our production efficiency has improved significantly.',
-		author: 'Amit Kumar',
-		position: 'Plant Manager',
-		company: 'Bajaj Auto',
-		image: heroImage,
-		rating: 5,
-	},
-	{
-		quote:
-			'Excellent statutory compliance support. TSPL handles all our PF, ESI, and labor law requirements flawlessly. Peace of mind guaranteed.',
-		author: 'Sunita Verma',
-		position: 'Finance Manager',
-		company: 'Hero MotoCorp',
-		image: '/images-10.jpeg',
-		rating: 5,
-	},
-]
-
-function useSectionReveal(threshold = 0.2) {
-	const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
-	const [isVisible, setIsVisible] = useState(isMobile)
-	const sectionRef = useRef(null)
-
-	useEffect(() => {
-		if (isMobile) {
-			setIsVisible(true)
-			return undefined
-		}
-
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				setIsVisible(entry.isIntersecting)
-			},
-			{ threshold }
-		)
-
-		if (sectionRef.current) {
-			observer.observe(sectionRef.current)
-		}
-
-		return () => observer.disconnect()
-	}, [threshold, isMobile])
-
-	return { isVisible, sectionRef }
-}
-
+import { useSectionReveal } from '../hooks/useSectionReveal'
+import AwardsSectionComponent from '../components/AwardsSection'
+import heroImage from '../assets/hero.png'
 function AwardsHero() {
 	const { isVisible, sectionRef } = useSectionReveal(0.25)
 	const [count, setCount] = useState({ years: 0, workers: 0, clients: 0, awardsWon: 0 })
@@ -469,228 +296,144 @@ function Milestones() {
 	)
 }
 
-function AwardsSection() {
-	const { isVisible, sectionRef } = useSectionReveal(0.2)
-
-	return (
-		<section ref={sectionRef} id="achievements" className="relative overflow-hidden bg-white py-16 md:py-24">
-			<div className="absolute inset-0">
-				<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-blue-100 blur-3xl opacity-30" />
-				<div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-orange-100 blur-3xl opacity-30" />
-			</div>
-
-			<div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-					<div className="mb-6 inline-flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-orange-700">
-						<Trophy className="h-4 w-4" />
-						<span className="text-sm font-semibold">Recognition</span>
-					</div>
-					<h2 className="mb-4 text-4xl font-bold text-gray-900 lg:text-5xl">
-						Awards & <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-blue-600">Certifications</span>
-					</h2>
-					<p className="mx-auto max-w-2xl text-lg text-gray-600">
-						Our commitment to excellence has been recognized by industry leaders and government bodies.
-					</p>
-				</div>
-
-				<div className="mb-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-					{awards.map((award, index) => (
-						<div
-							key={award.title}
-							className={`group flex flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
-							style={{ transitionDelay: `${index * 100}ms` }}
-						>
-							<div className="relative h-60 w-full overflow-hidden">
-								<img
-									src={award.image}
-									alt={award.title}
-									className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-								/>
-								<div className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-blue-600 shadow-sm backdrop-blur-sm">
-									{award.year}
-								</div>
-							</div>
-							<div className="flex flex-1 flex-col p-6">
-								<div className="mb-2">
-									<p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{award.organization}</p>
-								</div>
-								<h3 className="mb-3 line-clamp-2 text-xl font-bold text-gray-900 transition-colors group-hover:text-blue-600">
-									{award.title}
-								</h3>
-								<p className="mb-6 line-clamp-3 text-sm text-gray-500">
-									{award.description}
-								</p>
-								<div className="mt-auto">
-									<button className="group/btn inline-flex items-center gap-1 text-sm font-bold text-blue-600 transition-colors hover:text-blue-800">
-										<span className="relative">
-											Read More
-											<span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover/btn:w-full"></span>
-										</span>
-										<ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-									</button>
-								</div>
-							</div>
-						</div>
-					))}
-				</div>
-
-				<div className={`rounded-3xl bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 p-8 transition-all duration-700 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
-					<div className="mb-8 text-center">
-						<h3 className="mb-2 text-2xl font-bold text-white">Our Certifications</h3>
-						<p className="text-blue-200">Fully compliant with all statutory requirements</p>
-					</div>
-
-					<div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-						{certifications.map((cert) => (
-							<div key={cert.name} className="group rounded-xl border border-white/10 bg-white/10 p-4 text-center backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-white/20">
-								<div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 transition-transform group-hover:scale-110">
-									<BadgeCheck className="h-5 w-5 text-white" />
-								</div>
-								<p className="text-sm font-semibold text-white">{cert.name}</p>
-								<p className="mt-1 text-xs text-blue-200">{cert.desc}</p>
-							</div>
-						))}
-					</div>
-				</div>
-			</div>
-		</section>
-	)
-}
+// Use the shared AwardsSection component from /src/components
 
 function TestimonialsSection() {
 	const { isVisible, sectionRef } = useSectionReveal(0.2)
 	const [activeIndex, setActiveIndex] = useState(0)
-	const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+
+	const testimonials = [
+		{ company: 'Tata Motors', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHMfOlZPbJzMJLUrp1auGXEhz7TNJbDFcq-g&s', rating: 5, quote: 'TSPL Group significantly improved our hiring pipeline with great results.', author: 'Rajesh Mehta', position: 'Chief People Officer' },
+		{ company: 'Mahindra & Mahindra', logo: 'https://i.pinimg.com/736x/17/38/ff/1738ff204f7eaaf912742070a0871f8e.jpg', rating: 5, quote: 'Excellent service and quick turnarounds for critical roles.', author: 'Priya Sharma', position: 'HR Director' },
+		{ company: 'Bajaj Auto', logo: 'https://i.pinimg.com/736x/8b/e8/e5/8be8e5432419e9a984a3ab3fd3792905.jpg', rating: 5, quote: 'A dependable partner for mass hiring programs.', author: 'Amit Patel', position: 'Operations Head' },
+		{ company: 'Hero MotoCorp', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxiKq4Vgi8ttERIQse8zXFS6OxGJholi0txQ&s', rating: 4, quote: 'Professional and tailored recruitment solutions.', author: 'Neha Gupta', position: 'CEO' },
+	]
 
 	useEffect(() => {
-		if (!isAutoPlaying) return undefined
-
 		const timer = window.setInterval(() => {
 			setActiveIndex((prev) => (prev + 1) % testimonials.length)
-		}, 5000)
+		}, 4500)
 
 		return () => window.clearInterval(timer)
-	}, [isAutoPlaying])
+	}, [])
 
 	const currentTestimonial = testimonials[activeIndex]
 
-	const handlePrev = () => {
-		setIsAutoPlaying(false)
-		setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-	}
-
-	const handleNext = () => {
-		setIsAutoPlaying(false)
-		setActiveIndex((prev) => (prev + 1) % testimonials.length)
-	}
+	// manual navigation is available via dots; autoplay loops continuously
 
 	return (
-		<section ref={sectionRef} className="relative overflow-hidden bg-slate-50 py-16 md:py-24">
-			<div className="absolute top-0 left-0 h-full w-full opacity-5">
-				<Quote className="absolute left-20 top-20 h-64 w-64 -rotate-12 text-blue-500" />
-				<Quote className="absolute bottom-20 right-20 h-48 w-48 rotate-12 text-orange-500" />
+		<section ref={sectionRef} className="relative w-full min-h-screen bg-[#f8fafc] flex flex-col items-center justify-center p-4 md:p-10">
+			{/* Header Section */}
+			<div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+				<div className="mb-6 inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-blue-700">
+					<Quote className="h-4 w-4" />
+					<span className="text-sm font-semibold">Client Stories</span>
+				</div>
+				<h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">
+					What Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-orange-500">Clients Say</span>
+				</h2>
+				<p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base">
+					Hear from industry leaders who have transformed their workforce management with TSPL Group.
+				</p>
 			</div>
 
-			<div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-					<div className="mb-6 inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-blue-700">
-						<Quote className="h-4 w-4" />
-						<span className="text-sm font-semibold">Client Stories</span>
-					</div>
-					<h2 className="mb-4 text-4xl font-bold text-gray-900 lg:text-5xl">
-						What Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-orange-500">Clients Say</span>
-					</h2>
-					<p className="mx-auto max-w-2xl text-lg text-gray-600">
-						Hear from industry leaders who have transformed their workforce management with TSPL Group.
-					</p>
+			{/* Carousel Container */}
+			<div className={`relative w-full max-w-5xl h-[460px] md:h-[420px] flex items-center justify-center transition-all duration-700 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
+
+				{/* Desktop: show 3 cards (prev, active, next) with half-visible sides */}
+				<div className="hidden md:block relative w-full h-full overflow-visible">
+					{testimonials.map((t, idx) => {
+						const len = testimonials.length
+						const prev = (activeIndex - 1 + len) % len
+						const next = (activeIndex + 1) % len
+						let style = { left: '50%', transform: 'translateX(-50%) scale(1.02)', width: '76%', zIndex: 40, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
+						let classes = 'absolute top-1/2 -translate-y-1/2 rounded-2xl shadow-2xl overflow-hidden bg-white'
+
+						if (idx === prev) {
+							style = { left: '50%', transform: 'translateX(-120%) scale(0.92)', width: '52%', zIndex: 30, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
+						} else if (idx === next) {
+							style = { left: '50%', transform: 'translateX(20%) scale(0.92)', width: '52%', zIndex: 30, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
+						} else if (idx === activeIndex) {
+							style = { left: '50%', transform: 'translateX(-50%) scale(1.04)', width: '76%', zIndex: 40, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
+						} else {
+							// hide others
+							style = { left: '50%', transform: 'translateX(-50%) scale(0.8)', opacity: 0, pointerEvents: 'none', width: '50%', zIndex: 10, transition: 'all 700ms ease-in-out' }
+						}
+
+						return (
+							<div
+								key={t.company}
+								style={style}
+								className={classes + (idx === prev || idx === next ? ' cursor-pointer' : '')}
+								onClick={() => {
+									if (idx === prev || idx === next) setActiveIndex(idx)
+								}}
+							>
+								<div className="flex h-full">
+									<div className="w-2/5 bg-[#0A2647] p-6 flex items-center justify-center">
+										<img src={t.logo} alt={t.company} className="max-h-24 max-w-full object-contain" onError={(e) => e.target.style.display='none'} />
+									</div>
+									<div className="w-3/5 p-6 flex flex-col justify-center">
+										<div className="text-[#F97316] text-lg mb-2">{Array.from({ length: t.rating }).map((_, i) => (<span key={i}>★</span>))}</div>
+										<p className="text-slate-800 text-base leading-relaxed mb-4">{t.quote}</p>
+										<div className="mt-auto">
+											<p className="font-bold text-slate-900">{t.author}</p>
+											<p className="text-sm text-slate-500">{t.position}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						)
+					})}
 				</div>
 
-				<div className={`relative transition-all duration-700 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
-					<div className="overflow-hidden rounded-3xl bg-white shadow-2xl">
-						<div className="grid lg:grid-cols-2">
-							<div className="relative h-64 lg:h-auto">
-								<img src={currentTestimonial.image} alt={currentTestimonial.company} className="h-full w-full object-cover" />
-								<div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-900/40" />
-								<div className="absolute inset-0 flex items-center justify-center">
-									<div className="text-center text-white">
-										<Building2 className="mx-auto mb-4 h-16 w-16 opacity-80" />
-										<p className="text-2xl font-bold">{currentTestimonial.company}</p>
-									</div>
-								</div>
-							</div>
-
-							<div className="p-8 lg:p-12">
-								<div className="mb-6 flex gap-1">
-									{Array.from({ length: currentTestimonial.rating }).map((_, i) => (
-										<Star key={i} className="h-5 w-5 fill-orange-400 text-orange-400" />
-									))}
-								</div>
-
-								<Quote className="mb-4 h-10 w-10 text-blue-200" />
-
-								<blockquote className="mb-6 text-xl leading-relaxed text-gray-700 lg:text-2xl">
-									{currentTestimonial.quote}
-								</blockquote>
-
-								<div className="flex items-center gap-4">
-									<div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-xl font-bold text-white">
-										{currentTestimonial.author.charAt(0)}
-									</div>
-									<div>
-										<p className="font-bold text-gray-900">{currentTestimonial.author}</p>
-										<p className="text-sm text-gray-500">{currentTestimonial.position}</p>
-									</div>
-								</div>
+				{/* Mobile: single card layout */}
+				<div className="md:hidden w-full">
+					<div className="w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
+						<div className="p-6 flex items-center gap-4">
+							<img src={testimonials[activeIndex].logo} alt={testimonials[activeIndex].company} className="h-20 w-36 object-contain" />
+							<div>
+								<p className="font-bold">{testimonials[activeIndex].author}</p>
+								<p className="text-sm text-slate-500">{testimonials[activeIndex].position}</p>
 							</div>
 						</div>
-					</div>
-
-					<div className="mt-8 flex items-center justify-between">
-						<div className="flex gap-2">
-							{testimonials.map((_, index) => (
-								<button
-									key={index}
-									type="button"
-									onClick={() => {
-										setIsAutoPlaying(false)
-										setActiveIndex(index)
-									}}
-									className={`h-2 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-8 bg-blue-600' : 'w-2 bg-gray-300 hover:bg-gray-400'}`}
-									aria-label={`Show testimonial ${index + 1}`}
-								/>
-							))}
-						</div>
-
-						<div className="flex gap-3">
-							<button
-								type="button"
-								onClick={handlePrev}
-								className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-colors hover:border-blue-500 hover:bg-blue-50 hover:text-blue-600"
-								aria-label="Previous testimonial"
-							>
-									<ChevronLeft className="h-5 w-5" />
-								</button>
-							<button
-								type="button"
-								onClick={handleNext}
-								className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-colors hover:border-blue-500 hover:bg-blue-50 hover:text-blue-600"
-								aria-label="Next testimonial"
-							>
-									<ChevronRight className="h-5 w-5" />
-								</button>
+						<div className="p-6 pt-0">
+							<p className="text-slate-800 text-base md:text-lg">{testimonials[activeIndex].quote}</p>
 						</div>
 					</div>
 				</div>
 
-				<div className={`mt-16 transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-					<p className="mb-8 text-center text-gray-500">Trusted by leading companies across India</p>
-					<div className="flex flex-wrap items-center justify-center gap-8 opacity-60 lg:gap-16">
-						{['Tata Motors', 'Mahindra', 'Bajaj Auto', 'Hero', 'Maruti', 'L&T'].map((company) => (
-							<div key={company} className="cursor-pointer text-2xl font-bold text-gray-400 transition-colors hover:text-blue-600">
-								{company}
-							</div>
-						))}
-					</div>
+				{/* Prev / Next controls removed as requested; autoplay loops */}
+			</div>
+
+			{/* Pagination Dots and Mobile Arrows */}
+			<div className="flex gap-3 mt-10 items-center justify-center">
+
+
+				{/* Pagination Dots */}
+				<div className="flex gap-2 items-center">
+					{testimonials.map((_, index) => (
+						<button
+							key={index}
+							onClick={() => setActiveIndex(index)}
+							className={`rounded-full cursor-pointer transition-all ${index === activeIndex ? 'w-10 h-2 bg-[#0A2647]' : 'w-3 h-3 bg-[#F97316] opacity-50 hover:opacity-100'}`}
+							aria-label={`Show testimonial ${index + 1}`}
+						/>
+					))}
+				</div>
+
+
+			</div>
+
+			{/* Trusted Companies Section */}
+			<div className={`mt-16 transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+				<p className="mb-8 text-center text-gray-500 text-sm md:text-base">Trusted by leading companies across India</p>
+				<div className="flex flex-wrap items-center justify-center gap-6 opacity-60 lg:gap-12">
+					{['Tata Motors', 'Mahindra', 'Bajaj Auto', 'Hero', 'Maruti', 'L&T'].map((company) => (
+						<div key={company} className="cursor-pointer text-lg md:text-xl font-bold text-gray-400 transition-colors hover:text-blue-600">
+							{company}
+						</div>
+					))}
 				</div>
 			</div>
 		</section>
@@ -778,7 +521,7 @@ export default function AchimentPage() {
 			<main>
 				<AwardsHero />
 				
-				<AwardsSection />
+				<AwardsSectionComponent />
 				<TestimonialsSection />
 				<AchievementsCta />
 			</main>
