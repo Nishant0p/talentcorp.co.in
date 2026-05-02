@@ -44,7 +44,7 @@ const services = [
 		title: 'PF Registration & Compliance',
 		description: 'Complete Provident Fund management including registration, monthly challans, annual returns, and employee transfers.',
 		icon: Building2,
-		image: '/Gemini_Generated_Image_qskougqskougqsko.png',
+		image: 'https://images.pexels.com/photos/8566288/pexels-photo-8566288.jpeg',
 		features: ['New PF Code Registration', 'Monthly ECR Filing', 'KYC Updates', 'Transfer Claims'],
 		color: 'blue',
 	},
@@ -62,7 +62,7 @@ const services = [
 		title: 'Minimum Wages Compliance',
 		description: 'Stay updated with state-wise minimum wage notifications. We ensure your payroll meets all legal requirements.',
 		icon: Wallet,
-		image: '/Gemini_Generated_Image_qskougqskougqsko.png',
+		image: 'https://images.pexels.com/photos/5198201/pexels-photo-5198201.jpeg',
 		features: ['Wage Calculations', 'State Updates', 'VDA Adjustments', 'Bonus Compliance'],
 		color: 'orange',
 	},
@@ -71,7 +71,7 @@ const services = [
 		title: 'Factory Act Compliance',
 		description: 'Complete Factory Act requirements - licenses, safety audits, register maintenance, and inspector coordination.',
 		icon: Factory,
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
+		image: 'https://images.pexels.com/photos/31335983/pexels-photo-31335983.jpeg',
 		features: ['License Renewal', 'Safety Compliance', 'Register Maintenance', 'Audit Support'],
 		color: 'purple',
 	},
@@ -80,7 +80,7 @@ const services = [
 		title: 'Labor Law Compliance',
 		description: 'Comprehensive labor law compliance covering Contract Labor Act, CLRA, Shops Act, and other applicable regulations.',
 		icon: FileText,
-		image: '/Gemini_Generated_Image_qskougqskougqsko.png',
+		image: 'https://images.pexels.com/photos/9669807/pexels-photo-9669807.jpeg',
 		features: ['License Procurement', 'Returns Filing', 'Record Keeping', 'Legal Advisory'],
 		color: 'cyan',
 	},
@@ -89,7 +89,7 @@ const services = [
 		title: 'Contractor Compliance',
 		description: 'Principal employer compliance for contract workers. License management, register maintenance, and audit readiness.',
 		icon: Users,
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
+		image: 'https://images.pexels.com/photos/8482818/pexels-photo-8482818.jpeg',
 		features: ['CLRA License', 'Worker Records', 'Wage Verification', 'Principal-Contractor Liaison'],
 		color: 'pink',
 	},
@@ -449,11 +449,6 @@ function ComplianceServices() {
 	const [isVisible, setIsVisible] = useState(false)
 	const sectionRef = useRef(null)
 	const pageAssets = usePageAssets()
-	const serviceImages = [
-		getPageAsset(pageAssets, 'compliance.card.1', '/Gemini_Generated_Image_qskougqskougqsko.png', 'Compliance service'),
-		getPageAsset(pageAssets, 'compliance.card.2', '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp', 'Compliance service'),
-		getPageAsset(pageAssets, 'compliance.card.3', '/Gemini_Generated_Image_qskougqskougqsko.png', 'Compliance service'),
-	]
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(([entry]) => {
@@ -465,6 +460,7 @@ function ComplianceServices() {
 	}, [])
 
 	const currentService = services[activeService]
+	const currentImage = getPageAsset(pageAssets, `compliance.service.${currentService.id}`, currentService.image, currentService.title)
 	const colors = serviceColorMap[currentService.color]
 
 	return (
@@ -482,7 +478,7 @@ function ComplianceServices() {
 							const Icon = service.icon
 							const sColors = serviceColorMap[service.color]
 							const isActive = activeService === index
-							const serviceImage = serviceImages[index % serviceImages.length]
+						const serviceImage = getPageAsset(pageAssets, `compliance.service.${service.id}`, service.image, service.title)
 
 							return (
 								<button
@@ -511,7 +507,7 @@ function ComplianceServices() {
 					<div className={`transition-all duration-700 delay-300 lg:sticky lg:top-32 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
 						<div className={`relative overflow-hidden rounded-3xl border ${colors.border} ${colors.glow} shadow-2xl`}>
 							<div className="relative h-64 overflow-hidden">
-								<img src={serviceImages[activeService % serviceImages.length].url} alt={serviceImages[activeService % serviceImages.length].alt || currentService.title} className="h-full w-full object-cover transition-all duration-500" />
+								<img src={currentImage.url} alt={currentImage.alt || currentService.title} className="h-full w-full object-cover transition-all duration-500" />
 								<div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
 								<div className={`absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full border ${colors.bg} ${colors.border}`}><span className={`text-xl font-bold ${colors.text}`}>{activeService + 1}</span></div>
 							</div>
