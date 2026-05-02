@@ -12,7 +12,7 @@ const defaultNewsEventsContent = {
     heroTitleRight: '& EVENTS',
   },
   hero: {
-    featureImage: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80',
+    featureImage: '/news and event/news nap.png',
     featureTag: 'Featured',
     featureTitle: 'NAPS/NATS Top Rank Recognition',
     eventCount: '247',
@@ -26,29 +26,28 @@ const defaultNewsEventsContent = {
     awardSubtitle: 'World Record and Top Regional Performance',
   },
   spotlightFeature: {
-    image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&q=80',
+    image: '/news and event/image (1).png',
     tag: 'Awards',
     date: 'March 15, 2026',
-    title: 'TSPL Group Recognized with World Book of Records and Top TPA Rankings',
-    description:
-      'Recognitions include World Book of Records holder status, 1st Rank Western Region, and top NATS TPA rankings in Mumbai.',
+    title: 'Medhavi Skills University Inaugurates Work Integrated ITI (CTS) programme under Flexi-MoU scheme of DGT',
+    readMoreUrl: '/news-events/medhavi-flexi-iti',
   },
   spotlightCards: [
     {
-      category: 'Partnerships',
-      title: 'Strategic MoU Signed with Maharashtra Skill Development...',
+      category: '',
+      title: 'EDHAVI SKILLS UNIVERSITY INAUGURATES WORK INTEGRATED ITI (CTS) PROGRAMME UNDER THE FLEXI-MOU SCHEME OF DIRECTOR GENERAL OF TRAINING (DGT) AT INDUSTRY PARTNER LOCATION AT PUNE',
       date: 'March 10, 2026',
       img: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=400',
     },
     {
-      category: 'Milestones',
-      title: 'TSPL Expands Operations to 5 New States Across India',
+      category: '',
+      title: 'Medhavi Skills University Inaugurates Work Integrated ITI (CTS) Programme Under The Flexi-MoU Scheme Of Director General Of Training (DGT) At Industry Partner Location At Pune',
       date: 'March 5, 2026',
       img: 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&q=80&w=400',
     },
     {
-      category: 'Awards',
-      title: 'TSPL Achieves 1st Rank Western Region and 1st Rank NATS TPA (2023-24)',
+      category: '',
+      title: 'MSU, Sikkim, in collaboration with RSB Transmissions, inaugurates the Work Integrated ITI (CTS) training programme under the Flexi MoU scheme of DGT',
       date: 'March 1, 2026',
       img: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=400',
     },
@@ -273,29 +272,31 @@ const NewsEventsPage = ({ prismicData = null }) => {
       </motion.h1>
 
       <motion.div ref={heroParallaxRef} className="mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-4">
-        <motion.div
-          className="group relative overflow-hidden rounded-3xl md:col-span-2 md:row-span-2"
-          initial={{ opacity: 0, y: 72, scale: 0.98 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.75, ease: 'easeOut' }}
-          style={{ y: heroFeatureY }}
-        >
-          <img
-            src={content.hero.featureImage}
-            alt="Snowy mountains"
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-          <div className="absolute bottom-0 p-8">
-            <span className="rounded-full bg-orange-500 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white">
-              {content.hero.featureTag}
-            </span>
-            <h3 className="mt-4 text-3xl font-bold text-white">
-              {content.hero.featureTitle}
-            </h3>
-          </div>
-        </motion.div>
+        <Link to="/naps" className="group block h-full cursor-pointer md:col-span-2 md:row-span-2">
+          <motion.div
+            className="relative h-[320px] overflow-hidden rounded-3xl sm:h-[380px] md:h-full"
+            initial={{ opacity: 0, y: 72, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.75, ease: 'easeOut' }}
+            style={{ y: heroFeatureY }}
+          >
+            <img
+              src={content.hero.featureImage}
+              alt="Snowy mountains"
+              className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110 md:object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+            <div className="absolute bottom-0 p-8">
+              <span className="rounded-full bg-orange-500 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white">
+                {content.hero.featureTag}
+              </span>
+              <h3 className="mt-4 text-3xl font-bold text-white">
+                {content.hero.featureTitle}
+              </h3>
+            </div>
+          </motion.div>
+        </Link>
 
         <motion.div
           className="flex flex-col justify-between rounded-3xl bg-orange-500 p-8 text-white transition-all hover:scale-[1.02] hover:shadow-xl hover:shadow-orange-200"
@@ -443,8 +444,11 @@ const NewsEventsPage = ({ prismicData = null }) => {
               <p className="mb-6 max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
                 {content.spotlightFeature.description}
               </p>
-              <Link to="/news-events" className="flex items-center gap-2 font-semibold text-orange-500 transition-colors hover:text-orange-400">
-              Read More <ArrowRight size={18} />
+              <Link
+                to={content.spotlightFeature.readMoreUrl || '/news-events'}
+                className="flex items-center gap-2 font-semibold text-orange-500 transition-colors hover:text-orange-400"
+              >
+                Read More <ArrowRight size={18} />
               </Link>
             </div>
           </motion.article>
