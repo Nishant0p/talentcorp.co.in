@@ -92,7 +92,7 @@ const WorkforceSection = () => {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-white px-6 py-20 md:px-12">
+    <section className="relative overflow-hidden bg-white px-6 py-20 text-center md:px-12 lg:text-left">
       <div className="mx-auto max-w-6xl relative">
         <div className="grid items-stretch gap-8 lg:grid-cols-2">
           {cards.map((card, index) => {
@@ -116,25 +116,12 @@ const WorkforceSection = () => {
                 className={`group relative overflow-hidden rounded-[2.5rem] border border-slate-100 shadow-lg shadow-slate-200/40 transition-all duration-300 hover:shadow-xl ${cardBackdropClass}`}
                 style={{ contentVisibility: 'auto', containIntrinsicSize: '560px' }}
               >
-                {card.image && (
-                  <ProgressiveImage
-                    media={card.imageMedia}
-                    src={card.image}
-                    alt={card.title}
-                    className="object-center"
-                    highClassName="contrast-[1.02] brightness-[0.96] transition-transform duration-500 group-hover:scale-[1.03]"
-                    loading="lazy"
-                    decoding="async"
-                    width="1200"
-                    height="800"
-                  />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-r from-white/92 via-white/70 to-black/48" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/96 via-white/92 to-white/88" />
                 <div className={`absolute inset-0 ${accentClass}`} />
 
-                <div className="relative z-10 flex min-h-[520px] flex-1 flex-col justify-between p-8 md:min-h-[560px] md:max-w-[86%]">
+                <div className="relative z-10 flex min-h-[520px] flex-1 flex-col items-center justify-between p-8 text-center md:min-h-[560px] md:max-w-[86%] md:items-start md:text-left">
                   <div>
-                    <div className="mb-6 flex items-center gap-3">
+                    <div className="mb-6 flex items-center justify-center gap-3 md:justify-start">
                       <span className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white ${pillClass}`}>
                         {card.eyebrow}
                       </span>
@@ -146,14 +133,14 @@ const WorkforceSection = () => {
                     <p className="mb-8 font-medium leading-relaxed text-slate-500">{card.description}</p>
                     <ul className="mb-10 space-y-4">
                       {lines.map((item) => (
-                        <li key={item} className="flex items-center gap-3 text-sm font-semibold text-slate-700">
+                        <li key={item} className="flex items-center justify-center gap-3 text-sm font-semibold text-slate-700 md:justify-start">
                           <CheckCircle2 size={18} className={listClass} /> {item}
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="flex justify-start">
+                  <div className="flex justify-center md:justify-start">
                     <a
                       href={card.buttonLink}
                       className={`group inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-sm font-bold text-white shadow-md transition-all duration-300 hover:scale-[1.03] hover:shadow-xl ${actionClass}`}

@@ -20,6 +20,7 @@ import {
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ServiceEnquirySection from '../components/ServiceEnquirySection'
@@ -35,13 +36,13 @@ const aboutHighlights = [
 ]
 
 const aboutFeatures = [
-	{ icon: TrendingUp, title: 'Career Growth', desc: 'Fast-track advancement opportunities' },
+	{ icon: TrendingUp, title: 'Career Growth', desc: 'Fast-track advancement' },
 	{ icon: Users, title: 'Expert Mentors', desc: 'Learn from industry leaders' },
 	{ icon: Award, title: '90% Get Jobs', desc: 'Premium job placements' },
 ]
 
 const applicantBenefits = [
-	{ icon: Wallet, title: 'Rs. 15,000+/month', desc: 'Competitive monthly stipend' },
+	{ icon: Wallet, title: 'Rs. 15,000+/month', desc: 'Competitive stipend' },
 	{ icon: TrendingUp, title: 'Career Acceleration', desc: 'Fast-track growth' },
 	{ icon: Award, title: '90% Placement', desc: 'Premium job offers' },
 	{ icon: Target, title: 'Skill Mastery', desc: 'Advanced training' },
@@ -84,53 +85,41 @@ const processSteps = [
 
 function NAPSHero() {
 	return (
-		<section className="relative flex min-h-[88vh] items-center overflow-hidden bg-white pt-20 sm:pt-24">
-			<div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'linear-gradient(rgba(37,99,235,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.03) 1px, transparent 1px)', backgroundSize: '50px 50px' }} />
-			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/10 blur-3xl" />
-			<div className="absolute bottom-0 left-1/3 h-96 w-96 rounded-full bg-[#F97316]/10 blur-3xl" />
+		<section
+			className="relative flex min-h-screen items-center overflow-hidden pt-20 sm:pt-24"
+			style={{ backgroundImage: 'url("/naps.png")', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}
+		>
+			<div className="absolute inset-0 bg-white/10" />
 
 			<div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
 				<div className="mx-auto max-w-5xl text-center">
-					<div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-5 py-2.5 backdrop-blur-sm">
+					<div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-5 py-2.5 backdrop-blur-sm">
 						<Sparkles className="h-4 w-4 text-[#2563EB]" />
-						<span className="text-sm font-semibold tracking-wide text-[#0F172A]">Premium Apprenticeship Program</span>
+						<span className="text-sm font-semibold tracking-wide text-white">Premium Apprenticeship Program</span>
 					</div>
 
-					<h1 className="mb-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0F172A] sm:text-6xl md:text-7xl lg:text-8xl">
+					<h1 className="mb-6 text-2xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
 						National Apprenticeship
 						<span className="mt-2 block bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-transparent">Programme Scheme</span>
 					</h1>
 
-					<p className="mx-auto mb-10 max-w-3xl text-base font-medium leading-relaxed text-[#475569] sm:text-2xl lg:text-3xl">
-						Advance your career with <span className="font-bold text-[#2563EB]">world-class industry experience</span> and <span className="font-bold text-[#F97316]">competitive compensation</span>
+					<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-base lg:text-lg">
+						Advance your career with <span className="font-bold text-white">world-class industry experience</span> and <span className="font-bold text-white">competitive compensation</span>
 					</p>
 
 					<div className="mb-14 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
-						<Link to="/jobs" className="group inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] px-8 py-4 text-base font-semibold text-white shadow-2xl shadow-[#2563EB]/40 transition-all duration-300 hover:scale-105 sm:px-10 sm:py-5 sm:text-lg">
+						<Link to="/jobs" className="group inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] px-6 py-3 text-sm font-semibold text-white shadow-2xl shadow-[#2563EB]/40 transition-all duration-300 hover:scale-105 sm:px-8 sm:py-4 sm:text-base">
 							<Briefcase className="mr-2 h-5 w-5" />
 							Apply Now
 							<ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
 						</Link>
-						<Link to="/contact-us" className="inline-flex items-center justify-center rounded-2xl border-2 border-[#2563EB] bg-white px-8 py-4 text-base font-semibold text-[#2563EB] transition-all duration-300 hover:bg-[#2563EB] hover:text-white sm:px-10 sm:py-5 sm:text-lg">
+						<Link to="/contact-us" className="inline-flex items-center justify-center rounded-2xl border-2 border-[#2563EB] bg-white px-6 py-3 text-sm font-semibold text-[#2563EB] transition-all duration-300 hover:bg-[#2563EB] hover:text-white sm:px-8 sm:py-4 sm:text-base">
 							<TrendingUp className="mr-2 h-5 w-5" />
 							Learn More
 						</Link>
 					</div>
 
-					<div className="flex justify-center">
-						<StaggerContainer staggerDelay={0.08} className="flex flex-wrap justify-center gap-3 sm:gap-6">
-							{heroStats.map((stat) => (
-								<StaggerItem key={stat.label}>
-									<div className="flex items-center gap-3 rounded-2xl border border-[#2563EB]/20 bg-white/80 px-4 py-3 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-[#2563EB]/50 hover:bg-white hover:shadow-md sm:gap-4 sm:px-8 sm:py-5">
-										<div className="text-left">
-											<p className="bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-2xl font-extrabold text-transparent sm:text-4xl">{stat.value}</p>
-											<p className="text-sm font-medium text-[#64748B]">{stat.label}</p>
-										</div>
-									</div>
-								</StaggerItem>
-							))}
-						</StaggerContainer>
-					</div>
+
 				</div>
 			</div>
 		</section>
@@ -175,28 +164,29 @@ function NAPSAbout() {
 					</div>
 
 					<div className="space-y-6">
-						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img
-								src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop&q=80"
-								alt="Professionals in training"
-								className="h-72 w-full object-cover"
-							/>
-							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/50 to-transparent" />
+<div className="group relative flex items-center justify-center overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl transition-all duration-500 hover:shadow-2xl">
+						<img
+							src="/naps%20tspl.jpg"
+							alt="NAPS Premium Apprenticeship Program - National Apprenticeship Programme Scheme India"
+							className="h-64 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+						/>
 						</div>
 
-					<StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-								{aboutFeatures.map((feature) => (
-									<StaggerItem key={feature.title}>
-										<div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#2563EB]/40 hover:shadow-xl">
-											<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] shadow-lg shadow-[#2563EB]/30">
-												<feature.icon className="h-6 w-6 text-white" />
-											</div>
-											<h3 className="mb-1 text-base font-bold text-[#0F172A]">{feature.title}</h3>
-											<p className="text-sm text-[#64748B]">{feature.desc}</p>
+						<StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+							{aboutFeatures.map((feature) => (
+								<StaggerItem key={feature.title}>
+									{/* Removed the conditional styling and standardized to text-center */}
+									<div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#2563EB]/40 hover:shadow-xl">
+										<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] shadow-lg shadow-[#2563EB]/30">
+											<feature.icon className="h-6 w-6 text-white" />
 										</div>
-									</StaggerItem>
-								))}
-					</StaggerContainer>
+										{/* Standardized the typography to match the correct cards */}
+										<h3 className="mb-1 text-base font-bold text-[#0F172A]">{feature.title}</h3>
+										<p className="text-sm text-[#64748B]">{feature.desc}</p>
+									</div>
+								</StaggerItem>
+							))}
+						</StaggerContainer>
 					</div>
 				</div>
 			</div>
@@ -473,6 +463,12 @@ function NAPSCTA() {
 }
 
 export default function NapsPage() {
+	useEffect(() => {
+		document.title = 'NAPS - National Apprenticeship Programme Scheme | TSPL India';
+		document.querySelector('meta[name="description"]')?.setAttribute('content', 'NAPS - Premium apprenticeship program for skilled professionals in India. Earn up to Rs. 15,000/month with world-class training from leading companies.');
+		document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'NAPS - Premium Apprenticeship Program in India');
+		document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://tsplgroup.in/naps%20tspl.jpg');
+	}, []);
 	return (
 		<div className="min-h-screen bg-slate-50 text-slate-800">
 			<Navbar />

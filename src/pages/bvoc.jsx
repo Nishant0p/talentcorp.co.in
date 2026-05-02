@@ -122,9 +122,9 @@ function BvocHero() {
 		<section className="relative min-h-[82vh] overflow-hidden bg-[#0F172A] pt-20 lg:min-h-[calc(100vh-72px)] lg:pt-16">
 			<div className="absolute inset-0">
 				<img
-					src="https://images.prismic.io/tspl/7b91575d-3a91-4512-9c7b-8ae013dbcf9f_UGC_India_Logo.png?auto=compress,format&w=640"
+					src="https://images.pexels.com/photos/32276743/pexels-photo-32276743.jpeg"
 					alt="B. Voc programme"
-					className="h-full w-full object-contain bg-white"
+					className="h-full w-full object-cover"
 				/>
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/85 to-[#0F172A]/70" />
 			</div>
@@ -169,7 +169,7 @@ function BvocHero() {
 							</a>
 						</div>
 
-						<div className="flex items-center gap-6 border-t border-white/10 pt-4">
+						<div className="hidden items-center gap-6 border-t border-white/10 pt-4 sm:flex">
 							<div className="text-center">
 								<p className="text-3xl font-bold text-white">2 Years</p>
 								<p className="text-sm text-white/60">Training Duration</p>

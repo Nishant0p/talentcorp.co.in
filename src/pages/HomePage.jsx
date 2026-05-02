@@ -257,9 +257,9 @@ export default function HomePage() {
       </DeferredSection>
 
       <DeferredSection sectionId="open-jobs" className="px-4 py-14 sm:px-6 lg:px-8" minHeight={340} rootMargin="100px 0px" tone="blue" placeholder={<SectionSkeleton rows={3} className="px-0 py-0" />}>
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-7xl text-center lg:text-left">
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Open Jobs</h2>
-          <p className="mt-2 max-w-2xl text-slate-600">
+          <p className="mx-auto mt-2 max-w-2xl text-slate-600 lg:mx-0">
             Browse current openings and apply in minutes.
           </p>
           <div className="mt-8">

@@ -17,7 +17,7 @@ const serviceLinks = [
   { href: '/naps', label: 'NAPS' },
   { href: '/bvoc', label: 'B.VOC' },
   { href: '/dvoc', label: 'D.VOC' },
-  { href: '/flexi-iti', label: 'FLEXI ITI' },
+  { href: '/services/flexi-iti', label: 'FLEXI ITI' },
   { href: '/aedp', label: 'AEDP' },
   { href: '/maps', label: 'MAPS' },
   { href: '/security', label: 'SECURITY' },
@@ -77,7 +77,7 @@ const Navbar = () => {
           <div className="px-6 py-3.5 flex items-center justify-between">
             <Link
               to="/"
-              className="inline-flex h-11 w-[168px] items-center justify-center overflow-hidden rounded-2xl bg-white px-2 sm:h-13 sm:w-[196px]"
+              className="inline-flex h-9 w-[140px] items-center justify-center overflow-hidden rounded-2xl bg-white px-2 sm:h-11 sm:w-[160px]"
               aria-label="TSPL home"
             >
               <img
@@ -204,20 +204,19 @@ const Navbar = () => {
         </div>
 
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             className="lg:hidden mt-3 max-h-[calc(100vh-7.5rem)] overflow-y-auto rounded-2xl border border-[#d8e7f8] bg-white/95 shadow-lg backdrop-blur-md"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
             <div className="px-6 py-5">
-              <div className="flex flex-col gap-3 text-base font-semibold text-[#1a4f87]">
-                {/* Services dropdown */}
+              <div className="flex flex-col items-center gap-4 text-center text-base font-semibold text-[#1a4f87]">
                 <div>
                   <motion.button
                     type="button"
                     onClick={() => setIsMobileServicesOpen((prev) => !prev)}
-                    className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left hover:bg-[#f3f8ff] font-bold ${isServiceActive ? 'text-[#0f2a4d]' : ''}`}
+                    className={`flex w-full items-center justify-between rounded-lg px-2 py-1 text-center hover:bg-[#f3f8ff] font-bold ${isServiceActive ? 'text-[#0f2a4d]' : ''}`}
                     aria-expanded={isMobileServicesOpen}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -231,13 +230,7 @@ const Navbar = () => {
                   </motion.button>
 
                   {isMobileServicesOpen && (
-                    <motion.div 
-                      className="mt-2 flex flex-col gap-1"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
+                    <div className="mt-2 max-h-56 overflow-y-auto border-l border-[#d8e7f8] pl-3 text-center">
                       {serviceLinks.map((service, index) => {
                         const active = isLinkActive(service.href);
                         return (
@@ -257,16 +250,15 @@ const Navbar = () => {
                           </motion.div>
                         );
                       })}
-                    </motion.div>
+                    </div>
                   )}
                 </div>
 
                 <div className="my-1 h-px bg-[#d8e7f8]" />
 
-                {/* Other nav links */}
                 {navLinks.map((link, index) => {
                   const active = isLinkActive(link.href);
-                  const baseClasses = 'rounded-lg px-3 py-2 hover:bg-[#f3f8ff] transition-all duration-300';
+                  const baseClasses = 'block w-full rounded-lg px-3 py-2 text-center hover:bg-[#f3f8ff] transition-all duration-300';
                   const activeClasses = 'text-[#0f2a4d] font-bold bg-[#f3f8ff]';
 
                   return (
@@ -281,7 +273,7 @@ const Navbar = () => {
                         <Link
                           to={link.href}
                           onClick={handleNavigation}
-                          className={`block w-full ${baseClasses} ${active ? activeClasses : ''}`}
+                          className={`${baseClasses} ${active ? activeClasses : ''}`}
                         >
                           {link.label}
                         </Link>
@@ -289,7 +281,7 @@ const Navbar = () => {
                         <a
                           href={link.href}
                           onClick={handleNavigation}
-                          className={`block w-full ${baseClasses} ${active ? activeClasses : ''}`}
+                          className={`${baseClasses} ${active ? activeClasses : ''}`}
                         >
                           {link.label}
                         </a>

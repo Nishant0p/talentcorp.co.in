@@ -147,7 +147,7 @@ export default function ServiceEnquirySection({ serviceName }) {
 									</div>
 									<div>
 										<p className="text-sm text-white/70">Head Office</p>
-										<p className="font-bold">Gurugram, Haryana</p>
+										<p className="font-bold">Pune, Maharashtra</p>
 									</div>
 								</div>
 							</div>

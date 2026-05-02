@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, CheckCircle2, GraduationCap, Briefcase, FileText, CheckSquare, Award, Building2, ArrowRight, Phone, Mail } from 'lucide-react';
+import { CheckCircle2, GraduationCap, Briefcase, FileText, CheckSquare, Award, Building2, ArrowRight, Phone, Mail, Sparkles, TrendingUp } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ServiceEnquirySection from '../components/ServiceEnquirySection';
 
 const natsHighlights = [
 	{
-		value: 'Rs 8,000/month',
-		label: 'Min stipend for degree holders',
+		value: 'Min Stpend',
+		label: 'Rs 8,000/month',
 	},
 	{
 		value: '1 Year',
 		label: 'Duration of training',
 	},
 	{
-		value: 'Govt. Certificate',
+		value: 'Govt Certificate',
 		label: 'National validation',
 	},
 ];
@@ -33,53 +33,53 @@ const processSteps = [
 ];
 
 export default function NatsLandingPage() {
+	useEffect(() => {
+		document.title = 'NATS - National Apprenticeship Training Scheme | TSPL India';
+		document.querySelector('meta[name="description"]')?.setAttribute('content', 'NATS - Government of India apprenticeship scheme. Earn Rs. 8,000+/month with hands-on industry training and certification.');
+		document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'NATS - National Apprenticeship Training Scheme');
+		document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://tsplgroup.in/natshero.png');
+	}, []);
 	return (
 		<div className="min-h-screen bg-slate-50 text-slate-800">
 			<Navbar />
 
 			<main>
-				<header className="relative overflow-hidden bg-gradient-to-b from-[#0a0f25] via-[#101a35] to-[#1a2342] px-4 pb-28 pt-20 text-center md:pt-28">
-					<div className="pointer-events-none absolute inset-0 overflow-hidden">
-						<div className="absolute -left-24 top-16 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl" />
-						<div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-orange-500/15 blur-3xl" />
-						<div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:24px_24px]" />
-					</div>
-					<div className="mx-auto mb-6 inline-block rounded-full border border-blue-500/30 bg-blue-900/50 px-4 py-1.5 text-sm text-blue-300">
-						Ministry of Education, Govt. of India
-					</div>
-					<h1 className="mb-4 text-5xl font-extrabold text-white md:text-6xl">
-						National <br /> Apprenticeship <br />
-						<span className="text-blue-400">Training Scheme</span>
-					</h1>
-					<p className="mx-auto mb-8 max-w-2xl text-lg text-slate-300">
-						Earn <span className="font-bold text-orange-400">Rs. 9,000/month</span> while gaining{' '}
-						<span className="text-blue-400">real industry experience</span>
-					</p>
+				<section
+					className="relative flex min-h-screen items-center overflow-hidden pt-20 sm:pt-24"
+					style={{ backgroundImage: 'url("/natshero.png")', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}
+				>
+					<div className="absolute inset-0 bg-white/10" />
 
-					<div className="mb-16 flex flex-col justify-center gap-4 sm:flex-row">
-						<Link to="/jobs" className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-7 py-3 font-semibold text-white shadow-[0_18px_40px_rgba(37,99,235,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-[0_24px_50px_rgba(37,99,235,0.36)] active:translate-y-0">
-							<GraduationCap className="h-5 w-5" />
-							Start Your Career <ChevronRight className="h-4 w-4" />
-						</Link>
-						<Link to="/contact-us" className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-600 bg-white/10 px-7 py-3 font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/20 hover:shadow-lg active:translate-y-0">
-							<Building2 className="h-5 w-5 text-blue-100" />
-							Hire Apprentices
-						</Link>
-					</div>
-
-					<div className="mx-auto grid max-w-5xl gap-4 px-4 text-white sm:grid-cols-3">
-						{[
-							{ value: '25,000+', label: 'Apprentices Placed' },
-							{ value: '300+', label: 'Industry Partners' },
-							{ value: '100%', label: 'Govt. Compliant' },
-						].map((stat) => (
-							<div key={stat.label} className="rounded-xl border border-white/10 bg-white/5 px-8 py-4 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_18px_40px_rgba(15,23,42,0.28)]">
-								<h3 className="text-3xl font-bold">{stat.value}</h3>
-								<p className="text-sm text-slate-400">{stat.label}</p>
+					<div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+						<div className="mx-auto max-w-5xl text-center">
+							<div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-5 py-2.5 backdrop-blur-sm">
+								<Sparkles className="h-4 w-4 text-[#2563EB]" />
+								<span className="text-sm font-semibold tracking-wide text-white">Ministry of Education, Govt. of India</span>
 							</div>
-						))}
+
+							<h1 className="mb-6 text-2xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
+								National Apprenticeship
+								<span className="mt-2 block bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-transparent">Training Scheme</span>
+							</h1>
+
+							<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-base lg:text-lg">
+								Earn <span className="font-bold text-white">up to Rs. 9,000/month</span> while gaining <span className="font-bold text-white">real industry experience</span>
+							</p>
+
+							<div className="mb-14 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+								<Link to="/jobs" className="group inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] px-6 py-3 text-sm font-semibold text-white shadow-2xl shadow-[#2563EB]/40 transition-all duration-300 hover:scale-105 sm:px-8 sm:py-4 sm:text-base">
+									<GraduationCap className="mr-2 h-5 w-5" />
+									Start Your Career
+									<ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+								</Link>
+								<Link to="/contact-us" className="inline-flex items-center justify-center rounded-2xl border-2 border-[#2563EB] bg-white px-6 py-3 text-sm font-semibold text-[#2563EB] transition-all duration-300 hover:bg-[#2563EB] hover:text-white sm:px-8 sm:py-4 sm:text-base">
+									<TrendingUp className="mr-2 h-5 w-5" />
+									Hire Apprentices
+								</Link>
+							</div>
+						</div>
 					</div>
-				</header>
+				</section>
 
 				<section id="about" className="mx-auto grid max-w-7xl items-center gap-12 px-8 py-20 md:grid-cols-2">
 					<div>
@@ -109,10 +109,12 @@ export default function NatsLandingPage() {
 					</div>
 
 					<div>
-						<div className="group mb-6 h-80 w-full rounded-2xl bg-gradient-to-br from-slate-200 via-slate-300 to-slate-400 shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl">
-							<div className="flex h-full items-center justify-center rounded-2xl border border-white/40 bg-white/15 text-sm font-semibold tracking-[0.25em] text-slate-700/80 backdrop-blur-sm transition-opacity duration-300 group-hover:bg-white/20">
-								NATS HERO IMAGE
-							</div>
+						<div className="group mb-6 flex items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl">
+							<img
+								src="/nats%20tspl.jpg"
+								alt="NATS hero image"
+								className="h-56 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+							/>
 						</div>
 						<div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
 							{natsHighlights.map((item) => (
@@ -250,7 +252,7 @@ export default function NatsLandingPage() {
 								<div>
 									<h4 className="mb-3 font-medium text-orange-500">Employers</h4>
 									<div className="flex flex-wrap gap-3">
-										{['Registration Cert', 'GST', 'PAN Card', 'Signatory Details'].map((doc) => (
+										{['Registration Cert', 'GST', 'PAN Card', 'Signatory '].map((doc) => (
 											<span key={doc} className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm text-slate-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md">
 												{doc}
 											</span>

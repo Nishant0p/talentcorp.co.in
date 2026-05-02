@@ -120,7 +120,7 @@ export default function StrengthsAccordion() {
   return (
     <section className="relative overflow-hidden bg-white px-6 py-12">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8">
+        <div className="mb-8 text-center lg:text-left">
           <h2 className="mb-4 text-5xl font-extrabold text-[#1a2b4b]">
             Our <span className="text-blue-600">Strengths</span>
           </h2>

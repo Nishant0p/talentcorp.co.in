@@ -127,7 +127,7 @@ function DvocHero() {
 		<section className="relative min-h-[82vh] overflow-hidden bg-[#0F172A] pt-20 lg:min-h-[calc(100vh-72px)] lg:pt-16">
 			<div className="absolute inset-0">
 				<img
-					src="https://images.prismic.io/tspl/7b91575d-3a91-4512-9c7b-8ae013dbcf9f_UGC_India_Logo.png?auto=compress,format&w=640"
+					src="/training%20.jpeg"
 					alt="D. Voc programme"
 					className="h-full w-full object-contain bg-white"
 				/>
