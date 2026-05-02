@@ -130,12 +130,12 @@ const reasons = [
 function SecurityHero({ resolveAsset }) {
 	const heroAsset = resolveAsset(
 		'security.hero',
-		'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1c7e8e2473.jpeg',
+		'/security hero.jpeg',
 		'Professional security team'
 	)
 
 	return (
-		<section className="relative flex min-h-[90vh] items-center overflow-hidden">
+		<section className="relative flex min-h-[100svh] items-center overflow-hidden">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-[#0F172A]/70" />
@@ -157,11 +157,6 @@ function SecurityHero({ resolveAsset }) {
 
 			<div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-20 lg:px-8">
 				<div className="max-w-3xl text-left">
-					<div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/40 bg-[#2563EB]/20 px-4 py-2 animate-fade-in">
-						<Shield className="h-5 w-5 text-[#2563EB]" />
-						<span className="text-sm font-bold text-[#2563EB]">TRUSTED SECURITY PARTNER</span>
-					</div>
-
 					<h1 className="hero-text-reveal mb-6 text-5xl font-bold leading-[1.1] text-white animate-fade-in sm:text-6xl lg:text-7xl">
 						Protect What
 						<span className="mt-2 block text-[#2563EB]">Matters Most</span>
@@ -215,7 +210,7 @@ function SecurityHero({ resolveAsset }) {
 function WhatWeProvide({ resolveAsset }) {
 	const guardAsset = resolveAsset(
 		'security.guard',
-		'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1_a9d1da85a2.jpeg',
+		'/Security Service By Tspl.jpeg',
 		'Professional security guard'
 	)
 
@@ -392,7 +387,7 @@ function WhyChooseUs({ resolveAsset }) {
 	const [openReasonIndex, setOpenReasonIndex] = useState(0)
 	const trustAsset = resolveAsset(
 		'security.training',
-		'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_1c7e8e2473.jpeg',
+		'/Security Service By Tspl.jpeg',
 		'Security guard training'
 	)
 

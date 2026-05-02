@@ -4,8 +4,6 @@ import {
 	Mail,
 	MapPin,
 	CheckCircle,
-	Building2,
-	Users,
 	Clock,
 	ArrowRight,
 	Sparkles,
@@ -18,6 +16,8 @@ import {
 	Droplets,
 	Wind,
 	Trash2,
+	Building2,
+	Users,
 	Leaf,
 	ShieldCheck,
 	Factory,
@@ -29,8 +29,6 @@ import {
 	GraduationCap,
 	BadgeCheck,
 	RefreshCw,
-	Headphones,
-	DollarSign,
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -41,7 +39,7 @@ function HousekeepingHero({ resolveAsset }) {
 	return (
 		<section className="relative min-h-[700px] overflow-hidden pb-20 pt-32">
 			<div className="absolute inset-0">
-				<img src={resolveAsset('housekeeping.hero', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_23_2_4abfc029f0.jpeg').url} alt={resolveAsset('housekeeping.hero', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_23_2_4abfc029f0.jpeg', 'Professional housekeeping team').alt} className="h-full w-full object-cover" />
+				<img src={resolveAsset('housekeeping.hero', '/houskeeping deplyment.jpeg').url} alt={resolveAsset('housekeeping.hero', '/houskeeping deplyment.jpeg', 'Professional housekeeping team').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-[#0F172A]/60" />
 			</div>
 
@@ -267,7 +265,7 @@ function OurServices({ resolveAsset }) {
 				<div className="grid items-center gap-16 lg:grid-cols-2">
 					<div className="relative animate-fade-in-left">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src={resolveAsset('housekeeping.services', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_2_897785d10d.jpeg').url} alt={resolveAsset('housekeeping.services', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_2_897785d10d.jpeg', 'Housekeeping services').alt} className="h-auto w-full object-cover" />
+							<img src={resolveAsset('housekeeping.services', '/housekeepins tspl.jpeg').url} alt={resolveAsset('housekeeping.services', '/housekeepins tspl.jpeg', 'Housekeeping services').alt} className="h-auto w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 to-transparent" />
 						</div>
 
@@ -454,18 +452,6 @@ const reasons = [
 		description: 'If any worker leaves, we provide replacement within 24 hours',
 		color: '#2563EB',
 	},
-	{
-		icon: Headphones,
-		title: 'Supervisor Support',
-		description: 'Dedicated supervisor to manage staff and handle your concerns',
-		color: '#22C55E',
-	},
-	{
-		icon: DollarSign,
-		title: 'Fair Pricing',
-		description: 'Competitive rates with no hidden charges - pay only for what you need',
-		color: '#F97316',
-	},
 ]
 
 function WhyChooseUs({ resolveAsset }) {
@@ -510,7 +496,7 @@ function WhyChooseUs({ resolveAsset }) {
 
 					<div className="relative animate-fade-in-right">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
-							<img src={resolveAsset('housekeeping.staff', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_ed2ab4e588.jpeg').url} alt={resolveAsset('housekeeping.staff', 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_24_ed2ab4e588.jpeg', 'Happy housekeeping staff').alt} className="h-auto w-full object-cover" />
+							<img src={resolveAsset('housekeeping.staff', '/housekeeping.jpeg').url} alt={resolveAsset('housekeeping.staff', '/housekeeping.jpeg', 'Happy housekeeping staff').alt} className="aspect-[4/3] w-full object-cover" />
 							<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/80 via-transparent to-transparent" />
 
 							<div className="absolute bottom-0 left-0 right-0 p-8">

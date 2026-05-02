@@ -78,12 +78,12 @@ const sourcingStrategy = [
 
 function LeadershipSection() {
 	const leaders = [
-		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Founder & Chairman', imageUrl: '/visionaries/Untitled design (3).png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
-		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/sunil sir.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
-		{ id: '3', name: 'Deshbhushan Jain', role: 'Western Director', imageUrl: '/visionaries/Untitled design (5).png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
-		{ id: '4', name: 'Vikas Patil', role: 'Western Director', imageUrl: '/visionaries/Untitled design (6).png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
-		{ id: '5', name: 'Prakash Rathod', role: 'North Western Director', imageUrl: '/visionaries/Untitled design (7).png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
-		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Untitled design (14).png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Founder & Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-96' },
+		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/Sunil Chavan.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-32' },
+		{ id: '3', name: 'Deshbhushan Jain', role: 'Western Director', imageUrl: '/visionaries/Deshbushan jain.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '4', name: 'Vikas Patil', role: 'Western Director', imageUrl: '/visionaries/Vikas Patil.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '5', name: 'Prakash Rathod', role: 'North Western Director', imageUrl: '/visionaries/Prakash Rathod.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Sarang Chavan.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
 		/* { id: '7', name: 'Babasaheb Khillari', role: 'Board Director', imageUrl: '/visionaries/Untitled design (15).png' }, */
 		{ id: '8', name: 'Dheepan Chakravarthy', role: 'Southern Director', imageUrl: 'https://i.pravatar.cc/400?img=33', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
 	];
