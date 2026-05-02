@@ -418,7 +418,7 @@ function B2BPage() {
 
 							<div className="grid gap-4 sm:grid-cols-3 pt-6">
 								{[
-									{ label: 'Enterprise Partners', value: '400+' },
+									{ label: 'Enterprise Partners', value: '450+' },
 									{ label: 'Annual Transactions', value: '50M+' },
 									{ label: 'Uptime Guarantee', value: '99.9%' },
 								].map((item) => (
@@ -465,7 +465,7 @@ function B2BPage() {
 					<div className="mx-auto max-w-7xl px-6 lg:px-8">
 						<div className="text-center text-lg text-slate-500">
 							Trusted by{' '}
-							<span className="font-semibold text-slate-900">400+ leading enterprises</span>{' '}
+						<span className="font-semibold text-slate-900">450+ leading enterprises</span>{' '}
 							across India
 						</div>
 

@@ -74,7 +74,7 @@ export default function CompanyMarquee() {
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-widest text-slate-500">Trusted by</p>
             <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-              400+ leading companies across India
+              450+ leading companies across India
             </h2>
             <p className="mt-3 text-base font-medium text-slate-600">
               We partner with employers to connect skilled talent with real opportunities.

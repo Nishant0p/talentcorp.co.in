@@ -99,7 +99,7 @@ const whyBenefits = [
 
 const stats = [
 	{ value: '10+', label: 'Years Experience' },
-	{ value: '400+', label: 'Happy Companies' },
+	{ value: '450+', label: 'Happy Companies' },
 	{ value: '25,000+', label: 'Workers Placed' },
 	{ value: '98%', label: 'Success Rate' },
 ]

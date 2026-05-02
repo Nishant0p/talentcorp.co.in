@@ -49,7 +49,7 @@ function withCacheBuster(url, version) {
 
 const heroStats = [
 	{ value: 40000, isNumber: true, label: 'Successful Placements' },
-	{ value: 400, isNumber: true, label: 'Partner Employers' },
+	{ value: 450, isNumber: true, label: 'partner employers' },
 	{ value: 'Govt', isNumber: false, label: 'Authorized' },
 ]
 
@@ -303,7 +303,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 						</div>
 						<div className="h-8 w-[1px] bg-white/15" />
 						<div className="flex flex-col">
-							<span className="text-sm font-medium">+400 Companies Trust Us</span>
+						<span className="text-sm font-medium">+450 Companies Trust Us</span>
 							<div className="flex items-center gap-1">
 								{[...Array(5)].map((_, i) => (
 									<Star key={i} size={14} className="fill-orange-500 text-orange-500" />
@@ -380,7 +380,7 @@ function LogoMarquee({ partnerLogos }) {
 
 			<div className="relative w-full">
 				<h2 className="px-6 text-center text-2xl font-bold leading-snug text-[#103f78] md:px-10 md:text-3xl">
-					Trusted by 400+ leading companies across India
+					Trusted by 450+ leading companies across India
 				</h2>
 
 				<div

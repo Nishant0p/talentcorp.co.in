@@ -17,9 +17,9 @@ const fallbackStrengths = [
   {
     id: '02',
     title: 'Partner Network',
-    stat: '400+',
+    stat: '450+',
     sub: 'Partners',
-    desc: 'Strong partnerships with 400+ leading companies across various industries.',
+    desc: 'Strong partnerships with 450+ leading companies across various industries.',
     color: 'bg-blue-600',
     image: 'https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&q=80&w=800',
   },

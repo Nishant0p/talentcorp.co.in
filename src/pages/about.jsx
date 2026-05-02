@@ -17,7 +17,7 @@ const milestones = [
 
 const achievements = [
 	{ icon: Trophy, number: '40,000+', label: 'Workers Placed' },
-	{ icon: Building2, number: '400+', label: 'Partner Companies' },
+	{ icon: Building2, number: '450+', label: 'Partner Companies' },
 	{ icon: MapPin, number: '20+', label: 'Cities Covered' },
 	{ icon: Calendar, number: '10+', label: 'Years Experience' },
 ]
@@ -182,7 +182,7 @@ function AboutHero({ resolveAsset }) {
 							<p className="mt-1 text-white/60">Workers Placed</p>
 						</div>
 						<div>
-							<p className="text-4xl font-bold text-[#2563EB]">400+</p>
+							<p className="text-4xl font-bold text-[#2563EB]">450+</p>
 							<p className="mt-1 text-white/60">Partner Companies</p>
 						</div>
 						<div>

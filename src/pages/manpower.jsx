@@ -140,7 +140,7 @@ function WhatIsManpower({ resolveAsset }) {
 									<Building className="h-6 w-6 text-[#F97316]" />
 								</div>
 								<div>
-									<p className="text-2xl font-bold text-[#0F172A]">400+</p>
+								<p className="text-2xl font-bold text-[#0F172A]">450+</p>
 									<p className="text-sm text-[#64748B]">Companies Trust Us</p>
 								</div>
 							</div>
@@ -525,7 +525,7 @@ function ManpowerWhyChooseUs({ resolveAsset }) {
 								<span className="text-[#2563EB]"> Trust Us</span>
 							</h2>
 
-							<p className="text-lg text-[#64748B]">For 10+ years, we have helped 400+ companies find the right workers. Here is why they choose us:</p>
+							<p className="text-lg text-[#64748B]">For 10+ years, we have helped 450+ companies find the right workers. Here is why they choose us:</p>
 						</div>
 
 						<div className="grid gap-4 sm:grid-cols-2">
@@ -562,7 +562,7 @@ function ManpowerWhyChooseUs({ resolveAsset }) {
 										<p className="text-xs text-white/70">Years</p>
 									</div>
 									<div className="rounded-xl bg-white/10 p-4 text-center backdrop-blur-sm">
-										<p className="text-3xl font-bold text-[#F97316]">400+</p>
+										<p className="text-3xl font-bold text-[#F97316]">450+</p>
 										<p className="text-xs text-white/70">Clients</p>
 									</div>
 									<div className="rounded-xl bg-white/10 p-4 text-center backdrop-blur-sm">
