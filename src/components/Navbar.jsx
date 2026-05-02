@@ -212,16 +212,17 @@ const Navbar = () => {
           >
             <div className="px-6 py-5">
               <div className="flex flex-col items-center gap-4 text-center text-base font-semibold text-[#1a4f87]">
-                <div>
+                <div className="w-full">
                   <motion.button
                     type="button"
                     onClick={() => setIsMobileServicesOpen((prev) => !prev)}
-                    className={`flex w-full items-center justify-between rounded-lg px-2 py-1 text-center hover:bg-[#f3f8ff] font-bold ${isServiceActive ? 'text-[#0f2a4d]' : ''}`}
+                    className={`relative flex w-full items-center justify-center rounded-lg px-3 py-2 text-center hover:bg-[#f3f8ff] font-bold transition-all ${isServiceActive ? 'text-[#0f2a4d] bg-[#f3f8ff]' : 'text-[#1a4f87]'}`}
                     aria-expanded={isMobileServicesOpen}
                     whileTap={{ scale: 0.98 }}
                   >
                     <span>Services</span>
                     <motion.div
+                      className="absolute right-3"
                       animate={{ rotate: isMobileServicesOpen ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -230,22 +231,26 @@ const Navbar = () => {
                   </motion.button>
 
                   {isMobileServicesOpen && (
-                    <div className="mt-2 max-h-56 overflow-y-auto border-l border-[#d8e7f8] pl-3 text-center">
-                      {serviceLinks.map((service, index) => {
-                        const active = isLinkActive(service.href);
+                    <div className="mt-1 flex flex-col w-full gap-1">
+                      {serviceLinks.map((link, index) => {
+                        const active = isLinkActive(link.href);
+                        const baseClasses = 'block w-full rounded-lg px-3 py-2 text-center hover:bg-[#f3f8ff] transition-all duration-300';
+                        const activeClasses = 'text-[#0f2a4d] font-bold bg-[#f3f8ff]';
+
                         return (
                           <motion.div
-                            key={service.href}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.2, delay: index * 0.05 }}
+                            key={link.href}
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.2, delay: index * 0.03 }}
+                            className="w-full"
                           >
                             <Link
-                              to={service.href}
+                              to={link.href}
                               onClick={handleNavigation}
-                              className={`block w-full rounded-lg px-3 py-2 text-sm hover:bg-[#f3f8ff] transition-all ${active ? 'text-[#0f2a4d] font-bold bg-[#f3f8ff]' : ''}`}
+                              className={`${baseClasses} ${active ? activeClasses : 'text-[#1a4f87]'}`}
                             >
-                              {service.label}
+                              {link.label}
                             </Link>
                           </motion.div>
                         );
@@ -254,7 +259,7 @@ const Navbar = () => {
                   )}
                 </div>
 
-                <div className="my-1 h-px bg-[#d8e7f8]" />
+                <div className="my-2 h-px w-full bg-[#d8e7f8]" />
 
                 {navLinks.map((link, index) => {
                   const active = isLinkActive(link.href);

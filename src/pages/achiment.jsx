@@ -18,6 +18,8 @@ import {
 	Rocket,
 	Globe,
 	CheckCircle2,
+	ChevronLeft,
+	ChevronRight,
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -303,66 +305,59 @@ function TestimonialsSection() {
 	const [activeIndex, setActiveIndex] = useState(0)
 
 	const testimonials = [
-		{ company: 'Tata Motors', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHMfOlZPbJzMJLUrp1auGXEhz7TNJbDFcq-g&s', rating: 5, quote: 'TSPL Group significantly improved our hiring pipeline with great results.', author: 'Rajesh Mehta', position: 'Chief People Officer' },
-		{ company: 'Mahindra & Mahindra', logo: 'https://i.pinimg.com/736x/17/38/ff/1738ff204f7eaaf912742070a0871f8e.jpg', rating: 5, quote: 'Excellent service and quick turnarounds for critical roles.', author: 'Priya Sharma', position: 'HR Director' },
-		{ company: 'Bajaj Auto', logo: 'https://i.pinimg.com/736x/8b/e8/e5/8be8e5432419e9a984a3ab3fd3792905.jpg', rating: 5, quote: 'A dependable partner for mass hiring programs.', author: 'Amit Patel', position: 'Operations Head' },
-		{ company: 'Hero MotoCorp', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxiKq4Vgi8ttERIQse8zXFS6OxGJholi0txQ&s', rating: 4, quote: 'Professional and tailored recruitment solutions.', author: 'Neha Gupta', position: 'CEO' },
+		{ company: 'Tata Motors', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHMfOlZPbJzMJLUrp1auGXEhz7TNJbDFcq-g&s', rating: 5, quote: "<b>TSPL Group</b> has been a game-changer for our <b>bulk hiring requirements</b>. Their ability to deliver <b>highly skilled candidates</b> across multiple manufacturing units has drastically reduced our <b>time-to-hire</b> while ensuring we meet our rigorous quality standards.", author: 'Arun Bhatia', position: 'Head of Talent Acquisition' },
+		{ company: 'Mahindra', logo: 'https://i.pinimg.com/736x/17/38/ff/1738ff204f7eaaf912742070a0871f8e.jpg', rating: 5, quote: "Partnering with <b>TSPL Group</b> allowed us to scale our workforce efficiently during peak production cycles. Their <b>innovative screening process</b> and dedicated support team consistently <b>exceed our expectations</b> when it comes to matching the right talent to the right roles.", author: 'Meera Deshmukh', position: 'VP Human Resources' },
+		{ company: 'Bajaj Auto', logo: 'https://i.pinimg.com/736x/8b/e8/e5/8be8e5432419e9a984a3ab3fd3792905.jpg', rating: 5, quote: "The level of <b>professionalism and speed</b> that TSPL brings to the table is unmatched. They have successfully helped us build robust teams for our new R&D facilities with <b>zero compromise on candidate quality.</b> Truly a dependable partner.", author: 'Sanjay Kapoor', position: 'Director of HR' },
+		{ company: 'Hero', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxiKq4Vgi8ttERIQse8zXFS6OxGJholi0txQ&s', rating: 5, quote: "A highly reliable staffing partner. <b>TSPL's deep understanding</b> of the automotive manufacturing sector makes them our first choice for managing <b>large-scale recruitment drives</b> seamlessly.", author: 'Priya Sharma', position: 'Operations Head' },
 	]
-
 	useEffect(() => {
 		const timer = window.setInterval(() => {
 			setActiveIndex((prev) => (prev + 1) % testimonials.length)
-		}, 4500)
+		}, 5000)
 
 		return () => window.clearInterval(timer)
 	}, [])
 
-	const currentTestimonial = testimonials[activeIndex]
-
-	// manual navigation is available via dots; autoplay loops continuously
+	const handlePrev = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+	const handleNext = () => setActiveIndex((prev) => (prev + 1) % testimonials.length);
 
 	return (
-		<section ref={sectionRef} className="relative w-full min-h-screen bg-[#f8fafc] flex flex-col items-center justify-center p-4 md:p-10">
+		<section ref={sectionRef} className="relative w-full overflow-hidden bg-[#f4f7f9] flex flex-col items-center justify-center py-20 md:py-32">
 			{/* Header Section */}
-			<div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-				<div className="mb-6 inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-blue-700">
-					<Quote className="h-4 w-4" />
-					<span className="text-sm font-semibold">Client Stories</span>
-				</div>
-				<h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">
-					What Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-orange-500">Clients Say</span>
+			<div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} px-4`}>
+				<h2 className="text-4xl md:text-5xl font-extrabold text-[#0A2647] mb-4 font-serif">
+					What Our Clients Say
 				</h2>
-				<p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base">
+				<p className="text-slate-600 max-w-3xl mx-auto text-base md:text-lg">
 					Hear from industry leaders who have transformed their workforce management with TSPL Group.
 				</p>
 			</div>
 
 			{/* Carousel Container */}
-			<div className={`relative w-full max-w-5xl h-[460px] md:h-[420px] flex items-center justify-center transition-all duration-700 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
+			<div className={`relative w-full max-w-[1400px] h-[500px] md:h-[450px] flex items-center justify-center transition-all duration-700 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
 
-				{/* Desktop: show 3 cards (prev, active, next) with half-visible sides */}
-				<div className="hidden md:block relative w-full h-full overflow-visible">
+				{/* Desktop: show 3 cards (prev, active, next) */}
+				<div className="hidden md:block relative w-full h-full">
 					{testimonials.map((t, idx) => {
 						const len = testimonials.length
 						const prev = (activeIndex - 1 + len) % len
 						const next = (activeIndex + 1) % len
-						let style = { left: '50%', transform: 'translateX(-50%) scale(1.02)', width: '76%', zIndex: 40, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
-						let classes = 'absolute top-1/2 -translate-y-1/2 rounded-2xl shadow-2xl overflow-hidden bg-white'
+						let style = { left: '50%', transform: 'translate(-50%, -50%) scale(1)', width: '850px', height: '380px', zIndex: 40, opacity: 1, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
+						let classes = 'absolute top-1/2 border-[4px] border-[#0A2647] rounded-[2rem] shadow-[0_20px_50px_rgba(10,38,71,0.15)] overflow-hidden bg-white'
 
 						if (idx === prev) {
-							style = { left: '50%', transform: 'translateX(-120%) scale(0.92)', width: '52%', zIndex: 30, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
+							style = { left: '50%', transform: 'translate(calc(-50% - 830px), -50%) scale(0.85)', width: '850px', height: '380px', zIndex: 30, opacity: 0.9, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
 						} else if (idx === next) {
-							style = { left: '50%', transform: 'translateX(20%) scale(0.92)', width: '52%', zIndex: 30, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
+							style = { left: '50%', transform: 'translate(calc(-50% + 830px), -50%) scale(0.85)', width: '850px', height: '380px', zIndex: 30, opacity: 0.9, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
 						} else if (idx === activeIndex) {
-							style = { left: '50%', transform: 'translateX(-50%) scale(1.04)', width: '76%', zIndex: 40, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
+							style = { left: '50%', transform: 'translate(-50%, -50%) scale(1)', width: '850px', height: '380px', zIndex: 40, opacity: 1, transition: 'all 700ms cubic-bezier(.2,.8,.2,1)' }
 						} else {
-							// hide others
-							style = { left: '50%', transform: 'translateX(-50%) scale(0.8)', opacity: 0, pointerEvents: 'none', width: '50%', zIndex: 10, transition: 'all 700ms ease-in-out' }
+							style = { left: '50%', transform: 'translate(-50%, -50%) scale(0.7)', width: '850px', height: '380px', zIndex: 10, opacity: 0, pointerEvents: 'none', transition: 'all 700ms ease-in-out' }
 						}
 
 						return (
 							<div
-								key={t.company}
+								key={t.company + idx}
 								style={style}
 								className={classes + (idx === prev || idx === next ? ' cursor-pointer' : '')}
 								onClick={() => {
@@ -370,59 +365,101 @@ function TestimonialsSection() {
 								}}
 							>
 								<div className="flex h-full">
-									<div className="w-2/5 bg-[#0A2647] p-6 flex items-center justify-center">
-										<img src={t.logo} alt={t.company} className="max-h-24 max-w-full object-contain" onError={(e) => e.target.style.display='none'} />
+									<div className="w-[35%] bg-[#0A2647] relative p-8 flex flex-col items-center justify-center overflow-hidden">
+										{/* Circuit pattern background */}
+										<div className="absolute inset-0 opacity-[0.05]">
+											<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+												<defs>
+													<pattern id="circuit" width="80" height="80" patternUnits="userSpaceOnUse">
+														<path d="M40 40 L80 40 M40 40 L40 0 M40 40 L0 40 M40 40 L40 80 M20 20 L40 40 M60 60 L40 40 M60 20 L40 40" stroke="#ffffff" strokeWidth="2" fill="none" />
+														<circle cx="40" cy="40" r="4" fill="#ffffff" />
+														<circle cx="20" cy="20" r="2" fill="#ffffff" />
+														<circle cx="60" cy="60" r="2" fill="#ffffff" />
+														<circle cx="60" cy="20" r="2" fill="#ffffff" />
+													</pattern>
+												</defs>
+												<rect width="100%" height="100%" fill="url(#circuit)" />
+											</svg>
+										</div>
+										<img src={t.logo} alt={t.company} className="relative z-10 max-h-32 max-w-full object-contain drop-shadow-md" onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }} />
+										<h3 className="hidden relative z-10 text-white font-bold text-3xl mt-4 text-center">{t.company}</h3>
 									</div>
-									<div className="w-3/5 p-6 flex flex-col justify-center">
-										<div className="text-[#F97316] text-lg mb-2">{Array.from({ length: t.rating }).map((_, i) => (<span key={i}>★</span>))}</div>
-										<p className="text-slate-800 text-base leading-relaxed mb-4">{t.quote}</p>
-										<div className="mt-auto">
-											<p className="font-bold text-slate-900">{t.author}</p>
-											<p className="text-sm text-slate-500">{t.position}</p>
+									<div className="w-[65%] bg-white p-12 flex flex-col justify-center">
+										<div className="flex text-[#F97316] text-3xl mb-4 gap-1">
+											{Array.from({ length: t.rating }).map((_, i) => (<span key={i}>★</span>))}
+										</div>
+										<div className="text-[#F97316] text-[80px] font-serif leading-[0.5] mb-2 mt-2">“</div>
+										<p className="text-slate-800 text-[15px] leading-relaxed mb-10" dangerouslySetInnerHTML={{ __html: t.quote }}></p>
+										<div className="mt-auto flex items-center gap-4">
+
+											<div className="w-12 h-12 rounded-full bg-[#0A2647] flex items-center justify-center text-white font-bold text-lg shadow-sm">
+												{t.company.charAt(0)}
+											</div>
+											<div>
+												<p className="font-bold text-slate-900 text-lg">{t.author}</p>
+												<p className="text-sm text-slate-500">{t.position}</p>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						)
 					})}
+
+
 				</div>
 
 				{/* Mobile: single card layout */}
-				<div className="md:hidden w-full">
-					<div className="w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
-						<div className="p-6 flex items-center gap-4">
-							<img src={testimonials[activeIndex].logo} alt={testimonials[activeIndex].company} className="h-20 w-36 object-contain" />
-							<div>
-								<p className="font-bold">{testimonials[activeIndex].author}</p>
-								<p className="text-sm text-slate-500">{testimonials[activeIndex].position}</p>
+				<div className="md:hidden w-full px-4 h-full">
+					<div className="w-full h-full bg-white border-[3px] border-[#0A2647] rounded-[2rem] shadow-xl overflow-hidden flex flex-col relative">
+						<div className="h-[120px] bg-[#0A2647] relative flex items-center justify-center overflow-hidden shrink-0">
+							<div className="absolute inset-0 opacity-[0.05]">
+								<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+									<defs>
+										<pattern id="circuit-mobile" width="40" height="40" patternUnits="userSpaceOnUse">
+											<path d="M20 20 L40 20 M20 20 L20 0 M20 20 L0 20 M20 20 L20 40" stroke="#ffffff" strokeWidth="1" fill="none" />
+											<circle cx="20" cy="20" r="2" fill="#ffffff" />
+										</pattern>
+									</defs>
+									<rect width="100%" height="100%" fill="url(#circuit-mobile)" />
+								</svg>
+							</div>
+							<img src={testimonials[activeIndex].logo} alt={testimonials[activeIndex].company} className="relative z-10 max-h-16 max-w-[80%] object-contain" onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }} />
+							<h3 className="hidden relative z-10 text-white font-bold text-2xl mt-4 text-center">{testimonials[activeIndex].company}</h3>
+						</div>
+						<div className="flex-1 p-6 flex flex-col">
+							<div className="flex text-[#F97316] text-2xl mb-3 gap-1">
+								{Array.from({ length: testimonials[activeIndex].rating }).map((_, i) => (<span key={i}>★</span>))}
+							</div>
+							<div className="text-[#F97316] text-[60px] font-serif leading-[0.5] mb-2 mt-1">“</div>
+							<p className="text-slate-800 text-[14px] leading-relaxed mb-6 flex-1" dangerouslySetInnerHTML={{ __html: testimonials[activeIndex].quote }}></p>
+							<div className="flex items-center gap-3 mt-auto">
+
+								<div className="w-10 h-10 rounded-full bg-[#0A2647] flex items-center justify-center text-white font-bold text-sm shrink-0">
+									{testimonials[activeIndex].company.charAt(0)}
+								</div>
+								<div>
+									<p className="font-bold text-slate-900 text-sm">{testimonials[activeIndex].author}</p>
+									<p className="text-xs text-slate-500 line-clamp-1">{testimonials[activeIndex].position}</p>
+								</div>
 							</div>
 						</div>
-						<div className="p-6 pt-0">
-							<p className="text-slate-800 text-base md:text-lg">{testimonials[activeIndex].quote}</p>
-						</div>
+
+
 					</div>
 				</div>
-
-				{/* Prev / Next controls removed as requested; autoplay loops */}
 			</div>
 
-			{/* Pagination Dots and Mobile Arrows */}
-			<div className="flex gap-3 mt-10 items-center justify-center">
-
-
-				{/* Pagination Dots */}
-				<div className="flex gap-2 items-center">
-					{testimonials.map((_, index) => (
-						<button
-							key={index}
-							onClick={() => setActiveIndex(index)}
-							className={`rounded-full cursor-pointer transition-all ${index === activeIndex ? 'w-10 h-2 bg-[#0A2647]' : 'w-3 h-3 bg-[#F97316] opacity-50 hover:opacity-100'}`}
-							aria-label={`Show testimonial ${index + 1}`}
-						/>
-					))}
-				</div>
-
-
+			{/* Pagination Dots */}
+			<div className="flex gap-2 mt-12 items-center justify-center">
+				{testimonials.map((_, index) => (
+					<button
+						key={index}
+						onClick={() => setActiveIndex(index)}
+						className={`transition-all duration-300 ${index === activeIndex ? 'w-8 h-2.5 rounded-full border-2 border-[#0A2647] bg-transparent' : 'w-2.5 h-2.5 rounded-full bg-[#F97316]'}`}
+						aria-label={`Show testimonial ${index + 1}`}
+					/>
+				))}
 			</div>
 
 			{/* Trusted Companies Section */}
@@ -430,7 +467,7 @@ function TestimonialsSection() {
 				<p className="mb-8 text-center text-gray-500 text-sm md:text-base">Trusted by leading companies across India</p>
 				<div className="flex flex-wrap items-center justify-center gap-6 opacity-60 lg:gap-12">
 					{['Tata Motors', 'Mahindra', 'Bajaj Auto', 'Hero', 'Maruti', 'L&T'].map((company) => (
-						<div key={company} className="cursor-pointer text-lg md:text-xl font-bold text-gray-400 transition-colors hover:text-blue-600">
+						<div key={company} className="cursor-pointer text-lg md:text-xl font-bold text-gray-400 transition-colors hover:text-[#0A2647]">
 							{company}
 						</div>
 					))}
@@ -520,7 +557,7 @@ export default function AchimentPage() {
 			<Navbar />
 			<main>
 				<AwardsHero />
-				
+
 				<AwardsSectionComponent />
 				<TestimonialsSection />
 				<AchievementsCta />
