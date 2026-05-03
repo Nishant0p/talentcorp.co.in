@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import ClientVoicesSection from '../components/ClientVoicesSection'
 import { STRAPI_BASE_URL, extractMediaUrl, fetchCollection, submitLead } from '../utils/strapi'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 
@@ -106,43 +107,32 @@ const industries = [
 
 const caseStudies = [
 	{
-		company: 'Major Automobile OEM',
-		industry: 'Automobile',
-		image: '/Gemini_Generated_Image_qskougqskougqsko.png',
-		challenge: 'Needed 500 skilled workers for new assembly line within 30 days',
-		solution: 'Deployed trained workforce from our skill centers with pre-verified backgrounds',
+		company: 'NAPS Program Success',
+		industry: 'NAPS',
+		link: '/naps',
+		image: '/naps.png',
+		challenge: 'Bridging the skill gap for professionals and providing a reliable, pre-qualified workforce for employers.',
+		solution: 'Implemented a premium apprenticeship program with industry-recognized training and competitive stipends.',
 		results: [
-			{ label: 'Workers Deployed', value: '520' },
-			{ label: 'Time to Deploy', value: '25 Days' },
-			{ label: 'Retention Rate', value: '94%' },
+			{ label: 'Professionals Trained', value: '15,000+' },
+			{ label: 'Premium Partners', value: '500+' },
+			{ label: 'Avg Monthly Pay', value: '₹15,000+' },
 		],
-		testimonial: 'TSPL exceeded our expectations in both speed and quality.',
+		testimonial: 'An elite apprenticeship program designed for skilled professionals seeking premium career advancement.',
 	},
 	{
-		company: 'Leading Pharma Company',
-		industry: 'Pharmaceutical',
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
-		challenge: 'Required compliance-trained staff for GMP facility with zero audit findings',
-		solution: 'Provided pre-trained pharma workers with complete documentation and compliance support',
+		company: 'NATS Program Impact',
+		industry: 'NATS',
+		link: '/nats',
+		image: '/natshero.png',
+		challenge: 'Connecting fresh graduates with top industries for hands-on practical training.',
+		solution: 'Facilitated 12 months of skilled training with government-recognized certification and monthly stipends.',
 		results: [
-			{ label: 'Workers Placed', value: '150' },
-			{ label: 'Audit Findings', value: 'Zero' },
-			{ label: 'Cost Saved', value: '35%' },
+			{ label: 'Min Stipend', value: '₹8,000' },
+			{ label: 'Training Duration', value: '1 Year' },
+			{ label: 'Govt Certificate', value: 'Yes' },
 		],
-		testimonial: 'Their compliance expertise saved us from potential regulatory issues.',
-	},
-	{
-		company: 'E-commerce Logistics Giant',
-		industry: 'Logistics',
-		image: '/Gemini_Generated_Image_qskougqskougqsko.png',
-		challenge: 'Seasonal surge requiring 2000 workers across 15 warehouses in peak season',
-		solution: 'Rapid deployment through our pan-India network with real-time attendance tracking',
-		results: [
-			{ label: 'Workers Mobilized', value: '2,100' },
-			{ label: 'Locations Covered', value: '15' },
-			{ label: 'Uptime', value: '99.5%' },
-		],
-		testimonial: 'They scaled with us seamlessly during our busiest season.',
+		testimonial: 'A flagship Government of India scheme that serves as a career launchpad for graduates.',
 	},
 ]
 
@@ -165,36 +155,7 @@ const clients = [
 	{ name: 'Voltas', industry: 'HVAC' },
 ]
 
-const testimonials = [
-	{
-		quote: 'TSPL has been our trusted manpower partner for over 8 years. Their workers are skilled, reliable, and professional. They understand our requirements perfectly.',
-		author: 'Rajesh Sharma',
-		position: 'HR Director',
-		company: 'Tata Motors',
-		rating: 5,
-	},
-	{
-		quote: 'The compliance management by TSPL is exceptional. Zero legal issues in 5 years of partnership. They handle PF, ESI, and all statutory requirements flawlessly.',
-		author: 'Priya Mehta',
-		position: 'Operations Head',
-		company: 'Cipla Ltd',
-		rating: 5,
-	},
-	{
-		quote: 'When we needed 200 workers for our new plant within 2 weeks, TSPL delivered. Their quick deployment and quality workforce helped us meet our production targets.',
-		author: 'Amit Patel',
-		position: 'Plant Manager',
-		company: 'JSW Steel',
-		rating: 5,
-	},
-	{
-		quote: 'Professional team, transparent billing, and consistent quality. TSPL is not just a vendor, they are a strategic partner in our growth journey.',
-		author: 'Sunita Reddy',
-		position: 'VP Human Resources',
-		company: 'Mahindra & Mahindra',
-		rating: 5,
-	},
-]
+
 
 const benefits = [
 	'Dedicated Account Manager',
@@ -496,8 +457,8 @@ function CaseStudies({ resolveAsset }) {
 	const [activeCase, setActiveCase] = useState(0)
 	const ref = useRef(null)
 	const cardAssets = [
-		resolveAsset('client.card.1', '/Gemini_Generated_Image_qskougqskougqsko.png', 'Client case study image'),
-		resolveAsset('client.card.2', '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp', 'Client case study image'),
+		resolveAsset('client.card.1', '/naps.png', 'Client case study image'),
+		resolveAsset('client.card.2', '/natshero.png', 'Client case study image'),
 	]
 
 	useEffect(() => {
@@ -574,7 +535,7 @@ function CaseStudies({ resolveAsset }) {
 								&ldquo;{caseStudies[activeCase].testimonial}&rdquo;
 							</div>
 
-							<Link to="/contact-us" className="group inline-flex items-center rounded-xl bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700">
+							<Link to={caseStudies[activeCase].link || "/contact-us"} className="group inline-flex items-center rounded-xl bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700">
 								Read Full Case Study
 								<ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
 							</Link>
@@ -587,107 +548,7 @@ function CaseStudies({ resolveAsset }) {
 }
 
 
-function Testimonials() {
-	const [isVisible, setIsVisible] = useState(false)
-	const [currentIndex, setCurrentIndex] = useState(0)
-	const ref = useRef(null)
 
-	useEffect(() => {
-		const observer = new IntersectionObserver(([entry]) => {
-			if (entry.isIntersecting) setIsVisible(true)
-		}, { threshold: 0.2 })
-
-		if (ref.current) observer.observe(ref.current)
-		return () => observer.disconnect()
-	}, [])
-
-	const nextTestimonial = () => {
-		setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-	}
-
-	const prevTestimonial = () => {
-		setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-	}
-
-	return (
-		<section ref={ref} className="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white py-20">
-			<div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#2563eb10_1px,transparent_0)] bg-[size:32px_32px]" />
-			<div className="absolute left-10 top-20 opacity-5"><Quote className="h-40 w-40 text-blue-600" /></div>
-			<div className="absolute bottom-20 right-10 rotate-180 opacity-5"><Quote className="h-40 w-40 text-blue-600" /></div>
-
-			<div className="container relative z-10 mx-auto px-4">
-				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-					<p className="mb-2 font-semibold text-blue-600">CLIENT TESTIMONIALS</p>
-					<h2 className="mb-4 text-3xl md:text-4xl font-bold text-gray-900">What Our Partners Say</h2>
-				</div>
-
-				<div className={`mx-auto max-w-4xl transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-					<div className="relative rounded-3xl border border-gray-100 bg-white p-8 shadow-xl md:p-12">
-						<div className="absolute -top-6 left-8 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 shadow-lg">
-							<Quote className="h-6 w-6 text-white" />
-						</div>
-
-						<div className="pt-4">
-							<div className="mb-6 flex gap-1">
-								{Array.from({ length: testimonials[currentIndex].rating }).map((_, i) => (
-									<Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-								))}
-							</div>
-
-							<blockquote className="mb-8 text-xl md:text-2xl leading-relaxed text-gray-800">
-								&ldquo;{testimonials[currentIndex].quote}&rdquo;
-							</blockquote>
-
-							<div className="flex flex-wrap items-center justify-between gap-4">
-								<div className="flex items-center gap-4">
-									<div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-xl font-bold text-white">
-										{testimonials[currentIndex].author.charAt(0)}
-									</div>
-									<div>
-										<p className="font-semibold text-gray-900">{testimonials[currentIndex].author}</p>
-										<p className="text-sm text-gray-500">{testimonials[currentIndex].position}</p>
-										<div className="mt-1 flex items-center gap-2">
-											<Building2 className="h-4 w-4 text-blue-600" />
-											<span className="text-sm font-medium text-blue-600">{testimonials[currentIndex].company}</span>
-										</div>
-									</div>
-								</div>
-
-								<div className="flex items-center gap-3">
-									<button
-										type="button"
-										onClick={prevTestimonial}
-										className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 transition-colors hover:border-blue-300 hover:bg-blue-50"
-									>
-										<ChevronLeft className="h-5 w-5" />
-									</button>
-									<div className="flex gap-2">
-										{testimonials.map((_, index) => (
-											<button
-												key={index}
-												type="button"
-												onClick={() => setCurrentIndex(index)}
-												className={`h-2 rounded-full transition-all ${index === currentIndex ? 'w-6 bg-blue-600' : 'w-2 bg-gray-300 hover:bg-gray-400'}`}
-												aria-label={`Show testimonial ${index + 1}`}
-											/>
-										))}
-									</div>
-									<button
-										type="button"
-										onClick={nextTestimonial}
-										className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 transition-colors hover:border-blue-300 hover:bg-blue-50"
-									>
-										<ChevronRight className="h-5 w-5" />
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	)
-}
 
 function ClientsCTA() {
 	const [isVisible, setIsVisible] = useState(false)
@@ -891,7 +752,10 @@ export default function ClientPage() {
 				<LogoMarquee partnerLogos={partnerLogos} />
 				<Industries resolveAsset={resolveAsset} />
 				<CaseStudies resolveAsset={resolveAsset} />		
-				<Testimonials />
+				<ClientVoicesSection 
+					title={<>What our <span className="text-orange-500">Partner says</span></>} 
+					subtitle="" 
+				/>
 				<ClientsCTA />
 			</main>
 			<Footer />

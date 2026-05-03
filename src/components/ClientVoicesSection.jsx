@@ -30,7 +30,10 @@ const fallbackTestimonials = [
   }
 ];
 
-export default function ClientVoicesSection() {
+export default function ClientVoicesSection({ 
+  title = <>Client <span className="text-orange-500">Voices That Matter</span></>,
+  subtitle = "Real feedback from the companies we support."
+}) {
   const { isVisible, sectionRef } = useSectionReveal(0.2);
   const [testimonials, setTestimonials] = useState(fallbackTestimonials);
   const [isLoading, setIsLoading] = useState(true);
@@ -85,11 +88,13 @@ export default function ClientVoicesSection() {
         {/* Header Section */}
         <div className="mb-16 text-center">
           <h2 className="text-4xl font-bold text-gray-900 lg:text-5xl">
-            Client <span className="text-orange-500">Voices That Matter</span>
+            {title}
           </h2>
-          <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-            Real feedback from the companies we support.
-          </p>
+          {subtitle && (
+            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+              {subtitle}
+            </p>
+          )}
         </div>
 
         {/* Testimonials Grid */}
