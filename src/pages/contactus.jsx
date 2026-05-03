@@ -613,55 +613,6 @@ const ContactUs = () => {
         </div>
       </section>
 
-      {/* === SERVICES SECTION === */}
-      <section className="bg-blue-50/50 py-20 px-8 relative">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-blue-600 font-bold text-sm tracking-widest uppercase mb-2">Our Services</p>
-          <h2 className="text-3xl font-bold mb-2">Explore Your Growth Path</h2>
-          <p className="text-gray-500 mb-12">Choose the solutions that best fit your business needs</p>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Cards Array to Map Over */}
-            {[
-              {
-                title: "Hiring",
-                desc: "End-to-end staffing solutions tailored for your business needs.",
-                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
-              },
-              {
-                title: "Training",
-                desc: "Upskill your workforce with our customized training modules.",
-                image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
-              },
-              {
-                title: "Partnerships",
-                desc: "Explore strategic alliances to manage business complexities.",
-                image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=800&q=80",
-              },
-              {
-                title: "Support",
-                desc: "Need a helping hand? We offer immediate operational support.",
-                image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=80",
-              },
-            ].map((service, index) => (
-              <div key={index} className="bg-white rounded-[2.25rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-                <div className="h-40 bg-gray-100 flex items-center justify-center p-4">
-                  <img 
-                    src={service.image}
-                    alt={service.title} 
-                    className="h-full w-full rounded-2xl object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h4 className="font-bold text-lg mb-2">{service.title}</h4>
-                  <p className="text-sm text-gray-500">{service.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* === LOCATIONS SECTION === */}
       <section className="max-w-7xl mx-auto py-24 px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
