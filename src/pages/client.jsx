@@ -110,7 +110,7 @@ const caseStudies = [
 		company: 'NAPS Program Success',
 		industry: 'NAPS',
 		link: '/naps',
-		image: '/naps.png',
+		image: '/naps%20tspl.jpg',
 		challenge: 'Bridging the skill gap for professionals and providing a reliable, pre-qualified workforce for employers.',
 		solution: 'Implemented a premium apprenticeship program with industry-recognized training and competitive stipends.',
 		results: [
@@ -124,7 +124,7 @@ const caseStudies = [
 		company: 'NATS Program Impact',
 		industry: 'NATS',
 		link: '/nats',
-		image: '/natshero.png',
+		image: '/nats%20tspl.jpg',
 		challenge: 'Connecting fresh graduates with top industries for hands-on practical training.',
 		solution: 'Facilitated 12 months of skilled training with government-recognized certification and monthly stipends.',
 		results: [
@@ -457,8 +457,8 @@ function CaseStudies({ resolveAsset }) {
 	const [activeCase, setActiveCase] = useState(0)
 	const ref = useRef(null)
 	const cardAssets = [
-		resolveAsset('client.card.1', '/naps.png', 'Client case study image'),
-		resolveAsset('client.card.2', '/natshero.png', 'Client case study image'),
+		resolveAsset('client.card.1', '/naps%20tspl.jpg', 'Client case study image'),
+		resolveAsset('client.card.2', '/nats%20tspl.jpg', 'Client case study image'),
 	]
 
 	useEffect(() => {
