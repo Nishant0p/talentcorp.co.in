@@ -755,6 +755,7 @@ export default function ClientPage() {
 				<ClientVoicesSection 
 					title={<>What our <span className="text-orange-500">Partner says</span></>} 
 					subtitle="" 
+					autoRotate={true}
 				/>
 				<ClientsCTA />
 			</main>
