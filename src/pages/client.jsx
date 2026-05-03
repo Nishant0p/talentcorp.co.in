@@ -390,10 +390,7 @@ function LogoMarquee({ partnerLogos }) {
 							'repeating-linear-gradient(135deg, rgba(249,115,22,0.05) 0px, rgba(249,115,22,0.05) 1px, transparent 1px, transparent 16px)',
 					}}
 				>
-					<div className="space-y-4">
-						{renderPartnerRow(false)}
-						{renderPartnerRow(true)}
-					</div>
+					{renderPartnerRow(false)}
 				</div>
 			</div>
 		</section>
