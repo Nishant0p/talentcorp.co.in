@@ -354,9 +354,9 @@ function AchievementsCta() {
 						</div>
 						<h3 className="mb-4 text-2xl font-bold text-gray-900">Get In Touch</h3>
 						<div className="space-y-4">
-							<a href="tel:+919876543210" className="flex items-center gap-3 text-gray-600 transition-colors hover:text-blue-600">
+							<a href="tel:+91 7397971322" className="flex items-center gap-3 text-gray-600 transition-colors hover:text-blue-600">
 								<Phone className="h-5 w-5" />
-								<span>+91 98765 43210</span>
+								<span>+91  7397971322</span>
 							</a>
 							<a href="mailto:info@tsplgroup.com" className="flex items-center gap-3 text-gray-600 transition-colors hover:text-blue-600">
 								<Mail className="h-5 w-5" />
