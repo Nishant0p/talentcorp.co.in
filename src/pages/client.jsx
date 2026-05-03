@@ -248,7 +248,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 
 					<div className="mb-12 flex items-center gap-6">
 						<div className="flex items-center -space-x-3">
-							{partnerLogos.map((brand) => (
+							{partnerLogos.slice(0, 5).map((brand) => (
 								<div
 									key={brand.name}
 									className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2 border-[#0f2a4d] bg-white shadow-md"
