@@ -76,6 +76,212 @@ const sourcingStrategy = [
 	'Bulk voice calls and messaging outreach',
 ]
 
+const companyOverviewPoints = [
+	'TSPL Group established in 2011; one of India\'s leading human resource companies.',
+	'Workforce solutions delivered to 450+ clients with pan-India presence.',
+	'40,000+ trainees deployed across industries nationwide.',
+	'Sectors served: Manufacturing, Healthcare, Hospitality, IT, Service Industry, Retail, E-Commerce, Construction, and more.',
+	'1st Rank Government-Authorized TPA for NAPS and NATS programs in India.',
+	'Trusted provider for OJT, Employment Programs, D.Voc (2-3 years), and B.Voc (3 years).',
+	'Affiliations include World Book of Records (London) and South Asian Chamber of Commerce and Industry.',
+]
+
+const servicesOffered = [
+	'National Apprenticeship Promotion Scheme (NAPS)',
+	'Board of Apprenticeship Training (BOAT / NATS)',
+	'D.VOC, B.VOC, M.VOC vocational programs',
+	'Apprenticeship Embedded Degree Program (AEDP)',
+	'Work Integrated Learning Programme (WILP) / WISE',
+	'Contract Staffing, Fixed Term Contract, and Contract Labour Staffing',
+	'Statutory Compliance Payroll Management',
+	'State schemes: MAPS, MATS, and CMAPS',
+]
+
+const napsBenefits = [
+	'DBT benefit: INR 1,500 per apprentice per month.',
+	'NAPS quota: 2.5% to 15% of establishment strength; Maharashtra up to 25%.',
+	'No statutory applicability for eligible apprenticeship structure.',
+	'Industries can design custom courses and reduce recruitment costs.',
+	'Apprentices are not part of unions under apprenticeship structure.',
+]
+
+const natsBenefits = [
+	'Government of India Certificate of Proficiency after completion.',
+	'Governed by Apprentices Act 1961 with apprenticeship-focused compliance model.',
+	'NATS quota: 2.5% to 20% of overall establishment strength.',
+	'DBT (Diploma): INR 4,000 per month per apprentice.',
+	'DBT (B.E / B.Tech): INR 4,500 per month per apprentice.',
+	'DBT (Any Graduate, first year): INR 4,500 per month per apprentice.',
+]
+
+const wilpWiseBenefits = [
+	'Statutory compliance exemption model and CSR booking capability for eligible structures.',
+	'No Trade Union Act applicability for student trainees in applicable frameworks.',
+	'High retention with controlled attrition target of 5-10%.',
+	'Behavioral training covers career growth, shopfloor etiquette, teamwork, and safety.',
+	'Weekly and daily grievance redressal checkpoints.',
+	'Attendance focus: 90-95% required for exam and certificate eligibility.',
+]
+
+const hiringCapacity = [
+	{ region: 'Pan India', executives: '28 (Diploma/Eng/ITI)', recruiters: '150 (10th/12th)', strength: '320', capacity: '6,000/month' },
+	{ region: 'Maharashtra', executives: '16', recruiters: '100', strength: '320', capacity: '4,500/month' },
+]
+
+function DetailedProfileSection() {
+	return (
+		<section className="bg-slate-50 py-20 lg:py-24">
+			<div className="mx-auto max-w-6xl px-6 lg:px-8">
+				<div className="mb-12 text-center">
+					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-4 py-2">
+						<span className="text-sm font-bold text-[#2563EB]">TSPL PROFILE</span>
+					</div>
+					<h2 className="text-3xl font-bold text-[#0F172A] lg:text-4xl">Detailed Company Information</h2>
+				</div>
+
+				<div className="space-y-6">
+					<details open className="rounded-2xl border border-slate-200 bg-white p-6">
+						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">1. Company Overview (TSPL Group)</summary>
+						<ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
+							{companyOverviewPoints.map((item) => (
+								<li key={item}>{item}</li>
+							))}
+						</ul>
+					</details>
+
+					<details className="rounded-2xl border border-slate-200 bg-white p-6">
+						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">2. Services Offered</summary>
+						<ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
+							{servicesOffered.map((item) => (
+								<li key={item}>{item}</li>
+							))}
+						</ul>
+					</details>
+
+					<details className="rounded-2xl border border-slate-200 bg-white p-6">
+						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">3. Certificates, Awards & Achievements</summary>
+						<ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
+							{awardHighlights.map((item) => (
+								<li key={item}>{item}</li>
+							))}
+							<li>Fastest Growing Indian Company Excellence Award (Delhi).</li>
+							<li>Outstanding Achievement Award (Chennai).</li>
+							<li>Leading Emerging Skill Development Company of the Year 2023 (Goa).</li>
+						</ul>
+					</details>
+
+					<details className="rounded-2xl border border-slate-200 bg-white p-6">
+						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">4. Client Experience (OEM Manpower Count)</summary>
+						<div className="mt-4 overflow-x-auto">
+							<table className="w-full min-w-[640px] border-collapse text-left text-sm">
+								<thead>
+									<tr className="border-b border-slate-200 text-slate-900">
+										<th className="px-3 py-2 font-semibold">Client Name</th>
+										<th className="px-3 py-2 font-semibold">Manpower Count</th>
+										<th className="px-3 py-2 font-semibold">Association Period</th>
+									</tr>
+								</thead>
+								<tbody>
+									{clientExperience.map((client) => (
+										<tr key={client.name} className="border-b border-slate-100 text-slate-700">
+											<td className="px-3 py-2">{client.name}</td>
+											<td className="px-3 py-2">{client.manpower}</td>
+											<td className="px-3 py-2">{client.period}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					</details>
+
+					<details className="rounded-2xl border border-slate-200 bg-white p-6">
+						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">5. NAPS (National Apprenticeship Promotion Scheme)</summary>
+						<p className="mt-4 text-slate-700">Launched in August 2016 by the Government of India to promote apprenticeship using incentives, technology, and advocacy with portal-based registration.</p>
+						<ul className="mt-3 list-disc space-y-2 pl-5 text-slate-700">
+							{napsBenefits.map((item) => (
+								<li key={item}>{item}</li>
+							))}
+						</ul>
+						<p className="mt-3 text-slate-700">Savings example for 1,000 trainees: INR 15,00,000 monthly and INR 1.8 crores annually.</p>
+					</details>
+
+					<details className="rounded-2xl border border-slate-200 bg-white p-6">
+						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">6. NATS / BOAT</summary>
+						<p className="mt-4 text-slate-700">Flagship 1 to 3-year Government of India apprenticeship training route for technical youth employability.</p>
+						<ul className="mt-3 list-disc space-y-2 pl-5 text-slate-700">
+							{natsBenefits.map((item) => (
+								<li key={item}>{item}</li>
+							))}
+						</ul>
+						<p className="mt-3 text-slate-700">Savings example for 1,000 NATS trainees at INR 4,500: INR 45,00,000 monthly and INR 5.4 crores annually.</p>
+					</details>
+
+					<details className="rounded-2xl border border-slate-200 bg-white p-6">
+						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">7. Financial Savings (CSR & Statutory)</summary>
+						<ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
+							<li>CSR booking example: 10th/12th/ITI trainees (1,000 at avg INR 23,000) equals INR 2.3 crores monthly and INR 27.6 crores annually.</li>
+							<li>CSR booking example: Diploma/BE trainees (500 at avg INR 26,000) equals INR 1.3 crores monthly and INR 15.6 crores annually.</li>
+							<li>Statutory savings example for 1,500 trainees: ~INR 75 lakhs monthly and ~INR 9 crores annually by reducing PF, ESIC, Bonus, and Gratuity burden in eligible structures.</li>
+						</ul>
+					</details>
+
+					<details className="rounded-2xl border border-slate-200 bg-white p-6">
+						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">8. Vocational Programs (WILP & WISE)</summary>
+						<ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
+							<li>D.Voc (2-3 years): practical diploma with on-the-job training.</li>
+							<li>B.Voc (3 years): undergraduate pathway aligned to industry employment needs.</li>
+							<li>M.Voc (2 years): advanced postgraduate vocational specialization.</li>
+							{wilpWiseBenefits.map((item) => (
+								<li key={item}>{item}</li>
+							))}
+						</ul>
+					</details>
+
+					<details className="rounded-2xl border border-slate-200 bg-white p-6">
+						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">9. Recruitment Capabilities & Strategy</summary>
+						<div className="mt-4 overflow-x-auto">
+							<table className="w-full min-w-[620px] border-collapse text-left text-sm">
+								<thead>
+									<tr className="border-b border-slate-200 text-slate-900">
+										<th className="px-3 py-2 font-semibold">Region</th>
+										<th className="px-3 py-2 font-semibold">Sourcing Executives</th>
+										<th className="px-3 py-2 font-semibold">Recruiters</th>
+										<th className="px-3 py-2 font-semibold">Total Strength</th>
+										<th className="px-3 py-2 font-semibold">Capacity</th>
+									</tr>
+								</thead>
+								<tbody>
+									{hiringCapacity.map((row) => (
+										<tr key={row.region} className="border-b border-slate-100 text-slate-700">
+											<td className="px-3 py-2">{row.region}</td>
+											<td className="px-3 py-2">{row.executives}</td>
+											<td className="px-3 py-2">{row.recruiters}</td>
+											<td className="px-3 py-2">{row.strength}</td>
+											<td className="px-3 py-2">{row.capacity}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+						<p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-600">Hiring Speed Benchmarks</p>
+						<ul className="mt-2 list-disc space-y-1 pl-5 text-slate-700">
+							{recruitmentSpeed.map((item) => (
+								<li key={item}>{item}</li>
+							))}
+						</ul>
+						<p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-600">10-Point Sourcing Strategy</p>
+						<ol className="mt-2 list-decimal space-y-1 pl-5 text-slate-700">
+							{sourcingStrategy.map((item) => (
+								<li key={item}>{item}</li>
+							))}
+						</ol>
+					</details>
+				</div>
+			</div>
+		</section>
+	)
+}
+
 function LeadershipSection() {
 	const leaders = [
 		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Founder & Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-96' },
@@ -85,7 +291,7 @@ function LeadershipSection() {
 		{ id: '5', name: 'Prakash Rathod', role: 'North Western Director', imageUrl: '/visionaries/Prakash Rathod.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
 		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Sarang Chavan.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
 		/* { id: '7', name: 'Babasaheb Khillari', role: 'Board Director', imageUrl: '/visionaries/Untitled design (15).png' }, */
-		{ id: '8', name: 'Dheepan Chakravarthy', role: 'Southern Director', imageUrl: 'https://i.pravatar.cc/400?img=33', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '8', name: 'Dheepan Chakravarthy', role: 'Southern Director', imageUrl: '/visionaries/Dheepan Chakravarthy.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
 	];
 
 	return (
@@ -142,12 +348,12 @@ function LeadershipSection() {
 function AboutHero({ resolveAsset }) {
 	const aboutHeroAsset = resolveAsset(
 		'about.hero',
-		'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_25_3_1d589b7f92.jpeg',
+		'/ABOUT.jpeg',
 		'TSPL Group team'
 	)
 
-	return (
-			<section className="relative min-h-[680px] overflow-hidden pb-20 pt-32">
+	    return (
+		    <section className="relative min-h-[100svh] overflow-hidden pb-20 pt-32">
 			<div className="absolute inset-0">
 				<img src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
@@ -201,10 +407,10 @@ function AboutHero({ resolveAsset }) {
 }
 
 function OurStory({ resolveAsset }) {
-	const whoWeAreAsset = resolveAsset(
-		'about.mission',
-		'https://backend.tsplgroup.in/uploads/TSPL_Logo_Sarang_Sir_1_55253e4a30.png',
-		'TSPL Group mission - Training workers'
+	const tsplLogoAsset = resolveAsset(
+		'about.tsplLogo',
+		'/tspl main logo.png',
+		'TSPL logo'
 	)
 
 	return (
@@ -224,9 +430,11 @@ function OurStory({ resolveAsset }) {
 				</div>
 
 				<div className="mb-20 grid items-center gap-12 lg:grid-cols-2">
-					<div className="relative h-[460px] overflow-hidden rounded-3xl bg-white shadow-2xl">
-						<img src={whoWeAreAsset.url} alt={whoWeAreAsset.alt} className="h-full w-full object-cover p-4 sm:p-5" />
-						<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/40 to-transparent" />
+					<div className="relative flex h-[460px] items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-slate-50 via-white to-blue-50 shadow-2xl">
+						<div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(37,99,235,0.12),_transparent_55%)]" />
+						<div className="relative z-10 flex h-[360px] w-[360px] max-w-[80%] items-center justify-center rounded-[2rem] border border-white/80 bg-white/90 p-10 shadow-[0_25px_80px_rgba(15,23,42,0.18)] backdrop-blur-sm sm:h-[400px] sm:w-[400px]">
+							<img src={tsplLogoAsset.url} alt={tsplLogoAsset.alt} className="h-full w-full object-contain" loading="lazy" />
+						</div>
 					</div>
 
 					<div className="space-y-6">
@@ -359,8 +567,49 @@ export default function AboutPage() {
 	const pageAssets = usePageAssets()
 	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
 
+	const tsplLogoAsset = resolveAsset('about.tsplLogo', '/tspl main logo.png', 'TSPL logo')
+	const [showLogoFullscreen, setShowLogoFullscreen] = React.useState(true)
+
+	React.useEffect(() => {
+		function onKey(e) {
+			if (e.key === 'Escape') setShowLogoFullscreen(false)
+		}
+		document.addEventListener('keydown', onKey)
+		return () => document.removeEventListener('keydown', onKey)
+	}, [])
+
 	return (
 		<div className="min-h-screen bg-white text-slate-800">
+			{showLogoFullscreen && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-8">
+					<div className="relative w-full max-w-3xl rounded-2xl bg-white p-8 shadow-2xl">
+						<button
+							aria-label="Close"
+							onClick={() => setShowLogoFullscreen(false)}
+							className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200"
+						>
+							<span className="sr-only">Close</span>
+							&times;
+						</button>
+
+						<div className="flex flex-col items-center gap-6 text-center">
+							<img src={tsplLogoAsset.url} alt={tsplLogoAsset.alt} className="h-40 w-auto object-contain sm:h-56" />
+							<div className="max-w-2xl">
+								<p className="mb-4 text-lg leading-relaxed text-slate-700">
+									TSPL Group was founded with a simple yet powerful mission: to bridge the gap between skilled workers and meaningful employment opportunities across India.
+								</p>
+								<p className="mb-4 text-lg leading-relaxed text-slate-700">
+									We believe every worker deserves the chance to learn, grow, and succeed. Through our government-authorized programs like NAPS, NATS, and MAPS, we have helped over 40,000 individuals find their path to success.
+								</p>
+								<p className="text-lg leading-relaxed text-slate-700">
+									Our approach is simple: we train workers with real-world skills, connect them with trusted employers, and support them throughout their career journey.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
+
 			<Navbar />
 			<main>
 				<AboutHero resolveAsset={resolveAsset} />
@@ -368,6 +617,7 @@ export default function AboutPage() {
 				<OurValues />
 				<Achievements />
 				<LeadershipSection />
+				<DetailedProfileSection />
 			</main>
 			<Footer />
 		</div>

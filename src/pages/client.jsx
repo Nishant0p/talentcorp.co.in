@@ -57,7 +57,7 @@ const heroStats = [
 const industries = [
 	{
 		icon: Factory,
-		name: 'Manufacturing',
+		name: 'NAPS',
 		image: '/Gemini_Generated_Image_qskougqskougqsko.png',
 		clients: 120,
 		workers: '15,000+',
@@ -65,7 +65,7 @@ const industries = [
 	},
 	{
 		icon: Pill,
-		name: 'Pharmaceutical',
+		name: 'NATS',
 		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
 		clients: 85,
 		workers: '8,000+',
@@ -139,17 +139,17 @@ const caseStudies = [
 const clients = [
 	{ name: 'Tata Motors', industry: 'Automobile' },
 	{ name: 'Mahindra', industry: 'Automobile' },
-	{ name: 'Reliance Industries', industry: 'Manufacturing' },
+	{ name: 'Reliance Industries', industry: 'NAPS' },
 	{ name: 'Larsen & Toubro', industry: 'Infrastructure' },
-	{ name: 'Cipla', industry: 'Pharma' },
-	{ name: 'Sun Pharma', industry: 'Pharma' },
+	{ name: 'Cipla', industry: 'NATS' },
+	{ name: 'Sun Pharma', industry: 'NATS' },
 	{ name: 'Bajaj Auto', industry: 'Automobile' },
 	{ name: 'Godrej', industry: 'FMCG' },
-	{ name: 'Asian Paints', industry: 'Manufacturing' },
+	{ name: 'Asian Paints', industry: 'NAPS' },
 	{ name: 'Hindustan Unilever', industry: 'FMCG' },
 	{ name: 'ITC Limited', industry: 'FMCG' },
 	{ name: 'Adani Ports', industry: 'Logistics' },
-	{ name: 'JSW Steel', industry: 'Manufacturing' },
+	{ name: 'JSW Steel', industry: 'NAPS' },
 	{ name: 'Havells', industry: 'Electronics' },
 	{ name: 'Blue Star', industry: 'HVAC' },
 	{ name: 'Voltas', industry: 'HVAC' },
@@ -351,10 +351,7 @@ function LogoMarquee({ partnerLogos }) {
 							'repeating-linear-gradient(135deg, rgba(249,115,22,0.05) 0px, rgba(249,115,22,0.05) 1px, transparent 1px, transparent 16px)',
 					}}
 				>
-					<div className="space-y-4">
-						{renderPartnerRow(false)}
-						{renderPartnerRow(true)}
-					</div>
+					{renderPartnerRow(false)}
 				</div>
 			</div>
 		</section>
@@ -672,9 +669,9 @@ function ClientsCTA() {
 
 								<select name="industry" className="w-full rounded-xl border border-gray-200 px-4 py-3 text-gray-500 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
 									<option value="">Select Industry</option>
-									<option value="manufacturing">Manufacturing</option>
+									<option value="manufacturing">NAPS</option>
 									<option value="automobile">Automobile</option>
-									<option value="pharma">Pharmaceutical</option>
+									<option value="pharma">NATS</option>
 									<option value="fmcg">FMCG</option>
 									<option value="logistics">Logistics</option>
 									<option value="other">Other</option>
