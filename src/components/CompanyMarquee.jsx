@@ -37,13 +37,8 @@ export default function CompanyMarquee() {
           })
           .filter((item) => Boolean(item.src));
 
-        if (mapped.length) {
-          const merged = [...mapped, ...FALLBACK_LOGOS].filter(
-            (logo, index, array) =>
-              array.findIndex((candidate) => candidate.src === logo.src) === index
-          );
-
-          setLogos(merged);
+        if (mapped.length > 0) {
+          setLogos(mapped);
         }
       } catch {
         // keep fallback logos
@@ -96,12 +91,12 @@ export default function CompanyMarquee() {
               {loop.map((logo, index) => (
                 <div
                   key={`${logo.alt}-${index}`}
-                  className="flex h-24 w-44 flex-none flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white/90 px-3"
+                  className="flex h-32 w-56 flex-none flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white/90 px-3"
                 >
                   <img
                     src={logo.src}
                     alt={logo.alt}
-                    className="max-h-9 w-auto max-w-full object-contain"
+                    className="max-h-14 w-auto max-w-full object-contain"
                     loading="eager"
                     decoding="async"
                     width="160"

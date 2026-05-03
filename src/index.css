@@ -32,7 +32,7 @@ body {
 }
 
 .tspl-marquee__track {
-  animation: tspl-marquee 34s linear infinite;
+  animation: tspl-marquee 80s linear infinite;
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }
