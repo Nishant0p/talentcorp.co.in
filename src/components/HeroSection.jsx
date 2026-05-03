@@ -10,7 +10,7 @@ const fallbackHero = {
   description: 'We help skilled talent in India to land, launch, and level up with top employers; faster, smarter, and friction-free.',
   backgroundImage: '/WhatsApp Image 2026-04-16 at 10.53.25 (1).jpeg',
   primaryCtaLabel: 'Find Your Dream Job',
-  secondaryCtaLabel: 'Hire Talent',
+  secondaryCtaLabel: 'Hire Talent For Your Company',
 };
 
 const HeroSection = ({ onFindJobs, onHireTalent }) => {
