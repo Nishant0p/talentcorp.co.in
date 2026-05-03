@@ -284,7 +284,7 @@ function DetailedProfileSection() {
 
 function LeadershipSection() {
 	const leaders = [
-		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Founder & Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-96' },
+		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-96' },
 		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/Sunil Chavan.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-32' },
 		{ id: '3', name: 'Deshbhushan Jain', role: 'Western Director', imageUrl: '/visionaries/Deshbushan jain.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
 		{ id: '4', name: 'Vikas Patil', role: 'Western Director', imageUrl: '/visionaries/Vikas Patil.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
