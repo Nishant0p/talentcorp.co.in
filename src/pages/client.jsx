@@ -306,7 +306,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 
 function LogoMarquee({ partnerLogos }) {
 	const renderPartnerRow = (reverse = false) => (
-		<div className="logo-marquee-track gap-4" style={{ animationDirection: reverse ? 'reverse' : 'normal', animationDuration: '40s' }}>
+		<div className="logo-marquee-track gap-4" style={{ animationDirection: reverse ? 'reverse' : 'normal', animationDuration: '80s' }}>
 			{[...partnerLogos, ...partnerLogos, ...partnerLogos].map((brand, idx) => (
 				<div
 					key={`${brand.name}-${reverse ? 'rev' : 'fwd'}-${idx}`}

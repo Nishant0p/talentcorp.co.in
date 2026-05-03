@@ -11,7 +11,7 @@ const milestones = [
 	{ year: '2016', title: '100+ Companies', description: 'Partnered with 100 businesses across India' },
 	{ year: '2018', title: '10,000 Workers', description: 'Helped 10,000 workers find jobs' },
 	{ year: '2020', title: 'NAPS Authorized', description: 'Became government authorized for NAPS' },
-		/* { id: '8', name: 'Dheepan Chakravarthi', role: 'Southern Director', imageUrl: 'https://i.pravatar.cc/400?img=33' }, */
+	/* { id: '8', name: 'Dheepan Chakravarthi', role: 'Southern Director', imageUrl: 'https://i.pravatar.cc/400?img=33' }, */
 	{ year: '2024', title: '40,000+ Placements', description: 'Crossed 40,000 successful placements' },
 ]
 
@@ -291,7 +291,7 @@ function LeadershipSection() {
 		{ id: '5', name: 'Prakash Rathod', role: 'North Western Director', imageUrl: '/visionaries/Prakash Rathod.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
 		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Sarang Chavan.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
 		/* { id: '7', name: 'Babasaheb Khillari', role: 'Board Director', imageUrl: '/visionaries/Untitled design (15).png' }, */
-		{ id: '8', name: 'Dheepan Chakravarthy', role: 'Southern Director', imageUrl: '/visionaries/Dheepan Chakravarthy.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		// { id: '8', name: 'Dheepan Chakravarthy', role: 'Southern Director', imageUrl: '/visionaries/Dheepan Chakravarthy.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
 	];
 
 	return (
@@ -352,8 +352,8 @@ function AboutHero({ resolveAsset }) {
 		'TSPL Group team'
 	)
 
-	    return (
-		    <section className="relative min-h-[100svh] overflow-hidden pb-20 pt-32">
+	return (
+		<section className="relative min-h-[100svh] overflow-hidden pb-20 pt-32">
 			<div className="absolute inset-0">
 				<img src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
