@@ -32,11 +32,14 @@ const fallbackTestimonials = [
 
 export default function ClientVoicesSection({ 
   title = <>Client <span className="text-orange-500">Voices That Matter</span></>,
-  subtitle = "Real feedback from the companies we support."
+  subtitle = "Real feedback from the companies we support.",
+  showAll = false,
+  autoRotate = false
 }) {
   const { isVisible, sectionRef } = useSectionReveal(0.2);
   const [testimonials, setTestimonials] = useState(fallbackTestimonials);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     let isMounted = true;
@@ -47,10 +50,11 @@ export default function ClientVoicesSection({
         if (!isMounted) return;
 
         if (data && data.length > 0) {
-          const mapped = data
-            .filter((item) => item.reviewType === 'client' || item.type === 'client')
-            .slice(0, 3)
-            .map((item) => ({
+          let filtered = data.filter((item) => item.reviewType === 'client' || item.type === 'client');
+          if (!showAll && !autoRotate) {
+            filtered = filtered.slice(0, 3);
+          }
+          const mapped = filtered.map((item) => ({
               id: item.id || item.documentId,
               name: item.name || 'Client',
               company: item.company || item.organization || item.role || item.position || 'Company',
@@ -75,7 +79,19 @@ export default function ClientVoicesSection({
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [showAll, autoRotate]);
+
+  useEffect(() => {
+    if (!autoRotate || testimonials.length <= 3) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 3) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [autoRotate, testimonials.length]);
+
+  const displayedTestimonials = autoRotate && testimonials.length > 3
+    ? [...testimonials, ...testimonials, ...testimonials].slice(currentIndex, currentIndex + 3)
+    : testimonials;
 
   return (
     <section 
@@ -99,7 +115,7 @@ export default function ClientVoicesSection({
 
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {displayedTestimonials.map((testimonial, index) => (
             <div
               key={testimonial.id}
               className={`bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 relative hover:-translate-y-2 transition-all duration-300 ease-out group border border-gray-50 hover:border-indigo-100 flex flex-col h-full ${
