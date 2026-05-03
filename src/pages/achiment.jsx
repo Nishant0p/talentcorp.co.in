@@ -26,6 +26,7 @@ import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 import { useSectionReveal } from '../hooks/useSectionReveal'
 import AwardsSectionComponent from '../components/AwardsSection'
+import ClientVoicesSection from '../components/ClientVoicesSection'
 import { extractMediaUrl, fetchTestimonials } from '../utils/strapi'
 import heroImage from '../assets/hero.png'
 function AwardsHero() {
@@ -299,174 +300,6 @@ function Milestones() {
 	)
 }
 
-function TestimonialsSection() {
-	const { isVisible, sectionRef } = useSectionReveal(0.2)
-	const [activeIndex, setActiveIndex] = useState(0)
-	const [testimonials, setTestimonials] = useState([])
-
-	useEffect(() => {
-		let isMounted = true
-
-		const loadTestimonials = async () => {
-			const data = await fetchTestimonials()
-			if (!isMounted) return
-
-			const clientTestimonials = data
-				.filter((item) => item.reviewType === 'client')
-				.map((item) => ({
-					id: item.id,
-					company: item.company || item.name || 'Client',
-					logo: item.image ? extractMediaUrl(item.image) : '',
-					rating: item.rating || 5,
-					quote: item.quote || '',
-					author: item.name || '',
-					position: item.role || '',
-				}))
-
-			setTestimonials(clientTestimonials)
-		}
-
-		loadTestimonials()
-
-		return () => {
-			isMounted = false
-		}
-	}, [])
-
-	useEffect(() => {
-		if (testimonials.length === 0) return undefined
-
-		const timer = window.setInterval(() => {
-			setActiveIndex((prev) => (prev + 1) % testimonials.length)
-		}, 5000)
-
-		return () => window.clearInterval(timer)
-	}, [testimonials.length])
-
-	useEffect(() => {
-		setActiveIndex(0)
-	}, [testimonials.length])
-
-	const activeTestimonial = testimonials[activeIndex]
-
-	const handlePrev = () => {
-		if (testimonials.length === 0) return
-		setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-	}
-
-	const handleNext = () => {
-		if (testimonials.length === 0) return
-		setActiveIndex((prev) => (prev + 1) % testimonials.length)
-	}
-
-	return (
-		<section ref={sectionRef} className="relative overflow-hidden bg-[#f4f7f9] py-20 md:py-32">
-			<div className="mx-auto flex w-full max-w-7xl flex-col items-center px-4 sm:px-6 lg:px-8">
-				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-					<h2 className="text-4xl font-extrabold font-serif text-[#0A2647] md:text-5xl">
-						Client Voices <span className="text-[#F97316]">That Matter</span>
-					</h2>
-					<p className="mx-auto mt-4 max-w-3xl text-base text-slate-600 md:text-lg">
-						Real feedback from the companies we support.
-					</p>
-				</div>
-
-				<div className={`w-full transition-all duration-700 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
-					{testimonials.length === 0 ? (
-						<div className="rounded-[2rem] border border-slate-200 bg-white px-6 py-16 text-center text-slate-600 shadow-lg">
-							Loading client reviews...
-						</div>
-					) : (
-						<div className="overflow-hidden rounded-[2rem] border border-[#0A2647]/10 bg-white shadow-[0_20px_50px_rgba(10,38,71,0.15)]">
-							<div className="grid md:grid-cols-[320px,1fr]">
-								<div className="relative flex items-center justify-center overflow-hidden bg-[#0A2647] px-8 py-10 text-center md:min-h-[380px] md:px-10">
-									<div className="absolute inset-0 opacity-[0.06]">
-										<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-											<defs>
-												<pattern id="circuit-achievement" width="72" height="72" patternUnits="userSpaceOnUse">
-													<path d="M36 36 L72 36 M36 36 L36 0 M36 36 L0 36 M36 36 L36 72" stroke="#ffffff" strokeWidth="1.5" fill="none" />
-													<circle cx="36" cy="36" r="3" fill="#ffffff" />
-												</pattern>
-											</defs>
-											<rect width="100%" height="100%" fill="url(#circuit-achievement)" />
-										</svg>
-									</div>
-									<div className="relative z-10 flex flex-col items-center gap-4">
-										<div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl bg-white/10 ring-1 ring-white/15 md:h-24 md:w-24">
-											{activeTestimonial?.logo ? (
-												<img src={activeTestimonial.logo} alt={activeTestimonial.company} className="h-full w-full object-cover p-2" />
-											) : (
-												<span className="text-3xl font-black text-white">{activeTestimonial?.company?.charAt(0) || 'C'}</span>
-											)}
-										</div>
-										<h3 className="text-2xl font-bold text-white md:text-3xl">{activeTestimonial?.company}</h3>
-										<p className="text-sm font-semibold uppercase tracking-[0.24em] text-white/70">Client Review</p>
-									</div>
-								</div>
-
-								<div className="flex flex-col justify-between px-6 py-8 md:px-10 md:py-10">
-									<div>
-										<div className="flex items-start justify-between gap-3">
-											<div className="flex gap-1 text-[#F97316]">
-												{Array.from({ length: activeTestimonial?.rating || 5 }).map((_, index) => (
-													<Star key={index} size={18} className="fill-current" />
-												))}
-											</div>
-											<div className="flex gap-2">
-												<button type="button" onClick={handlePrev} className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition-colors hover:border-[#0A2647] hover:text-[#0A2647]" aria-label="Previous testimonial">
-													<ChevronLeft className="h-5 w-5" />
-												</button>
-												<button type="button" onClick={handleNext} className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition-colors hover:border-[#0A2647] hover:text-[#0A2647]" aria-label="Next testimonial">
-													<ChevronRight className="h-5 w-5" />
-												</button>
-											</div>
-										</div>
-
-										<div className="mt-6 text-[72px] font-serif leading-none text-[#F97316] md:text-[88px]">“</div>
-										<p className="mt-4 text-sm leading-relaxed text-slate-800 md:text-[15px]" dangerouslySetInnerHTML={{ __html: activeTestimonial?.quote || '' }} />
-									</div>
-
-									<div className="mt-8 flex items-center justify-between gap-4 border-t border-slate-100 pt-6">
-										<div className="flex items-center gap-3">
-											<div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#0A2647] text-sm font-bold text-white">
-												{activeTestimonial?.company?.charAt(0) || 'C'}
-											</div>
-											<div>
-												<p className="font-bold text-slate-900">{activeTestimonial?.author}</p>
-												<p className="text-sm text-slate-500">{activeTestimonial?.position}</p>
-											</div>
-										</div>
-										{activeTestimonial?.rating ? (
-											<div className="rounded-full bg-[#F97316]/10 px-3 py-1 text-xs font-bold text-[#C2410C]">
-												{activeTestimonial.rating}.0 rating
-											</div>
-										) : null}
-									</div>
-								</div>
-							</div>
-							</div>
-						)
-					}
-				</div>
-
-				{testimonials.length > 0 ? (
-					<div className="mt-8 flex items-center justify-center gap-2">
-						{testimonials.map((_, index) => (
-							<button
-								key={index}
-								type="button"
-								onClick={() => setActiveIndex(index)}
-								className={`h-2.5 rounded-full transition-all ${index === activeIndex ? 'w-7 bg-[#0A2647]' : 'w-2.5 bg-[#F97316]/50 hover:bg-[#F97316]'}`}
-								aria-label={`Show testimonial ${index + 1}`}
-							/>
-						))}
-					</div>
-				) : null}
-			</div>
-		</section>
-	)
-}
-
 function AchievementsCta() {
 	const { isVisible, sectionRef } = useSectionReveal(0.2)
 
@@ -549,7 +382,7 @@ export default function AchimentPage() {
 				<AwardsHero />
 
 				<AwardsSectionComponent />
-				<TestimonialsSection />
+				<ClientVoicesSection />
 				<AchievementsCta />
 			</main>
 			<Footer />
