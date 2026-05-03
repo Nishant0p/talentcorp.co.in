@@ -4,7 +4,7 @@ import { ShieldCheck, Trophy, Award, CheckCircle } from 'lucide-react';
 const awardsData = [
   {
     icon: <ShieldCheck size={28} className="text-blue-500" />,
-    highlight: '100+%',
+    highlight: '100%+',
     subtext: 'Compliant',
     pill: 'Official Partner',
     title: 'Government Authorized',
@@ -20,7 +20,7 @@ const awardsData = [
   },
   {
     icon: <Award size={28} className="text-gray-700" />,
-    highlight: '15+%',
+    highlight: '15%+',
     subtext: 'Awards',
     pill: '2024 Winner',
     title: 'Excellence Award',
@@ -28,7 +28,7 @@ const awardsData = [
   },
   {
     icon: <CheckCircle size={28} className="text-blue-500" />,
-    highlight: '98+%',
+    highlight: '100%+',
     subtext: 'Satisfaction',
     pill: 'ISO 9001',
     title: 'ISO Certified',

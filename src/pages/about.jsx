@@ -352,8 +352,8 @@ function AboutHero({ resolveAsset }) {
 		'TSPL Group team'
 	)
 
-	return (
-			<section className="relative min-h-[680px] overflow-hidden pb-20 pt-32">
+	    return (
+		    <section className="relative min-h-[100svh] overflow-hidden pb-20 pt-32">
 			<div className="absolute inset-0">
 				<img src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
@@ -413,12 +413,6 @@ function OurStory({ resolveAsset }) {
 		'TSPL logo'
 	)
 
-	const whoWeAreAsset = resolveAsset(
-		'about.mission',
-		'https://backend.tsplgroup.in/uploads/TSPL_Logo_Sarang_Sir_1_55253e4a30.png',
-		'TSPL Group mission - Training workers'
-	)
-
 	return (
 		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
@@ -429,9 +423,6 @@ function OurStory({ resolveAsset }) {
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-4 py-2">
 						<span className="text-sm font-bold text-[#2563EB]">OUR STORY</span>
 					</div>
-					<div className="mb-5 flex justify-center">
-						<img src={tsplLogoAsset.url} alt={tsplLogoAsset.alt} className="h-16 w-auto object-contain sm:h-20" loading="lazy" />
-					</div>
 					<h2 className="mb-4 text-4xl font-bold text-[#0F172A] lg:text-5xl">Who We Are</h2>
 					<p className="mx-auto max-w-2xl text-lg text-[#64748B]">
 						A trusted partner in workforce development, helping businesses grow and workers succeed
@@ -439,9 +430,11 @@ function OurStory({ resolveAsset }) {
 				</div>
 
 				<div className="mb-20 grid items-center gap-12 lg:grid-cols-2">
-					<div className="relative h-[460px] overflow-hidden rounded-3xl bg-white shadow-2xl">
-						<img src={whoWeAreAsset.url} alt={whoWeAreAsset.alt} className="h-full w-full object-cover p-4 sm:p-5" />
-						<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/40 to-transparent" />
+					<div className="relative flex h-[460px] items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-slate-50 via-white to-blue-50 shadow-2xl">
+						<div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(37,99,235,0.12),_transparent_55%)]" />
+						<div className="relative z-10 flex h-[360px] w-[360px] max-w-[80%] items-center justify-center rounded-[2rem] border border-white/80 bg-white/90 p-10 shadow-[0_25px_80px_rgba(15,23,42,0.18)] backdrop-blur-sm sm:h-[400px] sm:w-[400px]">
+							<img src={tsplLogoAsset.url} alt={tsplLogoAsset.alt} className="h-full w-full object-contain" loading="lazy" />
+						</div>
 					</div>
 
 					<div className="space-y-6">
@@ -574,16 +567,57 @@ export default function AboutPage() {
 	const pageAssets = usePageAssets()
 	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
 
+	const tsplLogoAsset = resolveAsset('about.tsplLogo', '/tspl main logo.png', 'TSPL logo')
+	const [showLogoFullscreen, setShowLogoFullscreen] = React.useState(true)
+
+	React.useEffect(() => {
+		function onKey(e) {
+			if (e.key === 'Escape') setShowLogoFullscreen(false)
+		}
+		document.addEventListener('keydown', onKey)
+		return () => document.removeEventListener('keydown', onKey)
+	}, [])
+
 	return (
 		<div className="min-h-screen bg-white text-slate-800">
+			{showLogoFullscreen && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-8">
+					<div className="relative w-full max-w-3xl rounded-2xl bg-white p-8 shadow-2xl">
+						<button
+							aria-label="Close"
+							onClick={() => setShowLogoFullscreen(false)}
+							className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200"
+						>
+							<span className="sr-only">Close</span>
+							&times;
+						</button>
+
+						<div className="flex flex-col items-center gap-6 text-center">
+							<img src={tsplLogoAsset.url} alt={tsplLogoAsset.alt} className="h-40 w-auto object-contain sm:h-56" />
+							<div className="max-w-2xl">
+								<p className="mb-4 text-lg leading-relaxed text-slate-700">
+									TSPL Group was founded with a simple yet powerful mission: to bridge the gap between skilled workers and meaningful employment opportunities across India.
+								</p>
+								<p className="mb-4 text-lg leading-relaxed text-slate-700">
+									We believe every worker deserves the chance to learn, grow, and succeed. Through our government-authorized programs like NAPS, NATS, and MAPS, we have helped over 40,000 individuals find their path to success.
+								</p>
+								<p className="text-lg leading-relaxed text-slate-700">
+									Our approach is simple: we train workers with real-world skills, connect them with trusted employers, and support them throughout their career journey.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
+
 			<Navbar />
 			<main>
 				<AboutHero resolveAsset={resolveAsset} />
 				<OurStory resolveAsset={resolveAsset} />
-				<DetailedProfileSection />
 				<OurValues />
 				<Achievements />
 				<LeadershipSection />
+				<DetailedProfileSection />
 			</main>
 			<Footer />
 		</div>
