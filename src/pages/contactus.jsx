@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
-import { STRAPI_BASE_URL } from '../utils/strapi';
+import { STRAPI_BASE_URL, submitLead } from '../utils/strapi';
 import { submitToGoogleSheet } from '../utils/googleSheets';
 import { 
   Phone, 
@@ -195,19 +195,7 @@ const ContactUs = () => {
 
     try {
       const [strapiResult, sheetResult] = await Promise.allSettled([
-        fetch(`${STRAPI_BASE_URL}/api/leads`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(leadPayload),
-        }).then(async (response) => {
-          if (!response.ok) {
-            const responseText = await response.text();
-            throw new Error(`CRM submit failed (${response.status}): ${responseText || 'no response body'}`);
-          }
-          return { status: 'success' };
-        }),
+        submitLead(leadPayload.data),
         submitToGoogleSheet(sheetsData),
       ]);
 
