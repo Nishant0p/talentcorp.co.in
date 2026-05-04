@@ -1,5 +1,40 @@
 export const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL || 'https://backend.tsplgroup.in';
+export const ADMIN_BACKEND_URL = import.meta.env.VITE_ADMIN_BACKEND_URL || 'https://api.tsplgroup.in';
 import { submitToGoogleSheet } from './googleSheets';
+
+// Submit to new admin backend (contact/service/job forms)
+export const submitToAdminBackend = async (type, formData, files = {}) => {
+  try {
+    const form = new FormData();
+    form.append('type', type);
+    form.append('name', formData.name || '');
+    form.append('email', formData.email || '');
+    form.append('phone', formData.phone || formData.mobile || '');
+    form.append('message', formData.message || '');
+    
+    if (formData.metadata) {
+      form.append('metadata', JSON.stringify(formData.metadata));
+    }
+    
+    // Attach files if provided
+    if (files.pdf) form.append('pdf', files.pdf);
+    if (files.cv) form.append('cv', files.cv);
+    
+    const response = await fetch(`${ADMIN_BACKEND_URL}/api/forms/submit`, {
+      method: 'POST',
+      body: form
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Admin backend submit failed (${response.status})`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.warn('Admin backend submission failed:', error.message);
+    return { ok: false, error: error.message };
+  }
+};
 
 export const resolveStrapiUrl = (url) => {
   if (!url) return '';

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
-import { STRAPI_BASE_URL } from '../utils/strapi';
+import { STRAPI_BASE_URL, submitToAdminBackend } from '../utils/strapi';
 import { submitToGoogleSheet } from '../utils/googleSheets';
 import { 
   Phone, 
@@ -194,7 +194,7 @@ const ContactUs = () => {
     setFlightManifest(manifestEntries.length ? manifestEntries : [{ label: 'Status', value: 'Sending...' }]);
 
     try {
-      const [strapiResult, sheetResult] = await Promise.allSettled([
+      const [strapiResult, sheetResult, adminBackendResult] = await Promise.allSettled([
         fetch(`${STRAPI_BASE_URL}/api/leads`, {
           method: 'POST',
           headers: {
@@ -209,19 +209,35 @@ const ContactUs = () => {
           return { status: 'success' };
         }),
         submitToGoogleSheet(sheetsData),
+        submitToAdminBackend('contact', {
+          name: normalizedData.fullName,
+          email: normalizedData.email,
+          phone: normalizedData.phone,
+          message: normalizedData.message,
+          metadata: { service: normalizedData.service, consent: normalizedData.consent }
+        }),
       ]);
 
       const crmOk = strapiResult.status === 'fulfilled';
       const sheetOk =
         sheetResult.status === 'fulfilled' &&
         (sheetResult.value.status === 'success' || sheetResult.value.status === 'skipped');
+      const adminOk = adminBackendResult.status === 'fulfilled' && adminBackendResult.value.ok !== false;
 
-      if (crmOk && sheetOk) {
+      if (crmOk && sheetOk && adminOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to CRM, Google Sheet, and Admin Panel.');
+      } else if (crmOk && sheetOk) {
         setSubmitStatusNote('Response sent successfully. Saved to CRM and Google Sheet.');
-      } else if (crmOk && !sheetOk) {
-        setSubmitStatusNote('Response sent successfully. Saved to CRM, but Google Sheet sync failed.');
-      } else if (!crmOk && sheetOk) {
-        setSubmitStatusNote('Response sent successfully. Saved to Google Sheet, but CRM sync failed.');
+      } else if (crmOk && adminOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to CRM and Admin Panel.');
+      } else if (sheetOk && adminOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to Google Sheet and Admin Panel.');
+      } else if (crmOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to CRM.');
+      } else if (sheetOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to Google Sheet.');
+      } else if (adminOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to Admin Panel.');
       } else {
         const crmError =
           strapiResult.status === 'rejected'
