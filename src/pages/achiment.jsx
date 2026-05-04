@@ -7,6 +7,7 @@ import {
 	Star,
 	Shield,
 	BadgeCheck,
+	Badge,
 	ArrowRight,
 	Phone,
 	Mail,
@@ -300,6 +301,92 @@ function Milestones() {
 	)
 }
 
+function AchievementsGallery() {
+	const { isVisible, sectionRef } = useSectionReveal(0.15)
+	const [hoveredIndex, setHoveredIndex] = useState(null)
+
+	const achievements = [
+		{ id: 1, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (1).jpeg', title: 'WORLD BOOK OF RECORD HOLDER DELHI', category: 'Corporate Recognition' },
+		{ id: 2, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (2).jpeg', title: 'OUTSTANDING ACHIEVEMENTAWARD CHENNAI', category: 'HR Excellence' },
+		{ id: 3, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (3).jpeg', title: 'LEADING EMERGING SKILL DEVELOPMENT COMPANY OF THE YEAR 2023 GOA', category: 'Business Growth' },
+		{ id: 4, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (4).jpeg', title: 'FASTEST GROWING INDIAN COMPANY EXCELLENCE AWARD DELHI', category: 'ISO Standards' },
+		{ id: 5, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (5).jpeg', title: 'GLOBAL SKILLING & STAFFING LEADERSHIP ACHIEVERS AWARD THAILAND', category: 'Service Quality' },
+		{ id: 6, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (6).jpeg', title: '2ND HON. DOCTORATE GUJARAT', category: 'Industry Recognition' },
+		{ id: 7, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (7).jpeg', title: '1ST HON. DOCTORATE SRI-LANKA', category: 'Team Excellence' },
+		{ id: 8, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (8).jpeg', title: '', category: 'Technology' },
+		{ id: 9, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (9).jpeg', title: 'LEADING EMERGING INDIAN COMPANY THAILAND', category: 'Green Initiative' },
+		{ id: 10, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM.jpeg', title: '1ST RANK ΤΡΑ FOR NATS 2023-24 MUMBAI', category: 'Social Responsibility' },
+	]
+
+	return (
+		<section ref={sectionRef} className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50 py-16 md:py-24">
+			<div className="absolute inset-0 opacity-[0.02]">
+				<svg className="h-full w-full">
+					<pattern id="achievement-grid-pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+						<circle cx="25" cy="25" r="1" fill="#2563EB" />
+					</pattern>
+					<rect width="100%" height="100%" fill="url(#achievement-grid-pattern)" />
+				</svg>
+			</div>
+
+			<div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+					<div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-100 to-orange-100 px-4 py-2 text-transparent bg-clip-text">
+						<Badge className="h-4 w-4 text-blue-600" />
+						<span className="text-sm font-semibold text-blue-600">Awards & Achievements</span>
+					</div>
+					<h2 className="mb-4 text-4xl font-bold text-gray-900 lg:text-5xl">
+						Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-orange-500">Recognition Gallery</span>
+					</h2>
+					<p className="mx-auto max-w-2xl text-lg text-gray-600">
+						Celebrating our milestones and achievements that reflect our commitment to excellence and innovation.
+					</p>
+				</div>
+
+				<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+					{achievements.map((achievement, index) => (
+						<div
+							key={achievement.id}
+							onMouseEnter={() => setHoveredIndex(index)}
+							onMouseLeave={() => setHoveredIndex(null)}
+							className={`group overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${hoveredIndex === index ? '-translate-y-2 shadow-2xl shadow-blue-500/20' : ''}`}
+							style={{ transitionDelay: `${index * 50}ms` }}
+						>
+							<div className="h-64 overflow-hidden bg-gray-100">
+								<img
+									src={achievement.image}
+									alt={achievement.title}
+									className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								/>
+							</div>
+
+							<div className="bg-white p-5 text-center transition-colors duration-300 group-hover:bg-blue-50/70">
+								<h3 className="text-lg font-bold text-gray-900 transition-colors duration-300 group-hover:text-blue-600">
+									{achievement.title}
+								</h3>
+							</div>
+						</div>
+					))}
+				</div>
+
+				{/* Bottom CTA */}
+				<div className={`mt-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+					<p className="mb-6 text-lg text-gray-600">
+						Ready to be part of our success story?
+					</p>
+					<Link
+						to="/contact-us"
+						className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 font-bold text-white shadow-lg shadow-blue-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/50 hover:scale-105"
+					>
+						Get in Touch Today
+						<ArrowRight className="h-5 w-5" />
+					</Link>
+				</div>
+			</div>
+		</section>
+	)
+}
+
 function AchievementsCta() {
 	const { isVisible, sectionRef } = useSectionReveal(0.2)
 
@@ -380,9 +467,9 @@ export default function AchimentPage() {
 			<Navbar />
 			<main>
 				<AwardsHero />
-
 				<AwardsSectionComponent />
 				<ClientVoicesSection />
+				<AchievementsGallery />
 				<AchievementsCta />
 			</main>
 			<Footer />
