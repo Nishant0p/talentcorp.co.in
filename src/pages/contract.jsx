@@ -31,7 +31,7 @@ import {
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ServiceEnquirySection from '../components/ServiceEnquirySection'
-import { submitLead } from '../utils/strapi'
+import { submitLead, submitToAdminBackend } from '../utils/strapi'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 
 const benefits = [
@@ -547,7 +547,8 @@ function ContractCTA({ resolveAsset }) {
 		setSubmitError('')
 
 		try {
-			await submitLead({
+			const [leadResult] = await Promise.allSettled([
+				submitLead({
 				name: formData.name.trim(),
 				email: formData.email.trim(),
 				phone: formData.phone.trim(),
@@ -558,7 +559,24 @@ function ContractCTA({ resolveAsset }) {
 					`Duration: ${formData.duration || 'Not specified'}`,
 					`Details: ${formData.message.trim() || 'No additional details'}`,
 				].join('\n'),
-			})
+				}),
+				submitToAdminBackend('service', {
+					name: formData.name.trim(),
+					email: formData.email.trim(),
+					phone: formData.phone.trim(),
+					message: formData.message.trim(),
+					metadata: {
+						source: 'contract staffing request',
+						company: formData.company.trim(),
+						workers: formData.workers,
+						duration: formData.duration,
+					},
+				}),
+			])
+
+			if (leadResult.status !== 'fulfilled') {
+				throw leadResult.reason
+			}
 
 			setFormData({
 				name: '',

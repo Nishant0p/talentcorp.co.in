@@ -29,7 +29,7 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProgressiveImage from '../components/ProgressiveImage';
-import { extractMediaUrl, fetchJobs, submitLead } from '../utils/strapi';
+import { extractMediaUrl, fetchJobs, submitLead, submitToAdminBackend } from '../utils/strapi';
 import { uploadResumeToGoogleDrive } from '../utils/googleSheets';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
 
@@ -940,13 +940,31 @@ function ApplyCTA() {
 				}
 			}
 
-			await submitLead({
-				name: formData.name,
-				phone: formData.phone,
-				email: formData.email,
-				subject: `Jobs page interest${formData.jobType ? ` - ${formData.jobType}` : ''}`,
-				message: `Experience: ${formData.experience || 'N/A'}\nPreferred role: ${formData.jobType || 'N/A'}\n${resumeLine}\n${formData.message || ''}`,
-			});
+			const [leadResult] = await Promise.allSettled([
+				submitLead({
+					name: formData.name,
+					phone: formData.phone,
+					email: formData.email,
+					subject: `Jobs page interest${formData.jobType ? ` - ${formData.jobType}` : ''}`,
+					message: `Experience: ${formData.experience || 'N/A'}\nPreferred role: ${formData.jobType || 'N/A'}\n${resumeLine}\n${formData.message || ''}`,
+				}),
+				submitToAdminBackend('job', {
+					name: formData.name,
+					email: formData.email,
+					phone: formData.phone,
+					message: formData.message || '',
+					metadata: {
+						jobType: formData.jobType || '',
+						experience: formData.experience || '',
+						resume: resumeFile ? resumeFile.name : 'Not provided',
+						source: 'jobs page',
+					},
+				}, resumeFile ? { cv: resumeFile } : {}),
+			]);
+
+			if (leadResult.status !== 'fulfilled') {
+				throw leadResult.reason;
+			}
 
 			setIsSubmitted(true);
 			setResumeFile(null);

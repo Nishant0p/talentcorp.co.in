@@ -26,7 +26,7 @@ import {
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ClientVoicesSection from '../components/ClientVoicesSection'
-import { STRAPI_BASE_URL, extractMediaUrl, fetchCollection, submitLead } from '../utils/strapi'
+import { STRAPI_BASE_URL, extractMediaUrl, fetchCollection, submitLead, submitToAdminBackend } from '../utils/strapi'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 
 const stats = [
@@ -582,7 +582,8 @@ function ClientsCTA() {
 		const requirements = String(formData.get('requirements') || '').trim()
 
 		try {
-			await submitLead({
+			const [leadResult] = await Promise.allSettled([
+				submitLead({
 				name,
 				email,
 				phone,
@@ -594,7 +595,29 @@ function ClientsCTA() {
 					`Requirements: ${requirements || 'Not provided'}`,
 					`Contact phone: ${phone}`,
 				].join('\n'),
-			})
+				}),
+				submitToAdminBackend('service', {
+					name,
+					email,
+					phone,
+					message: [
+						`Company: ${companyName}`,
+						`Industry: ${industry || 'Not specified'}`,
+						`Workforce requirement: ${workforce || 'Not specified'}`,
+						`Requirements: ${requirements || 'Not provided'}`,
+					].join('\n'),
+					metadata: {
+						source: 'client partnership inquiry',
+						companyName,
+						industry,
+						workforce,
+					},
+				}),
+			])
+
+			if (leadResult.status !== 'fulfilled') {
+				throw leadResult.reason
+			}
 
 			event.currentTarget.reset()
 			setSubmitMessage('Your request has been sent. Our team will contact you shortly.')
