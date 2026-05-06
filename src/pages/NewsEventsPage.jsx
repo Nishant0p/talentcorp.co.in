@@ -35,18 +35,6 @@ const defaultNewsEventsContent = {
   spotlightCards: [
     {
       category: '',
-      title: 'EDHAVI SKILLS UNIVERSITY INAUGURATES WORK INTEGRATED ITI (CTS) PROGRAMME UNDER THE FLEXI-MOU SCHEME OF DIRECTOR GENERAL OF TRAINING (DGT) AT INDUSTRY PARTNER LOCATION AT PUNE',
-      date: 'March 10, 2026',
-      img: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=400',
-    },
-    {
-      category: '',
-      title: 'Medhavi Skills University Inaugurates Work Integrated ITI (CTS) Programme Under The Flexi-MoU Scheme Of Director General Of Training (DGT) At Industry Partner Location At Pune',
-      date: 'March 5, 2026',
-      img: 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&q=80&w=400',
-    },
-    {
-      category: '',
       title: 'MSU, Sikkim, in collaboration with RSB Transmissions, inaugurates the Work Integrated ITI (CTS) training programme under the Flexi MoU scheme of DGT',
       date: 'March 1, 2026',
       img: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=400',
