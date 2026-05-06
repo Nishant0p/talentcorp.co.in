@@ -775,7 +775,7 @@ export default function ClientPage() {
 				<Industries resolveAsset={resolveAsset} />
 				<CaseStudies resolveAsset={resolveAsset} />		
 				<ClientVoicesSection 
-					title={<>What our <span className="text-orange-500">Partner says</span></>} 
+					title={<>What Our <span className="text-orange-500">Partners Say</span></>} 
 					subtitle="" 
 					autoRotate={true}
 				/>

@@ -8,7 +8,7 @@ const fallbackTestimonials = [
     id: 1,
     name: "Rahul Sharma",
     role: "CEO, TechNova",
-    content: "Bhai, inka kaam ekdum top-notch hai! Mere website ka conversion rate double ho gaya inki design ke baad. Highly recommended for anyone looking to scale.",
+    content: "TSPL helped us connect with the right talent quickly and consistently. Their support made our hiring process smoother and more reliable.",
     avatar: "https://i.pravatar.cc/150?img=11",
     rating: 5
   },
@@ -16,7 +16,7 @@ const fallbackTestimonials = [
     id: 2,
     name: "Priya Desai",
     role: "Marketing Head, GrowthX",
-    content: "The level of professionalism and creativity is unmatched. We needed a fresh look for our landing pages, and they delivered beyond our expectations.",
+    content: "Their team understood our workforce requirements clearly and delivered candidates who matched our expectations. The partnership has been valuable for our operations.",
     avatar: "https://i.pravatar.cc/150?img=5",
     rating: 5
   },
@@ -24,7 +24,7 @@ const fallbackTestimonials = [
     id: 3,
     name: "Amit Patel",
     role: "Founder, StartupHub",
-    content: "Cold outreach emails aur UI/UX dono mein inka jawab nahi. Client onboarding smooth ho gayi hai ab. Best investment for our business this year.",
+    content: "From enquiry to deployment, the process was smooth and professional. TSPL has been a dependable partner for apprenticeship and staffing support.",
     avatar: "https://i.pravatar.cc/150?img=12",
     rating: 4
   }

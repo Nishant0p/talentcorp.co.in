@@ -29,7 +29,7 @@ const fallbackReviews = [
     name: 'Rahul Singh',
     role: 'Production Trainee',
     company: 'Tata Motors',
-    quote: 'Got a great start to my career through TSPL. The training was practical and the placement process was very smooth.',
+    quote: 'Tata Motors gave me a strong start through TSPL support. The training was practical and the onboarding process was smooth and well organized.',
     rating: 5,
     metric: 'Fast onboarding',
   },
