@@ -21,7 +21,7 @@ const natsHighlights = [
 ];
 
 const apprenticeBenefits = ['₹4,000 to ₹4,500 DBT', '1 to 3 Year Scheme', 'Govt. Certificate', 'Hands-on Industry Training'];
-const employerBenefits = ['50% Stipend Reimbursement', '2.5% to 20% Quota', 'Skilled Technical Talent', 'No Extra Statutory Burden'];
+const employerBenefits = ['50% Government Reimbursement', '2.5% to 20% Quota', 'Skilled Technical Talent', 'No Extra Statutory Burden'];
 
 const processSteps = [
 	{ id: '01', title: 'Register', icon: <FileText /> },
@@ -63,7 +63,7 @@ export default function NatsLandingPage() {
 							</h1>
 
 							<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-base lg:text-lg">
-								Earn <span className="font-bold text-white">₹4,000 to ₹4,500 DBT</span> while gaining <span className="font-bold text-white">real industry experience</span>
+								Access <span className="font-bold text-white">₹4,000 to ₹4,500 DBT</span> while gaining <span className="font-bold text-white">real industry experience</span>
 							</p>
 
 							<div className="mb-14 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
@@ -93,9 +93,9 @@ export default function NatsLandingPage() {
 						<h2 className="mb-6 text-4xl font-bold">
 							What is <span className="text-blue-600">NATS?</span>
 						</h2>
-						<p className="mb-6 text-slate-600">
-								A flagship Government of India scheme connecting technically qualified youth with industry training, stipend support, and certification.
-						</p>
+							<p className="mb-6 text-slate-600">
+								A flagship Government of India scheme connecting technically qualified youth with industry training, government support, and certification.
+							</p>
 							<ul className="mb-8 space-y-3">
 								{['1 to 3 years apprenticeship', 'Diploma: ₹4,000/month', 'B.E./B.Tech: ₹4,500/month', 'Graduates: ₹4,500/month in first year'].map((item) => (
 								<li key={item} className="flex items-center text-slate-700">
@@ -132,7 +132,7 @@ export default function NatsLandingPage() {
 						<h2 className="mb-4 text-4xl font-bold">
 							Why Choose <span className="text-blue-600">NATS?</span>
 						</h2>
-						<p className="text-slate-500">Stipend support, quota compliance, and practical training for both sides.</p>
+							<p className="text-slate-500">Government support, quota compliance, and practical training for both sides.</p>
 					</div>
 
 					<div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
@@ -309,7 +309,7 @@ export default function NatsLandingPage() {
 									Start Your Journey Today
 								</h2>
 								<p className="mb-8 text-lg text-blue-100">
-									Join thousands who advanced through NATS with stipend support and certification.
+									Join thousands who advanced through NATS with government support and certification.
 								</p>
 
 								<div className="flex flex-wrap gap-4">

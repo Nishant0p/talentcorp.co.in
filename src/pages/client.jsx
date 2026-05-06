@@ -125,7 +125,7 @@ const caseStudies = [
 		industry: 'NATS',
 		link: '/nats',
 		image: '/nats%20tspl.jpg',
-		challenge: 'Connecting technically qualified youth with industry training, stipend support, and certification.',
+		challenge: 'Connecting technically qualified youth with industry training, government support, and certification.',
 		solution: 'Facilitated NATS with ₹4,000 to ₹4,500 DBT, quota compliance, and practical industry training.',
 		results: [
 			{ label: 'Diploma DBT', value: '₹4,000' },
