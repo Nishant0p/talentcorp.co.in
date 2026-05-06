@@ -6,27 +6,51 @@ import { useSectionReveal } from '../hooks/useSectionReveal';
 const fallbackTestimonials = [
   {
     id: 1,
-    name: "Rahul Sharma",
-    role: "CEO, TechNova",
-    content: "TSPL helped us connect with the right talent quickly and consistently. Their support made our hiring process smoother and more reliable.",
+    name: "Abhijit Patil",
+    role: "HR, Jabil Circuits",
+    content: "TSPL has helped us hire skilled candidates faster and with a better fit for our workforce needs. Their support is consistent and professional.",
     avatar: "https://i.pravatar.cc/150?img=11",
     rating: 5
   },
   {
     id: 2,
-    name: "Priya Desai",
-    role: "Marketing Head, GrowthX",
-    content: "Their team understood our workforce requirements clearly and delivered candidates who matched our expectations. The partnership has been valuable for our operations.",
+    name: "Mukesh Kumar",
+    role: "HR, RSB Transmission",
+    content: "Their hiring support has helped us build a dependable pipeline of job-ready candidates. The process is efficient and easy to manage.",
     avatar: "https://i.pravatar.cc/150?img=5",
     rating: 5
   },
   {
     id: 3,
-    name: "Amit Patel",
-    role: "Founder, StartupHub",
-    content: "From enquiry to deployment, the process was smooth and professional. TSPL has been a dependable partner for apprenticeship and staffing support.",
+    name: "Amit Chauhan",
+    role: "HR, Voltas Limited",
+    content: "TSPL understands our hiring requirements clearly and connects us with suitable talent. Their service has added value to our recruitment efforts.",
     avatar: "https://i.pravatar.cc/150?img=12",
     rating: 4
+  },
+  {
+    id: 4,
+    name: "Rajesh Patil",
+    role: "HR, Hyundai Motors",
+    content: "We receive timely hiring support and quality candidates through TSPL. Their understanding of the manufacturing sector makes a real difference.",
+    avatar: "https://i.pravatar.cc/150?img=14",
+    rating: 5
+  },
+  {
+    id: 5,
+    name: "Anklesh Mahale",
+    role: "HR, Haier Appliances",
+    content: "The candidates shared by TSPL have been relevant to our requirements and easy to onboard. Their team communicates clearly and works professionally.",
+    avatar: "https://i.pravatar.cc/150?img=15",
+    rating: 5
+  },
+  {
+    id: 6,
+    name: "Mangesh Takte",
+    role: "HR, LG Electronics",
+    content: "TSPL has been a strong hiring partner for our organization. They help us fill roles faster while maintaining candidate quality and fit.",
+    avatar: "https://i.pravatar.cc/150?img=16",
+    rating: 5
   }
 ];
 
