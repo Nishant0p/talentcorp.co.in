@@ -397,8 +397,16 @@ function Industries({ resolveAsset }) {
 								}`}
 							>
 								<div className="flex items-center gap-4">
-									<div className={`flex h-12 w-12 items-center justify-center rounded-xl ${activeIndustry === index ? 'bg-white/20' : 'bg-blue-100'}`}>
-										<industry.icon className={`h-6 w-6 ${activeIndustry === index ? 'text-white' : 'text-blue-600'}`} />
+											<div className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md overflow-hidden ${activeIndustry === index ? 'bg-white/20' : 'bg-blue-100'}`}>
+										{industry.image ? (
+											<img
+												src={industry.image}
+												alt={industry.name}
+															className={`${industry.name === 'NAPS' ? 'h-3 w-3' : 'h-12 w-12'} max-h-full max-w-full object-contain ${activeIndustry === index ? 'opacity-90' : 'opacity-100'}`}
+											/>
+										) : (
+											<industry.icon className={`h-6 w-6 ${activeIndustry === index ? 'text-white' : 'text-blue-600'}`} />
+										)}
 									</div>
 									<div className="flex-1">
 										<h3 className={`text-lg font-semibold ${activeIndustry === index ? 'text-white' : 'text-gray-900'}`}>{industry.name}</h3>
