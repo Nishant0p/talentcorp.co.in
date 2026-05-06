@@ -145,13 +145,13 @@ export default function ServiceEnquirySection({ serviceName }) {
 									</div>
 								</a>
 
-								<a href="mailto:info@tsplgroup.com" className="group flex items-start gap-4">
+								<a href="mailto:info@tsplgroup.in" className="group flex items-start gap-4">
 									<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#2563EB] transition-colors group-hover:bg-[#F97316]">
 										<Mail className="h-5 w-5" />
 									</div>
 									<div>
 										<p className="text-sm text-white/70">Email Us</p>
-										<p className="font-bold">info@tsplgroup.com</p>
+										<p className="font-bold">info@tsplgroup.in</p>
 									</div>
 								</a>
 

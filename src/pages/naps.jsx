@@ -26,61 +26,61 @@ import Footer from '../components/Footer'
 import ServiceEnquirySection from '../components/ServiceEnquirySection'
 import { StaggerContainer, StaggerItem } from '../components/AnimatedContent'
 
-const heroStats = [{ value: '15,000+', label: 'Professionals Trained' }, { value: '500+', label: 'Premium Partners' }, { value: 'Rs. 15,000+', label: 'Average Monthly Pay' }]
+const heroStats = [{ value: '₹1,500 DBT', label: 'Per Apprentice / Month' }, { value: '2.5% - 25%', label: 'Apprenticeship Quota' }, { value: '₹1.8 Cr', label: 'Annual Savings (1,000)' }]
 
 const aboutHighlights = [
-	'12-month premium apprenticeship',
-	'Monthly stipend up to Rs. 15,000',
-	'Industry-recognized certification',
-	'Advanced skill development',
+	'Launched in August 2016',
+	'₹1,500 DBT per apprentice',
+	'2.5% to 15% quota requirement',
+	'Maharashtra quota up to 25%',
 ]
 
 const aboutFeatures = [
-	{ icon: TrendingUp, title: 'Career Growth', desc: 'Fast-track advancement' },
-	{ icon: Users, title: 'Expert Mentors', desc: 'Learn from industry leaders' },
-	{ icon: Award, title: '90% Get Jobs', desc: 'Premium job placements' },
+	{ icon: TrendingUp, title: 'Government', desc: 'Direct monthly DBT support' },
+	{ icon: Users, title: 'Quota Driven', desc: 'Built for eligible establishments' },
+	{ icon: Award, title: 'No Trade Unions', desc: 'No statutory applicability' },
 ]
 
 const applicantBenefits = [
-	{ icon: Wallet, title: 'Rs. 15,000+/month', desc: 'Competitive stipend' },
-	{ icon: TrendingUp, title: 'Career Acceleration', desc: 'Fast-track growth' },
-	{ icon: Award, title: '90% Placement', desc: 'Premium job offers' },
-	{ icon: Target, title: 'Skill Mastery', desc: 'Advanced training' },
+	{ icon: Wallet, title: '₹1,500 DBT/month', desc: 'Direct monthly support' },
+	{ icon: TrendingUp, title: '2.5% - 15% Quota', desc: 'Mandatory apprentice strength' },
+	{ icon: Award, title: '₹1.8 Cr Saving', desc: 'For 1,000 apprentices annually' },
+	{ icon: Target, title: 'Maharashtra Up to 25%', desc: 'Higher local quota' },
 ]
 
 const employerBenefits = [
-	{ icon: Shield, title: 'Vetted Talent', desc: 'Pre-qualified professionals' },
-	{ icon: Users, title: 'Skilled Workforce', desc: 'Advanced capabilities' },
-	{ icon: BadgeCheck, title: 'Tax Benefits', desc: 'Government incentives' },
-	{ icon: Building2, title: 'Dedicated Support', desc: 'Full assistance' },
+	{ icon: Shield, title: 'Employer Incentive', desc: 'Lower apprenticeship cost' },
+	{ icon: Users, title: 'Quota Compliance', desc: 'Meet required apprentice strength' },
+	{ icon: BadgeCheck, title: 'No Union Burden', desc: 'No trade union participation' },
+	{ icon: Building2, title: 'Skilled Intake', desc: 'Build long-term talent pipelines' },
 ]
 
 const applicantReqs = [
-	'Degree/Advanced diploma holder',
-	'Passed within last 5 years',
-	'Age 21-35, Indian citizen',
-	'Valid Aadhaar & bank account',
+	'Eligible apprentice category',
+	'Valid Aadhaar and bank account',
+	'Assigned training agreement',
+	'Willingness to complete apprenticeship',
 ]
 
 const employerReqs = [
-	'Registered company/enterprise',
-	'Minimum 10 employees',
-	'Valid GST registration',
-	'Advanced infrastructure',
+	'Registered establishment or enterprise',
+	'Apprentice quota of 2.5% to 15%',
+	'Maharashtra quota up to 25%',
+	'No statutory applicability for eligible structure',
 ]
 
 const documents = {
-	applicant: ['Aadhaar Card', 'Degree', 'Photo', 'Bank Details'],
-	employer: ['Registration Cert', 'GST', 'PAN Card', 'Infrastructure Proof'],
+	applicant: ['Aadhaar Card', 'Bank Details', 'Photo', 'Apprentice Agreement'],
+	employer: ['Registration Cert', 'GST / PAN', 'Workforce Details', 'Apprenticeship Request'],
 }
 
 const processSteps = [
-	{ icon: UserCheck, title: 'Apply', desc: 'Submit your professional profile and requirements' },
-	{ icon: CheckCircle, title: 'Screen', desc: 'Get shortlisted based on qualifications' },
-	{ icon: Briefcase, title: 'Match', desc: 'Get matched with ideal companies' },
-	{ icon: TrendingUp, title: 'Train', desc: 'Begin premium apprenticeship training' },
-	{ icon: Award, title: 'Perform', desc: 'Excel with hands-on project work' },
-	{ icon: CheckCircle2, title: 'Certify', desc: 'Earn recognition and secure job offers' },
+	{ icon: UserCheck, title: 'Apply', desc: 'Share apprentice and employer details' },
+	{ icon: CheckCircle, title: 'Verify', desc: 'Confirm quota, documents, and eligibility' },
+	{ icon: Briefcase, title: 'Register', desc: 'Complete apprenticeship registration' },
+	{ icon: TrendingUp, title: 'Train', desc: 'Start on-the-job skill development' },
+	{ icon: Award, title: 'Claim DBT', desc: 'Receive government monthly support' },
+	{ icon: CheckCircle2, title: 'Complete', desc: 'Finish training and continue growth' },
 ]
 
 function NAPSHero() {
@@ -103,9 +103,9 @@ function NAPSHero() {
 						<span className="mt-2 block bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-transparent">Programme Scheme</span>
 					</h1>
 
-					<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-base lg:text-lg">
-						Advance your career with <span className="font-bold text-white">world-class industry experience</span> and <span className="font-bold text-white">competitive compensation</span>
-					</p>
+							<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-base lg:text-lg">
+							Government-backed apprenticeship with <span className="font-bold text-white">₹1,500 DBT per month</span>, <span className="font-bold text-white whitespace-nowrap">2.5% to 15% quota</span>, and higher Maharashtra coverage.
+							</p>
 
 					<div className="mb-14 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
 						<Link to="/jobs" className="group inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] px-6 py-3 text-sm font-semibold text-white shadow-2xl shadow-[#2563EB]/40 transition-all duration-300 hover:scale-105 sm:px-8 sm:py-4 sm:text-base">
@@ -143,9 +143,9 @@ function NAPSAbout() {
 							What is <span className="text-[#2563EB]">NAPS?</span>
 						</h2>
 
-						<p className="mb-8 text-lg leading-relaxed text-[#475569] lg:text-xl">
-							An elite apprenticeship program designed for skilled professionals seeking premium career advancement with top-tier industries and competitive compensation.
-						</p>
+							<p className="mb-8 text-lg leading-relaxed text-[#475569] lg:text-xl">
+								NAPS is a Government of India apprenticeship scheme launched in August 2016 to support employers with monthly DBT and help apprentices build job-ready skills.
+							</p>
 
 						<div className="mb-8 space-y-4">
 							{aboutHighlights.map((item, i) => (
@@ -158,9 +158,9 @@ function NAPSAbout() {
 							))}
 						</div>
 
-						<div className="inline-flex items-center gap-3 rounded-xl border border-[#BFDBFE] bg-gradient-to-r from-[#DBEAFE] to-[#EFF6FF] px-5 py-3">
-							<span className="text-base font-semibold text-[#1E40AF]">Premium Apprenticeship Program</span>
-						</div>
+							<div className="inline-flex items-center gap-3 rounded-xl border border-[#BFDBFE] bg-gradient-to-r from-[#DBEAFE] to-[#EFF6FF] px-5 py-3">
+								<span className="text-base font-semibold text-[#1E40AF]">DBT-backed Apprenticeship Scheme</span>
+							</div>
 					</div>
 
 					<div className="space-y-6">
@@ -205,7 +205,7 @@ function NAPSBenefits() {
 					<h2 className="mb-4 text-4xl font-bold text-[#0F172A] lg:text-5xl">
 						Why Choose <span className="bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-transparent">NAPS?</span>
 					</h2>
-					<p className="mx-auto max-w-2xl text-lg text-[#64748B]">Premium benefits for professionals and employers</p>
+							<p className="mx-auto max-w-2xl text-lg text-[#64748B]">Financial support, quota compliance, and apprentice-friendly savings</p>
 				</div>
 
 				<div className="grid gap-8 lg:gap-10 lg:grid-cols-2">
@@ -408,7 +408,7 @@ function NAPSProcess() {
 				</div>
 
 				<div className="mt-16 text-center lg:mt-20">
-					<p className="mb-6 text-[#64748B]">Ready to advance your career?</p>
+						<p className="mb-6 text-[#64748B]">Ready to deploy apprentices under NAPS?</p>
 						<Link to="/contact-us" className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#2563EB] to-[#F97316] px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg">
 						Start Your Journey
 						</Link>
@@ -424,8 +424,8 @@ function NAPSCTA() {
 			<div className="mx-auto w-full max-w-6xl">
 				<div className="flex flex-col items-center justify-between gap-10 rounded-3xl bg-gradient-to-r from-[#2d52b4] to-[#4083ff] p-8 shadow-lg md:flex-row md:p-12">
 					<div className="flex-1">
-						<h2 className="mb-3 text-3xl font-bold text-white md:text-4xl">Start Your Journey Today</h2>
-						<p className="mb-8 text-lg text-blue-100">Join thousands who transformed their careers through NATS.</p>
+						<h2 className="mb-3 text-3xl font-bold text-white md:text-4xl">Start Your NAPS Journey Today</h2>
+						<p className="mb-8 text-lg text-blue-100">Use DBT support and quota-based apprenticeships to lower hiring costs.</p>
 
 						<div className="flex flex-wrap gap-4">
 							<Link to="/jobs" className="flex items-center gap-2 rounded-full bg-[#f97316] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-[#ea580c]">
@@ -450,9 +450,9 @@ function NAPSCTA() {
 								<span className="font-medium">+91 98765 43210</span>
 							</a>
 
-							<a href="mailto:support@tsplgroup.com" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+								<a href="mailto:support@tsplgroup.in" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
 								<Mail className="h-5 w-5 text-blue-100" />
-								<span className="font-medium">support@tsplgroup.com</span>
+									<span className="font-medium">support@tsplgroup.in</span>
 							</a>
 						</div>
 					</div>
@@ -464,9 +464,9 @@ function NAPSCTA() {
 
 export default function NapsPage() {
 	useEffect(() => {
-		document.title = 'NAPS - National Apprenticeship Programme Scheme | TSPL India';
-		document.querySelector('meta[name="description"]')?.setAttribute('content', 'NAPS - Premium apprenticeship program for skilled professionals in India. Earn up to Rs. 15,000/month with world-class training from leading companies.');
-		document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'NAPS - Premium Apprenticeship Program in India');
+		document.title = 'NAPS - National Apprenticeship Promotion Scheme | TSPL India';
+		document.querySelector('meta[name="description"]')?.setAttribute('content', 'NAPS - Government apprenticeship scheme with ₹1,500 DBT per apprentice, 2.5% to 15% quota, and Maharashtra quota up to 25%.');
+		document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'NAPS - National Apprenticeship Promotion Scheme');
 		document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://tsplgroup.in/naps%20tspl.jpg');
 	}, []);
 	return (

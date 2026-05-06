@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
-import { STRAPI_BASE_URL, submitToAdminBackend } from '../utils/strapi';
+import { STRAPI_BASE_URL, submitLead, submitToAdminBackend } from '../utils/strapi';
 import { submitToGoogleSheet } from '../utils/googleSheets';
 import { 
   Phone, 
@@ -157,8 +157,7 @@ const ContactUs = () => {
       failValidation('Message must be at least 10 characters.');
       return;
     }
-    
-    // Prepare data for Strapi backend
+
     const leadPayload = {
       data: {
         name: normalizedData.fullName,
@@ -170,7 +169,6 @@ const ContactUs = () => {
       },
     };
 
-    // Prepare data for Google Sheets
     const sheetsData = {
       fullName: normalizedData.fullName,
       email: normalizedData.email,
@@ -195,26 +193,14 @@ const ContactUs = () => {
 
     try {
       const [strapiResult, sheetResult, adminBackendResult] = await Promise.allSettled([
-        fetch(`${STRAPI_BASE_URL}/api/leads`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(leadPayload),
-        }).then(async (response) => {
-          if (!response.ok) {
-            const responseText = await response.text();
-            throw new Error(`CRM submit failed (${response.status}): ${responseText || 'no response body'}`);
-          }
-          return { status: 'success' };
-        }),
+        submitLead(leadPayload.data),
         submitToGoogleSheet(sheetsData),
         submitToAdminBackend('contact', {
           name: normalizedData.fullName,
           email: normalizedData.email,
           phone: normalizedData.phone,
           message: normalizedData.message,
-          metadata: { service: normalizedData.service, consent: normalizedData.consent }
+          metadata: { service: normalizedData.service, consent: normalizedData.consent },
         }),
       ]);
 
@@ -270,7 +256,6 @@ const ContactUs = () => {
       setIsSubmitting(false);
     }
   };
-
   return (
     <div className="font-sans text-gray-800 bg-white antialiased">
       <style>{`

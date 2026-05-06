@@ -622,8 +622,8 @@ function ContractCTA({ resolveAsset }) {
 						<div className="space-y-4">
 							{[
 								{ icon: Phone, label: 'Call Us', value: '+91 98765 43210', sublabel: 'Mon-Sat 9am-7pm' },
-								{ icon: Mail, label: 'Email Us', value: 'contract@tsplgroup.com', sublabel: 'Quick Response' },
-								{ icon: MapPin, label: 'Visit Us', value: 'Mumbai, Maharashtra', sublabel: 'Head Office' },
+								{ icon: Mail, label: 'Email Us', value: 'contract@tsplgroup.in', sublabel: 'Quick Response' },
+								{ icon: MapPin, label: 'Visit Us', value: 'Chakan, Pune, Maharashtra', sublabel: 'Head Office' },
 							].map((contact) => {
 								const Icon = contact.icon
 								return (

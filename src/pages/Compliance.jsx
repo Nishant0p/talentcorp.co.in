@@ -224,13 +224,13 @@ const contactMethods = [
 	{
 		icon: Mail,
 		label: 'Email Us',
-		value: 'compliance@tsplgroup.com',
-		href: 'mailto:compliance@tsplgroup.com',
+		value: 'compliance@tsplgroup.in',
+	href: 'mailto:compliance@tsplgroup.in',
 	},
 	{
 		icon: MapPin,
 		label: 'Visit Us',
-		value: 'Mumbai, Maharashtra',
+		value: 'Chakan, Pune, Maharashtra',
 		href: '#',
 	},
 ]

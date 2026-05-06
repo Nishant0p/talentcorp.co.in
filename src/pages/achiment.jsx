@@ -445,13 +445,13 @@ function AchievementsCta() {
 								<Phone className="h-5 w-5" />
 								<span>+91  7397971322</span>
 							</a>
-							<a href="mailto:info@tsplgroup.com" className="flex items-center gap-3 text-gray-600 transition-colors hover:text-blue-600">
+							<a href="mailto:info@tsplgroup.in" className="flex items-center gap-3 text-gray-600 transition-colors hover:text-blue-600">
 								<Mail className="h-5 w-5" />
-								<span>info@tsplgroup.com</span>
+								<span>info@tsplgroup.in</span>
 							</a>
 							<div className="flex items-start gap-3 text-gray-600">
 								<MapPin className="mt-0.5 h-5 w-5" />
-								<span>Mumbai, Maharashtra, India</span>
+								<span>Chakan, Pune, Maharashtra, India</span>
 							</div>
 						</div>
 					</div>
