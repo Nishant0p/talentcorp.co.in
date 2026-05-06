@@ -60,16 +60,16 @@ const industries = [
 		name: 'NAPS',
 		image: '/Gemini_Generated_Image_qskougqskougqsko.png',
 		clients: 120,
-		workers: '15,000+',
-		description: 'Steel, metals, plastics, and heavy engineering',
+		workers: '₹1,500 DBT',
+		description: 'Apprenticeship quota support and monthly DBT for eligible establishments',
 	},
 	{
 		icon: Pill,
 		name: 'NATS',
 		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
 		clients: 85,
-		workers: '8,000+',
-		description: 'Drug manufacturing, labs, and healthcare',
+		workers: '₹4,000 - ₹4,500 DBT',
+		description: 'Technical apprenticeship support for diploma, degree, and graduate candidates',
 	},
 	{
 		icon: Car,
@@ -111,28 +111,28 @@ const caseStudies = [
 		industry: 'NAPS',
 		link: '/naps',
 		image: '/naps%20tspl.jpg',
-		challenge: 'Bridging the skill gap for professionals and providing a reliable, pre-qualified workforce for employers.',
-		solution: 'Implemented a premium apprenticeship program with industry-recognized training and competitive stipends.',
+		challenge: 'Supporting employers with a DBT-backed apprenticeship model while meeting quota requirements across eligible establishments.',
+		solution: 'Implemented NAPS with ₹1,500 monthly DBT, quota compliance, and practical apprenticeship support.',
 		results: [
-			{ label: 'Professionals Trained', value: '15,000+' },
-			{ label: 'Premium Partners', value: '500+' },
-			{ label: 'Avg Monthly Pay', value: '₹15,000+' },
+			{ label: 'DBT / Month', value: '₹1,500' },
+			{ label: 'Quota Range', value: '2.5% - 25%' },
+			{ label: 'Annual Saving', value: '₹1.8 Cr' },
 		],
-		testimonial: 'An elite apprenticeship program designed for skilled professionals seeking premium career advancement.',
+		testimonial: 'A government apprenticeship program that lowers hiring cost while strengthening workforce pipelines.',
 	},
 	{
 		company: 'NATS Program Impact',
 		industry: 'NATS',
 		link: '/nats',
 		image: '/nats%20tspl.jpg',
-		challenge: 'Connecting fresh graduates with top industries for hands-on practical training.',
-		solution: 'Facilitated 12 months of skilled training with government-recognized certification and monthly stipends.',
+		challenge: 'Connecting technically qualified youth with industry training, stipend support, and certification.',
+		solution: 'Facilitated NATS with ₹4,000 to ₹4,500 DBT, quota compliance, and practical industry training.',
 		results: [
-			{ label: 'Min Stipend', value: '₹8,000' },
-			{ label: 'Training Duration', value: '1 Year' },
-			{ label: 'Govt Certificate', value: 'Yes' },
+			{ label: 'Diploma DBT', value: '₹4,000' },
+			{ label: 'Degree DBT', value: '₹4,500' },
+			{ label: 'Quota Range', value: '2.5% - 20%' },
 		],
-		testimonial: 'A flagship Government of India scheme that serves as a career launchpad for graduates.',
+		testimonial: 'A Government of India scheme that supports technical training and lowers apprentice costs.',
 	},
 ]
 
@@ -230,7 +230,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 							</div>
 							<div className="flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-white/3 px-3 py-1 text-xs backdrop-blur-md md:gap-2 md:px-4 md:py-1.5 md:text-sm">
 								<CheckCircle2 size={14} className="text-emerald-500 md:h-4 md:w-4" />
-								<span>NAPS | NATS | MAPS</span>
+								<span>NAPS DBT | NATS DBT | MAPS</span>
 							</div>
 						</div>
 					</div>
@@ -242,8 +242,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 					</h1>
 
 					<p className="mb-10 max-w-2xl text-lg leading-relaxed text-gray-300 md:text-xl">
-						India&apos;s leading government-authorized staffing partner connecting 40,000+ skilled
-						candidates with top employers through certified apprenticeship programs.
+						India&apos;s leading government-authorized staffing partner connecting employers and candidates through NAPS and NATS apprenticeship programs with quota-based support.
 					</p>
 
 					<div className="mb-12 flex items-center gap-6">
