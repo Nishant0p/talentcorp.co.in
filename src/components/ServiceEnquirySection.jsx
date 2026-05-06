@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Shield, Phone, Mail, MapPin, CheckCircle, Clock, Send } from 'lucide-react'
-import { submitLead } from '../utils/strapi'
+import { submitLead, submitToAdminBackend } from '../utils/strapi'
 
 export default function ServiceEnquirySection({ serviceName }) {
 	const [formData, setFormData] = useState({
@@ -31,13 +31,27 @@ export default function ServiceEnquirySection({ serviceName }) {
 		].join('\n')
 
 		try {
-			await submitLead({
-				name: formData.name.trim(),
-				email: formData.email.trim(),
-				phone: formData.phone.trim(),
-				subject: `${serviceName} enquiry`,
-				message: leadMessage,
-			})
+			await Promise.allSettled([
+				submitLead({
+					name: formData.name.trim(),
+					email: formData.email.trim(),
+					phone: formData.phone.trim(),
+					subject: `${serviceName} enquiry`,
+					message: leadMessage,
+				}),
+				submitToAdminBackend('service', {
+					name: formData.name.trim(),
+					email: formData.email.trim(),
+					phone: formData.phone.trim(),
+					message: formData.message.trim(),
+					metadata: {
+						service: serviceName,
+						company: formData.company.trim(),
+						city: formData.city.trim(),
+						source: 'ServiceEnquirySection'
+					}
+				})
+			])
 
 			setFormData({
 				name: '',

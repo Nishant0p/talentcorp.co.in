@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
-import { STRAPI_BASE_URL, submitLead } from '../utils/strapi';
+import { STRAPI_BASE_URL, submitLead, submitToAdminBackend } from '../utils/strapi';
 import { submitToGoogleSheet } from '../utils/googleSheets';
 import { 
   Phone, 
@@ -194,22 +194,55 @@ const ContactUs = () => {
     setFlightManifest(manifestEntries.length ? manifestEntries : [{ label: 'Status', value: 'Sending...' }]);
 
     try {
+<<<<<<< HEAD
       const [strapiResult, sheetResult] = await Promise.allSettled([
         submitLead(leadPayload.data),
+=======
+      const [strapiResult, sheetResult, adminBackendResult] = await Promise.allSettled([
+        fetch(`${STRAPI_BASE_URL}/api/leads`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(leadPayload),
+        }).then(async (response) => {
+          if (!response.ok) {
+            const responseText = await response.text();
+            throw new Error(`CRM submit failed (${response.status}): ${responseText || 'no response body'}`);
+          }
+          return { status: 'success' };
+        }),
+>>>>>>> de7b3ef71c74cc001f7fe9cd568af7d2bd38697c
         submitToGoogleSheet(sheetsData),
+        submitToAdminBackend('contact', {
+          name: normalizedData.fullName,
+          email: normalizedData.email,
+          phone: normalizedData.phone,
+          message: normalizedData.message,
+          metadata: { service: normalizedData.service, consent: normalizedData.consent }
+        }),
       ]);
 
       const crmOk = strapiResult.status === 'fulfilled';
       const sheetOk =
         sheetResult.status === 'fulfilled' &&
         (sheetResult.value.status === 'success' || sheetResult.value.status === 'skipped');
+      const adminOk = adminBackendResult.status === 'fulfilled' && adminBackendResult.value.ok !== false;
 
-      if (crmOk && sheetOk) {
+      if (crmOk && sheetOk && adminOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to CRM, Google Sheet, and Admin Panel.');
+      } else if (crmOk && sheetOk) {
         setSubmitStatusNote('Response sent successfully. Saved to CRM and Google Sheet.');
-      } else if (crmOk && !sheetOk) {
-        setSubmitStatusNote('Response sent successfully. Saved to CRM, but Google Sheet sync failed.');
-      } else if (!crmOk && sheetOk) {
-        setSubmitStatusNote('Response sent successfully. Saved to Google Sheet, but CRM sync failed.');
+      } else if (crmOk && adminOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to CRM and Admin Panel.');
+      } else if (sheetOk && adminOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to Google Sheet and Admin Panel.');
+      } else if (crmOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to CRM.');
+      } else if (sheetOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to Google Sheet.');
+      } else if (adminOk) {
+        setSubmitStatusNote('Response sent successfully. Saved to Admin Panel.');
       } else {
         const crmError =
           strapiResult.status === 'rejected'
@@ -238,31 +271,14 @@ const ContactUs = () => {
       setIsFormFlyingAway(false);
       setFlightManifest([]);
       setSubmitError(error?.message || 'Unable to submit contact form.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <div className="font-sans text-gray-800 bg-white antialiased">
-      <style>{`
-        @keyframes contactOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes popupTimerShrink { from { transform: scaleX(1); } to { transform: scaleX(0); } }
-      `}</style>
-      
-      {/* === HEADER & HERO SECTION === */}
-      <header className="relative bg-gray-900 min-h-[72vh] md:min-h-[86vh] flex flex-col">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src={contactHeroAsset.url} 
-            alt={contactHeroAsset.alt || 'Office Meeting'} 
-            className="w-full h-full object-cover object-center opacity-55"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/40 to-black/65"></div>
-        </div>
-
-        <Navbar />
+    try {
+      const [strapiResult, sheetResult, adminBackendResult] = await Promise.allSettled([
+        submitLead(leadPayload.data),
+        submitToGoogleSheet(sheetsData),
+        submitToAdminBackend('contact', {
+          name: normalizedData.fullName,
+          email: normalizedData.email,
+          phone: normalizedData.phone,
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-grow items-center max-w-7xl mx-auto w-full px-8 pt-8 pb-16 md:pt-10 md:pb-20">

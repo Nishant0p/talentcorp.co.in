@@ -30,3 +30,4 @@ dist-ssr
 
 # ignore backend runtime
 tspl backend/
+tspl-admin-backend/

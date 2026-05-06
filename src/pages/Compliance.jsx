@@ -28,7 +28,7 @@ import {
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ServiceEnquirySection from '../components/ServiceEnquirySection'
-import { submitLead } from '../utils/strapi'
+import { submitLead, submitToAdminBackend } from '../utils/strapi'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 
 const heroStats = [
@@ -671,7 +671,8 @@ function ComplianceCTA() {
 		setSubmitMessage('')
 
 		try {
-			await submitLead({
+			const [leadResult] = await Promise.allSettled([
+				submitLead({
 				name: formData.name.trim(),
 				email: formData.email.trim(),
 				phone: formData.phone.trim(),
@@ -681,7 +682,23 @@ function ComplianceCTA() {
 					`Employees: ${formData.employees || 'Not specified'}`,
 					`Message: ${formData.message.trim() || 'No additional details'}`,
 				].join('\n'),
-			})
+				}),
+				submitToAdminBackend('service', {
+					name: formData.name.trim(),
+					email: formData.email.trim(),
+					phone: formData.phone.trim(),
+					message: formData.message.trim(),
+					metadata: {
+						source: 'compliance audit request',
+						company: formData.company.trim(),
+						employees: formData.employees,
+					},
+				}),
+			])
+
+			if (leadResult.status !== 'fulfilled') {
+				throw leadResult.reason
+			}
 
 			setFormData({ name: '', company: '', phone: '', email: '', employees: '', message: '' })
 			setSubmitMessage('Your compliance audit request has been sent. We will reach out within 24 hours.')

@@ -4,7 +4,7 @@ import {
   ArrowLeft, MapPin, IndianRupee, Clock, Briefcase, Calendar,
   CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2
 } from 'lucide-react';
-import { fetchJobs, submitApplicant } from '../utils/strapi';
+import { fetchJobs, submitApplicant, submitToAdminBackend } from '../utils/strapi';
 import './JobDetailPage.css';
 
 // ─── Static constants ────────────────────────────────────────────────────────
@@ -204,24 +204,42 @@ const JobDetailPage = () => {
         formData.append('cv', form.cv);
       }
 
-      await submitApplicant({
-        jobId: job.id,
-        name: form.name,
-        mobile: form.mobile,
-        email: form.email,
-        pageName: form.pageName,
-        cvFile: form.cv,
-        googleSheetsPayload: {
-          service: `Job Application - ${job.title || 'Open Position'}`,
-          message: [
-            `Job ID: ${String(job.id || '')}`,
-            `Job Title: ${job.title || ''}`,
-            `Company: ${job.company || ''}`,
-            `Location: ${job.location || ''}`,
-            `Page Name: ${form.pageName || ''}`,
-          ].join(' | '),
-        },
-      });
+      await Promise.allSettled([
+        submitApplicant({
+          jobId: job.id,
+          name: form.name,
+          mobile: form.mobile,
+          email: form.email,
+          pageName: form.pageName,
+          cvFile: form.cv,
+          googleSheetsPayload: {
+            service: `Job Application - ${job.title || 'Open Position'}`,
+            message: [
+              `Job ID: ${String(job.id || '')}`,
+              `Job Title: ${job.title || ''}`,
+              `Company: ${job.company || ''}`,
+              `Location: ${job.location || ''}`,
+              `Page Name: ${form.pageName || ''}`,
+            ].join(' | '),
+          },
+        }),
+        submitToAdminBackend('job', {
+          name: form.name,
+          email: form.email,
+          phone: form.mobile,
+          message: '',
+          metadata: {
+            jobId: job.id,
+            jobTitle: job.title,
+            company: job.company,
+            location: job.location,
+            pageName: form.pageName,
+            salary: job.salary,
+            jobType: job.type
+          }
+        }, { cv: form.cv })
+      ]);
+      
       setSubmitted(true);
       setForm(EMPTY_FORM);
       setTimeout(() => setSubmitted(false), 6000);
