@@ -13,9 +13,14 @@ const fallbackJobs = [
   { id: 6, title: 'Assembly Line Worker', company: 'Hero MotoCorp', location: 'Haridwar, Uttarakhand', salary: '₹16,000 - ₹20,000', type: 'Contract', urgent: true },
 ];
 
-const filters = ['All Jobs', 'Apprenticeship', 'Full-time', 'Contract', 'Part-time'];
-
 const normalizeType = (value) => String(value || '').trim().toLowerCase();
+
+const toTitleCase = (value) =>
+  String(value || '')
+    .trim()
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 
 const toNumber = (value) => {
   if (value === null || value === undefined || value === '') return null;
@@ -50,6 +55,21 @@ const JobBoard = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const prefersReducedMotion = useReducedMotion();
+
+  const filterOptions = useMemo(() => {
+    const values = jobs
+      .map((job) => String(job.type || job.category || '').trim())
+      .filter(Boolean)
+      .filter((value) => normalizeType(value) !== 'overseas');
+    const uniqueValues = [...new Set(values)];
+    return [{ value: 'All Jobs', label: 'All Jobs' }, ...uniqueValues.map((value) => ({ value, label: toTitleCase(value) }))];
+  }, [jobs]);
+
+  useEffect(() => {
+    if (!filterOptions.some((option) => option.value === filter)) {
+      setFilter('All Jobs');
+    }
+  }, [filter, filterOptions]);
 
   useEffect(() => {
     const loadJobs = async () => {
@@ -126,23 +146,25 @@ const JobBoard = () => {
             />
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            {filters.map((type) => (
+          <div className="-mx-4 overflow-x-auto px-4 pb-1 sm:mx-0 sm:overflow-visible sm:px-0">
+            <div className="flex w-max gap-2 sm:w-full sm:flex-wrap">
+              {filterOptions.map((type) => (
               <button
-                key={type}
-                onClick={() => setFilter(type)}
-                className={`rounded-md border px-4 py-2 text-sm font-semibold transition-colors ${
-                  filter === type
+                        key={type.value}
+                        onClick={() => setFilter(type.value)}
+                className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
+                          filter === type.value
                     ? 'border-blue-600 bg-blue-600 text-white'
                     : 'border-white/80 bg-white/80 text-slate-700 hover:border-slate-300'
                 }`}
               >
-                {type}
+                        {type.label}
               </button>
-            ))}
-            <button className="rounded-md border border-white/80 bg-white/80 p-2.5 text-slate-600 hover:bg-white" aria-label="Open filters">
-              <Filter size={18} />
-            </button>
+              ))}
+              <button className="shrink-0 rounded-full border border-white/80 bg-white/80 p-2.5 text-slate-600 hover:bg-white" aria-label="Open filters">
+                <Filter size={18} />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -158,7 +180,7 @@ const JobBoard = () => {
             {filteredJobs.map((job, index) => (
               <motion.article
                 key={job.id}
-                className="rounded-2xl border border-white/80 bg-white/78 p-4 shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition-colors hover:border-blue-300"
+                className="overflow-hidden rounded-2xl border border-white/80 bg-white/78 p-4 shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition-colors hover:border-blue-300 sm:p-5"
                 initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
                 whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
@@ -172,28 +194,35 @@ const JobBoard = () => {
               >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className="truncate text-lg font-bold text-slate-900">{job.title}</h3>
-                    {job.urgent && (
-                      <span className="rounded-sm border border-orange-200 bg-orange-50 px-2 py-0.5 text-[11px] font-semibold text-orange-700">
-                        Urgent
-                      </span>
-                    )}
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-md sm:h-14 sm:w-14">
+                      <span className="text-lg font-black">{String(job.company || job.title || 'J').charAt(0)}</span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <h3 className="truncate text-[15px] font-bold text-slate-900 sm:text-lg">{job.title}</h3>
+                        {job.urgent && (
+                          <span className="rounded-full border border-orange-200 bg-orange-50 px-2 py-0.5 text-[10px] font-semibold text-orange-700 sm:text-[11px]">
+                            Urgent
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-1 truncate text-sm font-medium text-slate-600">{job.company}</p>
+                    </div>
                   </div>
-                  <p className="mt-1 text-sm font-medium text-slate-600">{job.company}</p>
 
-                  <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-600">
-                    <span className="inline-flex items-center gap-1.5">
-                      <MapPin size={15} className="text-slate-400" />
-                      {job.location}
+                  <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-slate-600 sm:gap-x-5 sm:text-sm">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5">
+                      <MapPin size={14} className="text-slate-400" />
+                      <span className="truncate max-w-[170px]">{job.location}</span>
                     </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <IndianRupee size={15} className="text-slate-400" />
-                      {job.salary}
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5">
+                      <IndianRupee size={14} className="text-slate-400" />
+                      <span className="truncate max-w-[170px]">{job.salary}</span>
                     </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Clock size={15} className="text-slate-400" />
-                      {job.type}
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5">
+                      <Clock size={14} className="text-slate-400" />
+                      <span className="truncate max-w-[170px]">{job.type}</span>
                     </span>
                   </div>
                 </div>
@@ -201,7 +230,7 @@ const JobBoard = () => {
                 <div className="flex items-center gap-2 lg:pl-4">
                   <button
                     onClick={() => navigate(`/job/${job.id}`)}
-                    className="inline-flex items-center gap-2 rounded-md border border-blue-600 px-4 py-2.5 text-sm font-bold text-blue-700 transition-colors hover:bg-blue-600 hover:text-white"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-blue-600 px-4 py-2.5 text-sm font-bold text-blue-700 transition-colors hover:bg-blue-600 hover:text-white sm:w-auto"
                   >
                     Apply Now <ArrowRight size={16} />
                   </button>

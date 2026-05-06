@@ -63,7 +63,7 @@ export default function NatsLandingPage() {
 							</h1>
 
 							<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-base lg:text-lg">
-								Access <span className="font-bold text-white">₹4,000 to ₹4,500 DBT</span> while gaining <span className="font-bold text-white">real industry experience</span>
+								Gaining Stipend Of <span className="font-bold text-white">₹15,000 to ₹30,000 </span>  <span className="font-bold text-white"> With Real Industry Experience </span>
 							</p>
 
 							<div className="mb-14 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
@@ -94,8 +94,9 @@ export default function NatsLandingPage() {
 							What is <span className="text-blue-600">NATS?</span>
 						</h2>
 							<p className="mb-6 text-slate-600">
-								A flagship Government of India scheme connecting technically qualified youth with industry training, government support, and certification.
-							</p>
+The National Apprenticeship Training Scheme in India was started by the Board of Apprenticeship and Training/Practical Training. It is a flagship programme from the Government of India, and undertaken by the Ministry of Human Resource Development. The programme is aimed at enhancing the employability of students by equipping technically qualified youth with practical knowledge and skills required in their respective field (s) of work. As part of this programme, organisations and Training Managers provide year-long or six months relevant training to apprentices using well-developed training modules. The establishments can pay stipend amount greater than or equal to the minimum stipend amount fixed by the Government of India to the apprentices. The establishments are reimbursed with half of the minimum prescribed stipend amount.
+The apprentices are trained at Central, State and Private organisations. At the end of the training programme, the apprentices are issued a Certificate of Proficiency by the Government of India.
+This certificate can be registered at all employment exchanges across India as valid employment experience. The apprentices are governed solely by the Apprentices Act, 1961.							</p>
 							<ul className="mb-8 space-y-3">
 								{['1 to 3 years apprenticeship', 'Diploma: ₹4,000/month', 'B.E./B.Tech: ₹4,500/month', 'Graduates: ₹4,500/month in first year'].map((item) => (
 								<li key={item} className="flex items-center text-slate-700">
@@ -109,11 +110,11 @@ export default function NatsLandingPage() {
 					</div>
 
 					<div>
-						<div className="group mb-6 flex items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl">
+							<div className="group mb-6 flex items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl md:p-6">
 							<img
 								src="/nats%20tspl.jpg"
 								alt="NATS hero image"
-								className="h-56 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+									className="h-72 w-full max-w-xl object-contain transition-transform duration-500 group-hover:scale-105 md:h-[480px]"
 							/>
 						</div>
 						<div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
