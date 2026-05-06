@@ -51,6 +51,14 @@ const fallbackTestimonials = [
     content: "TSPL has been a strong hiring partner for our organization. They help us fill roles faster while maintaining candidate quality and fit.",
     avatar: "https://i.pravatar.cc/150?img=16",
     rating: 5
+  },
+  {
+    id: 7,
+    name: "Bapusaheb Ghorpade",
+    role: "HR, Force Motor",
+    content: "TSPL has helped us source dependable candidates for our hiring needs. Their support has been consistent, clear, and professional.",
+    avatar: "https://i.pravatar.cc/150?img=17",
+    rating: 5
   }
 ];
 

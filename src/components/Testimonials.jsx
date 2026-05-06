@@ -63,6 +63,16 @@ const fallbackReviews = [
     rating: 5,
     metric: 'Hiring efficiency',
   },
+  {
+    id: 9,
+    reviewType: 'client',
+    name: 'Bapusaheb Ghorpade',
+    role: 'HR',
+    company: 'Force Motor',
+    quote: 'TSPL has helped us source dependable candidates for our hiring needs. Their support has been consistent, clear, and professional.',
+    rating: 5,
+    metric: 'Trusted hiring support',
+  },
 ];
 
 const tabs = [
