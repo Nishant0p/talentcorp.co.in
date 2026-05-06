@@ -157,8 +157,7 @@ const ContactUs = () => {
       failValidation('Message must be at least 10 characters.');
       return;
     }
-    
-    // Prepare data for Strapi backend
+
     const leadPayload = {
       data: {
         name: normalizedData.fullName,
@@ -170,7 +169,6 @@ const ContactUs = () => {
       },
     };
 
-    // Prepare data for Google Sheets
     const sheetsData = {
       fullName: normalizedData.fullName,
       email: normalizedData.email,
@@ -194,32 +192,15 @@ const ContactUs = () => {
     setFlightManifest(manifestEntries.length ? manifestEntries : [{ label: 'Status', value: 'Sending...' }]);
 
     try {
-<<<<<<< HEAD
-      const [strapiResult, sheetResult] = await Promise.allSettled([
-        submitLead(leadPayload.data),
-=======
       const [strapiResult, sheetResult, adminBackendResult] = await Promise.allSettled([
-        fetch(`${STRAPI_BASE_URL}/api/leads`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(leadPayload),
-        }).then(async (response) => {
-          if (!response.ok) {
-            const responseText = await response.text();
-            throw new Error(`CRM submit failed (${response.status}): ${responseText || 'no response body'}`);
-          }
-          return { status: 'success' };
-        }),
->>>>>>> de7b3ef71c74cc001f7fe9cd568af7d2bd38697c
+        submitLead(leadPayload.data),
         submitToGoogleSheet(sheetsData),
         submitToAdminBackend('contact', {
           name: normalizedData.fullName,
           email: normalizedData.email,
           phone: normalizedData.phone,
           message: normalizedData.message,
-          metadata: { service: normalizedData.service, consent: normalizedData.consent }
+          metadata: { service: normalizedData.service, consent: normalizedData.consent },
         }),
       ]);
 
@@ -271,14 +252,30 @@ const ContactUs = () => {
       setIsFormFlyingAway(false);
       setFlightManifest([]);
       setSubmitError(error?.message || 'Unable to submit contact form.');
-    try {
-      const [strapiResult, sheetResult, adminBackendResult] = await Promise.allSettled([
-        submitLead(leadPayload.data),
-        submitToGoogleSheet(sheetsData),
-        submitToAdminBackend('contact', {
-          name: normalizedData.fullName,
-          email: normalizedData.email,
-          phone: normalizedData.phone,
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  return (
+    <div className="font-sans text-gray-800 bg-white antialiased">
+      <style>{`
+        @keyframes contactOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes popupTimerShrink { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+      `}</style>
+      
+      {/* === HEADER & HERO SECTION === */}
+      <header className="relative bg-gray-900 min-h-[72vh] md:min-h-[86vh] flex flex-col">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={contactHeroAsset.url} 
+            alt={contactHeroAsset.alt || 'Office Meeting'} 
+            className="w-full h-full object-cover object-center opacity-55"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/40 to-black/65"></div>
+        </div>
+
+        <Navbar />
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-grow items-center max-w-7xl mx-auto w-full px-8 pt-8 pb-16 md:pt-10 md:pb-20">

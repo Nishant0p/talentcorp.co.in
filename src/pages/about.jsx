@@ -568,48 +568,9 @@ export default function AboutPage() {
 	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
 
 	const tsplLogoAsset = resolveAsset('about.tsplLogo', '/tspl main logo.png', 'TSPL logo')
-	const [showLogoFullscreen, setShowLogoFullscreen] = React.useState(true)
-
-	React.useEffect(() => {
-		function onKey(e) {
-			if (e.key === 'Escape') setShowLogoFullscreen(false)
-		}
-		document.addEventListener('keydown', onKey)
-		return () => document.removeEventListener('keydown', onKey)
-	}, [])
 
 	return (
 		<div className="min-h-screen bg-white text-slate-800">
-			{showLogoFullscreen && (
-				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-8">
-					<div className="relative w-full max-w-3xl rounded-2xl bg-white p-8 shadow-2xl">
-						<button
-							aria-label="Close"
-							onClick={() => setShowLogoFullscreen(false)}
-							className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200"
-						>
-							<span className="sr-only">Close</span>
-							&times;
-						</button>
-
-						<div className="flex flex-col items-center gap-6 text-center">
-							<img src={tsplLogoAsset.url} alt={tsplLogoAsset.alt} className="h-40 w-auto object-contain sm:h-56" />
-							<div className="max-w-2xl">
-								<p className="mb-4 text-lg leading-relaxed text-slate-700">
-									TSPL Group was founded with a simple yet powerful mission: to bridge the gap between skilled workers and meaningful employment opportunities across India.
-								</p>
-								<p className="mb-4 text-lg leading-relaxed text-slate-700">
-									We believe every worker deserves the chance to learn, grow, and succeed. Through our government-authorized programs like NAPS, NATS, and MAPS, we have helped over 40,000 individuals find their path to success.
-								</p>
-								<p className="text-lg leading-relaxed text-slate-700">
-									Our approach is simple: we train workers with real-world skills, connect them with trusted employers, and support them throughout their career journey.
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			)}
-
 			<Navbar />
 			<main>
 				<AboutHero resolveAsset={resolveAsset} />
