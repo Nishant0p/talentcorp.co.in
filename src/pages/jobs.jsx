@@ -1029,7 +1029,7 @@ function ApplyCTA() {
 							</div>
 							<div>
 								<p className="text-xs text-slate-500">Visit office</p>
-								<p className="text-lg font-semibold text-slate-900">Mumbai, Maharashtra</p>
+								<p className="text-lg font-semibold text-slate-900">Chakan,Pune,Maharashtra</p>
 							</div>
 						</div>
 					</div>

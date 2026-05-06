@@ -230,7 +230,7 @@ const contactMethods = [
 	{
 		icon: MapPin,
 		label: 'Visit Us',
-		value: 'Mumbai, Maharashtra',
+		value: 'Chakan, Pune, Maharashtra',
 		href: '#',
 	},
 ]
