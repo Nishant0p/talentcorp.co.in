@@ -7,21 +7,21 @@ import ServiceEnquirySection from '../components/ServiceEnquirySection';
 
 const natsHighlights = [
 	{
-		value: 'Min Stpend',
-		label: 'Rs 8,000/month',
+		value: '₹4,000 DBT',
+		label: 'Diploma (1 Year)',
 	},
 	{
-		value: '1 Year',
-		label: 'Duration of training',
+		value: '₹4,500 DBT',
+		label: 'B.E./B.Tech & Graduates',
 	},
 	{
-		value: 'Govt Certificate',
-		label: 'National validation',
+		value: '2.5% - 20%',
+		label: 'Establishment Quota',
 	},
 ];
 
-const apprenticeBenefits = ['Earn While You Learn', 'Govt. Certificate', 'Skill Development', 'Career Launchpad'];
-const employerBenefits = ['Cost Savings', 'Fresh Talent', 'CSR Benefits', 'Reduce Attrition'];
+const apprenticeBenefits = ['₹4,000 to ₹4,500 DBT', '1 to 3 Year Scheme', 'Govt. Certificate', 'Hands-on Industry Training'];
+const employerBenefits = ['50% Stipend Reimbursement', '2.5% to 20% Quota', 'Skilled Technical Talent', 'No Extra Statutory Burden'];
 
 const processSteps = [
 	{ id: '01', title: 'Register', icon: <FileText /> },
@@ -35,7 +35,7 @@ const processSteps = [
 export default function NatsLandingPage() {
 	useEffect(() => {
 		document.title = 'NATS - National Apprenticeship Training Scheme | TSPL India';
-		document.querySelector('meta[name="description"]')?.setAttribute('content', 'NATS - Government of India apprenticeship scheme. Earn Rs. 8,000+/month with hands-on industry training and certification.');
+		document.querySelector('meta[name="description"]')?.setAttribute('content', 'NATS - Government of India apprenticeship scheme with ₹4,000 to ₹4,500 DBT, 2.5% to 20% quota, and hands-on industry training.');
 		document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'NATS - National Apprenticeship Training Scheme');
 		document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://tsplgroup.in/natshero.png');
 	}, []);
@@ -63,7 +63,7 @@ export default function NatsLandingPage() {
 							</h1>
 
 							<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-base lg:text-lg">
-								Earn <span className="font-bold text-white">up to Rs. 9,000/month</span> while gaining <span className="font-bold text-white">real industry experience</span>
+								Earn <span className="font-bold text-white">₹4,000 to ₹4,500 DBT</span> while gaining <span className="font-bold text-white">real industry experience</span>
 							</p>
 
 							<div className="mb-14 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
@@ -94,10 +94,10 @@ export default function NatsLandingPage() {
 							What is <span className="text-blue-600">NATS?</span>
 						</h2>
 						<p className="mb-6 text-slate-600">
-							A flagship Government of India scheme connecting fresh graduates with top industries for hands-on practical training.
+								A flagship Government of India scheme connecting technically qualified youth with industry training, stipend support, and certification.
 						</p>
-						<ul className="mb-8 space-y-3">
-							{['12 months skilled training', 'Monthly stipend (min. 8,000)', 'Government recognized certificate', 'Real industry work experience'].map((item) => (
+							<ul className="mb-8 space-y-3">
+								{['1 to 3 years apprenticeship', 'Diploma: ₹4,000/month', 'B.E./B.Tech: ₹4,500/month', 'Graduates: ₹4,500/month in first year'].map((item) => (
 								<li key={item} className="flex items-center text-slate-700">
 									<CheckCircle2 className="mr-3 h-5 w-5 text-green-500" /> {item}
 								</li>
@@ -132,7 +132,7 @@ export default function NatsLandingPage() {
 						<h2 className="mb-4 text-4xl font-bold">
 							Why Choose <span className="text-blue-600">NATS?</span>
 						</h2>
-						<p className="text-slate-500">Benefits for both apprentices and employers.</p>
+						<p className="text-slate-500">Stipend support, quota compliance, and practical training for both sides.</p>
 					</div>
 
 					<div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
@@ -270,7 +270,7 @@ export default function NatsLandingPage() {
 						<h2 className="mb-4 text-4xl font-bold">
 							Your Journey to <span className="text-blue-600">Success</span>
 						</h2>
-						<p className="text-slate-500">Follow our streamlined 6-step process.</p>
+							<p className="text-slate-500">Follow our streamlined 6-step apprenticeship process.</p>
 					</div>
 
 					<div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
@@ -281,7 +281,7 @@ export default function NatsLandingPage() {
 									{step.icon}
 								</div>
 								<h3 className="relative z-10 mb-2 text-xl font-bold">{step.title}</h3>
-								<p className="relative z-10 text-sm text-slate-500">Brief description of this step goes right here.</p>
+								<p className="relative z-10 text-sm text-slate-500">Register, verify, train, and complete the apprenticeship with support.</p>
 							</div>
 						))}
 					</div>
@@ -309,7 +309,7 @@ export default function NatsLandingPage() {
 									Start Your Journey Today
 								</h2>
 								<p className="mb-8 text-lg text-blue-100">
-									Join thousands who transformed their careers through NATS.
+									Join thousands who advanced through NATS with stipend support and certification.
 								</p>
 
 								<div className="flex flex-wrap gap-4">
