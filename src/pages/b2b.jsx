@@ -30,8 +30,9 @@ import {
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
+import { fetchCollection } from '../utils/strapi'
 
-const partnerLogos = [
+const FALLBACK_PARTNER_COMPANIES = [
 	'Tata Steel',
 	'Reliance Industries',
 	'Adani Group',
@@ -53,6 +54,12 @@ const partnerLogos = [
 	'BHEL',
 	'SAIL',
 ]
+
+const normalizeCompanyNames = (entries) => {
+	if (!Array.isArray(entries)) return []
+
+	return [...new Set(entries.map((entry) => String(entry?.name || '').trim()).filter(Boolean))]
+}
 
 const services = [
 	{
@@ -332,6 +339,7 @@ function B2BPage() {
 	const [industriesRef, industriesVisible] = useReveal(0.2)
 	const [statsRef, statsVisible] = useReveal(0.3)
 	const [testimonialsRef, testimonialsVisible] = useReveal(0.2)
+	const [partnerCompanies, setPartnerCompanies] = useState(FALLBACK_PARTNER_COMPANIES)
 	const [activeStep, setActiveStep] = useState(0)
 	const [activeTestimonial, setActiveTestimonial] = useState(0)
 	const pageAssets = usePageAssets()
@@ -347,7 +355,30 @@ function B2BPage() {
 		return () => window.clearInterval(timer)
 	}, [])
 
-	const marqueeItems = [...partnerLogos, ...partnerLogos]
+	useEffect(() => {
+		let isMounted = true
+
+		const loadPartnerCompanies = async () => {
+			try {
+				const data = await fetchCollection('/api/client-logos?sort=order:asc&pagination[pageSize]=100')
+				const names = normalizeCompanyNames(data)
+
+				if (isMounted && names.length > 0) {
+					setPartnerCompanies(names)
+				}
+			} catch {
+				// Keep fallback company names if Strapi fetch fails.
+			}
+		}
+
+		loadPartnerCompanies()
+
+		return () => {
+			isMounted = false
+		}
+	}, [])
+
+	const marqueeItems = [...partnerCompanies, ...partnerCompanies]
 
 	return (
 		<div className="bg-white text-slate-900">
@@ -485,7 +516,7 @@ function B2BPage() {
 
 							<div className="overflow-hidden rounded-2xl border border-slate-200 bg-white py-4 shadow-sm">
 								<div className="flex w-max gap-4 px-4" style={{ animation: 'b2bMarqueeReverse 34s linear infinite' }}>
-									{[...partnerLogos].reverse().concat([...partnerLogos].reverse()).map((partner, index) => (
+									{[...partnerCompanies].reverse().concat([...partnerCompanies].reverse()).map((partner, index) => (
 										<span
 											key={`${partner}-bottom-${index}`}
 											className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"

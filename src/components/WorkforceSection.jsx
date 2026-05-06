@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { fetchWorkforceCards, extractMediaUrl } from '../utils/strapi';
-import ProgressiveImage from './ProgressiveImage';
 
 const DEFAULT_WORKFORCE_CARDS = [
   {
@@ -17,7 +16,7 @@ const DEFAULT_WORKFORCE_CARDS = [
       'Apply faster with guided support at every step.',
       'Build long-term growth with trusted employers.',
     ],
-    image: '',
+    image: 'https://backend.tsplgroup.in/uploads/first_2_2d6bb37164.png',
     imageMedia: null,
   },
   {
@@ -25,16 +24,15 @@ const DEFAULT_WORKFORCE_CARDS = [
     eyebrow: 'FOR EMPLOYERS',
     title: 'Build Your Team',
     highlight: 'Team',
-    description: 'Recruit high-quality manpower with operational support, onboarding help, and better workforce flexibility.',
+    description: 'Recruit high-quality manpower with operational support, onboarding help.',
     buttonLabel: 'Hire Talent',
     buttonLink: '/contact-us',
     points: [
       'Find pre-screened people, fast.',
       'We manage all paperwork for you.',
-      'Get money-saving stipend benefits.',
       'Find flexible staff just for you.',
     ],
-    image: '',
+    image: 'https://backend.tsplgroup.in/uploads/recruitmentwala_photo_2_cf5fa294aa.jpeg',
     imageMedia: null,
   },
 ];
@@ -116,7 +114,12 @@ const WorkforceSection = () => {
                 className={`group relative overflow-hidden rounded-[2.5rem] border border-slate-100 shadow-lg shadow-slate-200/40 transition-all duration-300 hover:shadow-xl ${cardBackdropClass}`}
                 style={{ contentVisibility: 'auto', containIntrinsicSize: '560px' }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/96 via-white/92 to-white/88" />
+                <div
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 transition-transform duration-500 group-hover:scale-105"
+                  style={{ backgroundImage: card.image ? `url(${card.image})` : 'none' }}
+                  aria-hidden="true"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-white/55 to-white/65" />
                 <div className={`absolute inset-0 ${accentClass}`} />
 
                 <div className="relative z-10 flex min-h-[520px] flex-1 flex-col items-center justify-between p-8 text-center md:min-h-[560px] md:max-w-[86%] md:items-start md:text-left">

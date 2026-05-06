@@ -62,7 +62,7 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
                 </svg>
               </div>
 
-              <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-white/85 backdrop-blur-md sm:mx-0">
+              <div className="mx-auto mb-4 hidden items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-white/85 backdrop-blur-md sm:mx-0 sm:inline-flex">
                 {hero.eyebrow}
               </div>
 
@@ -77,11 +77,11 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
               {hero.description}
             </p>
 
-            <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-start sm:gap-5">
+            <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-stretch sm:justify-start sm:gap-5">
               <button
                 type="button"
                 onClick={onFindJobs}
-                className="group inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-10 py-4 font-bold text-white shadow-lg shadow-orange-950 transition-all active:scale-95"
+                className="group inline-flex w-full flex-1 basis-0 items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-4 font-bold text-white shadow-lg shadow-orange-950 transition-all active:scale-95 sm:px-8"
               >
                 {hero.primaryCtaLabel}
                 <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
@@ -90,7 +90,7 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
               <button
                 type="button"
                 onClick={onHireTalent}
-                className="inline-flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-900 px-10 py-4 font-bold text-white transition-all hover:bg-slate-800"
+                className="inline-flex w-full flex-1 basis-0 items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-900 px-6 py-4 font-bold text-white transition-all hover:bg-slate-800 sm:px-8"
               >
                 <Target size={20} className="text-blue-400" /> {hero.secondaryCtaLabel}
               </button>

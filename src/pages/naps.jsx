@@ -98,12 +98,12 @@ function NAPSHero() {
 						<span className="text-sm font-semibold tracking-wide text-white">Premium Apprenticeship Program</span>
 					</div>
 
-					<h1 className="mb-6 text-2xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
+					<h1 className="mb-6 text-2xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-3xl md:text-[2.75rem] lg:text-4xl">
 						National Apprenticeship
 						<span className="mt-2 block bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-transparent">Programme Scheme</span>
 					</h1>
 
-							<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-base lg:text-lg">
+							<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-sm md:text-base lg:text-base">
 							Government-backed apprenticeship with <span className="font-bold text-white">₹1,500 DBT per month</span>, <span className="font-bold text-white whitespace-nowrap">2.5% to 15% quota</span>, and higher Maharashtra coverage.
 							</p>
 
@@ -143,9 +143,10 @@ function NAPSAbout() {
 							What is <span className="text-[#2563EB]">NAPS?</span>
 						</h2>
 
-							<p className="mb-8 text-lg leading-relaxed text-[#475569] lg:text-xl">
-								NAPS is a Government of India apprenticeship scheme launched in August 2016 to support employers with monthly DBT and help apprentices build job-ready skills.
-							</p>
+							<p className="mb-8 text-xs leading-relaxed text-[#475569] md:text-sm lg:text-base">
+NAPS was launched in August 2016 by Government of India to promote the Apprenticeship in the country by providing financial incentives, technology and advocacy support. Through the National, Apprenticeship Promotion Scheme apprenticeship training will be promoted by the government by sharing the cost of training with the employers.
+Apprenticeship Training is considered to be one of the most efficient ways to develop skilled manpower for the country. It provides for an industry led, practice oriented, effective and efficient mode of formal training. National Apprenticeship
+Promotion Scheme is to promote apprenticeship training in the country. For the implementation of the National apprenticeship promotion scheme, an online portal has launched which will help in administering. Through this portal, an online registration facility will be available for employers, basic training providers, and apprentices. There will be two fields under the scheme that are designated trade and optional trade.							</p>
 
 						<div className="mb-8 space-y-4">
 							{aboutHighlights.map((item, i) => (
@@ -164,11 +165,11 @@ function NAPSAbout() {
 					</div>
 
 					<div className="space-y-6">
-<div className="group relative flex items-center justify-center overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl transition-all duration-500 hover:shadow-2xl">
+						<div className="group mb-6 flex items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl md:p-6">
 						<img
 							src="/naps%20tspl.jpg"
 							alt="NAPS Premium Apprenticeship Program - National Apprenticeship Programme Scheme India"
-							className="h-64 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+								className="h-72 w-full max-w-xl object-contain transition-transform duration-500 group-hover:scale-105 md:h-[480px]"
 						/>
 						</div>
 
