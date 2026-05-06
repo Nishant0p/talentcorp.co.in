@@ -524,7 +524,7 @@ function CaseStudies({ resolveAsset }) {
 							<div className="grid grid-cols-3 gap-4">
 								{caseStudies[activeCase].results.map((result) => (
 									<div key={result.label} className="rounded-xl bg-gray-50 p-4 text-center">
-										<p className="text-2xl md:text-3xl font-bold text-blue-600">{result.value}</p>
+										<p className={`text-2xl md:text-3xl font-bold text-blue-600 ${result.label === 'Quota Range' ? 'whitespace-nowrap' : ''}`}>{result.value}</p>
 										<p className="mt-1 text-sm text-gray-500">{result.label}</p>
 									</div>
 								))}
@@ -661,7 +661,7 @@ function ClientsCTA() {
 							</div>
 							<div className="flex items-center gap-2">
 								<Mail className="h-5 w-5 text-blue-300" />
-								<span>partners@tsplgroup.com</span>
+								<span>partners@tsplgroup.in</span>
 							</div>
 						</div>
 					</div>

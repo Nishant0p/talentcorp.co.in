@@ -36,7 +36,7 @@ const aboutHighlights = [
 ]
 
 const aboutFeatures = [
-	{ icon: TrendingUp, title: 'Government Incentive', desc: 'Direct monthly DBT support' },
+	{ icon: TrendingUp, title: 'Government', desc: 'Direct monthly DBT support' },
 	{ icon: Users, title: 'Quota Driven', desc: 'Built for eligible establishments' },
 	{ icon: Award, title: 'No Trade Unions', desc: 'No statutory applicability' },
 ]
@@ -104,7 +104,7 @@ function NAPSHero() {
 					</h1>
 
 							<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-base lg:text-lg">
-								Government-backed apprenticeship with <span className="font-bold text-white">₹1,500 DBT per month</span>, <span className="font-bold text-white">2.5% to 15% quota</span>, and higher Maharashtra coverage.
+							Government-backed apprenticeship with <span className="font-bold text-white">₹1,500 DBT per month</span>, <span className="font-bold text-white whitespace-nowrap">2.5% to 15% quota</span>, and higher Maharashtra coverage.
 							</p>
 
 					<div className="mb-14 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
@@ -450,9 +450,9 @@ function NAPSCTA() {
 								<span className="font-medium">+91 98765 43210</span>
 							</a>
 
-							<a href="mailto:support@tsplgroup.com" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+								<a href="mailto:support@tsplgroup.in" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
 								<Mail className="h-5 w-5 text-blue-100" />
-								<span className="font-medium">support@tsplgroup.com</span>
+									<span className="font-medium">support@tsplgroup.in</span>
 							</a>
 						</div>
 					</div>

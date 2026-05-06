@@ -119,7 +119,7 @@ export default function NatsLandingPage() {
 						<div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
 							{natsHighlights.map((item) => (
 								<div key={item.label} className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl">
-									<div className="mb-1 text-xl font-bold text-blue-600">{item.value}</div>
+									<div className="mb-1 text-xl font-bold text-blue-600 whitespace-nowrap">{item.value}</div>
 									<div className="text-xs text-slate-500">{item.label}</div>
 								</div>
 							))}
@@ -339,11 +339,11 @@ export default function NatsLandingPage() {
 									</a>
 
 									<a
-										href="mailto:support@tsplgroup.com"
+										href="mailto:support@tsplgroup.in"
 										className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25"
 									>
 										<Mail className="h-5 w-5 text-blue-100" />
-										<span className="font-medium">support@tsplgroup.com</span>
+										<span className="font-medium">support@tsplgroup.in</span>
 									</a>
 								</div>
 							</div>
