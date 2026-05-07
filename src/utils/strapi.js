@@ -197,6 +197,39 @@ export const fetchJobs = async ({ force = false } = {}) => {
   jobsCacheAt = now;
   return jobs;
 };
+
+const normalizeFilterValue = (value) =>
+  String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ');
+
+export const toJobFilterSlug = (value) =>
+  normalizeFilterValue(value).replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+const toTitleCase = (value) =>
+  String(value || '')
+    .trim()
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+
+export const buildJobCategoryOptions = (jobs = []) => {
+  const uniqueCategories = [...new Set(
+    jobs
+      .map((job) => String(job?.category || '').trim())
+      .filter((value) => Boolean(value) && normalizeFilterValue(value) !== 'overseas')
+  )].sort((left, right) => left.localeCompare(right));
+
+  return [
+    { value: 'All Jobs', label: 'All Jobs' },
+    ...uniqueCategories.map((value) => ({ value: toJobFilterSlug(value), label: toTitleCase(value) })),
+  ];
+};
+
+export const getJobCategoryFilterValue = (job) => String(job?.category || job?.type || '').trim();
+
 export const fetchNews = async () => fetchCollection('/api/news-events?sort=order:asc,date:desc&pagination[pageSize]=100&populate=image');
 export const fetchPageAssets = async () =>
   fetchCollection('/api/page-assets?sort=order:asc,name:asc&pagination[pageSize]=300&populate=image');

@@ -51,15 +51,15 @@ export default function CompanyMarquee() {
   const loop = React.useMemo(() => {
     if (!logos.length) return FALLBACK_LOGOS;
 
-    // Keep one marquee cycle reasonably sized, then duplicate it once for seamless looping.
-    const minCards = 12;
+    // Keep each cycle long enough that three copies comfortably cover wide screens.
+    const minCards = 18;
     const cycle = [...logos];
     while (cycle.length < minCards) {
       cycle.push(...logos);
     }
 
     const trimmedCycle = cycle.slice(0, Math.max(minCards, logos.length));
-    return [...trimmedCycle, ...trimmedCycle];
+    return [trimmedCycle, trimmedCycle, trimmedCycle];
   }, [logos]);
 
   return (
@@ -87,24 +87,30 @@ export default function CompanyMarquee() {
 
         <div className="mt-10 overflow-hidden rounded-3xl bg-white">
           <div className="tspl-marquee relative w-full overflow-hidden py-6 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-            <div className="tspl-marquee__track flex w-max items-center gap-8 pr-8">
-              {loop.map((logo, index) => (
-                <div
-                  key={`${logo.alt}-${index}`}
-                  className="flex h-32 w-56 flex-none flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white/90 px-3"
-                >
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="max-h-14 w-auto max-w-full object-contain"
-                    loading="eager"
-                    decoding="async"
-                    width="160"
-                    height="56"
-                    draggable={false}
-                  />
-                  <p className="mt-2 text-xs font-bold uppercase tracking-wide text-slate-700">{logo.alt}</p>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Partner</p>
+            <div className="tspl-marquee__track flex w-max items-center">
+              {loop.map((group, groupIndex) => (
+                <div key={`marquee-group-${groupIndex}`} className="flex items-center gap-8 pr-8">
+                  {group.map((logo, index) => (
+                    <div
+                      key={`${logo.alt}-${groupIndex}-${index}`}
+                      className="flex h-24 w-44 flex-none flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white/90 px-3 sm:h-32 sm:w-56"
+                    >
+                      <div className="flex w-full flex-1 items-center justify-center px-1">
+                        <img
+                          src={logo.src}
+                          alt={logo.alt}
+                          className="block max-h-14 max-w-[9rem] object-contain sm:max-h-14 sm:max-w-full"
+                          loading="eager"
+                          decoding="async"
+                          width="160"
+                          height="56"
+                          draggable={false}
+                        />
+                      </div>
+                      <p className="mt-2 hidden text-xs font-bold uppercase tracking-wide text-slate-700 sm:block">{logo.alt}</p>
+                      <p className="hidden text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400 sm:block">Partner</p>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
