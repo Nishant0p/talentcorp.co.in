@@ -7,35 +7,27 @@ import {
 	CheckCircle2,
 	ChevronDown,
 	ChevronLeft,
-									{[marqueeItems, marqueeItems, marqueeItems].map((group, groupIndex) => (
-										<div key={`top-group-${groupIndex}`} className="flex items-center gap-4">
-											{group.map((partner, index) => (
-												<span
-													key={`${partner}-top-${groupIndex}-${index}`}
-													className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"
-												>
-													{partner}
-												</span>
-											))}
-										</div>
-									))}
+	ChevronRight,
+	Clock,
+	Cpu,
+	Factory,
+	FileCheck,
+	FileSearch,
+	Handshake,
+	Mail,
 	Phone,
 	Pill,
 	Rocket,
 	Shield,
 	Star,
-									{[...Array(3)].map((_, groupIndex) => (
-										<div key={`bottom-group-${groupIndex}`} className="flex items-center gap-4">
-											{[...partnerCompanies].reverse().map((partner, index) => (
-												<span
-													key={`${partner}-bottom-${groupIndex}-${index}`}
-													className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"
-												>
-													{partner}
-												</span>
-											))}
-										</div>
-									))}
+	TrendingUp,
+	Truck,
+	ShoppingCart,
+	Users,
+	Car,
+	Plane,
+} from 'lucide-react'
+import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 import { fetchCollection } from '../utils/strapi'

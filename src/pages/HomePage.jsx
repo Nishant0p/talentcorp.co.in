@@ -234,7 +234,7 @@ export default function HomePage() {
     <div className="relative">
       <Navbar />
       <HeroSection
-        onFindJobs={(e) => startWhirlpool('jobs', e)}
+        onFindJobs={() => navigate('/jobs')}
         onHireTalent={(e) => startWhirlpool('hire', e)}
       />
 

@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, IndianRupee, Clock, ArrowRight, Filter } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { fetchJobs } from '../utils/strapi';
+import { buildJobCategoryOptions, fetchJobs, getJobCategoryFilterValue, toJobFilterSlug } from '../utils/strapi';
 
 const fallbackJobs = [
   { id: 1, title: 'Production Operator', company: 'Tata Motors', location: 'Pune, Maharashtra', salary: '₹18,000 - ₹25,000', type: 'Full-time', urgent: true },
@@ -14,13 +14,6 @@ const fallbackJobs = [
 ];
 
 const normalizeType = (value) => String(value || '').trim().toLowerCase();
-
-const toTitleCase = (value) =>
-  String(value || '')
-    .trim()
-    .replace(/[_-]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .replace(/\b\w/g, (char) => char.toUpperCase());
 
 const toNumber = (value) => {
   if (value === null || value === undefined || value === '') return null;
@@ -57,12 +50,7 @@ const JobBoard = () => {
   const prefersReducedMotion = useReducedMotion();
 
   const filterOptions = useMemo(() => {
-    const values = jobs
-      .map((job) => String(job.type || job.category || '').trim())
-      .filter(Boolean)
-      .filter((value) => normalizeType(value) !== 'overseas');
-    const uniqueValues = [...new Set(values)];
-    return [{ value: 'All Jobs', label: 'All Jobs' }, ...uniqueValues.map((value) => ({ value, label: toTitleCase(value) }))];
+    return buildJobCategoryOptions(jobs);
   }, [jobs]);
 
   useEffect(() => {
@@ -96,18 +84,18 @@ const JobBoard = () => {
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
-      const jobType = normalizeType(job.type);
-      if (jobType === 'overseas') {
+      const categoryFilterValue = toJobFilterSlug(getJobCategoryFilterValue(job));
+      if (categoryFilterValue === 'overseas') {
         return false;
       }
 
-      const byType = normalizeType(filter) === 'all jobs' || jobType === normalizeType(filter);
+      const byCategory = normalizeType(filter) === 'all jobs' || categoryFilterValue === filter;
       const normalized = query.trim().toLowerCase();
       if (!normalized) {
-        return byType;
+        return byCategory;
       }
-      const haystack = `${job.title} ${job.company} ${job.location} ${job.category} ${jobType}`.toLowerCase();
-      return byType && haystack.includes(normalized);
+      const haystack = `${job.title} ${job.company} ${job.location} ${job.category} ${job.type}`.toLowerCase();
+      return byCategory && haystack.includes(normalized);
     });
   }, [jobs, filter, query]);
 

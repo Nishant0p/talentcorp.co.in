@@ -32,6 +32,7 @@ import ProgressiveImage from '../components/ProgressiveImage';
 import { extractMediaUrl, fetchJobs, submitLead, submitToAdminBackend } from '../utils/strapi';
 import { uploadResumeToGoogleDrive } from '../utils/googleSheets';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
+import { buildJobCategoryOptions } from '../utils/strapi';
 
 const allJobs = [
 	{
@@ -194,18 +195,6 @@ const presetLocationOptions = [
 const normalizeText = (value) => String(value || '').trim().toLowerCase();
 
 const toOptionValue = (value) => normalizeText(value).replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
-const uniqueOptionsFromJobs = (jobs, key) => {
-	const seen = new Map();
-	jobs.forEach((job) => {
-		const value = String(job[key] || '').trim();
-		if (!value) return;
-		const normalized = toOptionValue(value);
-		if (!normalized || seen.has(normalized)) return;
-		seen.set(normalized, { value: normalized, label: value });
-	});
-	return Array.from(seen.values()).sort((a, b) => a.label.localeCompare(b.label));
-};
 
 const salaryOptions = [
 	{ value: '', label: 'Any Salary' },
@@ -1197,7 +1186,7 @@ export default function JobsPage() {
 		loadJobs();
 	}, [managedPlaceholders, fallbackJobImage]);
 
-	const categoryOptions = useMemo(() => uniqueOptionsFromJobs(jobs, 'category'), [jobs]);
+	const categoryOptions = useMemo(() => buildJobCategoryOptions(jobs).slice(1), [jobs]);
 	const locationOptions = presetLocationOptions;
 
 	const handleSearchSubmit = () => {

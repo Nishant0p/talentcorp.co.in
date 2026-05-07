@@ -33,6 +33,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktopServicesOpen, setIsDesktopServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const desktopServicesRef = useRef(null);
   const { pathname, hash } = useLocation();
 
@@ -55,6 +56,42 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (pathname !== '/') {
+      setIsNavbarVisible(true);
+      return undefined;
+    }
+
+    const isMobile = window.matchMedia('(max-width: 1023px)').matches;
+
+    if (!isMobile) {
+      setIsNavbarVisible(true);
+      return undefined;
+    }
+
+    let previousScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const isNearTop = currentScrollY < 48;
+
+      if (isNearTop) {
+        setIsNavbarVisible(true);
+      } else if (currentScrollY > previousScrollY + 4) {
+        setIsNavbarVisible(false);
+      } else if (currentScrollY < previousScrollY - 4) {
+        setIsNavbarVisible(true);
+      }
+
+      previousScrollY = currentScrollY;
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname]);
+
   const closeMenu = () => {
     setIsMobileMenuOpen(false);
     setIsMobileServicesOpen(false);
@@ -67,7 +104,9 @@ const Navbar = () => {
 
   return (
     <motion.nav 
-      className="fixed top-6 inset-x-0 z-50 px-4 sm:px-6"
+      className={`fixed top-6 inset-x-0 z-50 px-4 sm:px-6 transition-all duration-300 ${
+        isNavbarVisible ? 'translate-y-0 opacity-100' : '-translate-y-24 opacity-0 pointer-events-none'
+      }`}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
