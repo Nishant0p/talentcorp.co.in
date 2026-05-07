@@ -7,27 +7,35 @@ import {
 	CheckCircle2,
 	ChevronDown,
 	ChevronLeft,
-	ChevronRight,
-	Clock,
-	Cpu,
-	Factory,
-	FileCheck,
-	FileSearch,
-	Handshake,
-	Mail,
+									{[marqueeItems, marqueeItems, marqueeItems].map((group, groupIndex) => (
+										<div key={`top-group-${groupIndex}`} className="flex items-center gap-4">
+											{group.map((partner, index) => (
+												<span
+													key={`${partner}-top-${groupIndex}-${index}`}
+													className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"
+												>
+													{partner}
+												</span>
+											))}
+										</div>
+									))}
 	Phone,
 	Pill,
 	Rocket,
 	Shield,
 	Star,
-	TrendingUp,
-	Truck,
-	ShoppingCart,
-	Users,
-	Car,
-	Plane,
-} from 'lucide-react'
-import Navbar from '../components/Navbar'
+									{[...Array(3)].map((_, groupIndex) => (
+										<div key={`bottom-group-${groupIndex}`} className="flex items-center gap-4">
+											{[...partnerCompanies].reverse().map((partner, index) => (
+												<span
+													key={`${partner}-bottom-${groupIndex}-${index}`}
+													className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"
+												>
+													{partner}
+												</span>
+											))}
+										</div>
+									))}
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 import { fetchCollection } from '../utils/strapi'
@@ -382,7 +390,7 @@ function B2BPage() {
 
 	return (
 		<div className="bg-white text-slate-900">
-			<style>{`\n        @keyframes b2bMarquee {\n          from { transform: translateX(0); }\n          to { transform: translateX(-50%); }\n        }\n\n        @keyframes b2bMarqueeReverse {\n          from { transform: translateX(-50%); }\n          to { transform: translateX(0); }\n        }\n\n        @keyframes b2bFloat {\n          0%, 100% { transform: translateY(0px); }\n          50% { transform: translateY(-10px); }\n        }\n      `}</style>
+			<style>{`\n        @keyframes b2bMarquee {\n          from { transform: translateX(0); }\n          to { transform: translateX(-33.3333%); }\n        }\n\n        @keyframes b2bMarqueeReverse {\n          from { transform: translateX(-33.3333%); }\n          to { transform: translateX(0); }\n        }\n\n        @keyframes b2bFloat {\n          0%, 100% { transform: translateY(0px); }\n          50% { transform: translateY(-10px); }\n        }\n      `}</style>
 
 			<Navbar />
 
@@ -502,10 +510,26 @@ function B2BPage() {
 
 						<div className="mt-10 space-y-4">
 							<div className="overflow-hidden rounded-2xl border border-slate-200 bg-white py-4 shadow-sm">
-								<div className="flex w-max gap-4 px-4" style={{ animation: 'b2bMarquee 34s linear infinite' }}>
+								<div className="flex w-max" style={{ animation: 'b2bMarquee 34s linear infinite' }}>
 									{marqueeItems.map((partner, index) => (
 										<span
 											key={`${partner}-top-${index}`}
+											className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"
+										>
+											{partner}
+										</span>
+									))}
+									{marqueeItems.map((partner, index) => (
+										<span
+											key={`${partner}-top-copy-${index}`}
+											className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"
+										>
+											{partner}
+										</span>
+									))}
+									{marqueeItems.map((partner, index) => (
+										<span
+											key={`${partner}-top-copy-2-${index}`}
 											className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"
 										>
 											{partner}
@@ -515,10 +539,26 @@ function B2BPage() {
 							</div>
 
 							<div className="overflow-hidden rounded-2xl border border-slate-200 bg-white py-4 shadow-sm">
-								<div className="flex w-max gap-4 px-4" style={{ animation: 'b2bMarqueeReverse 34s linear infinite' }}>
-									{[...partnerCompanies].reverse().concat([...partnerCompanies].reverse()).map((partner, index) => (
+								<div className="flex w-max" style={{ animation: 'b2bMarqueeReverse 34s linear infinite' }}>
+									{[...partnerCompanies].reverse().map((partner, index) => (
 										<span
 											key={`${partner}-bottom-${index}`}
+											className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"
+										>
+											{partner}
+										</span>
+									))}
+									{[...partnerCompanies].reverse().map((partner, index) => (
+										<span
+											key={`${partner}-bottom-copy-${index}`}
+											className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"
+										>
+											{partner}
+										</span>
+									))}
+									{[...partnerCompanies].reverse().map((partner, index) => (
+										<span
+											key={`${partner}-bottom-copy-2-${index}`}
 											className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700"
 										>
 											{partner}
