@@ -15,8 +15,6 @@ const navLinks = [
 const serviceLinks = [
   { href: '/nats', label: 'NATS' },
   { href: '/naps', label: 'NAPS' },
-  { href: '/bvoc', label: 'B.VOC' },
-  { href: '/dvoc', label: 'D.VOC' },
   { href: '/services/flexi-iti', label: 'FLEXI ITI' },
   { href: '/aedp', label: 'AEDP' },
   { href: '/maps', label: 'MAPS' },
@@ -29,12 +27,21 @@ const serviceLinks = [
   { href: '/payroll', label: 'PAYROLL' },
 ];
 
+const wilpLinks = [
+  { href: '/bvoc', label: 'B.VOC' },
+  { href: '/dvoc', label: 'D.VOC' },
+  { href: '/mvoc', label: 'M.VOC' },
+];
+
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktopServicesOpen, setIsDesktopServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const [isDesktopWilpOpen, setIsDesktopWilpOpen] = useState(false);
+  const [isMobileWilpOpen, setIsMobileWilpOpen] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const desktopServicesRef = useRef(null);
+  const desktopWilpRef = useRef(null);
   const { pathname, hash } = useLocation();
 
   const isLinkActive = (href) => {
@@ -44,11 +51,15 @@ const Navbar = () => {
   };
 
   const isServiceActive = serviceLinks.some((service) => isLinkActive(service.href));
+  const isWilpActive = wilpLinks.some((link) => isLinkActive(link.href));
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (desktopServicesRef.current && !desktopServicesRef.current.contains(event.target)) {
         setIsDesktopServicesOpen(false);
+      }
+      if (desktopWilpRef.current && !desktopWilpRef.current.contains(event.target)) {
+        setIsDesktopWilpOpen(false);
       }
     };
 
@@ -179,6 +190,58 @@ const Navbar = () => {
                 )}
               </div>
 
+              <div className="relative" ref={desktopWilpRef}>
+                <motion.button
+                  type="button"
+                  onClick={() => setIsDesktopWilpOpen((prev) => !prev)}
+                  className={`relative inline-flex items-center gap-2 hover:text-[#0f2a4d] transition-colors font-bold ${
+                    isWilpActive ? 'text-[#0f2a4d] after:absolute after:left-0 after:-bottom-[6px] after:h-[2px] after:w-full after:rounded-full after:bg-[#FF8C00]' : ''
+                  }`}
+                  aria-expanded={isDesktopWilpOpen}
+                  aria-haspopup="menu"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  WILP
+                  <motion.div
+                    animate={{ rotate: isDesktopWilpOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ChevronDown className="h-5 w-5" />
+                  </motion.div>
+                </motion.button>
+
+                {isDesktopWilpOpen && (
+                  <motion.div 
+                    className="absolute left-0 top-full mt-2 w-44 overflow-hidden rounded-xl border border-[#d8e7f8] bg-white p-1.5 shadow-xl"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {wilpLinks.map((link, index) => {
+                      const active = isLinkActive(link.href);
+                      return (
+                        <motion.div
+                          key={link.href}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.2, delay: index * 0.05 }}
+                        >
+                          <Link
+                            to={link.href}
+                            onClick={handleNavigation}
+                            className={`block rounded-lg px-3 py-2 text-sm font-semibold transition-colors hover:bg-[#f3f8ff] hover:text-[#0f2a4d] ${active ? 'bg-[#f3f8ff] text-[#0f2a4d] font-bold' : 'text-[#1a4f87]'}`}
+                          >
+                            {link.label}
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </div>
+
               {navLinks.map((link) => {
                 const active = isLinkActive(link.href);
                 const baseClasses = 'relative hover:text-[#0f2a4d] transition-colors';
@@ -272,6 +335,53 @@ const Navbar = () => {
                   {isMobileServicesOpen && (
                     <div className="mt-1 flex flex-col w-full gap-1">
                       {serviceLinks.map((link, index) => {
+                        const active = isLinkActive(link.href);
+                        const baseClasses = 'block w-full rounded-lg px-3 py-2 text-center hover:bg-[#f3f8ff] transition-all duration-300';
+                        const activeClasses = 'text-[#0f2a4d] font-bold bg-[#f3f8ff]';
+
+                        return (
+                          <motion.div
+                            key={link.href}
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.2, delay: index * 0.03 }}
+                            className="w-full"
+                          >
+                            <Link
+                              to={link.href}
+                              onClick={handleNavigation}
+                              className={`${baseClasses} ${active ? activeClasses : 'text-[#1a4f87]'}`}
+                            >
+                              {link.label}
+                            </Link>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                <div className="w-full">
+                  <motion.button
+                    type="button"
+                    onClick={() => setIsMobileWilpOpen((prev) => !prev)}
+                    className={`relative flex w-full items-center justify-center rounded-lg px-3 py-2 text-center hover:bg-[#f3f8ff] font-bold transition-all ${isWilpActive ? 'text-[#0f2a4d] bg-[#f3f8ff]' : 'text-[#1a4f87]'}`}
+                    aria-expanded={isMobileWilpOpen}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span>WILP</span>
+                    <motion.div
+                      className="absolute right-3"
+                      animate={{ rotate: isMobileWilpOpen ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ChevronDown className="h-5 w-5" />
+                    </motion.div>
+                  </motion.button>
+
+                  {isMobileWilpOpen && (
+                    <div className="mt-1 flex flex-col w-full gap-1">
+                      {wilpLinks.map((link, index) => {
                         const active = isLinkActive(link.href);
                         const baseClasses = 'block w-full rounded-lg px-3 py-2 text-center hover:bg-[#f3f8ff] transition-all duration-300';
                         const activeClasses = 'text-[#0f2a4d] font-bold bg-[#f3f8ff]';

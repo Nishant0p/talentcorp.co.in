@@ -12,6 +12,7 @@ const NatsLandingPage = lazy(() => import('./pages/nats'))
 const NapsPage = lazy(() => import('./pages/naps'))
 const BvocPage = lazy(() => import('./pages/bvoc'))
 const DvocPage = lazy(() => import('./pages/dvoc'))
+const MvocPage = lazy(() => import('./pages/mvoc'))
 const FlexiItiPage = lazy(() => import('./pages/FLEXI'))
 const SkilledPage = lazy(() => import('./pages/skilled'))
 const AboutPage = lazy(() => import('./pages/about'))
@@ -80,6 +81,7 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="naps" path="/naps" element={<NapsPage />} />
           <Route key="bvoc" path="/bvoc" element={<BvocPage />} />
           <Route key="dvoc" path="/dvoc" element={<DvocPage />} />
+          <Route key="mvoc" path="/mvoc" element={<MvocPage />} />
           <Route key="flexi" path="/services/flexi-iti" element={<FlexiItiPage />} />
           <Route key="flexi-legacy" path="/flexi-iti" element={<FlexiItiPage />} />
           <Route key="skilled" path="/skilled" element={<SkilledPage />} />

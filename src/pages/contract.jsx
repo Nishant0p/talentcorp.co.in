@@ -80,14 +80,14 @@ const benefits = [
 ]
 
 const industries = [
-	{ name: 'Manufacturing', icon: Factory, workers: '5000+' },
-	{ name: 'Automobile', icon: Users, workers: '3000+' },
-	{ name: 'Pharma', icon: Pill, workers: '1500+' },
-	{ name: 'FMCG', icon: Package, workers: '2000+' },
-	{ name: 'Engineering', icon: Wrench, workers: '2500+' },
-	{ name: 'Infrastructure', icon: Building, workers: '1800+' },
-	{ name: 'Logistics', icon: Truck, workers: '2200+' },
-	{ name: 'IT/Electronics', icon: Cpu, workers: '1200+' },
+	{ name: 'Manufacturing', icon: Factory },
+	{ name: 'Automobile', icon: Users },
+	{ name: 'Pharma', icon: Pill },
+	{ name: 'FMCG', icon: Package },
+	{ name: 'Engineering', icon: Wrench },
+	{ name: 'Infrastructure', icon: Building },
+	{ name: 'Logistics', icon: Truck },
+	{ name: 'IT/Electronics', icon: Cpu },
 ]
 
 const processSteps = [
@@ -267,14 +267,14 @@ function WhatIsContract({ resolveAsset }) {
 	return (
 		<section className="bg-slate-50 py-20 lg:py-28">
 			<div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
-				<div className="relative">
-					<div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl">
+				<div className="relative mx-auto flex justify-center">
+					<div className="relative aspect-[4/3] w-full max-w-xl overflow-hidden rounded-3xl shadow-2xl">
 						<img src={resolveAsset('contract.project', '/TSPL INDIA.jpeg').url} alt={resolveAsset('contract.project', '/TSPL INDIA.jpeg', 'Contract Staffing Explained').alt} className="h-full w-full object-cover" />
 					</div>
 				</div>
 
-				<div className="space-y-8">
-					<div className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-blue-700">
+				<div className="space-y-8 text-center lg:text-left">
+					<div className="mx-auto inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-blue-700 lg:mx-0">
 						<span className="text-sm font-semibold">What is Contract Staffing?</span>
 					</div>
 
@@ -454,7 +454,6 @@ function ContractIndustries() {
 									<Icon className={`h-7 w-7 ${hoveredIndex === index ? 'text-white' : 'text-blue-600'}`} />
 								</div>
 								<h3 className={`mb-1 text-lg font-bold ${hoveredIndex === index ? 'text-white' : 'text-gray-900'}`}>{industry.name}</h3>
-								<p className={`text-sm ${hoveredIndex === index ? 'text-white/80' : 'text-gray-500'}`}>{industry.workers} workers deployed</p>
 							</div>
 						)
 					})}

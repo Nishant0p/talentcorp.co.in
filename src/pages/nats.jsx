@@ -21,7 +21,7 @@ const natsHighlights = [
 ];
 
 const apprenticeBenefits = ['₹4,000 to ₹4,500 DBT', '1 to 3 Year Scheme', 'Govt. Certificate', 'Hands-on Industry Training'];
-const employerBenefits = ['50% Government Reimbursement', '2.5% to 20% Quota', 'Skilled Technical Talent', 'No Extra Statutory Burden'];
+const employerBenefits = ['Cost Saving ₹4,000 to ₹4,500 DBT Per Month Per Apperentice', '2.5% to 20% Quota', 'Skilled Technical Talent', 'NO Statutory Compliance Burden'];
 
 const processSteps = [
 	{ id: '01', title: 'Register', icon: <FileText /> },
@@ -146,7 +146,7 @@ This certificate can be registered at all employment exchanges across India as v
 							</div>
 							<div className="grid grid-cols-2 gap-4">
 								{apprenticeBenefits.map((item) => (
-									<div key={item} className="group flex flex-col items-start rounded-xl border border-slate-100 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-xl">
+									<div key={item} className="group flex flex-col h-full rounded-xl border border-slate-100 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-xl min-h-[140px]">
 										<div className="mb-4 rounded-full bg-blue-100 p-2 text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white">
 											<CheckCircle2 className="h-5 w-5" />
 										</div>
@@ -165,7 +165,7 @@ This certificate can be registered at all employment exchanges across India as v
 							</div>
 							<div className="grid grid-cols-2 gap-4">
 								{employerBenefits.map((item) => (
-									<div key={item} className="group flex flex-col items-start rounded-xl border border-slate-100 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:bg-white hover:shadow-xl">
+									<div key={item} className="group flex flex-col h-full rounded-xl border border-slate-100 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:bg-white hover:shadow-xl min-h-[140px]">
 										<div className="mb-4 rounded-full bg-orange-100 p-2 text-orange-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white">
 											<CheckCircle2 className="h-5 w-5" />
 										</div>
@@ -181,89 +181,89 @@ This certificate can be registered at all employment exchanges across India as v
 					<div className="mx-auto w-full max-w-5xl">
 						<div className="mb-10 text-center">
 							<h2 className="mb-3 text-4xl font-bold">
-								Who Can <span className="text-blue-600">Apply?</span>
-							</h2>
-							<p className="text-lg text-slate-500">Eligibility criteria & documents</p>
+							Who Can <span className="text-[#2563EB]">Apply?</span>
+						</h2>
+						<p className="text-lg text-slate-500">Eligibility criteria & documents</p>
+					</div>
+
+					<div className="mb-6 grid gap-6 md:grid-cols-2">
+						<div className="rounded-2xl border border-[#2563EB]/10 bg-[#f8fbff] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/20 hover:shadow-xl">
+							<div className="mb-6 flex items-center gap-4">
+								<div className="flex items-center justify-center rounded-full bg-[#2563EB] p-3 text-white transition-transform duration-300 hover:scale-110">
+									<GraduationCap className="h-6 w-6" />
+								</div>
+								<h3 className="text-2xl font-bold">Apprentices</h3>
+							</div>
+							<ul className="list-none space-y-3 text-slate-600">
+								{[
+									'Engineering/Diploma/Degree holder',
+									'Passed within last 3 years',
+									'Age 18-30, Indian citizen',
+									'Valid Aadhaar & bank account',
+								].map((item) => (
+									<li key={item} className="flex items-start gap-3">
+										<span className="mt-0.5 text-xl leading-none text-[#2563EB]">•</span>
+										<span>{item}</span>
+									</li>
+								))}
+							</ul>
 						</div>
 
-						<div className="mb-6 grid gap-6 md:grid-cols-2">
-							<div className="rounded-2xl border border-blue-100 bg-[#f8fbff] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl">
-								<div className="mb-6 flex items-center gap-4">
-									<div className="flex items-center justify-center rounded-full bg-blue-600 p-3 text-white transition-transform duration-300 hover:scale-110">
-										<GraduationCap className="h-6 w-6" />
-									</div>
-									<h3 className="text-2xl font-bold">Apprentices</h3>
+						<div className="rounded-2xl border border-[#F97316]/10 bg-[#fffcf8] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#F97316]/20 hover:shadow-xl">
+							<div className="mb-6 flex items-center gap-4">
+								<div className="flex items-center justify-center rounded-full bg-[#f97316] p-3 text-white transition-transform duration-300 hover:scale-110">
+									<Building2 className="h-6 w-6" />
 								</div>
-								<ul className="list-none space-y-3 text-slate-600">
-									{[
-										'Engineering/Diploma/Degree holder',
-										'Passed within last 3 years',
-										'Age 18-30, Indian citizen',
-										'Valid Aadhaar & bank account',
-									].map((item) => (
-										<li key={item} className="flex items-start gap-3">
-											<span className="mt-0.5 text-xl leading-none text-blue-500">•</span>
-											<span>{item}</span>
-										</li>
-									))}
-								</ul>
+								<h3 className="text-2xl font-bold">Employers</h3>
 							</div>
+							<ul className="list-none space-y-3 text-slate-600">
+								{[
+									'Registered company',
+									'Minimum 10+ employees',
+									'Valid GST registration',
+									'On Job Training Scheme ',
+								].map((item) => (
+									<li key={item} className="flex items-start gap-3">
+										<span className="mt-0.5 text-xl leading-none text-[#F97316]">•</span>
+										<span>{item}</span>
+									</li>
+								))}
+							</ul>
+						</div>
+					</div>
 
-							<div className="rounded-2xl border border-orange-100 bg-[#fffcf8] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-xl">
-								<div className="mb-6 flex items-center gap-4">
-									<div className="flex items-center justify-center rounded-full bg-[#f97316] p-3 text-white transition-transform duration-300 hover:scale-110">
-										<Building2 className="h-6 w-6" />
-									</div>
-									<h3 className="text-2xl font-bold">Employers</h3>
-								</div>
-								<ul className="list-none space-y-3 text-slate-600">
-									{[
-										'Registered company/PSU',
-										'Minimum 4 employees',
-										'Valid GST registration',
-										'Training infrastructure',
-									].map((item) => (
-										<li key={item} className="flex items-start gap-3">
-											<span className="mt-0.5 text-xl leading-none text-orange-500">•</span>
-											<span>{item}</span>
-										</li>
-									))}
-								</ul>
-							</div>
+					<div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl">
+						<div className="mb-6 flex items-center gap-2">
+							<FileText className="h-5 w-5 text-slate-800" />
+							<h3 className="text-xl font-bold">Required Documents</h3>
 						</div>
 
-						<div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl">
-							<div className="mb-6 flex items-center gap-2">
-								<FileText className="h-5 w-5 text-slate-800" />
-								<h3 className="text-xl font-bold">Required Documents</h3>
+						<div className="grid gap-8 md:grid-cols-2">
+							<div>
+								<h4 className="mb-3 font-medium text-[#2563EB]">Apprentices</h4>
+								<div className="flex flex-wrap gap-3">
+									{['Aadhaar Card','Pan Card','Photo','Educational Marksheets','Bank Details'].map((doc) => (
+										<span key={doc} className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm text-slate-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2563EB]/40 hover:shadow-md">
+											{doc}
+										</span>
+									))}
+								</div>
 							</div>
 
-							<div className="grid gap-8 md:grid-cols-2">
-								<div>
-									<h4 className="mb-3 font-medium text-blue-600">Apprentices</h4>
-									<div className="flex flex-wrap gap-3">
-										{['Aadhaar Card', 'Photo', 'Certificates', 'Bank Details'].map((doc) => (
-											<span key={doc} className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm text-slate-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md">
-												{doc}
-											</span>
-										))}
-									</div>
-								</div>
-
-								<div>
-									<h4 className="mb-3 font-medium text-orange-500">Employers</h4>
-									<div className="flex flex-wrap gap-3">
-										{['Registration Cert', 'GST', 'PAN Card', 'Signatory '].map((doc) => (
-											<span key={doc} className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm text-slate-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md">
-												{doc}
-											</span>
-										))}
-									</div>
+							<div>
+								<h4 className="mb-3 font-medium text-[#F97316]">Employers</h4>
+								<div className="flex flex-wrap gap-3">
+									{['Registration Cert', 'GST', 'PAN Card', 'Signatory '].map((doc) => (
+										<span key={doc} className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm text-slate-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#F97316]/40 hover:shadow-md">
+											{doc}
+										</span>
+									))}
 								</div>
 							</div>
 						</div>
 					</div>
-				</section>
+				</div>
+			</section>
 
 				<section id="process" className="bg-slate-50 px-8 py-20">
 					<div className="mx-auto mb-16 max-w-5xl text-center">
@@ -332,11 +332,11 @@ This certificate can be registered at all employment exchanges across India as v
 
 								<div className="space-y-3">
 									<a
-										href="tel:+919876543210"
+										href="tel:+917397971322"
 										className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25"
 									>
 										<Phone className="h-5 w-5 text-blue-100" />
-										<span className="font-medium">+91 98765 43210</span>
+										<span className="font-medium">+91 73979 1322</span>
 									</a>
 
 									<a
