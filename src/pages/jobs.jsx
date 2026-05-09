@@ -226,7 +226,7 @@ function formatSalary(min, max) {
 }
 
 function JobsHero({ searchQuery, onSearchChange, onSearchSubmit }) {
-	const words = ['Dream Job', 'New Career', 'Better Future', 'Right Opportunity'];
+	const words = useMemo(() => ['Dream Job', 'New Career', 'Better Future', 'Right Opportunity'], []);
 	const [wordIndex, setWordIndex] = useState(0);
 	const [typedText, setTypedText] = useState('');
 	const [isDeleting, setIsDeleting] = useState(false);
@@ -754,10 +754,6 @@ function JobsListing({ filters, searchQuery, jobs, loading }) {
 		return filtered;
 	}, [filters, jobs, searchQuery]);
 
-	useEffect(() => {
-		setCurrentPage(1);
-	}, [filters, searchQuery]);
-
 	const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 	const start = (currentPage - 1) * jobsPerPage;
 	const currentJobs = filteredJobs.slice(start, start + jobsPerPage);
@@ -912,24 +908,30 @@ function ApplyCTA() {
 
 		try {
 			let resumeLine = 'Resume: Not provided';
+			let resumeUploadNote = '';
 			if (resumeFile) {
-				const uploadResult = await uploadResumeToGoogleDrive(resumeFile, {
-					fullName: formData.name,
-					email: formData.email,
-					phone: formData.phone,
-					jobType: formData.jobType,
-				});
+				try {
+					const uploadResult = await uploadResumeToGoogleDrive(resumeFile, {
+						fullName: formData.name,
+						email: formData.email,
+						phone: formData.phone,
+						jobType: formData.jobType,
+					});
 
-				if (uploadResult?.status === 'success' || uploadResult?.status === 'queued') {
-					resumeLine = `Resume: Upload request sent (${resumeFile.name})`;
-					setResumeStatusNote(uploadResult?.message || 'Resume upload request sent.');
-				} else {
+					if (uploadResult?.status === 'success' || uploadResult?.status === 'queued') {
+						resumeLine = `Resume: Upload request sent (${resumeFile.name})`;
+						resumeUploadNote = uploadResult?.message || 'Resume upload request sent.';
+					} else {
+						resumeLine = `Resume: Upload failed (${resumeFile.name})`;
+						resumeUploadNote = uploadResult?.message || 'Resume upload failed.';
+					}
+				} catch (uploadError) {
 					resumeLine = `Resume: Upload failed (${resumeFile.name})`;
-					setResumeStatusNote(uploadResult?.message || 'Resume upload failed.');
+					resumeUploadNote = uploadError?.message || 'Resume upload failed.';
 				}
 			}
 
-			const [leadResult] = await Promise.allSettled([
+			const [leadResult, adminResult] = await Promise.allSettled([
 				submitLead({
 					name: formData.name,
 					phone: formData.phone,
@@ -946,18 +948,24 @@ function ApplyCTA() {
 						jobType: formData.jobType || '',
 						experience: formData.experience || '',
 						resume: resumeFile ? resumeFile.name : 'Not provided',
+						pageName: 'jobs',
 						source: 'jobs page',
 					},
 				}, resumeFile ? { cv: resumeFile } : {}),
 			]);
 
+			const adminSubmission = adminResult.status === 'fulfilled' ? adminResult.value : null;
+			if (!adminSubmission || adminSubmission.ok === false) {
+				throw new Error(adminSubmission?.error || 'Submission to the new backend failed. Please try again.');
+			}
+
 			if (leadResult.status !== 'fulfilled') {
-				throw leadResult.reason;
+				console.warn('Legacy lead sync failed:', leadResult.reason);
 			}
 
 			setIsSubmitted(true);
 			setResumeFile(null);
-			setResumeStatusNote('');
+			setResumeStatusNote(resumeUploadNote);
 			setFormData({
 				name: '',
 				phone: '',
@@ -1202,7 +1210,13 @@ export default function JobsPage() {
 			<JobsHero searchQuery={searchQuery} onSearchChange={setSearchQuery} onSearchSubmit={handleSearchSubmit} />
 			<JobsFilters filters={filters} setFilters={setFilters} categoryOptions={categoryOptions} locationOptions={locationOptions} />
 			<div id="jobs-listing">
-				<JobsListing filters={filters} searchQuery={searchQuery} jobs={jobs} loading={loading} />
+				<JobsListing
+					key={`${searchQuery}-${filters.jobType.join('|')}-${filters.category.join('|')}-${filters.location.join('|')}-${filters.salary}-${filters.experience}`}
+					filters={filters}
+					searchQuery={searchQuery}
+					jobs={jobs}
+					loading={loading}
+				/>
 			</div>
 			<ApplyCTA />
 
