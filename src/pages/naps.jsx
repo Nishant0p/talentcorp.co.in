@@ -28,12 +28,8 @@ import { StaggerContainer, StaggerItem } from '../components/AnimatedContent'
 
 const heroStats = [{ value: '₹1,500 DBT', label: 'Per Apprentice / Month' }, { value: '2.5% - 25%', label: 'Apprenticeship Quota' }, { value: '₹1.8 Cr', label: 'Annual Savings (1,000)' }]
 
-const aboutHighlights = [
-	'Launched in August 2016',
-	'₹1,500 DBT per apprentice',
-	'2.5% to 15% quota requirement',
-	'Maharashtra quota up to 25%',
-]
+const aboutHighlights = ['Cost Saving ₹4,000 to ₹4,500 DBT Per Month Per Apperentice', '2.5% to 20% Quota', 'Skilled Technical Talent', 'NO Statutory Compliance Burden'];
+
 
 const aboutFeatures = [
 	{ icon: TrendingUp, title: 'Government', desc: 'Direct monthly DBT support' },
@@ -48,12 +44,7 @@ const applicantBenefits = [
 	{ icon: Target, title: 'Maharashtra Up to 25%', desc: 'Higher local quota' },
 ]
 
-const employerBenefits = [
-	{ icon: Shield, title: 'Employer Incentive', desc: 'Lower apprenticeship cost' },
-	{ icon: Users, title: 'Quota Compliance', desc: 'Meet required apprentice strength' },
-	{ icon: BadgeCheck, title: 'No Union Burden', desc: 'No trade union participation' },
-	{ icon: Building2, title: 'Skilled Intake', desc: 'Build long-term talent pipelines' },
-]
+const employerBenefits = ['Cost Saving ₹4,000 to ₹4,500 DBT  /Month  /Apperentice', '2.5% to 20% Quota', 'Skilled Technical Talent', 'NO Statutory Compliance Burden'];
 
 const applicantReqs = [
 	'Eligible apprentice category',
@@ -70,8 +61,8 @@ const employerReqs = [
 ]
 
 const documents = {
-	applicant: ['Aadhaar Card', 'Bank Details', 'Photo', 'Apprentice Agreement'],
-	employer: ['Registration Cert', 'GST / PAN', 'Workforce Details', 'Apprenticeship Request'],
+	applicant: ['Aadhaar Card', 'Pan Card', 'Photo', 'Educational Marksheets', 'Bank Details'],
+	employer: ['Registration Cert', 'GST', 'PAN Card', 'Signatory '],
 }
 
 const processSteps = [
@@ -104,7 +95,7 @@ function NAPSHero() {
 					</h1>
 
 							<p className="mx-auto mb-10 max-w-3xl text-sm font-medium leading-relaxed text-white sm:text-sm md:text-base lg:text-base">
-							Government-backed apprenticeship with <span className="font-bold text-white">₹1,500 DBT per month</span>, <span className="font-bold text-white whitespace-nowrap">2.5% to 15% quota</span>, and higher Maharashtra coverage.
+							Gaining Stipend Of  <span className="font-bold text-white">₹10,000 to ₹25,000</span>, <span className="font-bold text-white whitespace-nowrap">With Real Industry Experience</span>
 							</p>
 
 					<div className="mb-14 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
@@ -219,14 +210,12 @@ function NAPSBenefits() {
 						</div>
 							<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 								{applicantBenefits.map((benefit, i) => (
-									<div key={benefit.title} className="group flex items-start gap-4 rounded-2xl border border-[#E2E8F0] bg-white p-5 transition-all duration-300 hover:scale-[1.03] hover:border-[#2563EB]/40 hover:shadow-xl" style={{ animationDelay: `${i * 100}ms` }}>
-										<div className="h-12 w-12 shrink-0 rounded-xl bg-[#2563EB]/10 flex items-center justify-center transition-colors duration-300 group-hover:bg-[#2563EB]">
-											<benefit.icon className="h-6 w-6 text-[#2563EB] transition-colors duration-300 group-hover:text-white" />
+									<div key={benefit.title} className="group flex flex-col h-full rounded-xl border border-[#E2E8F0] bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/40 hover:shadow-xl min-h-[140px]" style={{ animationDelay: `${i * 100}ms` }}>
+										<div className="mb-4 rounded-full bg-[#2563EB]/10 p-2 text-[#2563EB] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#2563EB] group-hover:text-white">
+											<benefit.icon className="h-5 w-5" />
 										</div>
-										<div>
-											<h4 className="mb-1 text-base font-bold text-[#0F172A]">{benefit.title}</h4>
-											<p className="text-sm text-[#64748B]">{benefit.desc}</p>
-										</div>
+										<h4 className="mb-2 font-bold text-[#0F172A]">{benefit.title}</h4>
+										<p className="text-sm text-[#64748B]">{benefit.desc}</p>
 									</div>
 								))}
 							</div>
@@ -240,15 +229,12 @@ function NAPSBenefits() {
 							<h3 className="text-2xl font-bold text-[#0F172A]">For Employers</h3>
 						</div>
 						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-							{employerBenefits.map((benefit, i) => (
-								<div key={benefit.title} className="group flex items-start gap-4 rounded-2xl border border-[#E2E8F0] bg-white p-5 transition-all duration-300 hover:scale-[1.03] hover:border-[#F97316]/40 hover:shadow-xl" style={{ animationDelay: `${i * 100}ms` }}>
-									<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#F97316]/10 transition-colors duration-300 group-hover:bg-[#F97316]">
-										<benefit.icon className="h-6 w-6 text-[#F97316] transition-colors duration-300 group-hover:text-white" />
+							{employerBenefits.map((item, i) => (
+								<div key={item} className="group flex flex-col items-start rounded-xl border border-[#E2E8F0] bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#F97316]/40 hover:shadow-xl" style={{ animationDelay: `${i * 100}ms` }}>
+									<div className="mb-4 rounded-full bg-[#F97316]/10 p-2 text-[#F97316] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#F97316] group-hover:text-white">
+										<CheckCircle2 className="h-5 w-5" />
 									</div>
-									<div>
-										<h4 className="mb-1 text-base font-bold text-[#0F172A]">{benefit.title}</h4>
-										<p className="text-sm text-[#64748B]">{benefit.desc}</p>
-									</div>
+									<h4 className="font-bold text-[#0F172A]">{item}</h4>
 								</div>
 							))}
 						</div>

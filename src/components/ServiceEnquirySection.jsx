@@ -141,7 +141,7 @@ export default function ServiceEnquirySection({ serviceName }) {
 									</div>
 									<div>
 										<p className="text-sm text-white/70">Call Us</p>
-										<p className="text-lg font-bold">+91 98765 43210</p>
+										<p className="text-lg font-bold">+91 7397971322</p>
 									</div>
 								</a>
 
@@ -186,7 +186,7 @@ export default function ServiceEnquirySection({ serviceName }) {
 								</div>
 								<div>
 									<p className="text-white/80">Response Time</p>
-									<p className="text-2xl font-bold">Within 2 Hours</p>
+									<p className="text-2xl font-bold">Within 15 Minutes</p>
 								</div>
 							</div>
 						</div>
