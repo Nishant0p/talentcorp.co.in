@@ -81,7 +81,7 @@ const industries = [
 	},
 	{
 		icon: Package,
-		name: 'FMCG',
+		name: 'WILP',
 		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
 		clients: 75,
 		workers: '6,000+',
@@ -305,7 +305,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 
 function LogoMarquee({ partnerLogos }) {
 	const renderPartnerRow = (reverse = false) => (
-		<div className="logo-marquee-track gap-4" style={{ animationDirection: reverse ? 'reverse' : 'normal', animationDuration: '80s' }}>
+		<div className="logo-marquee-track gap-4" style={{ animationDirection: reverse ? 'reverse' : 'normal', animationDuration: '45s' }}>
 			{[...partnerLogos, ...partnerLogos, ...partnerLogos].map((brand, idx) => (
 				<div
 					key={`${brand.name}-${reverse ? 'rev' : 'fwd'}-${idx}`}
@@ -503,8 +503,12 @@ function CaseStudies({ resolveAsset }) {
 
 				<div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
 					<div className="grid items-center gap-8 lg:grid-cols-2">
-						<div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-							<img src={cardAssets[activeCase % cardAssets.length].url} alt={cardAssets[activeCase % cardAssets.length].alt || caseStudies[activeCase].company} className="h-full w-full object-cover" />
+						<div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-slate-100">
+							<img
+								src={cardAssets[activeCase % cardAssets.length].url}
+								alt={cardAssets[activeCase % cardAssets.length].alt || caseStudies[activeCase].company}
+								className={`h-full w-full ${caseStudies[activeCase].industry === 'NAPS' ? 'object-contain p-4' : 'object-cover'}`}
+							/>
 							<div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
 							<div className="absolute bottom-6 left-6">
 								<span className="rounded-full bg-blue-600 px-3 py-1 text-sm text-white">{caseStudies[activeCase].industry}</span>
@@ -702,7 +706,7 @@ function ClientsCTA() {
 									<option value="manufacturing">NAPS</option>
 									<option value="automobile">Automobile</option>
 									<option value="pharma">NATS</option>
-									<option value="fmcg">FMCG</option>
+									<option value="fmcg">WILP</option>
 									<option value="logistics">Logistics</option>
 									<option value="other">Other</option>
 								</select>

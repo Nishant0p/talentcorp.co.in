@@ -3,18 +3,23 @@ import {
     Award,
     BadgeCheck,
     Briefcase,
+    BookOpen,
     Building2,
     CheckCircle,
     CheckCircle2,
     FileCheck,
+    FileText,
     GraduationCap,
+    Landmark,
     Mail,
     Phone,
     Shield,
+    ShieldCheck,
     Sparkles,
     Target,
     TrendingUp,
     UserCheck,
+    UserPlus,
     Users,
     Wallet,
 } from 'lucide-react'
@@ -66,12 +71,12 @@ const documents = {
 }
 
 const processSteps = [
-	{ icon: UserCheck, title: 'Apply', desc: 'Share apprentice and employer details' },
-	{ icon: CheckCircle, title: 'Verify', desc: 'Confirm quota, documents, and eligibility' },
-	{ icon: Briefcase, title: 'Register', desc: 'Complete apprenticeship registration' },
-	{ icon: TrendingUp, title: 'Train', desc: 'Start on-the-job skill development' },
-	{ icon: Award, title: 'Claim DBT', desc: 'Receive government monthly support' },
-	{ icon: CheckCircle2, title: 'Complete', desc: 'Finish training and continue growth' },
+	{ icon: UserPlus, title: 'Register', desc: 'Create your account to get started' },
+  { icon: ShieldCheck, title: 'Verify', desc: 'Verify your details and documents' },
+  { icon: FileText, title: 'Apply', desc: 'Submit your application for the program' },
+  { icon: BookOpen, title: 'Train', desc: 'Complete the required training modules' },
+  { icon: CheckCircle2, title: 'Complete', desc: 'Finish training and continue growth' },
+  { icon: Landmark, title: 'Claim DBT', desc: 'Receive your Direct Benefit Transfer safely' },
 ]
 
 function NAPSHero() {

@@ -10,6 +10,7 @@ const navLinks = [
   { href: '/client', label: 'Clients' },
   { href: '/achievements', label: 'Achievements' },
   { href: '/news-events', label: 'News & Events' },
+  { href: '/yatra', label: 'Rozgar Yatra' },
 ];
 
 const serviceLinks = [

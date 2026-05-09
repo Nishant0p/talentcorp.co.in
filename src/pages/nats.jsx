@@ -25,9 +25,9 @@ const employerBenefits = ['Cost Saving ₹4,000 to ₹4,500 DBT Per Month Per Ap
 
 const processSteps = [
 	{ id: '01', title: 'Register', icon: <FileText /> },
-	{ id: '02', title: 'Apply', icon: <Briefcase /> },
-	{ id: '03', title: 'Verify', icon: <CheckSquare /> },
-	{ id: '04', title: 'Contract', icon: <FileText /> },
+	{ id: '02', title: 'Verify', icon: <Briefcase /> },
+	{ id: '03', title: 'Contract', icon: <CheckSquare /> },
+	{ id: '04', title: 'Apply', icon: <FileText /> },
 	{ id: '05', title: 'Train', icon: <Award /> },
 	{ id: '06', title: 'Certify', icon: <GraduationCap /> },
 ];
