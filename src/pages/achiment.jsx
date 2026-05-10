@@ -21,6 +21,7 @@ import {
 	CheckCircle2,
 	ChevronLeft,
 	ChevronRight,
+	X,
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -304,8 +305,10 @@ function Milestones() {
 function AchievementsGallery() {
 	const { isVisible, sectionRef } = useSectionReveal(0.15)
 	const [hoveredIndex, setHoveredIndex] = useState(null)
+	const [selectedImage, setSelectedImage] = useState(null)
 
 	const achievements = [
+		{ id: 10, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM.jpeg', title: '1ST RANK ΤΡΑ FOR NATS 2023-24 MUMBAI', category: 'Social Responsibility' },
 		{ id: 1, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (1).jpeg', title: 'WORLD BOOK OF RECORD HOLDER DELHI', category: 'Corporate Recognition' },
 		{ id: 2, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (2).jpeg', title: 'OUTSTANDING ACHIEVEMENTAWARD CHENNAI', category: 'HR Excellence' },
 		{ id: 3, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (3).jpeg', title: 'LEADING EMERGING SKILL DEVELOPMENT COMPANY OF THE YEAR 2023 GOA', category: 'Business Growth' },
@@ -313,7 +316,6 @@ function AchievementsGallery() {
 		{ id: 5, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (5).jpeg', title: 'GLOBAL SKILLING & STAFFING LEADERSHIP ACHIEVERS AWARD THAILAND', category: 'Service Quality' },
 		{ id: 8, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (8).jpeg', title: 'Outstanding Business Leadership Award at the International Achievers Awards Dubai', category: 'Technology' },
 		{ id: 9, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (9).jpeg', title: 'LEADING EMERGING INDIAN COMPANY THAILAND', category: 'Green Initiative' },
-		{ id: 10, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM.jpeg', title: '1ST RANK ΤΡΑ FOR NATS 2023-24 MUMBAI', category: 'Social Responsibility' },
 	]
 
 	return (
@@ -341,7 +343,7 @@ function AchievementsGallery() {
 					</p>
 				</div>
 
-				<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+				<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
 					{achievements.map((achievement, index) => (
 						<div
 							key={achievement.id}
@@ -350,7 +352,7 @@ function AchievementsGallery() {
 							className={`group overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${hoveredIndex === index ? '-translate-y-2 shadow-2xl shadow-blue-500/20' : ''}`}
 							style={{ transitionDelay: `${index * 50}ms` }}
 						>
-							<div className="h-64 overflow-hidden bg-gray-100">
+							<div className="h-64 cursor-pointer overflow-hidden bg-gray-100" onClick={() => setSelectedImage(achievement.image)}>
 								<img
 									src={achievement.image}
 									alt={achievement.title}
@@ -381,6 +383,21 @@ function AchievementsGallery() {
 					</Link>
 				</div>
 			</div>
+
+			{/* Image Modal */}
+			{selectedImage && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm" onClick={() => setSelectedImage(null)}>
+					<button
+						className="absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+						onClick={() => setSelectedImage(null)}
+					>
+						<X className="h-6 w-6" />
+					</button>
+					<div className="relative max-h-[90vh] max-w-5xl overflow-hidden rounded-2xl" onClick={(e) => e.stopPropagation()}>
+						<img src={selectedImage} alt="Achievement full size" className="max-h-[90vh] w-auto max-w-full object-contain" />
+					</div>
+				</div>
+			)}
 		</section>
 	)
 }

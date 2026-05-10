@@ -572,7 +572,6 @@ const ContactUs = () => {
                 <div>
                   <p className="text-sm text-gray-500">Call Us</p>
                   <a href="tel:+917397971322" className="font-bold text-lg transition-colors group-hover:text-blue-700">+91 7397971322</a>
-                  <a href="tel:+919561504911" className="font-bold text-lg transition-colors group-hover:text-blue-700 block">+91 9561504911</a>
                   <p className="text-sm text-gray-500">Mon - Fri, 9AM - 6PM</p>
                 </div>
               </div>

@@ -315,9 +315,9 @@ function B2BEnquiry() {
 						<h3 className="mb-4 font-medium text-white">Need Help?</h3>
 
 						<div className="space-y-3">
-							<a href="tel:+919876543210" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+							<a href="tel:+917397971322" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
 								<Phone className="h-5 w-5 text-blue-100" />
-								<span className="font-medium">+91 98765 43210</span>
+								<span className="font-medium">+91 7397971322</span>
 							</a>
 
 							<a href="mailto:b2b@tsplgroup.in" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">

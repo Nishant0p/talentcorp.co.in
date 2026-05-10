@@ -18,6 +18,18 @@ import {
 	User,
 	UserCheck,
 	XCircle,
+	Zap,
+	Wrench,
+	Flame,
+	ShowerHead,
+	Computer,
+	Snowflake,
+	Car,
+	Hammer,
+	Paintbrush,
+	Cog,
+	Factory,
+	Plug,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
@@ -428,21 +440,23 @@ function FlexiItiProcess() {
 					<h3 className="mb-8 text-center text-2xl font-bold text-[#0F172A]">Popular Trades You Can Learn</h3>
 					<div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
 						{[
-							{ name: 'Electrician', icon: '⚡' },
-							{ name: 'Fitter', icon: '🔧' },
-							{ name: 'Welder', icon: '🔥' },
-							{ name: 'Plumber', icon: '🚿' },
-							{ name: 'Computer', icon: '💻' },
-							{ name: 'AC Mechanic', icon: '❄️' },
-							{ name: 'Motor Mechanic', icon: '🚗' },
-							{ name: 'Carpenter', icon: '🪚' },
-							{ name: 'Painter', icon: '🎨' },
-							{ name: 'Turner', icon: '⚙️' },
-							{ name: 'Machinist', icon: '🏭' },
-							{ name: 'Wireman', icon: '🔌' },
-						].map((trade) => (
-							<div key={trade.name} className="flex flex-col items-center rounded-xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/40 hover:shadow-md">
-								<span className="mb-2 text-3xl transition-transform group-hover:scale-125">{trade.icon}</span>
+							{ name: 'Electrician', icon: Zap },
+							{ name: 'Fitter', icon: Wrench },
+							{ name: 'Welder', icon: Flame },
+							{ name: 'Plumber', icon: ShowerHead },
+							{ name: 'Computer', icon: Computer },
+							{ name: 'AC Mechanic', icon: Snowflake },
+							{ name: 'Motor Mechanic', icon: Car },
+							{ name: 'Carpenter', icon: Hammer },
+							{ name: 'Painter', icon: Paintbrush },
+							{ name: 'Turner', icon: Cog },
+							{ name: 'Machinist', icon: Factory },
+							{ name: 'Wireman', icon: Plug },
+						].map((trade, index) => (
+							<div key={trade.name} className="group flex flex-col items-center rounded-xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/40 hover:shadow-md">
+								<div className={`mb-3 flex h-14 w-14 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 ${index % 2 === 0 ? 'bg-[#F97316]/10 text-[#F97316]' : 'bg-[#2563EB]/10 text-[#2563EB]'}`}>
+									<trade.icon className="h-7 w-7" />
+								</div>
 								<span className="text-center text-sm font-medium text-[#0F172A]">{trade.name}</span>
 							</div>
 						))}

@@ -1003,7 +1003,7 @@ function ApplyCTA() {
 							</div>
 							<div>
 								<p className="text-xs text-slate-500">Call us</p>
-								<p className="text-lg font-semibold text-slate-900">+91 9561504911</p>
+								<p className="text-lg font-semibold text-slate-900">+91 7397971322</p>
 							</div>
 						</div>
 						<div className="flex items-center gap-4 rounded-xl bg-emerald-50 p-4">

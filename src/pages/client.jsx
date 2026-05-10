@@ -58,50 +58,34 @@ const industries = [
 	{
 		icon: Factory,
 		name: 'NAPS',
-		image: '/Gemini_Generated_Image_qskougqskougqsko.png',
-		clients: 120,
-		workers: '₹1,500 DBT',
+		image: '/naps%20tspl.jpg',
+		clients: 400,
+		workers: 'Apprenticeship',
 		description: 'Apprenticeship quota support and monthly DBT for eligible establishments',
 	},
 	{
-		icon: Pill,
+		icon: Briefcase,
 		name: 'NATS',
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
-		clients: 85,
-		workers: '₹4,000 - ₹4,500 DBT',
+		image: '/training%20tspl.jpeg',
+		clients: 400,
+		workers: 'Apprenticeship',
 		description: 'Technical apprenticeship support for diploma, degree, and graduate candidates',
 	},
 	{
-		icon: Car,
-		name: 'Automobile',
-		image: '/Gemini_Generated_Image_qskougqskougqsko.png',
-		clients: 95,
-		workers: '12,000+',
-		description: 'OEMs, auto parts, and assembly plants',
+		icon: Award,
+		name: 'WLP',
+		image: '/training.jpeg',
+		clients: 20,
+		workers: 'Learn & Earn',
+		description: 'Work Integrated Learning Program for continuous education',
 	},
 	{
-		icon: Package,
-		name: 'WILP',
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
-		clients: 75,
-		workers: '6,000+',
-		description: 'Food, beverages, and consumer goods',
-	},
-	{
-		icon: Truck,
-		name: 'Logistics',
-		image: '/Gemini_Generated_Image_qskougqskougqsko.png',
-		clients: 60,
-		workers: '5,000+',
-		description: 'Warehousing, transport, and supply chain',
-	},
-	{
-		icon: Cpu,
-		name: 'Electronics',
-		image: '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp',
-		clients: 45,
-		workers: '3,500+',
-		description: 'Electronics assembly and manufacturing',
+		icon: Users,
+		name: 'Contractual Labour',
+		image: '/seasonal%20labours.jpeg',
+		clients: '100+',
+		workers: 'Flexible Staffing',
+		description: 'Skilled and unskilled manpower on contract basis',
 	},
 ]
 
@@ -507,7 +491,7 @@ function CaseStudies({ resolveAsset }) {
 							<img
 								src={cardAssets[activeCase % cardAssets.length].url}
 								alt={cardAssets[activeCase % cardAssets.length].alt || caseStudies[activeCase].company}
-								className={`h-full w-full ${caseStudies[activeCase].industry === 'NAPS' ? 'object-contain p-4' : 'object-cover'}`}
+								className={`h-full w-full ${caseStudies[activeCase].industry === 'NAPS' ? 'bg-white object-contain p-4' : 'object-cover'}`}
 							/>
 							<div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
 							<div className="absolute bottom-6 left-6">
@@ -667,9 +651,9 @@ function ClientsCTA() {
 						</div>
 
 						<div className="flex flex-wrap gap-6 text-white">
-							<div className="flex items-center gap-2">
-								<Phone className="h-5 w-5 text-blue-300" />
-								<span>+91 98765 43210</span>
+							<div className="flex items-center gap-3">
+								<Phone className="h-5 w-5 text-blue-600" />
+								<a href="tel:+917397971322" className="hover:underline">+91 7397971322</a>
 							</div>
 							<div className="flex items-center gap-2">
 								<Mail className="h-5 w-5 text-blue-300" />

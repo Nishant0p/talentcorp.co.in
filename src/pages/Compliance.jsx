@@ -218,8 +218,8 @@ const contactMethods = [
 	{
 		icon: Phone,
 		label: 'Call Us',
-		value: '+91 98765 43210',
-		href: 'tel:+919876543210',
+		value: '+91 95615 04911',
+		href: 'tel:+919561504911',
 	},
 	{
 		icon: Mail,
@@ -778,7 +778,7 @@ function ComplianceCTA() {
 								<div className="grid gap-5 md:grid-cols-2">
 									<div>
 										<label className="mb-2 block text-sm text-gray-400">Phone Number *</label>
-										<input type="tel" required value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className="w-full rounded-xl border border-gray-700 bg-gray-800/50 px-4 py-3 text-white placeholder-gray-500 transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="+91 98765 43210" />
+										<input type="tel" required value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className="w-full rounded-xl border border-gray-700 bg-gray-800/50 px-4 py-3 text-white placeholder-gray-500 transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="+91 95615 04911" />
 									</div>
 									<div>
 										<label className="mb-2 block text-sm text-gray-400">Email Address</label>
