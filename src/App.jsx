@@ -31,6 +31,7 @@ const NewsDetailPage = lazy(() => import('./pages/news/NewsDetailPage'))
 const ArticlePage = lazy(() => import('./pages/ArticlePage'))
 const TermsPage = lazy(() => import('./pages/terms'))
 const PrivacyPolicyPage = lazy(() => import('./pages/privacy'))
+const YatraPage = lazy(() => import('./pages/yatra'))
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -101,6 +102,7 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="jobs" path="/jobs" element={<JobsPage />} />
           <Route key="news-events" path="/news-events" element={<NewsEventsPage />} />
           <Route key="news-detail" path="/news-events/:newsId" element={<NewsDetailPage />} />
+          <Route key="yatra" path="/yatra" element={<YatraPage />} />
           <Route key="medhavi-article" path="/news-events/medhavi-flexi-iti" element={<ArticlePage />} />
           <Route key="terms-and-conditions" path="/terms-and-conditions" element={<TermsPage />} />
           <Route key="terms" path="/terms" element={<TermsPage />} />
@@ -114,22 +116,36 @@ function AnimatedRoutes({ isLoading }) {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true)
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  )
+}
+
+function AppContent() {
+  const location = useLocation()
+  const skipMainPreloader = location.pathname === '/yatra'
+  const [isLoading, setIsLoading] = useState(() => !skipMainPreloader)
 
   useEffect(() => {
+    if (!isLoading) {
+      return undefined
+    }
+
     const timer = window.setTimeout(() => {
       setIsLoading(false)
     }, PRELOADER_DURATION_MS)
 
     return () => window.clearTimeout(timer)
-  }, [])
+  }, [isLoading])
 
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <div className="page-shell">
         <GlobalTextureOverlay />
-        {isLoading && (
+        {isLoading && !skipMainPreloader && (
           <div className="preloader" role="status" aria-label="Loading TSPL website">
             <div className="preloader-layer preloader-layer--orange" aria-hidden="true" />
             <div className="preloader-layer preloader-layer--blue" aria-hidden="true" />
@@ -144,12 +160,12 @@ function App() {
         )}
 
         <main className={`home ${isLoading ? 'home--hidden' : ''}`}>
-          <Suspense fallback={<PageLoader />}>
+          <Suspense fallback={skipMainPreloader ? null : <PageLoader />}>
             <AnimatedRoutes isLoading={isLoading} />
           </Suspense>
         </main>
       </div>
-    </BrowserRouter>
+    </>
   )
 }
 
