@@ -34,12 +34,22 @@ import { uploadResumeToGoogleDrive } from '../utils/googleSheets';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
 import { buildJobCategoryOptions } from '../utils/strapi';
 
+const categoryColorMap = {
+	'Welding': 'bg-orange-500',
+	'Electrical': 'bg-blue-500',
+	'Supervision': 'bg-orange-600',
+	'Machine Operation': 'bg-blue-600',
+	'Helper': 'bg-orange-400',
+	'Maintenance': 'bg-blue-400',
+};
+
+const getJobColor = (category) => categoryColorMap[category] || 'bg-blue-500';
+
 const allJobs = [
 	{
 		id: '1',
 		title: 'Welder (TIG & ARC)',
 		company: 'TSPL Group',
-		image: 'https://picsum.photos/seed/welder-industrial/1200/800',
 		category: 'Welding',
 		location: 'Maharashtra, India',
 		salaryMin: 25000,
@@ -56,7 +66,6 @@ const allJobs = [
 		id: '2',
 		title: 'Electrician',
 		company: 'TSPL Group',
-		image: 'https://picsum.photos/seed/electrician-panel/1200/800',
 		category: 'Electrical',
 		location: 'Gujarat, India',
 		salaryMin: 20000,
@@ -72,7 +81,6 @@ const allJobs = [
 		id: '3',
 		title: 'Production Supervisor',
 		company: 'TSPL Group',
-		image: 'https://picsum.photos/seed/production-supervisor/1200/800',
 		category: 'Supervision',
 		location: 'Tamil Nadu, India',
 		salaryMin: 35000,
@@ -87,7 +95,6 @@ const allJobs = [
 		id: '4',
 		title: 'CNC Machine Operator',
 		company: 'TSPL Group',
-		image: 'https://picsum.photos/seed/cnc-operator/1200/800',
 		category: 'Machine Operation',
 		location: 'Karnataka, India',
 		salaryMin: 22000,
@@ -103,7 +110,6 @@ const allJobs = [
 		id: '5',
 		title: 'Factory Helper',
 		company: 'TSPL Group',
-		image: 'https://picsum.photos/seed/factory-helper/1200/800',
 		category: 'Helper',
 		location: 'Delhi NCR, India',
 		salaryMin: 12000,
@@ -118,7 +124,6 @@ const allJobs = [
 		id: '6',
 		title: 'Maintenance Technician',
 		company: 'TSPL Group',
-		image: 'https://picsum.photos/seed/maintenance-tech/1200/800',
 		category: 'Maintenance',
 		location: 'Maharashtra, India',
 		salaryMin: 28000,
@@ -627,22 +632,12 @@ function JobCard({ job }) {
 				</button>
 			</div>
 
-			<div className="relative h-40 overflow-hidden p-4 text-white">
-				<ProgressiveImage
-					media={job.imageMedia}
-					src={job.image}
-					alt={job.title}
-					highClassName="transition-transform duration-500 group-hover:scale-110"
-					loading="lazy"
-					decoding="async"
-					width="1200"
-					height="800"
-				/>
-				<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-transparent" />
+			<div className={`relative h-40 overflow-hidden p-4 text-white ${getJobColor(job.category)}`}>
+				<div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent" />
 				<div className="relative z-[1]">
-					<p className="text-xs font-semibold uppercase tracking-wide text-slate-100">{job.company}</p>
+					<p className="text-xs font-semibold uppercase tracking-wide text-white/90">{job.company}</p>
 					<h3 className="mt-2 text-xl font-bold leading-tight text-white">{job.title}</h3>
-					<div className="mt-3 inline-flex items-center gap-1.5 text-sm text-slate-100">
+					<div className="mt-3 inline-flex items-center gap-1.5 text-sm text-white/90">
 						<MapPin className="h-4 w-4" />
 						{job.location}
 					</div>

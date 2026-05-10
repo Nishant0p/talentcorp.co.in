@@ -311,8 +311,6 @@ function AchievementsGallery() {
 		{ id: 3, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (3).jpeg', title: 'LEADING EMERGING SKILL DEVELOPMENT COMPANY OF THE YEAR 2023 GOA', category: 'Business Growth' },
 		{ id: 4, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (4).jpeg', title: 'FASTEST GROWING INDIAN COMPANY EXCELLENCE AWARD DELHI', category: 'ISO Standards' },
 		{ id: 5, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (5).jpeg', title: 'GLOBAL SKILLING & STAFFING LEADERSHIP ACHIEVERS AWARD THAILAND', category: 'Service Quality' },
-		{ id: 6, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (6).jpeg', title: '2ND HON. DOCTORATE GUJARAT', category: 'Industry Recognition' },
-		{ id: 7, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (7).jpeg', title: '1ST HON. DOCTORATE SRI-LANKA', category: 'Team Excellence' },
 		{ id: 8, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (8).jpeg', title: 'Outstanding Business Leadership Award at the International Achievers Awards Dubai', category: 'Technology' },
 		{ id: 9, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (9).jpeg', title: 'LEADING EMERGING INDIAN COMPANY THAILAND', category: 'Green Initiative' },
 		{ id: 10, image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM.jpeg', title: '1ST RANK ΤΡΑ FOR NATS 2023-24 MUMBAI', category: 'Social Responsibility' },
