@@ -332,11 +332,11 @@ This certificate can be registered at all employment exchanges across India as v
 
 								<div className="space-y-3">
 									<a
-										href="tel:+917397971322"
+										href="tel:+919561504911"
 										className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25"
 									>
 										<Phone className="h-5 w-5 text-blue-100" />
-										<span className="font-medium">+91 73979 1322</span>
+										<span className="font-medium">+91 95615 04911</span>
 									</a>
 
 									<a
