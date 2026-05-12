@@ -1,10 +1,10 @@
-import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Shield, Users, Lightbulb, HandHeart, Award } from 'lucide-react'
+import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Shield, Users, Lightbulb, HandHeart, Award, BookOpen, Globe, Star, CheckCircle, Briefcase } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
-import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 const milestones = [
 	{ year: '2014', title: 'Company Founded', description: 'Started with a small team of 5 people' },
@@ -129,212 +129,456 @@ const hiringCapacity = [
 ]
 
 function DetailedProfileSection() {
+	const [activeTab, setActiveTab] = useState(0);
+
+	const tabs = [
+		{ id: 0, title: 'Company Overview' },
+		{ id: 1, title: 'Services Offered' },
+		{ id: 2, title: 'Awards & Achievements' },
+		{ id: 3, title: 'Client Experience' },
+		{ id: 4, title: 'NAPS Program' },
+		{ id: 5, title: 'NATS / BOAT' },
+		{ id: 6, title: 'Financial Savings' },
+		{ id: 7, title: 'Vocational Programs' },
+		{ id: 8, title: 'Recruitment Strategy' },
+	];
+
 	return (
-		<section className="bg-slate-50 py-20 lg:py-24">
-			<div className="mx-auto max-w-6xl px-6 lg:px-8">
-				<div className="mb-12 text-center">
-					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-4 py-2">
-						<span className="text-sm font-bold text-[#2563EB]">TSPL PROFILE</span>
+		<section className="bg-slate-50 py-24 lg:py-32 relative overflow-hidden">
+			{/* Decorative Elements */}
+			<div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-blue-100/40 blur-3xl pointer-events-none" />
+			<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-100/30 blur-3xl pointer-events-none" />
+
+			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+				<div className="mb-10 text-center">
+					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2">
+						<span className="text-sm font-bold tracking-widest text-blue-700 uppercase">TSPL Profile</span>
 					</div>
-					<h2 className="text-3xl font-bold text-[#0F172A] lg:text-4xl">Detailed Company Information</h2>
+					<h2 className="text-4xl font-extrabold text-slate-900 lg:text-5xl">Detailed Information</h2>
+					<p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">Everything you need to know about our operations, impact, and reach.</p>
 				</div>
 
-				<div className="space-y-6">
-					<details open className="rounded-2xl border border-slate-200 bg-white p-6">
-						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">1. Company Overview (TSPL Group)</summary>
-						<ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
-							{companyOverviewPoints.map((item) => (
-								<li key={item}>{item}</li>
-							))}
-						</ul>
-					</details>
-
-					<details className="rounded-2xl border border-slate-200 bg-white p-6">
-						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">2. Services Offered</summary>
-						<ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
-							{servicesOffered.map((item) => (
-								<li key={item}>{item}</li>
-							))}
-						</ul>
-					</details>
-
-					<details className="rounded-2xl border border-slate-200 bg-white p-6">
-						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">3. Certificates, Awards & Achievements</summary>
-						<ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
-							{awardHighlights.map((item) => (
-								<li key={item}>{item}</li>
-							))}
-							<li>Fastest Growing Indian Company Excellence Award (Delhi).</li>
-							<li>Outstanding Achievement Award (Chennai).</li>
-							<li>Leading Emerging Skill Development Company of the Year 2023 (Goa).</li>
-						</ul>
-					</details>
-
-					<details className="rounded-2xl border border-slate-200 bg-white p-6">
-						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">4. Client Experience (OEM Manpower Count)</summary>
-						<div className="mt-4 overflow-x-auto">
-							<table className="w-full min-w-[640px] border-collapse text-left text-sm">
-								<thead>
-									<tr className="border-b border-slate-200 text-slate-900">
-										<th className="px-3 py-2 font-semibold">Client Name</th>
-										<th className="px-3 py-2 font-semibold">Manpower Count</th>
-										<th className="px-3 py-2 font-semibold">Association Period</th>
-									</tr>
-								</thead>
-								<tbody>
-									{clientExperience.map((client) => (
-										<tr key={client.name} className="border-b border-slate-100 text-slate-700">
-											<td className="px-3 py-2">{client.name}</td>
-											<td className="px-3 py-2">{client.manpower}</td>
-											<td className="px-3 py-2">{client.period}</td>
-										</tr>
-									))}
-								</tbody>
-							</table>
-						</div>
-					</details>
-
-					<details className="rounded-2xl border border-slate-200 bg-white p-6">
-						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">5. NAPS (National Apprenticeship Promotion Scheme)</summary>
-						<p className="mt-4 text-slate-700">Launched in August 2016 by the Government of India to promote apprenticeship using incentives, technology, and advocacy with portal-based registration.</p>
-						<ul className="mt-3 list-disc space-y-2 pl-5 text-slate-700">
-							{napsBenefits.map((item) => (
-								<li key={item}>{item}</li>
-							))}
-						</ul>
-						<p className="mt-3 text-slate-700">Savings example for 1,000 trainees: INR 15,00,000 monthly and INR 1.8 crores annually.</p>
-					</details>
-
-					<details className="rounded-2xl border border-slate-200 bg-white p-6">
-						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">6. NATS / BOAT</summary>
-						<p className="mt-4 text-slate-700">Flagship 1 to 3-year Government of India apprenticeship training route for technical youth employability.</p>
-						<ul className="mt-3 list-disc space-y-2 pl-5 text-slate-700">
-							{natsBenefits.map((item) => (
-								<li key={item}>{item}</li>
-							))}
-						</ul>
-						<p className="mt-3 text-slate-700">Savings example for 1,000 NATS trainees at INR 4,500: INR 45,00,000 monthly and INR 5.4 crores annually.</p>
-					</details>
-
-					<details className="rounded-2xl border border-slate-200 bg-white p-6">
-						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">7. Financial Savings (CSR & Statutory)</summary>
-						<ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
-							<li>CSR booking example: 10th/12th/ITI trainees (1,000 at avg INR 23,000) equals INR 2.3 crores monthly and INR 27.6 crores annually.</li>
-							<li>CSR booking example: Diploma/BE trainees (500 at avg INR 26,000) equals INR 1.3 crores monthly and INR 15.6 crores annually.</li>
-							<li>Statutory savings example for 1,500 trainees: ~INR 75 lakhs monthly and ~INR 9 crores annually by reducing PF, ESIC, Bonus, and Gratuity burden in eligible structures.</li>
-						</ul>
-					</details>
-
-					<details className="rounded-2xl border border-slate-200 bg-white p-6">
-						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">8. Vocational Programs (WILP & WISE)</summary>
-						<ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
-							<li>D.Voc (2-3 years): practical diploma with on-the-job training.</li>
-							<li>B.Voc (3 years): undergraduate pathway aligned to industry employment needs.</li>
-							<li>M.Voc (2 years): advanced postgraduate vocational specialization.</li>
-							{wilpWiseBenefits.map((item) => (
-								<li key={item}>{item}</li>
-							))}
-						</ul>
-					</details>
-
-					<details className="rounded-2xl border border-slate-200 bg-white p-6">
-						<summary className="cursor-pointer text-xl font-bold text-[#0F172A]">9. Recruitment Capabilities & Strategy</summary>
-						<div className="mt-4 overflow-x-auto">
-							<table className="w-full min-w-[620px] border-collapse text-left text-sm">
-								<thead>
-									<tr className="border-b border-slate-200 text-slate-900">
-										<th className="px-3 py-2 font-semibold">Region</th>
-										<th className="px-3 py-2 font-semibold">Sourcing Executives</th>
-										<th className="px-3 py-2 font-semibold">Recruiters</th>
-										<th className="px-3 py-2 font-semibold">Total Strength</th>
-										<th className="px-3 py-2 font-semibold">Capacity</th>
-									</tr>
-								</thead>
-								<tbody>
-									{hiringCapacity.map((row) => (
-										<tr key={row.region} className="border-b border-slate-100 text-slate-700">
-											<td className="px-3 py-2">{row.region}</td>
-											<td className="px-3 py-2">{row.executives}</td>
-											<td className="px-3 py-2">{row.recruiters}</td>
-											<td className="px-3 py-2">{row.strength}</td>
-											<td className="px-3 py-2">{row.capacity}</td>
-										</tr>
-									))}
-								</tbody>
-							</table>
-						</div>
-						<p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-600">Hiring Speed Benchmarks</p>
-						<ul className="mt-2 list-disc space-y-1 pl-5 text-slate-700">
-							{recruitmentSpeed.map((item) => (
-								<li key={item}>{item}</li>
-							))}
-						</ul>
-						<p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-600">10-Point Sourcing Strategy</p>
-						<ol className="mt-2 list-decimal space-y-1 pl-5 text-slate-700">
-							{sourcingStrategy.map((item) => (
-								<li key={item}>{item}</li>
-							))}
-						</ol>
-					</details>
+				{/* Horizontal Toggle Bar */}
+				<div className="mb-12 flex overflow-x-auto pb-4 pt-2 hide-scrollbar mask-edges">
+					<div className="flex gap-3 mx-auto min-w-max px-4">
+						{tabs.map((tab) => (
+							<button
+								key={tab.id}
+								onClick={() => setActiveTab(tab.id)}
+								className={`px-6 py-3 rounded-full text-sm font-bold whitespace-nowrap transition-all duration-300 ${activeTab === tab.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 scale-105' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 hover:text-slate-900'}`}
+							>
+								{tab.title}
+							</button>
+						))}
+					</div>
 				</div>
+
+				{/* Content Container */}
+				<AnimatePresence mode="wait">
+					<motion.div
+						key={activeTab}
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -20 }}
+						transition={{ duration: 0.3 }}
+						className="min-h-[500px]"
+					>
+						{/* Tab 0: Company Overview */}
+						{activeTab === 0 && (
+							<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[200px]">
+								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="md:col-span-2 lg:col-span-2 row-span-2 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 to-blue-800 p-8 sm:p-10 text-white shadow-xl shadow-blue-900/10 group">
+									<div className="absolute right-0 top-0 opacity-10 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-12">
+										<Building2 className="h-64 w-64 -mr-16 -mt-16" />
+									</div>
+									<div className="relative z-10 h-full flex flex-col justify-between">
+										<div>
+											<span className="inline-block px-4 py-1 rounded-full bg-white/20 backdrop-blur-md text-sm font-bold tracking-widest uppercase mb-6">Est. 2011</span>
+											<h3 className="text-3xl sm:text-4xl font-black leading-tight mb-4">One of India's leading human resource companies.</h3>
+										</div>
+										<p className="text-blue-100 text-lg leading-relaxed max-w-md">We provide elite workforce solutions with a strong Pan-India presence, driving growth for businesses across the nation.</p>
+									</div>
+								</motion.div>
+
+								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="md:col-span-1 lg:col-span-2 row-span-1 relative overflow-hidden rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl hover:border-orange-200 group flex items-center gap-6">
+									<div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-orange-100 transition-transform group-hover:scale-110">
+										<Trophy className="h-10 w-10 text-orange-600" />
+									</div>
+									<div>
+										<h4 className="text-2xl font-black text-slate-900 mb-2">1st Rank Government-Authorized TPA</h4>
+										<p className="text-slate-600">For NAPS and NATS programs in India.</p>
+									</div>
+								</motion.div>
+
+								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="md:col-span-1 lg:col-span-1 row-span-1 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl group flex flex-col justify-center">
+									<Users className="h-10 w-10 text-blue-500 mb-4 transition-transform group-hover:scale-110" />
+									<h4 className="text-4xl font-black text-slate-900 mb-1">40,000+</h4>
+									<p className="text-slate-600 font-medium">Trainees Deployed Nationwide</p>
+								</motion.div>
+
+								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="md:col-span-1 lg:col-span-1 row-span-1 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl group flex flex-col justify-center">
+									<Building2 className="h-10 w-10 text-emerald-500 mb-4 transition-transform group-hover:scale-110" />
+									<h4 className="text-4xl font-black text-slate-900 mb-1">450+</h4>
+									<p className="text-slate-600 font-medium">Clients with Pan-India Presence</p>
+								</motion.div>
+
+								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="md:col-span-2 lg:col-span-2 row-span-1 rounded-[2rem] bg-slate-900 p-8 text-white shadow-xl group flex flex-col justify-center">
+									<h4 className="text-xl font-bold mb-4 text-orange-400">Trusted Provider For</h4>
+									<div className="flex flex-wrap gap-3">
+										{['OJT', 'Employment Programs', 'D.Voc (2-3 years)', 'B.Voc (3 years)'].map((prog) => (
+											<span key={prog} className="px-4 py-2 rounded-xl bg-white/10 border border-white/10 text-sm font-semibold backdrop-blur-md">{prog}</span>
+										))}
+									</div>
+								</motion.div>
+
+								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.5 }} className="md:col-span-1 lg:col-span-2 row-span-1 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl flex flex-col justify-center gap-4">
+									<h4 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+										<Globe className="h-5 w-5 text-blue-500" /> Global Affiliations
+									</h4>
+									<ul className="space-y-3 text-slate-600 font-medium">
+										<li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-emerald-500"/> World Book of Records (London)</li>
+										<li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-emerald-500"/> South Asian Chamber of Commerce</li>
+									</ul>
+								</motion.div>
+
+								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.6 }} className="md:col-span-3 lg:col-span-4 row-span-auto rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl">
+									<h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+										<Target className="h-6 w-6 text-orange-500" /> Sectors Served
+									</h4>
+									<div className="flex flex-wrap gap-3">
+										{['Manufacturing', 'Healthcare', 'Hospitality', 'IT', 'Service Industry', 'Retail', 'E-Commerce', 'Construction'].map((sector) => (
+											<span key={sector} className="px-5 py-2.5 rounded-xl bg-slate-50 border border-slate-100 text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-700 hover:border-blue-100 transition-colors cursor-default">
+												{sector}
+											</span>
+										))}
+									</div>
+								</motion.div>
+							</div>
+						)}
+
+						{/* Tab 1: Services Offered */}
+						{activeTab === 1 && (
+							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+								{servicesOffered.map((service, i) => (
+									<div key={i} className="rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 flex flex-col justify-center items-center text-center group">
+										<div className="h-16 w-16 rounded-full bg-blue-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+											<Briefcase className="h-8 w-8 text-blue-600" />
+										</div>
+										<h4 className="text-xl font-bold text-slate-900">{service}</h4>
+									</div>
+								))}
+							</div>
+						)}
+
+						{/* Tab 2: Awards & Achievements */}
+						{activeTab === 2 && (
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+								{[...awardHighlights, 'Fastest Growing Indian Company Excellence Award (Delhi).', 'Outstanding Achievement Award (Chennai).', 'Leading Emerging Skill Development Company of the Year 2023 (Goa).'].map((award, i) => (
+									<div key={i} className="rounded-[2rem] bg-gradient-to-br from-orange-50 to-orange-100/50 p-8 border border-orange-200 shadow-sm transition-all hover:shadow-lg flex items-center gap-6 group">
+										<Trophy className="h-12 w-12 text-orange-500 shrink-0 group-hover:scale-110 transition-transform" />
+										<p className="text-lg font-bold text-slate-900 leading-relaxed">{award}</p>
+									</div>
+								))}
+							</div>
+						)}
+
+						{/* Tab 3: Client Experience */}
+						{activeTab === 3 && (
+							<div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
+								<div className="overflow-x-auto">
+									<table className="w-full text-left text-sm whitespace-nowrap">
+										<thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-xs font-bold border-b border-slate-200">
+											<tr>
+												<th className="px-8 py-6">Client Name</th>
+												<th className="px-8 py-6">Manpower Deployed</th>
+												<th className="px-8 py-6">Engagement Period</th>
+											</tr>
+										</thead>
+										<tbody className="divide-y divide-slate-100">
+											{clientExperience.map((client) => (
+												<tr key={client.name} className="hover:bg-slate-50 transition-colors">
+													<td className="px-8 py-6 font-bold text-slate-900 text-base">{client.name}</td>
+													<td className="px-8 py-6 text-slate-600 font-medium text-base">{client.manpower}</td>
+													<td className="px-8 py-6">
+														<span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-bold text-blue-800">
+															{client.period}
+														</span>
+													</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						)}
+
+						{/* Tab 4: NAPS Program */}
+						{activeTab === 4 && (
+							<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+								<div className="lg:col-span-3 rounded-[2rem] bg-gradient-to-br from-blue-600 to-blue-800 p-8 sm:p-10 text-white shadow-xl relative overflow-hidden">
+									<div className="absolute right-0 top-0 opacity-10">
+										<Shield className="h-64 w-64 -mr-16 -mt-16" />
+									</div>
+									<div className="relative z-10 max-w-3xl">
+										<h3 className="text-4xl font-black mb-4">NAPS Program</h3>
+										<p className="text-xl text-blue-100 leading-relaxed">Launched in August 2016 by the Government of India to promote apprenticeship using incentives, technology, and advocacy.</p>
+									</div>
+								</div>
+								
+								<div className="lg:col-span-2 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm">
+									<h4 className="text-2xl font-bold text-slate-900 mb-6">Program Benefits</h4>
+									<ul className="space-y-4">
+										{napsBenefits.map((item, i) => (
+											<li key={i} className="flex gap-4 items-start">
+												<CheckCircle className="h-6 w-6 text-emerald-500 shrink-0 mt-0.5" />
+												<span className="text-lg text-slate-700">{item}</span>
+											</li>
+										))}
+									</ul>
+								</div>
+
+								<div className="lg:col-span-1 rounded-[2rem] bg-orange-50 p-8 border border-orange-200 shadow-sm flex flex-col justify-center">
+									<div className="flex items-center gap-3 mb-6">
+										<Lightbulb className="h-8 w-8 text-orange-600" />
+										<h4 className="text-2xl font-black text-orange-900">Savings Example</h4>
+									</div>
+									<p className="text-lg text-orange-800/80 mb-4">For 1,000 trainees under NAPS:</p>
+									<p className="text-3xl font-black text-orange-600 mb-2">INR 15 Lakhs</p>
+									<p className="text-sm font-bold text-orange-800 uppercase tracking-widest mb-6">Monthly Savings</p>
+									<p className="text-3xl font-black text-orange-600 mb-2">INR 1.8 Crores</p>
+									<p className="text-sm font-bold text-orange-800 uppercase tracking-widest">Annual Savings</p>
+								</div>
+							</div>
+						)}
+
+						{/* Tab 5: NATS / BOAT */}
+						{activeTab === 5 && (
+							<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+								<div className="lg:col-span-3 rounded-[2rem] bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 sm:p-10 text-white shadow-xl relative overflow-hidden">
+									<div className="absolute right-0 top-0 opacity-10">
+										<BookOpen className="h-64 w-64 -mr-16 -mt-16" />
+									</div>
+									<div className="relative z-10 max-w-3xl">
+										<h3 className="text-4xl font-black mb-4">NATS / BOAT Program</h3>
+										<p className="text-xl text-emerald-100 leading-relaxed">Flagship 1 to 3-year Government of India apprenticeship training route for technical youth employability.</p>
+									</div>
+								</div>
+								
+								<div className="lg:col-span-2 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm">
+									<h4 className="text-2xl font-bold text-slate-900 mb-6">Program Structure & Benefits</h4>
+									<ul className="space-y-4">
+										{natsBenefits.map((item, i) => (
+											<li key={i} className="flex gap-4 items-start">
+												<CheckCircle className="h-6 w-6 text-emerald-500 shrink-0 mt-0.5" />
+												<span className="text-lg text-slate-700">{item}</span>
+											</li>
+										))}
+									</ul>
+								</div>
+
+								<div className="lg:col-span-1 rounded-[2rem] bg-emerald-50 p-8 border border-emerald-200 shadow-sm flex flex-col justify-center">
+									<div className="flex items-center gap-3 mb-6">
+										<Lightbulb className="h-8 w-8 text-emerald-600" />
+										<h4 className="text-2xl font-black text-emerald-900">Savings Example</h4>
+									</div>
+									<p className="text-lg text-emerald-800/80 mb-4">For 1,000 NATS trainees at INR 4,500 DBT:</p>
+									<p className="text-3xl font-black text-emerald-600 mb-2">INR 45 Lakhs</p>
+									<p className="text-sm font-bold text-emerald-800 uppercase tracking-widest mb-6">Monthly Savings</p>
+									<p className="text-3xl font-black text-emerald-600 mb-2">INR 5.4 Crores</p>
+									<p className="text-sm font-bold text-emerald-800 uppercase tracking-widest">Annual Savings</p>
+								</div>
+							</div>
+						)}
+
+						{/* Tab 6: Financial Savings */}
+						{activeTab === 6 && (
+							<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+								<div className="rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm hover:shadow-xl transition-all hover:-translate-y-2 group">
+									<div className="h-16 w-16 rounded-full bg-emerald-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+										<Target className="h-8 w-8 text-emerald-600" />
+									</div>
+									<h4 className="text-xl font-bold text-slate-900 mb-4">10th/12th/ITI Trainees (CSR)</h4>
+									<p className="text-slate-600 mb-6">Based on 1,000 trainees at average INR 23,000 stipend.</p>
+									<p className="text-4xl font-black text-emerald-600 mb-1">INR 2.3 Cr<span className="text-xl text-emerald-600/60">/mo</span></p>
+									<p className="text-sm font-bold text-slate-400 uppercase tracking-widest">INR 27.6 Crores Annually</p>
+								</div>
+
+								<div className="rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm hover:shadow-xl transition-all hover:-translate-y-2 group">
+									<div className="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+										<Target className="h-8 w-8 text-blue-600" />
+									</div>
+									<h4 className="text-xl font-bold text-slate-900 mb-4">Diploma/BE Trainees (CSR)</h4>
+									<p className="text-slate-600 mb-6">Based on 500 trainees at average INR 26,000 stipend.</p>
+									<p className="text-4xl font-black text-blue-600 mb-1">INR 1.3 Cr<span className="text-xl text-blue-600/60">/mo</span></p>
+									<p className="text-sm font-bold text-slate-400 uppercase tracking-widest">INR 15.6 Crores Annually</p>
+								</div>
+
+								<div className="rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm hover:shadow-xl transition-all hover:-translate-y-2 group">
+									<div className="h-16 w-16 rounded-full bg-orange-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+										<Shield className="h-8 w-8 text-orange-600" />
+									</div>
+									<h4 className="text-xl font-bold text-slate-900 mb-4">Statutory Savings</h4>
+									<p className="text-slate-600 mb-6">For 1,500 trainees by reducing PF, ESIC, Bonus, & Gratuity.</p>
+									<p className="text-4xl font-black text-orange-600 mb-1">~INR 75 L<span className="text-xl text-orange-600/60">/mo</span></p>
+									<p className="text-sm font-bold text-slate-400 uppercase tracking-widest">~INR 9 Crores Annually</p>
+								</div>
+							</div>
+						)}
+
+						{/* Tab 7: Vocational Programs */}
+						{activeTab === 7 && (
+							<div className="space-y-6">
+								<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+									<div className="rounded-[2rem] bg-blue-600 p-8 text-center text-white shadow-lg transition-transform hover:-translate-y-2">
+										<h4 className="font-black text-4xl mb-2">D.Voc</h4>
+										<p className="text-blue-200 font-medium text-lg">2-3 years practical diploma</p>
+									</div>
+									<div className="rounded-[2rem] bg-orange-500 p-8 text-center text-white shadow-lg transition-transform hover:-translate-y-2">
+										<h4 className="font-black text-4xl mb-2">B.Voc</h4>
+										<p className="text-orange-100 font-medium text-lg">3 years undergrad pathway</p>
+									</div>
+									<div className="rounded-[2rem] bg-emerald-500 p-8 text-center text-white shadow-lg transition-transform hover:-translate-y-2">
+										<h4 className="font-black text-4xl mb-2">M.Voc</h4>
+										<p className="text-emerald-100 font-medium text-lg">2 years advanced postgrad</p>
+									</div>
+								</div>
+								
+								<div className="rounded-[2rem] bg-white p-8 sm:p-10 border border-slate-200 shadow-sm">
+									<h4 className="text-2xl font-bold text-slate-900 mb-8">Program Features & WILP/WISE Benefits</h4>
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+										{wilpWiseBenefits.map((item, i) => (
+											<div key={i} className="flex gap-4">
+												<div className="mt-2 h-2 w-2 shrink-0 rounded-full bg-blue-500" />
+												<span className="text-lg text-slate-700 leading-relaxed">{item}</span>
+											</div>
+										))}
+									</div>
+								</div>
+							</div>
+						)}
+
+						{/* Tab 8: Recruitment Strategy */}
+						{activeTab === 8 && (
+							<div className="space-y-6">
+								<div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
+									<div className="overflow-x-auto">
+										<table className="w-full text-left text-sm whitespace-nowrap">
+											<thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-xs font-bold border-b border-slate-200">
+												<tr>
+													<th className="px-8 py-6">Region</th>
+													<th className="px-8 py-6">Sourcing Staff Strength</th>
+													<th className="px-8 py-6">Hiring Capacity</th>
+												</tr>
+											</thead>
+											<tbody className="divide-y divide-slate-100">
+												{hiringCapacity.map((row, i) => (
+													<tr key={i} className="hover:bg-slate-50 transition-colors">
+														<td className="px-8 py-6 font-bold text-slate-900 text-base">{row.region}</td>
+														<td className="px-8 py-6 text-slate-600 font-medium text-base">{row.strength} Members</td>
+														<td className="px-8 py-6 text-blue-600 font-bold text-base">{row.capacity}</td>
+													</tr>
+												))}
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+								<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+									<div className="rounded-[2rem] bg-gradient-to-br from-orange-50 to-orange-100/50 p-8 border border-orange-200 shadow-sm">
+										<h4 className="font-black text-2xl text-slate-900 mb-6 flex items-center gap-3">
+											<span className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 text-white shadow-md">⚡</span> 
+											Speed Benchmarks
+										</h4>
+										<ul className="space-y-4">
+											{recruitmentSpeed.map((item, i) => (
+												<li key={i} className="flex gap-4 items-center bg-white p-4 rounded-xl border border-orange-100 shadow-sm">
+													<Calendar className="h-5 w-5 text-orange-500 shrink-0" />
+													<span className="text-slate-800 font-bold">{item}</span>
+												</li>
+											))}
+										</ul>
+									</div>
+									<div className="rounded-[2rem] bg-gradient-to-br from-blue-50 to-blue-100/50 p-8 border border-blue-200 shadow-sm">
+										<h4 className="font-black text-2xl text-slate-900 mb-6 flex items-center gap-3">
+											<span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white shadow-md">🎯</span> 
+											Sourcing Methods
+										</h4>
+										<ul className="space-y-4">
+											{sourcingStrategy.slice(0, 7).map((item, i) => (
+												<li key={i} className="flex gap-4 items-start">
+													<div className="mt-2 h-2 w-2 shrink-0 rounded-full bg-blue-600" />
+													<span className="text-slate-700 font-medium leading-relaxed">{item}</span>
+												</li>
+											))}
+										</ul>
+									</div>
+								</div>
+							</div>
+						)}
+					</motion.div>
+				</AnimatePresence>
 			</div>
 		</section>
-	)
+	);
 }
 
 function LeadershipSection() {
 	const leaders = [
-		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-96' },
-		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/Sunil Chavan.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-32' },
-		{ id: '3', name: 'Deshbhushan Jain', role: 'Western Director', imageUrl: '/visionaries/Deshbushan jain.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
-		{ id: '4', name: 'Vikas Patil', role: 'Western Director', imageUrl: '/visionaries/Vikas Patil.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
-		{ id: '5', name: 'Prakash Rathod', role: 'North Western Director', imageUrl: '/visionaries/Prakash Rathod.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
-		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Sarang Chavan.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
-		/* { id: '7', name: 'Babasaheb Khillari', role: 'Board Director', imageUrl: '/visionaries/Untitled design (15).png' }, */
-		// { id: '8', name: 'Dheepan Chakravarthy', role: 'Southern Director', imageUrl: '/visionaries/Dheepan Chakravarthy.png', imageClassName: 'object-cover object-center', imageContainerClassName: 'h-64' },
+		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png' },
+		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/Sunil Chavan.png' },
+		{ id: '3', name: 'Deshbhushan Jain', role: 'Western Director', imageUrl: '/visionaries/Deshbushan jain.png' },
+		{ id: '4', name: 'Vikas Patil', role: 'Western Director', imageUrl: '/visionaries/Vikas Patil.png' },
+		{ id: '5', name: 'Prakash Rathod', role: 'North Western Director', imageUrl: '/visionaries/Prakash Rathod.png' },
+		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Sarang Chavan.png' },
 	];
 
 	return (
-		<section className="py-20 bg-gradient-to-b from-slate-50 to-white">
-			<div className="mx-auto max-w-full px-4 lg:px-8 text-center">
+		<section className="py-24 bg-slate-50 relative overflow-hidden">
+			<div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-blue-100/30 blur-3xl" />
+			<div className="mx-auto max-w-[96rem] px-4 lg:px-8 relative z-10">
 				{/* Section Heading */}
-				<h2 className="text-4xl font-extrabold text-slate-900 mb-4">
-					Our <span className="text-blue-600">Leadership Team</span>
-				</h2>
-				<p className="text-slate-500 mb-12 text-lg">
-					Meet the visionary leaders shaping TSPL Group's future.
-				</p>
+				<div className="mb-16 text-center">
+					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2">
+						<span className="text-sm font-bold tracking-widest text-blue-700 uppercase">Board of Directors</span>
+					</div>
+					<h2 className="text-4xl font-extrabold text-slate-900 mb-4 sm:text-5xl">
+						Our Leadership Team
+					</h2>
+					<p className="text-slate-600 max-w-2xl mx-auto text-lg">
+						Meet the visionary leaders shaping TSPL Group's future with decades of combined experience.
+					</p>
+				</div>
 
-				<div className="flex w-full flex-col gap-6 lg:flex-row lg:justify-center lg:items-stretch lg:gap-2 lg:flex-nowrap">
-					{leaders.map((leader) => (
+				{/* Single Line Symmetrical Grid Layout */}
+				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
+					{leaders.map((leader, i) => (
 						<motion.div
 							key={leader.id}
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
-							viewport={{ once: true, amount: 0.3 }}
-							transition={{ duration: 0.6 }}
-							className="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg transition-all duration-300 group cursor-pointer hover:shadow-2xl lg:flex-1"
+							viewport={{ once: true, amount: 0.2 }}
+							transition={{ duration: 0.5, delay: i * 0.1 }}
+							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200"
 						>
-							{/* Image Container with Hover Effects */}
-							<div className={`relative overflow-hidden bg-slate-100 ${leader.imageContainerClassName || 'h-64'} h-56 sm:h-64 lg:h-64`}>
+							{/* Uniform Aspect Ratio Container */}
+							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200">
 								<img
 									src={leader.imageUrl}
 									alt={leader.name}
-									className={`w-full h-full transition-all duration-500 transform group-hover:scale-110 brightness-100 group-hover:brightness-110 ${leader.imageClassName || 'object-cover object-center'}`}
+									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 									loading="lazy"
 								/>
-								{/* Vibrant gradient overlay on hover */}
-								<div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-							</div>
-
-							{/* Text Details */}
-							<div className="p-3 text-center bg-white relative z-10 transition-colors duration-300 group-hover:bg-blue-50">
-								<h3 className="text-sm font-bold text-slate-900 mb-1 group-hover:text-blue-700 transition-colors line-clamp-2">
-									{leader.name}
-								</h3>
-								<p className="text-xs text-slate-500 font-medium group-hover:text-blue-600 transition-colors line-clamp-2">
-									{leader.role}
-								</p>
+								{/* Gradient Overlay for Text Readability */}
+								<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+								
+								{/* Leadership Info Overlay */}
+								<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
+									<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+										{leader.name}
+									</h3>
+									<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+										{leader.role}
+									</p>
+								</div>
 							</div>
 						</motion.div>
 					))}
@@ -353,7 +597,7 @@ function AboutHero({ resolveAsset }) {
 	)
 
 	return (
-		<section className="relative min-h-[100svh] overflow-hidden pb-20 pt-32">
+		<section className="relative flex flex-col justify-center min-h-[100svh] overflow-hidden pb-20 pt-40">
 			<div className="absolute inset-0">
 				<img src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
@@ -362,7 +606,7 @@ function AboutHero({ resolveAsset }) {
 			<div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-[#2563EB]/10 blur-3xl" />
 			<div className="absolute bottom-0 left-1/4 h-80 w-80 rounded-full bg-[#F97316]/8 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
+			<div className="relative z-10 w-full px-6 md:px-16 lg:px-24 xl:px-32">
 				<div className="max-w-3xl">
 					<div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-md">
 						<span className="text-sm font-semibold text-white">About TSPL Group</span>
@@ -414,42 +658,139 @@ function OurStory({ resolveAsset }) {
 	)
 
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
-			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
-			<div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-[#F97316]/5 blur-3xl" />
+		<section className="relative overflow-hidden bg-[#0A0A0B] py-32 text-white">
+			{/* Mesh Gradient Background */}
+			<div className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none">
+				<div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-[#2563EB] blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
+				<div className="absolute top-[40%] -right-[20%] w-[60%] h-[60%] rounded-full bg-[#F97316] blur-[120px] animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }} />
+				<div className="absolute -bottom-[20%] left-[20%] w-[50%] h-[50%] rounded-full bg-[#8B5CF6] blur-[120px] animate-pulse" style={{ animationDuration: '10s', animationDelay: '4s' }} />
+			</div>
 
-			<div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
-				<div className="mb-16 text-center">
-					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-4 py-2">
-						<span className="text-sm font-bold text-[#2563EB]">OUR STORY</span>
+			{/* Noise Overlay */}
+			<div className="absolute inset-0 opacity-[0.15] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+')] mix-blend-overlay" />
+
+			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+				
+				<div className="mb-16 flex flex-col items-center justify-between gap-8 md:flex-row md:items-end">
+					<div className="max-w-2xl text-center md:text-left">
+						<motion.p 
+							initial={{ opacity: 0, y: 10 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true }}
+							className="mb-4 text-sm font-bold tracking-[0.2em] text-[#F97316] uppercase"
+						>
+							Beyond Traditional Staffing
+						</motion.p>
+						<motion.h2 
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true }}
+							transition={{ delay: 0.1 }}
+							className="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl"
+						>
+							We are the <br className="hidden md:block" />
+							<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] to-[#F97316]">Catalyst.</span>
+						</motion.h2>
 					</div>
-					<h2 className="mb-4 text-4xl font-bold text-[#0F172A] lg:text-5xl">Who We Are</h2>
-					<p className="mx-auto max-w-2xl text-lg text-[#64748B]">
-						A trusted partner in workforce development, helping businesses grow and workers succeed
-					</p>
+					<motion.div 
+						initial={{ opacity: 0, scale: 0.9 }}
+						whileInView={{ opacity: 1, scale: 1 }}
+						viewport={{ once: true }}
+						transition={{ delay: 0.2 }}
+						className="flex h-32 w-32 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white shadow-2xl"
+					>
+						<img src={tsplLogoAsset.url} alt="TSPL Logo" className="w-20 h-20 object-contain" />
+					</motion.div>
 				</div>
 
-				<div className="mb-20 grid items-center gap-12 lg:grid-cols-2">
-					<div className="relative flex h-[460px] items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-slate-50 via-white to-blue-50 shadow-2xl">
-						<div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(37,99,235,0.12),_transparent_55%)]" />
-						<div className="relative z-10 flex h-[360px] w-[360px] max-w-[80%] items-center justify-center rounded-[2rem] border border-white/80 bg-white/90 p-10 shadow-[0_25px_80px_rgba(15,23,42,0.18)] backdrop-blur-sm sm:h-[400px] sm:w-[400px]">
-							<img src={tsplLogoAsset.url} alt={tsplLogoAsset.alt} className="h-full w-full object-contain" loading="lazy" />
+				{/* Asymmetrical Bento Grid */}
+				<div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:grid-rows-2">
+					
+					{/* The Vision Block (Spans 8 cols) */}
+					<motion.div 
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true }}
+						transition={{ delay: 0.1 }}
+						className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-white/10 to-white/5 p-8 backdrop-blur-xl md:col-span-8 md:p-12"
+					>
+						<div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#2563EB]/20 blur-3xl transition-transform duration-700 group-hover:scale-150" />
+						<div className="relative z-10 h-full flex flex-col justify-between gap-8">
+							<Target className="h-10 w-10 text-[#60A5FA]" />
+							<div>
+								<h3 className="mb-4 text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
+									Bridging the gap between raw talent & industry demands.
+								</h3>
+								<p className="text-lg text-white/60 max-w-2xl">
+									We don't just supply manpower; we engineer careers. Through elite programs like NAPS, NATS, and MAPS, we transform untrained individuals into specialized assets that power India's leading organizations.
+								</p>
+							</div>
 						</div>
-					</div>
+					</motion.div>
 
-					<div className="space-y-6">
-						<p className="text-lg leading-relaxed text-[#475569]">
-							<span className="text-2xl font-bold text-[#2563EB]">TSPL Group</span> was founded with a simple yet powerful mission: to bridge the gap between skilled workers and meaningful employment opportunities across India.
-						</p>
-						<p className="text-lg leading-relaxed text-[#475569]">
-							We believe every worker deserves the chance to learn, grow, and succeed. Through our government-authorized programs like NAPS, NATS, and MAPS, we have helped over 40,000 individuals find their path to success.
-						</p>
-						<p className="text-lg leading-relaxed text-[#475569]">
-							Our approach is simple: we train workers with real-world skills, connect them with trusted employers, and support them throughout their career journey.
-						</p>
-					</div>
+					{/* The Impact Stat (Spans 4 cols) */}
+					<motion.div 
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true }}
+						transition={{ delay: 0.2 }}
+						className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#F97316] p-10 md:col-span-4"
+					>
+						{/* Subtle pattern overlay */}
+						<div className="absolute inset-0 bg-black/10 opacity-30 mix-blend-overlay" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '10px 10px' }} />
+						<div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/20 blur-2xl" />
+						<div className="relative z-10 h-full flex flex-col items-center justify-center text-center">
+							<div className="mb-2 text-6xl font-black tracking-tighter text-white sm:text-7xl md:text-8xl">40K<span className="text-[#FFE4E6]">+</span></div>
+							<div className="text-sm font-bold uppercase tracking-[0.3em] text-[#FFF7ED]">Lives Elevated</div>
+						</div>
+					</motion.div>
+
+					{/* Image / Graphic Block (Spans 5 cols) */}
+					<motion.div 
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true }}
+						transition={{ delay: 0.3 }}
+						className="group relative h-80 overflow-hidden rounded-[2.5rem] bg-white md:col-span-5 md:h-auto"
+					>
+						<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
+						<img src="/ABOUT.jpeg" alt="Workers" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+						<div className="absolute bottom-0 left-0 z-20 p-8">
+							<div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-md">
+								<span className="h-2 w-2 rounded-full bg-[#4ADE80] animate-pulse" />
+								<span className="text-xs font-bold tracking-wider text-white uppercase">Active Pan-India</span>
+							</div>
+							<h3 className="text-2xl font-bold text-white sm:text-3xl">450+ Partner <br/>Companies</h3>
+						</div>
+					</motion.div>
+
+					{/* The Method Block (Spans 7 cols) */}
+					<motion.div 
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true }}
+						transition={{ delay: 0.4 }}
+						className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl md:col-span-7 md:p-12 flex flex-col justify-center"
+					>
+						<div className="grid gap-6 sm:grid-cols-2">
+							<div className="rounded-3xl border border-white/5 bg-white/5 p-8 transition-colors hover:bg-white/10">
+								<div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2563EB]/20">
+									<Lightbulb className="h-7 w-7 text-[#60A5FA]" />
+								</div>
+								<h4 className="mb-3 text-2xl font-bold text-white">Real-World Skills</h4>
+								<p className="text-base text-white/60 leading-relaxed">We focus entirely on practical, on-the-job training that translates directly to shop-floor success.</p>
+							</div>
+							<div className="rounded-3xl border border-white/5 bg-white/5 p-8 transition-colors hover:bg-white/10">
+								<div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F97316]/20">
+									<Building2 className="h-7 w-7 text-[#FB923C]" />
+								</div>
+								<h4 className="mb-3 text-2xl font-bold text-white">End-to-End Support</h4>
+								<p className="text-base text-white/60 leading-relaxed">From strict compliance and payroll to welfare, we stand as an unwavering pillar for both workers and employers.</p>
+							</div>
+						</div>
+					</motion.div>
+
 				</div>
-
 			</div>
 		</section>
 	)
@@ -493,71 +834,103 @@ function OurValues() {
 }
 
 function Achievements() {
+	const sectionRef = useRef(null);
+	const [isMobile, setIsMobile] = useState(false);
+
+	useEffect(() => {
+		const checkMobile = () => setIsMobile(window.innerWidth < 768);
+		// Check on mount
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+		return () => window.removeEventListener('resize', checkMobile);
+	}, []);
+	
+	const { scrollYProgress } = useScroll({
+		target: sectionRef,
+		offset: ["start start", "end end"]
+	});
+
+	const xTransform = useTransform(scrollYProgress, [0, 1], ["10%", "-70%"]);
+	const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
 	return (
-		<section className="relative overflow-hidden bg-[#0F172A] py-20 lg:py-28">
-			<div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/20 blur-3xl" />
-			<div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-[#F97316]/10 blur-3xl" />
+		<section ref={sectionRef} className="relative md:h-[300vh] bg-slate-50 py-20 md:py-0">
+			<div className="md:sticky md:top-0 flex flex-col justify-center md:h-screen overflow-hidden md:pt-28 md:pb-10">
+				{/* Decorative Background Elements */}
+				<div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #0F172A 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+				<div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-400/20 blur-[120px] pointer-events-none" />
+				<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-400/20 blur-[120px] pointer-events-none" />
 
-			<div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
-				<div className="mb-16 text-center">
-					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2">
-						<span className="text-sm font-bold text-white">OUR JOURNEY</span>
-					</div>
-					<h2 className="mb-4 text-4xl font-bold text-white lg:text-5xl">Our Achievements</h2>
-					<p className="mx-auto max-w-2xl text-lg text-white/70">A decade of helping workers and businesses grow together</p>
-				</div>
-
-				<div className="mb-20 grid grid-cols-2 gap-6 lg:grid-cols-4">
-					{achievements.map((item, i) => (
-						<div key={item.label} className="group rounded-2xl border border-white/10 bg-white/5 p-6 text-center transition-all duration-300 hover:bg-white/10" style={{ animationDelay: `${i * 100}ms` }}>
-							<div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-[#2563EB]/20 transition-transform group-hover:scale-110">
-								<item.icon className="h-7 w-7 text-[#2563EB]" />
+				<div className="relative z-10 mx-auto w-full max-w-[96rem] px-6 lg:px-8 flex flex-col h-full justify-between gap-12">
+					
+					{/* Top Section: Header & Stats */}
+					<div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-10">
+						<div className="max-w-xl">
+							<div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 backdrop-blur-md">
+								<span className="text-xs font-bold tracking-widest text-blue-700 uppercase">Our Journey</span>
 							</div>
-							<p className="mb-2 text-3xl font-bold text-white lg:text-4xl">{item.number}</p>
-							<p className="text-white/60">{item.label}</p>
+							<h2 className="text-4xl font-black text-slate-900 sm:text-5xl lg:text-6xl tracking-tight">Our Achievements</h2>
+							<p className="mt-4 text-lg text-slate-600">A decade of helping workers and businesses grow together.</p>
 						</div>
-					))}
-				</div>
+						
+						{/* Stats Grid */}
+						<div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full lg:w-auto shrink-0">
+							{achievements.map((item, i) => (
+								<div key={item.label} className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+									<item.icon className="mb-3 h-6 w-6 text-blue-600" />
+									<p className="text-2xl font-bold text-slate-900">{item.number}</p>
+									<p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{item.label}</p>
+								</div>
+							))}
+						</div>
+					</div>
 
-				<div className="relative">
-					<h3 className="mb-12 text-center text-2xl font-bold text-white">Our Timeline</h3>
-					<div className="absolute bottom-0 left-1/2 top-20 hidden w-1 -translate-x-1/2 bg-gradient-to-b from-[#2563EB] via-[#F97316] to-[#2563EB] lg:block" />
+					{/* Middle Section: Animated Timeline */}
+					<div className="relative w-full md:h-[350px] lg:h-[400px] flex items-center my-10 md:my-auto">
+						
+						{/* Base Tracks */}
+						<div className="hidden md:block absolute top-1/2 left-0 w-full h-px bg-slate-300 -translate-y-1/2" />
+						<div className="md:hidden absolute top-0 left-6 w-px h-full bg-slate-300" />
+						
+						{/* Animated Fill Tracks */}
+						{!isMobile && (
+							<motion.div 
+								className="hidden md:block absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-orange-400 to-orange-500 -translate-y-1/2 origin-left shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+								style={{ scaleX, width: '100%' }}
+							/>
+						)}
 
-					<div className="relative space-y-8 lg:space-y-0">
-						{milestones.map((milestone, i) => (
-							<motion.div
-								key={`${milestone.year}-${milestone.title}`}
-								initial={{ opacity: 0, y: 20 }}
-								whileInView={{ opacity: 1, y: 0 }}
-								viewport={{ once: true, amount: 0.3 }}
-								transition={{ duration: 0.6, delay: i * 0.1 }}
-								className={`flex flex-col items-center gap-4 w-full lg:flex-row lg:gap-8 lg:w-auto ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
-							>
-								<div className={`w-full lg:flex-1 ${i % 2 === 0 ? 'lg:text-right' : 'lg:text-left'}`}>
-									<div className={`min-h-[180px] w-full lg:w-auto inline-block rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:bg-white/10 flex flex-col justify-between ${i % 2 === 0 ? 'lg:ml-auto' : 'lg:mr-auto'}`}>
-										<p className="mb-2 text-sm font-bold text-[#F97316]">{milestone.year}</p>
-										<h4 className="mb-2 text-xl font-bold text-white">{milestone.title}</h4>
-										<p className="text-white/60">{milestone.description}</p>
+						{/* Milestones Container */}
+						<motion.div 
+							className="flex flex-col md:flex-row gap-8 md:gap-12 lg:gap-24 relative md:absolute md:left-0 items-start md:items-center w-full md:w-auto px-4 md:px-[5vw] lg:px-[10vw]"
+							style={isMobile ? {} : { x: xTransform }}
+						>
+							{milestones.map((milestone, i) => (
+								<div key={i} className="relative flex flex-col items-start md:items-center w-full md:w-72 lg:w-80 shrink-0 group pl-12 md:pl-0">
+									{/* Node on the line */}
+									<div className="absolute top-8 md:top-1/2 left-2 md:left-1/2 md:-translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-4 border-white bg-orange-500 z-20 shadow-md transition-transform duration-300 group-hover:scale-150" />
+									
+									{/* Card (Alternating top/bottom on Desktop only) */}
+									<div className={`w-full p-6 sm:p-8 rounded-[2rem] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 md:mb-0 md:mt-0 ${!isMobile && i % 2 === 0 ? 'md:mb-36 lg:mb-48' : ''} ${!isMobile && i % 2 !== 0 ? 'md:mt-36 lg:mt-48' : ''}`}>
+										<p className="mb-2 text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-orange-500">{milestone.year}</p>
+										<h4 className="mb-3 text-xl font-bold text-slate-900">{milestone.title}</h4>
+										<p className="text-slate-600 text-sm leading-relaxed">{milestone.description}</p>
 									</div>
 								</div>
-
-								<div className="z-10 hidden h-6 w-6 shrink-0 rounded-full border-4 border-[#0F172A] bg-[#2563EB] lg:block" />
-								<div className="hidden flex-1 lg:block" />
-							</motion.div>
-						))}
+							))}
+						</motion.div>
 					</div>
+
+					{/* Bottom Section: CTA */}
+					<div className="mt-8 md:mt-auto flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-blue-100 bg-blue-50 px-6 py-4 shadow-sm mx-auto w-full max-w-4xl">
+						<h3 className="text-lg font-bold text-slate-900 text-center sm:text-left">Ready to be part of our success story?</h3>
+						<Link to="/contact-us" className="shrink-0 group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-3 text-xs font-bold uppercase tracking-widest text-white shadow-md transition-all hover:scale-105 hover:shadow-orange-500/25">
+							Join Us Today
+							<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+						</Link>
+					</div>
+
 				</div>
-
-				{/* Upstream version does not include extra panels here */}
-
-				<div className="mt-20 text-center">
-					<p className="mb-6 text-xl text-white/70">Ready to be part of our success story?</p>
-					<Link to="/contact-us" className="rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/40 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
-						Join Us Today
-					</Link>
-				</div>
-
 			</div>
 		</section>
 	)

@@ -620,7 +620,7 @@ function ContractCTA({ resolveAsset }) {
 
 						<div className="space-y-4">
 							{[
-								{ icon: Phone, label: 'Call Us', value: '+91 98765 43210', sublabel: 'Mon-Sat 9am-7pm' },
+								{ icon: Phone, label: 'Call Us', value: '+91 95615 04911', sublabel: 'Mon-Sat 9am-7pm' },
 								{ icon: Mail, label: 'Email Us', value: 'contract@tsplgroup.in', sublabel: 'Quick Response' },
 								{ icon: MapPin, label: 'Visit Us', value: 'Chakan, Pune, Maharashtra', sublabel: 'Head Office' },
 							].map((contact) => {
@@ -653,7 +653,7 @@ function ContractCTA({ resolveAsset }) {
 								</div>
 
 								<div className="grid gap-4 sm:grid-cols-2">
-									<input type="tel" required placeholder="+91 98765 43210" className="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
+									<input type="tel" required placeholder="+91 95615 04911" className="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
 									<input type="email" required placeholder="you@company.com" className="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
 								</div>
 

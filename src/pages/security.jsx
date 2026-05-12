@@ -183,8 +183,8 @@ function SecurityHero({ resolveAsset }) {
 						<a href="#enquiry" className="inline-flex w-full items-center justify-center rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C] hover:shadow-2xl sm:w-auto">
 							Get Security Now
 						</a>
-						<a href="tel:+919876543210" className="inline-flex w-full items-center justify-center rounded-xl border-2 border-white/40 px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:bg-white/10 sm:w-auto">
-							Call: +91 98765 43210
+						<a href="tel:+919561504911" className="inline-flex w-full items-center justify-center rounded-xl border-2 border-white/40 px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:bg-white/10 sm:w-auto">
+							Call: +91 95615 04911
 						</a>
 					</div>
 				</div>
@@ -372,7 +372,7 @@ function OurProcess() {
 						<p className="text-lg text-[#0F172A]">
 							<span className="font-bold">Ready to get started?</span> Call us now or fill the form below
 						</p>
-						<a href="tel:+919876543210" className="inline-flex items-center gap-2 rounded-xl bg-[#F97316] px-6 py-3 font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
+						<a href="tel:+919561504911" className="inline-flex items-center gap-2 rounded-xl bg-[#F97316] px-6 py-3 font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
 							<Phone className="h-5 w-5" />
 							Call Now
 						</a>

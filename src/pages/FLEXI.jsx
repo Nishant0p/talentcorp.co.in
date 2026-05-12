@@ -18,6 +18,18 @@ import {
 	User,
 	UserCheck,
 	XCircle,
+	Zap,
+	Wrench,
+	Flame,
+	ShowerHead,
+	Computer,
+	Snowflake,
+	Car,
+	Hammer,
+	Paintbrush,
+	Cog,
+	Factory,
+	Plug,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
@@ -314,48 +326,49 @@ function FlexiItiEligibility() {
 				</div>
 
 				<div className="mb-16 grid gap-8 lg:grid-cols-2">
-				<div className="rounded-3xl border border-[#22C55E]/20 bg-[#22C55E]/5 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#22C55E]/50 hover:shadow-lg hover:bg-[#22C55E]/10">
-					<div className="mb-6 flex items-center gap-3">
-						<div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#22C55E]/20">
-							<CheckCircle2 className="h-6 w-6 text-[#22C55E]" />
+					<div className="rounded-3xl border border-[#22C55E]/20 bg-[#22C55E]/5 p-8">
+						<div className="mb-6 flex items-center gap-3">
+							<div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#22C55E]/20">
+								<CheckCircle2 className="h-6 w-6 text-[#22C55E]" />
+							</div>
+							<h3 className="text-2xl font-bold text-[#0F172A]">You Can Join If...</h3>
 						</div>
-						<h3 className="text-2xl font-bold text-[#0F172A]">You Can Join If...</h3>
+
+						<ul className="space-y-4">
+							{eligibleItems.map((item) => (
+								<li key={item} className="flex items-start gap-3">
+									<CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-[#22C55E]" />
+									<span className="text-lg text-[#0F172A]">{item}</span>
+								</li>
+							))}
+						</ul>
 					</div>
 
-					<ul className="space-y-4">
-						{eligibleItems.map((item) => (
-							<li key={item} className="flex items-start gap-3">
-								<CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-[#22C55E]" />
-								<span className="text-lg text-[#0F172A]">{item}</span>
-							</li>
-						))}
-					</ul>
+					<div className="rounded-3xl border border-[#EF4444]/20 bg-[#EF4444]/5 p-8">
+						<div className="mb-6 flex items-center gap-3">
+							<div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#EF4444]/20">
+								<XCircle className="h-6 w-6 text-[#EF4444]" />
+							</div>
+							<h3 className="text-2xl font-bold text-[#0F172A]">Cannot Join If...</h3>
+						</div>
+
+						<ul className="space-y-4">
+							{notEligibleItems.map((item) => (
+								<li key={item} className="flex items-start gap-3">
+									<XCircle className="mt-0.5 h-6 w-6 shrink-0 text-[#EF4444]" />
+									<span className="text-lg text-[#0F172A]">{item}</span>
+								</li>
+							))}
+						</ul>
+
+						<div className="mt-6 rounded-xl border border-[#F97316]/30 bg-white p-4">
+							<p className="text-sm text-[#64748B]">
+								<span className="font-bold text-[#F97316]">Note:</span> If you are below 8th pass, some trades like Electrician still accept you. Contact us to know more.
+							</p>
+						</div>
+					</div>
 				</div>
 
-				<div className="rounded-3xl border border-[#EF4444]/20 bg-[#EF4444]/5 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#EF4444]/50 hover:shadow-lg hover:bg-[#EF4444]/10">
-					<div className="mb-6 flex items-center gap-3">
-						<div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#EF4444]/20">
-							<XCircle className="h-6 w-6 text-[#EF4444]" />
-						</div>
-						<h3 className="text-2xl font-bold text-[#0F172A]">Cannot Join If...</h3>
-					</div>
-
-					<ul className="space-y-4">
-						{notEligibleItems.map((item) => (
-							<li key={item} className="flex items-start gap-3">
-								<XCircle className="mt-0.5 h-6 w-6 shrink-0 text-[#EF4444]" />
-								<span className="text-lg text-[#0F172A]">{item}</span>
-							</li>
-						))}
-					</ul>
-
-					<div className="mt-6 rounded-xl border border-[#F97316]/30 bg-white p-4">
-						<p className="text-sm text-[#64748B]">
-							<span className="font-bold text-[#F97316]">Note:</span> If you are below 8th pass, some trades like Electrician still accept you. Contact us to know more.
-						</p>
-					</div>
-				</div>
-			</div>
 				<div className="rounded-3xl bg-[#0F172A] p-8 lg:p-12">
 					<h3 className="mb-8 text-center text-2xl font-bold text-white lg:text-3xl">Documents You Need</h3>
 					<p className="mx-auto mb-10 max-w-2xl text-center text-white/70">Keep these documents ready before applying. We will help you if any document is missing.</p>
@@ -427,20 +440,23 @@ function FlexiItiProcess() {
 					<h3 className="mb-8 text-center text-2xl font-bold text-[#0F172A]">Popular Trades You Can Learn</h3>
 					<div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
 						{[
-							{ name: 'Electrician' },
-							{ name: 'Fitter' },
-							{ name: 'Welder' },
-							{ name: 'Plumber' },
-							{ name: 'Computer' },
-							{ name: 'AC Mechanic' },
-							{ name: 'Motor Mechanic' },
-							{ name: 'Carpenter' },
-							{ name: 'Painter' },
-							{ name: 'Turner' },
-							{ name: 'Machinist' },
-							{ name: 'Wireman' }
-						].map((trade) => (
-							<div key={trade.name} className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/40 hover:shadow-md group">
+							{ name: 'Electrician', icon: Zap },
+							{ name: 'Fitter', icon: Wrench },
+							{ name: 'Welder', icon: Flame },
+							{ name: 'Plumber', icon: ShowerHead },
+							{ name: 'Computer', icon: Computer },
+							{ name: 'AC Mechanic', icon: Snowflake },
+							{ name: 'Motor Mechanic', icon: Car },
+							{ name: 'Carpenter', icon: Hammer },
+							{ name: 'Painter', icon: Paintbrush },
+							{ name: 'Turner', icon: Cog },
+							{ name: 'Machinist', icon: Factory },
+							{ name: 'Wireman', icon: Plug },
+						].map((trade, index) => (
+							<div key={trade.name} className="group flex flex-col items-center rounded-xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/40 hover:shadow-md">
+								<div className={`mb-3 flex h-14 w-14 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 ${index % 2 === 0 ? 'bg-[#F97316]/10 text-[#F97316]' : 'bg-[#2563EB]/10 text-[#2563EB]'}`}>
+									<trade.icon className="h-7 w-7" />
+								</div>
 								<span className="text-center text-sm font-medium text-[#0F172A]">{trade.name}</span>
 							</div>
 						))}

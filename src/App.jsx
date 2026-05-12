@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowUp } from 'lucide-react'
 import './App.css'
 import GlobalTextureOverlay from './components/GlobalTextureOverlay'
 import AchimentPage from './pages/achiment'
@@ -31,6 +32,7 @@ const NewsDetailPage = lazy(() => import('./pages/news/NewsDetailPage'))
 const ArticlePage = lazy(() => import('./pages/ArticlePage'))
 const TermsPage = lazy(() => import('./pages/terms'))
 const PrivacyPolicyPage = lazy(() => import('./pages/privacy'))
+const YatraPage = lazy(() => import('./pages/yatra'))
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -42,6 +44,47 @@ function ScrollToTop() {
   }, [pathname])
 
   return null
+}
+
+function ScrollToTopButton() {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.scrollY > 300) {
+        setIsVisible(true)
+      } else {
+        setIsVisible(false)
+      }
+    }
+
+    window.addEventListener('scroll', toggleVisibility)
+    return () => window.removeEventListener('scroll', toggleVisibility)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5 }}
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-[100] p-4 rounded-full bg-blue-600 text-white shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="w-6 h-6" />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  )
 }
 
 function PageLoader({ showLogo = false }) {
@@ -101,6 +144,7 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="jobs" path="/jobs" element={<JobsPage />} />
           <Route key="news-events" path="/news-events" element={<NewsEventsPage />} />
           <Route key="news-detail" path="/news-events/:newsId" element={<NewsDetailPage />} />
+          <Route key="yatra" path="/yatra" element={<YatraPage />} />
           <Route key="medhavi-article" path="/news-events/medhavi-flexi-iti" element={<ArticlePage />} />
           <Route key="terms-and-conditions" path="/terms-and-conditions" element={<TermsPage />} />
           <Route key="terms" path="/terms" element={<TermsPage />} />
@@ -114,22 +158,37 @@ function AnimatedRoutes({ isLoading }) {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true)
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  )
+}
+
+function AppContent() {
+  const location = useLocation()
+  const skipMainPreloader = location.pathname === '/yatra'
+  const [isLoading, setIsLoading] = useState(() => !skipMainPreloader)
 
   useEffect(() => {
+    if (!isLoading) {
+      return undefined
+    }
+
     const timer = window.setTimeout(() => {
       setIsLoading(false)
     }, PRELOADER_DURATION_MS)
 
     return () => window.clearTimeout(timer)
-  }, [])
+  }, [isLoading])
 
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
+      <ScrollToTopButton />
       <div className="page-shell">
         <GlobalTextureOverlay />
-        {isLoading && (
+        {isLoading && !skipMainPreloader && (
           <div className="preloader" role="status" aria-label="Loading TSPL website">
             <div className="preloader-layer preloader-layer--orange" aria-hidden="true" />
             <div className="preloader-layer preloader-layer--blue" aria-hidden="true" />
@@ -144,12 +203,12 @@ function App() {
         )}
 
         <main className={`home ${isLoading ? 'home--hidden' : ''}`}>
-          <Suspense fallback={<PageLoader />}>
+          <Suspense fallback={skipMainPreloader ? null : <PageLoader />}>
             <AnimatedRoutes isLoading={isLoading} />
           </Suspense>
         </main>
       </div>
-    </BrowserRouter>
+    </>
   )
 }
 

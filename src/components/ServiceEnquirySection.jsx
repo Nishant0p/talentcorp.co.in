@@ -135,12 +135,12 @@ export default function ServiceEnquirySection({ serviceName }) {
 							<h3 className="mb-6 text-xl font-bold">Quick Contact</h3>
 
 							<div className="space-y-6">
-								<a href="tel:+919876543210" className="group flex items-start gap-4">
-									<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#2563EB] transition-colors group-hover:bg-[#F97316]">
-										<Phone className="h-5 w-5" />
+								<a href="tel:+917397971322" className="group flex items-start gap-4">
+									<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-100 transition-colors group-hover:bg-orange-500">
+										<Phone className="h-6 w-6 text-orange-600 transition-colors group-hover:text-white" />
 									</div>
 									<div>
-										<p className="text-sm text-white/70">Call Us</p>
+										<p className="text-sm font-medium text-slate-500">Call for instant quote</p>
 										<p className="text-lg font-bold">+91 7397971322</p>
 									</div>
 								</a>
@@ -170,7 +170,7 @@ export default function ServiceEnquirySection({ serviceName }) {
 						<div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-xl">
 							<h3 className="mb-4 text-lg font-bold text-[#0F172A]">When You Enquire</h3>
 							<div className="space-y-3">
-								{['Free consultation call', 'Customized solution', 'Transparent quotation', 'Dedicated follow-up'].map((item) => (
+								{['Free consultation call', 'Customized solution', 'Dedicated follow-up'].map((item) => (
 									<div key={item} className="flex items-center gap-3">
 										<CheckCircle className="h-5 w-5 text-[#2563EB]" />
 										<span className="text-[#64748B]">{item}</span>

@@ -15,23 +15,7 @@ const benefits = [
 		'Apprenticeship stipend and related apprentice expenses can be booked under CSR as per policy.',
 ]
 
-const sectors = [
-		{
-			icon: Factory,
-			title: 'Manufacturing',
-			description: 'Production units and plant operations can engage apprentices across roles.',
-		},
-		{
-			icon: Building2,
-			title: 'Service Sector',
-			description: 'Service-led businesses can train youth while building talent pipelines.',
-		},
-		{
-			icon: Wrench,
-			title: 'Repair Sector',
-			description: 'Technical repair and maintenance units can onboard and train apprentices.',
-		},
-]
+
 
 function MapsHero() {
 	return (
@@ -58,12 +42,11 @@ function MapsHero() {
 							development opportunities for students and unemployed youth.
 						</p>
 
-						<div className="grid gap-3 sm:grid-cols-2">
+						<div className="flex flex-col gap-3">
 							{[
-								'Existing EPP scheme has been converted into MAPS scheme.',
-								'MAPS portal rollout is expected this month.',
-								'Financial assistance available for establishments engaging apprentices.',
-								'Training cost reimbursement includes apprentice stipend support.',
+								'MAPS has already been merged with the NAPS scheme.',
+								'Maharashtra students will receive ₹3,500 per month for 1 year.',
+								'Available for existing residents of Maharashtra.',
 							].map((point) => (
 								<div key={point} className="group flex items-start gap-2 rounded-lg border border-white/15 bg-white/10 p-3 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/35 hover:bg-white/20 hover:shadow-lg hover:shadow-black/20">
 									<CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#22C55E] transition-transform duration-300 group-hover:scale-110" />
@@ -90,56 +73,7 @@ function MapsHero() {
 	)
 }
 
-function MapsProgramDetails() {
-	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
-			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
-			<div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-[#F97316]/5 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="mb-14 text-center">
-					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-4 py-2">
-						<CalendarClock className="h-4 w-4 text-[#2563EB]" />
-						<span className="text-sm font-bold text-[#2563EB]">SCHEME STRUCTURE</span>
-					</div>
-					<h2 className="text-4xl font-bold text-[#0F172A] lg:text-5xl">How MAPS Supports Employers and Youth</h2>
-				</div>
-
-				<div className="grid gap-8 lg:grid-cols-3">
-					<div className="group rounded-3xl border border-slate-200 bg-slate-50 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#F97316]/30 hover:shadow-xl">
-						<BadgeIndianRupee className="mb-4 h-9 w-9 text-[#F97316]" />
-						<h3 className="mb-2 text-2xl font-bold text-[#0F172A]">Financial Incentive</h3>
-						<p className="leading-relaxed text-[#475569]">The scheme reimburses training costs and supports stipend structure to encourage wider apprenticeship adoption.</p>
-					</div>
-
-					<div className="group rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/30 hover:shadow-xl">
-						<Users className="mb-4 h-9 w-9 text-[#2563EB]" />
-						<h3 className="mb-2 text-2xl font-bold text-[#0F172A]">Youth Skill Development</h3>
-						<p className="leading-relaxed text-[#475569]">Students and unemployed youth gain practical exposure and improve employability through structured apprenticeship training.</p>
-					</div>
-
-					<div className="group rounded-3xl border border-slate-200 bg-slate-50 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#22C55E]/30 hover:shadow-xl">
-						<Handshake className="mb-4 h-9 w-9 text-[#22C55E]" />
-						<h3 className="mb-2 text-2xl font-bold text-[#0F172A]">Industry Alignment</h3>
-						<p className="leading-relaxed text-[#475569]">Apprenticeship roles are designed around real workplace needs so organizations can develop role-ready talent internally.</p>
-					</div>
-				</div>
-
-				<div className="mt-8 grid gap-6 rounded-3xl border border-slate-200 bg-white p-8 lg:grid-cols-3">
-					{sectors.map((sector) => (
-						<div key={sector.title} className="group rounded-2xl border border-slate-100 bg-slate-50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/30 hover:bg-white hover:shadow-md">
-							<div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-[#2563EB]/10">
-								<sector.icon className="h-5 w-5 text-[#2563EB] transition-transform duration-300 group-hover:scale-110" />
-							</div>
-							<h4 className="mb-1 text-lg font-bold text-[#0F172A]">{sector.title}</h4>
-							<p className="text-sm text-[#64748B]">{sector.description}</p>
-						</div>
-					))}
-				</div>
-			</div>
-		</section>
-	)
-}
 
 function MapsBenefits() {
 	return (
@@ -154,7 +88,7 @@ function MapsBenefits() {
 					<h2 className="text-4xl font-bold text-[#0F172A] lg:text-5xl">Key Benefits for Employers</h2>
 				</div>
 
-				<div className="grid gap-4 md:grid-cols-2">
+				<div className="grid gap-4 md:grid-cols-3">
 					{benefits.map((item) => (
 						<div key={item} className="group rounded-xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2563EB]/30 hover:shadow-md">
 							<div className="flex items-start gap-3">
@@ -178,7 +112,6 @@ export default function MapsPage() {
 		<div className="bg-white text-[#0F172A]">
 			<Navbar />
 			<MapsHero />
-			<MapsProgramDetails />
 			<MapsBenefits />
 			<ServiceEnquirySection serviceName="MAPS" />
 			<Footer />

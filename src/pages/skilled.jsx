@@ -150,8 +150,8 @@ function SkilledJobHero({ resolveAsset }) {
 							Get Skilled Workers
 							<ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
 						</Link>
-						<a href="tel:+919876543210" className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-white/5 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/50 hover:bg-white/10">
-							Call Now: +91 98765 43210
+						<a href="tel:+919561504911" className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-white/5 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/50 hover:bg-white/10">
+							Call Now: +91 95615 04911
 						</a>
 					</div>
 
@@ -409,9 +409,9 @@ function HowItWorks() {
 								Start Now - Free Enquiry
 								<ArrowRight className="h-5 w-5" />
 							</a>
-							<a href="tel:+919876543210" className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-[#0F172A]/10 bg-white px-8 py-4 text-lg font-bold text-[#0F172A] transition-all duration-300 hover:border-[#2563EB] hover:text-[#2563EB]">
+							<a href="tel:+919561504911" className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-[#0F172A]/10 bg-white px-8 py-4 text-lg font-bold text-[#0F172A] transition-all duration-300 hover:border-[#2563EB] hover:text-[#2563EB]">
 								<Phone className="h-5 w-5" />
-								Call: +91 98765 43210
+								Call: +91 95615 04911
 							</a>
 						</div>
 					</div>
@@ -501,9 +501,9 @@ function Enquiry() {
 						<h3 className="mb-4 font-medium text-white">Need Help?</h3>
 
 						<div className="space-y-3">
-							<a href="tel:+919876543210" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+							<a href="tel:+919561504911" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
 								<Phone className="h-5 w-5 text-blue-100" />
-								<span className="font-medium">+91 98765 43210</span>
+								<span className="font-medium">+91 95615 04911</span>
 							</a>
 
 							<a href="mailto:support@tsplgroup.in" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
