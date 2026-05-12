@@ -403,71 +403,138 @@ function AchievementsGallery() {
 }
 
 function AchievementsCta() {
-	const { isVisible, sectionRef } = useSectionReveal(0.2)
+	const { isVisible, sectionRef } = useSectionReveal(0.1)
 
 	return (
-		<section ref={sectionRef} className="relative overflow-hidden bg-white py-16 md:py-24">
-			<div className="absolute inset-0">
-				<div className="absolute left-1/2 top-0 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-br from-blue-100 via-white to-orange-100 blur-3xl opacity-50" />
+		<section ref={sectionRef} className="relative flex items-center overflow-hidden bg-[#0A0A0B] px-6 lg:h-[100svh] lg:min-h-[700px] lg:px-8">
+			{/* Animated Mesh Gradient Background */}
+			<div className="pointer-events-none absolute inset-0">
+				<div className="absolute -left-[15%] -top-[20%] h-[60%] w-[60%] rounded-full bg-[#2563EB] opacity-[0.07] blur-[120px]" style={{ animation: 'pulse 8s ease-in-out infinite' }} />
+				<div className="absolute -right-[10%] bottom-[5%] h-[50%] w-[50%] rounded-full bg-[#F97316] opacity-[0.07] blur-[120px]" style={{ animation: 'pulse 10s ease-in-out infinite 3s' }} />
+				<div className="absolute left-[50%] top-[50%] h-[25%] w-[25%] rounded-full bg-[#8B5CF6] opacity-[0.05] blur-[100px]" style={{ animation: 'pulse 12s ease-in-out infinite 1s' }} />
 			</div>
+			{/* Dot Grid */}
+			<div className="pointer-events-none absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
-			<div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-					<h2 className="mb-4 text-4xl font-bold text-gray-900 lg:text-5xl">
-						Be Part of Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-orange-500">Success Story</span>
-					</h2>
-					<p className="mx-auto max-w-2xl text-lg text-gray-600">
-						Join hundreds of companies who have transformed their workforce management with TSPL Group.
-					</p>
-				</div>
-
-				<div className={`grid gap-8 transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'} md:grid-cols-3`}>
-					<div className="group rounded-3xl bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/30">
-						<div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 transition-transform group-hover:scale-110">
-							<Building2 className="h-7 w-7" />
+			<div className="relative z-10 mx-auto w-full max-w-7xl py-16 lg:py-0">
+				<div className={`grid gap-8 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} lg:grid-cols-2 lg:gap-12`}>
+					
+					{/* Left Column — Headline + CTA Cards */}
+					<div className="flex flex-col justify-center">
+						<div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-md">
+							<Rocket className="h-4 w-4 text-[#F97316]" />
+							<span className="text-xs font-bold uppercase tracking-widest text-[#F97316]">Join Our Network</span>
 						</div>
-						<h3 className="mb-4 text-2xl font-bold">For Companies</h3>
-						<p className="mb-6 text-blue-100">
-							Get reliable manpower, payroll management, and statutory compliance - all under one roof.
+						<h2 className="mb-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+							Be Part of Our{' '}
+							<span className="bg-gradient-to-r from-[#60A5FA] via-[#A78BFA] to-[#F97316] bg-clip-text text-transparent">
+								Success Story
+							</span>
+						</h2>
+						<p className="mb-10 max-w-lg text-base text-gray-400 leading-relaxed">
+							Join hundreds of companies who have transformed their workforce management with TSPL Group.
 						</p>
-						<Link to="/b2b" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 font-semibold text-blue-600 transition-colors hover:bg-blue-50">
-							Partner With Us
-							<ArrowRight className="h-4 w-4" />
-						</Link>
-					</div>
 
-					<div className="group rounded-3xl bg-gradient-to-br from-orange-500 to-orange-600 p-8 text-white transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/30">
-						<div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 transition-transform group-hover:scale-110">
-							<Users className="h-7 w-7" />
-						</div>
-						<h3 className="mb-4 text-2xl font-bold">For Job Seekers</h3>
-						<p className="mb-6 text-orange-100">
-							Find your dream job with India&apos;s leading manpower company. We have opportunities for all skill levels.
-						</p>
-						<Link to="/skilled" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 font-semibold text-orange-600 transition-colors hover:bg-orange-50">
-							Browse Jobs
-							<ArrowRight className="h-4 w-4" />
-						</Link>
-					</div>
-
-					<div className="group rounded-3xl border-2 border-gray-100 bg-white p-8 transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:shadow-2xl">
-						<div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 transition-transform group-hover:scale-110">
-							<Trophy className="h-7 w-7 text-white" />
-						</div>
-						<h3 className="mb-4 text-2xl font-bold text-gray-900">Get In Touch</h3>
-						<div className="space-y-4">
-							<a href="tel:+91 7397971322" className="flex items-center gap-3 text-gray-600 transition-colors hover:text-blue-600">
-								<Phone className="h-5 w-5" />
-								<span>+91  7397971322</span>
-							</a>
-							<a href="mailto:info@tsplgroup.in" className="flex items-center gap-3 text-gray-600 transition-colors hover:text-blue-600">
-								<Mail className="h-5 w-5" />
-								<span>info@tsplgroup.in</span>
-							</a>
-							<div className="flex items-start gap-3 text-gray-600">
-								<MapPin className="mt-0.5 h-5 w-5" />
-								<span>Chakan, Pune, Maharashtra, India</span>
+						{/* Two CTA Cards Side-by-Side */}
+						<div className="grid gap-4 sm:grid-cols-2">
+							{/* For Companies */}
+							<div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-500 hover:border-[#2563EB]/40 hover:bg-white/[0.06]">
+								<div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#2563EB] opacity-10 blur-2xl transition-all duration-500 group-hover:opacity-25 group-hover:scale-150" />
+								<div className="relative z-10">
+									<div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] shadow-lg shadow-blue-500/20 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+										<Building2 className="h-6 w-6 text-white" />
+									</div>
+									<h3 className="mb-2 text-lg font-bold text-white">For Companies</h3>
+									<p className="mb-4 text-sm leading-relaxed text-gray-400">
+										Reliable manpower, payroll & compliance under one roof.
+									</p>
+									<Link
+										to="/b2b"
+										className="inline-flex items-center gap-2 rounded-lg bg-[#2563EB] px-5 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:bg-[#1D4ED8] hover:scale-105"
+									>
+										Partner With Us
+										<ArrowRight className="h-4 w-4" />
+									</Link>
+								</div>
 							</div>
+
+							{/* For Job Seekers */}
+							<div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-500 hover:border-[#F97316]/40 hover:bg-white/[0.06]">
+								<div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#F97316] opacity-10 blur-2xl transition-all duration-500 group-hover:opacity-25 group-hover:scale-150" />
+								<div className="relative z-10">
+									<div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#F97316] to-[#EA580C] shadow-lg shadow-orange-500/20 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+										<Users className="h-6 w-6 text-white" />
+									</div>
+									<h3 className="mb-2 text-lg font-bold text-white">For Job Seekers</h3>
+									<p className="mb-4 text-sm leading-relaxed text-gray-400">
+										Find opportunities across all skill levels and industries.
+									</p>
+									<Link
+										to="/skilled"
+										className="inline-flex items-center gap-2 rounded-lg bg-[#F97316] px-5 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:bg-[#EA580C] hover:scale-105"
+									>
+										Browse Jobs
+										<ArrowRight className="h-4 w-4" />
+									</Link>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Right Column — Contact + Stats */}
+					<div className="flex flex-col justify-center gap-4">
+						{/* Stats Row */}
+						<div className="grid grid-cols-3 gap-3">
+							{[
+								{ value: '450+', label: 'Partners', color: '#2563EB' },
+								{ value: '40K+', label: 'Workers', color: '#F97316' },
+								{ value: '25+', label: 'States', color: '#8B5CF6' },
+							].map((stat) => (
+								<div key={stat.label} className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-center transition-all duration-500 hover:border-white/20 hover:bg-white/[0.06]">
+									<div className="text-2xl font-extrabold lg:text-3xl" style={{ color: stat.color }}>{stat.value}</div>
+									<div className="mt-1 text-xs font-medium uppercase tracking-wider text-gray-500">{stat.label}</div>
+								</div>
+							))}
+						</div>
+
+						{/* Get In Touch Card */}
+						<div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-500 hover:border-[#A78BFA]/30 hover:bg-white/[0.06]">
+							<div className="pointer-events-none absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-[#8B5CF6] opacity-10 blur-3xl transition-all duration-500 group-hover:opacity-20 group-hover:scale-150" />
+							<div className="relative z-10">
+								<div className="mb-4 flex items-center gap-3">
+									<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#8B5CF6] to-[#7C3AED] shadow-lg shadow-purple-500/20 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+										<Globe className="h-6 w-6 text-white" />
+									</div>
+									<h3 className="text-xl font-bold text-white">Get In Touch</h3>
+								</div>
+								<div className="grid gap-2.5 sm:grid-cols-1">
+									<a href="tel:+917397971322" className="flex items-center gap-3 rounded-xl border border-white/5 bg-white/[0.03] p-3 text-gray-300 no-underline transition-all duration-300 hover:border-[#8B5CF6]/30 hover:bg-white/[0.06] hover:text-white">
+										<div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[#8B5CF6]/20">
+											<Phone className="h-4 w-4 text-[#A78BFA]" />
+										</div>
+										<span className="text-sm font-medium">+91 7397971322</span>
+									</a>
+									<a href="mailto:info@tsplgroup.in" className="flex items-center gap-3 rounded-xl border border-white/5 bg-white/[0.03] p-3 text-gray-300 no-underline transition-all duration-300 hover:border-[#8B5CF6]/30 hover:bg-white/[0.06] hover:text-white">
+										<div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[#8B5CF6]/20">
+											<Mail className="h-4 w-4 text-[#A78BFA]" />
+										</div>
+										<span className="text-sm font-medium">info@tsplgroup.in</span>
+									</a>
+									<div className="flex items-center gap-3 rounded-xl border border-white/5 bg-white/[0.03] p-3 text-gray-300">
+										<div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[#8B5CF6]/20">
+											<MapPin className="h-4 w-4 text-[#A78BFA]" />
+										</div>
+										<span className="text-sm font-medium">Chakan, Pune, Maharashtra, India</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						{/* Bottom Tagline */}
+						<div className="rounded-2xl border border-white/10 bg-gradient-to-r from-[#2563EB]/10 via-[#8B5CF6]/10 to-[#F97316]/10 p-5 text-center backdrop-blur-sm">
+							<p className="text-sm font-medium text-gray-400">
+								Trusted by <span className="font-bold text-white">450+</span> companies across <span className="font-bold text-white">25+</span> states in India
+							</p>
 						</div>
 					</div>
 				</div>
