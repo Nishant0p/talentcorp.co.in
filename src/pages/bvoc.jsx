@@ -69,7 +69,7 @@ const employerBenefits = [
 
 const programmeHighlights = [
 	'Undergraduate Degree with NSQF Alignment',
-	'2-year training duration under Flexi MoU-CTS',
+	'3-year training duration under Flexi MoU-CTS',
 	'Job roles and NOSs incorporated in curriculum',
 	'Consolidated stipend payment model',
 	'Certificate awarded upon successful completion',
@@ -82,7 +82,7 @@ const employerModelPoints = [
 	'This is not an employment contract or labor contract during the training model.',
 	'Industry can onboard candidates in age group 18 to 40 years.',
 	'Industry can onboard candidates with qualification range from 8th to 12th standard.',
-	'Training duration is 2 years with certificate upon completion.',
+	'Training duration is 3 years with certificate upon completion.',
 	'Opportunity to develop skilled manpower according to specific industry requirements.',
 ]
 
@@ -112,7 +112,7 @@ const steps = [
 		number: '04',
 		icon: GraduationCap,
 		title: 'Certification & Deployment',
-		description: 'After 2-year tenure, candidates receive degree certificate and can be absorbed as industry-ready talent.',
+		description: 'After 3-year tenure, candidates receive degree certificate and can be absorbed as industry-ready talent.',
 		color: '#8B5CF6',
 	},
 ]
@@ -171,13 +171,13 @@ function BvocHero() {
 
 						<div className="hidden items-center gap-6 border-t border-white/10 pt-4 sm:flex">
 							<div className="text-center">
-								<p className="text-3xl font-bold text-white">2 Years</p>
+								<p className="text-3xl font-bold text-white">3 Years</p>
 								<p className="text-sm text-white/60">Training Duration</p>
 							</div>
 							<div className="h-12 w-px bg-white/20" />
 							<div className="text-center">
-								<p className="text-3xl font-bold text-[#2563EB]">18-40</p>
-								<p className="text-sm text-white/60">Age Group</p>
+								<p className="text-3xl font-bold text-[#2563EB]">6</p>
+								<p className="text-sm text-white/60"> Semesters</p>
 							</div>
 							<div className="h-12 w-px bg-white/20" />
 							<div className="text-center">

@@ -19,9 +19,9 @@ const serviceLinks = [
     isNested: true,
     label: 'WILP',
     links: [
-      { href: '/bvoc', label: 'B.VOC' },
-      { href: '/dvoc', label: 'D.VOC' },
-      { href: '/mvoc', label: 'M.VOC' },
+      { href: '/dvoc', label: 'D.Voc (Diploma)' },
+      { href: '/bvoc', label: 'B.Voc (Bachelor)' },
+      { href: '/mvoc', label: 'M.Voc (Master)' },
     ]
   },
   { href: '/services/flexi-iti', label: 'FLEXI ITI' },

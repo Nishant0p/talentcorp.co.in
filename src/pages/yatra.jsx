@@ -76,6 +76,36 @@ const faqItems = [
 	},
 ]
 
+const routeStatusItems = [
+	{
+		state: 'Completed',
+		label: 'MP, UP, BR, MH',
+		states: ['MP', 'UP', 'BR', 'MH'],
+		icon: CheckCircle2,
+		iconClassName: 'h-5 w-5 sm:h-6 sm:w-6',
+		textClassName: 'text-emerald-400',
+		subTextClassName: 'text-emerald-400/70',
+	},
+	{
+		state: 'Active',
+		label: 'GJ',
+		states: ['GJ'],
+		icon: PlayCircle,
+		iconClassName: 'h-5 w-5 sm:h-6 sm:w-6 animate-pulse',
+		textClassName: 'text-orange-400',
+		subTextClassName: 'text-orange-400/70',
+	},
+	{
+		state: 'Upcoming',
+		label: 'RJ, WB, OD',
+		states: ['RJ', 'WB', 'OD'],
+		icon: Circle,
+		iconClassName: 'h-5 w-5 sm:h-6 sm:w-6',
+		textClassName: 'text-slate-400',
+		subTextClassName: 'text-slate-500',
+	},
+]
+
 export default function YatraPage() {
 	const [loading, setLoading] = useState(true)
 	const [selectedImage, setSelectedImage] = useState('')
@@ -179,29 +209,22 @@ export default function YatraPage() {
 							</div>
 
 							{/* The "Stop" Indicator Ticker */}
-							<div className="mt-12 w-full max-w-lg rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-6 backdrop-blur-md">
-								<div className="flex items-center justify-between text-sm sm:text-base">
-									<div className="flex flex-col items-center gap-1 text-emerald-400 w-1/3 text-center">
-										<CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6" />
-										<span className="font-bold">Maharashtra</span>
-										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-emerald-400/70">Completed</span>
-									</div>
-									<div className="h-[2px] flex-1 mx-2 bg-emerald-500/30 relative overflow-hidden">
-										<div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-orange-500 opacity-50" />
-									</div>
-									<div className="flex flex-col items-center gap-1 text-orange-400 w-1/3 text-center">
-										<PlayCircle className="h-5 w-5 sm:h-6 sm:w-6 animate-pulse" />
-										<span className="font-bold">Gujarat</span>
-										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-orange-400/70">Active</span>
-									</div>
-									<div className="h-[2px] flex-1 mx-2 bg-white/10 relative overflow-hidden">
-										<div className="absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-orange-500/50 to-transparent animate-pulse" />
-									</div>
-									<div className="flex flex-col items-center gap-1 text-slate-400 w-1/3 text-center">
-										<Circle className="h-5 w-5 sm:h-6 sm:w-6" />
-										<span className="font-bold">Rajasthan</span>
-										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500">Upcoming</span>
-									</div>
+							<div className="mt-12 w-full overflow-hidden rounded-2xl border border-white/10 bg-transparent px-4 py-6 sm:px-6 sm:py-8 backdrop-blur-md min-h-[96px] sm:min-h-[112px]">
+								<div className="flex items-center gap-3 whitespace-nowrap text-sm sm:text-base min-h-[48px] sm:min-h-[56px]">
+									{routeStatusItems.map((item, index) => {
+										const Icon = item.icon
+										return (
+											<React.Fragment key={item.state}>
+												<div className={`flex flex-col items-center justify-center shrink-0 rounded-full border border-white/10 bg-white/5 px-5 py-3 min-w-[120px] ${item.textClassName}`}>
+													<span className="text-sm font-extrabold leading-none">{item.label}</span>
+													<span className={`mt-1 text-[11px] font-semibold uppercase leading-none ${item.subTextClassName}`}>{item.state}</span>
+												</div>
+												{index < routeStatusItems.length - 1 && (
+													<div className="shrink-0 text-white/30">•</div>
+												)}
+											</React.Fragment>
+										)
+									})}
 								</div>
 							</div>
 						</div>
