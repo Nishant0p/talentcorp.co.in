@@ -437,9 +437,9 @@ function NAPSCTA() {
 						<h3 className="mb-4 font-medium text-white">Need Help?</h3>
 
 						<div className="space-y-3">
-							<a href="tel:+919876543210" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
+							<a href="tel:+919561504911" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">
 								<Phone className="h-5 w-5 text-blue-100" />
-								<span className="font-medium">+91 98765 43210</span>
+								<span className="font-medium">+91 95615 04911</span>
 							</a>
 
 								<a href="mailto:support@tsplgroup.in" className="flex items-center gap-4 rounded-xl bg-white/15 p-4 text-white no-underline transition-colors hover:bg-white/25">

@@ -89,9 +89,9 @@ const companyOverviewPoints = [
 const servicesOffered = [
 	'National Apprenticeship Promotion Scheme (NAPS)',
 	'Board of Apprenticeship Training (BOAT / NATS)',
+	'Work Integrated Learning Programme (WILP) / WISE',
 	'D.VOC, B.VOC, M.VOC vocational programs',
 	'Apprenticeship Embedded Degree Program (AEDP)',
-	'Work Integrated Learning Programme (WILP) / WISE',
 	'Contract Staffing, Fixed Term Contract, and Contract Labour Staffing',
 	'Statutory Compliance Payroll Management',
 	'State schemes: MAPS, MATS, and CMAPS',
@@ -124,7 +124,7 @@ const wilpWiseBenefits = [
 ]
 
 const hiringCapacity = [
-	{ region: 'Pan India', executives: '28 (Diploma/Eng/ITI)', recruiters: '150 (10th/12th)', strength: '320', capacity: '6,000/month' },
+	{ region: 'Pan India', executives: '28 (Diploma/Eng/ITI)', recruiters: '150 (10th/12th)', strength: '570+', capacity: '10,000/month' },
 	{ region: 'Maharashtra', executives: '16', recruiters: '100', strength: '320', capacity: '4,500/month' },
 ]
 
@@ -135,7 +135,7 @@ function DetailedProfileSection() {
 		{ id: 0, title: 'Company Overview' },
 		{ id: 1, title: 'Services Offered' },
 		{ id: 2, title: 'Awards & Achievements' },
-		{ id: 3, title: 'Client Experience' },
+		{ id: 3, title: 'Clients' },
 		{ id: 4, title: 'NAPS Program' },
 		{ id: 5, title: 'NATS / BOAT' },
 		{ id: 6, title: 'Financial Savings' },
@@ -281,32 +281,24 @@ function DetailedProfileSection() {
 							</div>
 						)}
 
-						{/* Tab 3: Client Experience */}
+						{/* Tab 3: Clients */}
 						{activeTab === 3 && (
-							<div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
-								<div className="overflow-x-auto">
-									<table className="w-full text-left text-sm whitespace-nowrap">
-										<thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-xs font-bold border-b border-slate-200">
-											<tr>
-												<th className="px-8 py-6">Client Name</th>
-												<th className="px-8 py-6">Manpower Deployed</th>
-												<th className="px-8 py-6">Engagement Period</th>
-											</tr>
-										</thead>
-										<tbody className="divide-y divide-slate-100">
-											{clientExperience.map((client) => (
-												<tr key={client.name} className="hover:bg-slate-50 transition-colors">
-													<td className="px-8 py-6 font-bold text-slate-900 text-base">{client.name}</td>
-													<td className="px-8 py-6 text-slate-600 font-medium text-base">{client.manpower}</td>
-													<td className="px-8 py-6">
-														<span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-bold text-blue-800">
-															{client.period}
-														</span>
-													</td>
-												</tr>
-											))}
-										</tbody>
-									</table>
+							<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+								<div className="rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm flex flex-col items-center justify-center text-center transition-all hover:shadow-xl hover:-translate-y-2 group">
+									<h4 className="text-5xl font-black text-blue-600 mb-2 transition-transform group-hover:scale-110">410</h4>
+									<p className="text-lg font-bold text-slate-700 uppercase tracking-widest mt-4">NAPS Clients</p>
+								</div>
+								<div className="rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm flex flex-col items-center justify-center text-center transition-all hover:shadow-xl hover:-translate-y-2 group">
+									<h4 className="text-5xl font-black text-emerald-600 mb-2 transition-transform group-hover:scale-110">350</h4>
+									<p className="text-lg font-bold text-slate-700 uppercase tracking-widest mt-4">NATS Clients</p>
+								</div>
+								<div className="rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm flex flex-col items-center justify-center text-center transition-all hover:shadow-xl hover:-translate-y-2 group">
+									<h4 className="text-5xl font-black text-orange-600 mb-2 transition-transform group-hover:scale-110">20</h4>
+									<p className="text-lg font-bold text-slate-700 uppercase tracking-widest mt-4">WILP Clients</p>
+								</div>
+								<div className="rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm flex flex-col items-center justify-center text-center transition-all hover:shadow-xl hover:-translate-y-2 group">
+									<h4 className="text-5xl font-black text-indigo-600 mb-2 transition-transform group-hover:scale-110">100+</h4>
+									<p className="text-lg font-bold text-slate-700 uppercase tracking-widest mt-4">Contract Labour</p>
 								</div>
 							</div>
 						)}
@@ -347,6 +339,22 @@ function DetailedProfileSection() {
 									<p className="text-3xl font-black text-orange-600 mb-2">INR 1.8 Crores</p>
 									<p className="text-sm font-bold text-orange-800 uppercase tracking-widest">Annual Savings</p>
 								</div>
+								
+								{/* Contact Block */}
+								<div className="lg:col-span-3 rounded-[2rem] bg-slate-900 p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl mt-2">
+									<div className="flex items-center gap-4 w-full sm:w-auto">
+										<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-500/20">
+											<Users className="h-6 w-6 text-blue-400" />
+										</div>
+										<div>
+											<h4 className="text-xl font-bold">NAPS Enquiries</h4>
+											<p className="text-slate-400">Contact: Samruddhi Mam (Number)</p>
+										</div>
+									</div>
+									<Link to="/contact-us" className="rounded-xl bg-blue-600 px-8 py-3 font-bold text-white hover:bg-blue-500 transition-colors shrink-0 text-center w-full sm:w-auto">
+										Contact Now
+									</Link>
+								</div>
 							</div>
 						)}
 
@@ -385,6 +393,22 @@ function DetailedProfileSection() {
 									<p className="text-sm font-bold text-emerald-800 uppercase tracking-widest mb-6">Monthly Savings</p>
 									<p className="text-3xl font-black text-emerald-600 mb-2">INR 5.4 Crores</p>
 									<p className="text-sm font-bold text-emerald-800 uppercase tracking-widest">Annual Savings</p>
+								</div>
+
+								{/* Contact Block */}
+								<div className="lg:col-span-3 rounded-[2rem] bg-slate-900 p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl mt-2">
+									<div className="flex items-center gap-4 w-full sm:w-auto">
+										<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-emerald-500/20">
+											<Users className="h-6 w-6 text-emerald-400" />
+										</div>
+										<div>
+											<h4 className="text-xl font-bold">NATS / BOAT Enquiries</h4>
+											<p className="text-slate-400">Contact: Samruddhi Mam (Number)</p>
+										</div>
+									</div>
+									<Link to="/contact-us" className="rounded-xl bg-emerald-600 px-8 py-3 font-bold text-white hover:bg-emerald-500 transition-colors shrink-0 text-center w-full sm:w-auto">
+										Contact Now
+									</Link>
 								</div>
 							</div>
 						)}
@@ -855,38 +879,38 @@ function Achievements() {
 
 	return (
 		<section ref={sectionRef} className="relative md:h-[300vh] bg-slate-50 py-20 md:py-0">
-			<div className="md:sticky md:top-0 flex flex-col justify-center md:h-screen overflow-hidden md:pt-28 md:pb-10">
+			<div className="md:sticky md:top-0 flex flex-col justify-center md:h-screen overflow-hidden md:pt-16 lg:pt-28 md:pb-6 lg:pb-10">
 				{/* Decorative Background Elements */}
 				<div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #0F172A 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 				<div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-400/20 blur-[120px] pointer-events-none" />
 				<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-400/20 blur-[120px] pointer-events-none" />
 
-				<div className="relative z-10 mx-auto w-full max-w-[96rem] px-6 lg:px-8 flex flex-col h-full justify-between gap-12">
+				<div className="relative z-10 mx-auto w-full max-w-[96rem] px-6 lg:px-8 flex flex-col h-full justify-center lg:justify-between gap-6 lg:gap-12">
 					
 					{/* Top Section: Header & Stats */}
-					<div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-10">
+					<div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 lg:gap-10 shrink-0">
 						<div className="max-w-xl">
-							<div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 backdrop-blur-md">
-								<span className="text-xs font-bold tracking-widest text-blue-700 uppercase">Our Journey</span>
+							<div className="mb-2 lg:mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 backdrop-blur-md">
+								<span className="text-[10px] lg:text-xs font-bold tracking-widest text-blue-700 uppercase">Our Journey</span>
 							</div>
-							<h2 className="text-4xl font-black text-slate-900 sm:text-5xl lg:text-6xl tracking-tight">Our Achievements</h2>
-							<p className="mt-4 text-lg text-slate-600">A decade of helping workers and businesses grow together.</p>
+							<h2 className="text-3xl font-black text-slate-900 sm:text-4xl lg:text-6xl tracking-tight">Our Achievements</h2>
+							<p className="mt-2 lg:mt-4 text-base lg:text-lg text-slate-600">A decade of helping workers and businesses grow together.</p>
 						</div>
 						
 						{/* Stats Grid */}
-						<div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full lg:w-auto shrink-0">
+						<div className="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4 w-full lg:w-auto shrink-0">
 							{achievements.map((item, i) => (
-								<div key={item.label} className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
-									<item.icon className="mb-3 h-6 w-6 text-blue-600" />
-									<p className="text-2xl font-bold text-slate-900">{item.number}</p>
-									<p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{item.label}</p>
+								<div key={item.label} className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-white p-4 lg:p-5 shadow-sm transition-shadow hover:shadow-md">
+									<item.icon className="mb-2 lg:mb-3 h-5 w-5 lg:h-6 lg:w-6 text-blue-600" />
+									<p className="text-xl lg:text-2xl font-bold text-slate-900">{item.number}</p>
+									<p className="text-[9px] lg:text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{item.label}</p>
 								</div>
 							))}
 						</div>
 					</div>
 
 					{/* Middle Section: Animated Timeline */}
-					<div className="relative w-full md:h-[350px] lg:h-[400px] flex items-center my-10 md:my-auto">
+					<div className="relative w-full md:h-[280px] lg:h-[400px] flex items-center my-6 lg:my-auto shrink-0">
 						
 						{/* Base Tracks */}
 						<div className="hidden md:block absolute top-1/2 left-0 w-full h-px bg-slate-300 -translate-y-1/2" />
@@ -902,19 +926,19 @@ function Achievements() {
 
 						{/* Milestones Container */}
 						<motion.div 
-							className="flex flex-col md:flex-row gap-8 md:gap-12 lg:gap-24 relative md:absolute md:left-0 items-start md:items-center w-full md:w-auto px-4 md:px-[5vw] lg:px-[10vw]"
+							className="flex flex-col md:flex-row gap-8 md:gap-8 lg:gap-24 relative md:absolute md:left-0 items-start md:items-center w-full md:w-auto px-4 md:px-[5vw] lg:px-[10vw]"
 							style={isMobile ? {} : { x: xTransform }}
 						>
 							{milestones.map((milestone, i) => (
-								<div key={i} className="relative flex flex-col items-start md:items-center w-full md:w-72 lg:w-80 shrink-0 group pl-12 md:pl-0">
+								<div key={i} className="relative flex flex-col items-start md:items-center w-full md:w-64 lg:w-80 shrink-0 group pl-12 md:pl-0">
 									{/* Node on the line */}
 									<div className="absolute top-8 md:top-1/2 left-2 md:left-1/2 md:-translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-4 border-white bg-orange-500 z-20 shadow-md transition-transform duration-300 group-hover:scale-150" />
 									
 									{/* Card (Alternating top/bottom on Desktop only) */}
-									<div className={`w-full p-6 sm:p-8 rounded-[2rem] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 md:mb-0 md:mt-0 ${!isMobile && i % 2 === 0 ? 'md:mb-36 lg:mb-48' : ''} ${!isMobile && i % 2 !== 0 ? 'md:mt-36 lg:mt-48' : ''}`}>
-										<p className="mb-2 text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-orange-500">{milestone.year}</p>
-										<h4 className="mb-3 text-xl font-bold text-slate-900">{milestone.title}</h4>
-										<p className="text-slate-600 text-sm leading-relaxed">{milestone.description}</p>
+									<div className={`w-full p-5 lg:p-8 rounded-[1.5rem] lg:rounded-[2rem] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 md:mb-0 md:mt-0 ${!isMobile && i % 2 === 0 ? 'md:mb-28 lg:mb-48' : ''} ${!isMobile && i % 2 !== 0 ? 'md:mt-28 lg:mt-48' : ''}`}>
+										<p className="mb-1 lg:mb-2 text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-orange-500">{milestone.year}</p>
+										<h4 className="mb-2 lg:mb-3 text-lg lg:text-xl font-bold text-slate-900">{milestone.title}</h4>
+										<p className="text-slate-600 text-xs lg:text-sm leading-relaxed">{milestone.description}</p>
 									</div>
 								</div>
 							))}
@@ -922,9 +946,9 @@ function Achievements() {
 					</div>
 
 					{/* Bottom Section: CTA */}
-					<div className="mt-8 md:mt-auto flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-blue-100 bg-blue-50 px-6 py-4 shadow-sm mx-auto w-full max-w-4xl">
-						<h3 className="text-lg font-bold text-slate-900 text-center sm:text-left">Ready to be part of our success story?</h3>
-						<Link to="/contact-us" className="shrink-0 group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-3 text-xs font-bold uppercase tracking-widest text-white shadow-md transition-all hover:scale-105 hover:shadow-orange-500/25">
+					<div className="mt-2 lg:mt-auto flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-blue-100 bg-blue-50 px-6 py-4 shadow-sm mx-auto w-full max-w-4xl shrink-0">
+						<h3 className="text-base lg:text-lg font-bold text-slate-900 text-center sm:text-left">Ready to be part of our success story?</h3>
+						<Link to="/contact-us" className="shrink-0 group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-5 lg:px-6 py-2.5 lg:py-3 text-[10px] lg:text-xs font-bold uppercase tracking-widest text-white shadow-md transition-all hover:scale-105 hover:shadow-orange-500/25">
 							Join Us Today
 							<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 						</Link>
