@@ -3,6 +3,10 @@ import { Shield, Phone, Mail, MapPin, CheckCircle, Clock, Send } from 'lucide-re
 import { submitLead, submitToAdminBackend } from '../utils/strapi'
 
 export default function ServiceEnquirySection({ serviceName }) {
+	const isNatsOrNaps = ['NATS', 'NAPS'].includes(serviceName)
+	const quickContactNumber = isNatsOrNaps ? '+91 95615 04911' : '+91 7397971322'
+	const quickContactHref = isNatsOrNaps ? 'tel:+919561504911' : 'tel:+917397971322'
+
 	const [formData, setFormData] = useState({
 		name: '',
 		phone: '',
@@ -135,13 +139,13 @@ export default function ServiceEnquirySection({ serviceName }) {
 							<h3 className="mb-6 text-xl font-bold">Quick Contact</h3>
 
 							<div className="space-y-6">
-								<a href="tel:+917397971322" className="group flex items-start gap-4">
+								<a href={quickContactHref} className="group flex items-start gap-4">
 									<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-100 transition-colors group-hover:bg-orange-500">
 										<Phone className="h-6 w-6 text-orange-600 transition-colors group-hover:text-white" />
 									</div>
 									<div>
 										<p className="text-sm font-medium text-slate-500">Call for instant quote</p>
-										<p className="text-lg font-bold">+91 7397971322</p>
+										<p className="text-lg font-bold">{quickContactNumber}</p>
 									</div>
 								</a>
 
