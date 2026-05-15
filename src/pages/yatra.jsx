@@ -5,8 +5,7 @@ import { CheckCircle2, PlayCircle, Circle, MapPin, ArrowRight, Eye, Target, Hand
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import RozgaarPreloader from '../components/RozgaarPreloader'
-import { rojgarYatraImages } from '../data/rojgarYatraImages'
-
+import { yatraGalleryCards } from '../data/yatraGalleryData'
 const participatingStates = [
 	'Andhra Pradesh',
 	'Arunachal Pradesh',
@@ -37,11 +36,6 @@ const participatingStates = [
 	'Uttarakhand',
 	'West Bengal',
 ]
-
-const galleryTriples = []
-for (let index = 0; index < rojgarYatraImages.length; index += 3) {
-	galleryTriples.push(rojgarYatraImages.slice(index, index + 3))
-}
 
 const faqItems = [
 	{
@@ -108,8 +102,6 @@ const routeStatusItems = [
 
 export default function YatraPage() {
 	const [loading, setLoading] = useState(true)
-	const [selectedImage, setSelectedImage] = useState('')
-	const [loadedImages, setLoadedImages] = useState({})
 	const [openFaqIndex, setOpenFaqIndex] = useState(0)
 
 	const heroRef = useRef(null)
@@ -126,26 +118,6 @@ export default function YatraPage() {
 		const t = setTimeout(() => setLoading(false), 7000)
 		return () => clearTimeout(t)
 	}, [])
-
-	useEffect(() => {
-		if (!selectedImage) return undefined
-
-		const onEsc = (e) => {
-			if (e.key === 'Escape') {
-				setSelectedImage('')
-			}
-		}
-
-		window.addEventListener('keydown', onEsc)
-		return () => window.removeEventListener('keydown', onEsc)
-	}, [selectedImage])
-
-	const markImageLoaded = (src) => {
-		setLoadedImages((current) => {
-			if (current[src]) return current
-			return { ...current, [src]: true }
-		})
-	}
 
 	return (
 		<div className="bg-white text-slate-800">
@@ -209,22 +181,29 @@ export default function YatraPage() {
 							</div>
 
 							{/* The "Stop" Indicator Ticker */}
-							<div className="mt-12 w-full overflow-hidden rounded-2xl border border-white/10 bg-transparent px-4 py-6 sm:px-6 sm:py-8 backdrop-blur-md min-h-[96px] sm:min-h-[112px]">
-								<div className="flex items-center gap-3 whitespace-nowrap text-sm sm:text-base min-h-[48px] sm:min-h-[56px]">
-									{routeStatusItems.map((item, index) => {
-										const Icon = item.icon
-										return (
-											<React.Fragment key={item.state}>
-												<div className={`flex flex-col items-center justify-center shrink-0 rounded-full border border-white/10 bg-white/5 px-5 py-3 min-w-[120px] ${item.textClassName}`}>
-													<span className="text-sm font-extrabold leading-none">{item.label}</span>
-													<span className={`mt-1 text-[11px] font-semibold uppercase leading-none ${item.subTextClassName}`}>{item.state}</span>
-												</div>
-												{index < routeStatusItems.length - 1 && (
-													<div className="shrink-0 text-white/30">•</div>
-												)}
-											</React.Fragment>
-										)
-									})}
+							<div className="mt-12 w-full max-w-[1177px] rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-6 backdrop-blur-md">
+								<div className="flex items-center justify-between text-sm sm:text-base">
+									<div className="flex flex-col items-center gap-1 text-emerald-400 w-2/5 text-center">
+										<CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6" />
+										<span className="font-bold text-sm sm:text-base"> Maharashtra, Bihar, Madhya Pradesh, Uttar Pradesh</span>
+										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-emerald-400/70">Completed</span>
+									</div>
+									<div className="h-[2px] flex-1 mx-2 bg-emerald-500/30 relative overflow-hidden">
+										<div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-orange-500 opacity-50" />
+									</div>
+									<div className="flex flex-col items-center gap-1 text-orange-400 w-1/3 text-center">
+										<PlayCircle className="h-5 w-5 sm:h-6 sm:w-6 animate-pulse" />
+										<span className="font-bold">Gujarat</span>
+										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-orange-400/70">Active</span>
+									</div>
+									<div className="h-[2px] flex-1 mx-2 bg-white/10 relative overflow-hidden">
+										<div className="absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-orange-500/50 to-transparent animate-pulse" />
+									</div>
+									<div className="flex flex-col items-center gap-1 text-slate-400 w-1/3 text-center">
+										<Circle className="h-5 w-5 sm:h-6 sm:w-6" />
+										<span className="font-bold">Rajasthan, West Bengal, Odisha</span>
+										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500">Upcoming</span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -256,147 +235,41 @@ export default function YatraPage() {
 					</div>
 				</section>
 
-				<section className="relative flex h-[100svh] flex-col justify-center overflow-hidden bg-slate-950 py-8">
+				<section className="relative overflow-hidden bg-slate-950 py-24 sm:py-28">
 					<div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.18),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.22),transparent_45%)]" />
-					<div className="relative mb-5">
-						<h2 className="px-6 text-3xl font-extrabold text-white sm:px-8 sm:text-4xl lg:px-12">Journey Highlights</h2>
-						<p className="mt-3 max-w-3xl px-6 text-slate-300 sm:px-8 lg:px-12">
-							Explore interactive moments from Rozgaar Yatra across regions.
-						</p>
-					</div>
-
-					<div className="relative px-6 sm:px-8 lg:px-12">
-						<div className="overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/45 p-2 shadow-[0_30px_80px_rgba(2,6,23,0.45)] sm:p-3">
-							{/* Row 1: Moves Left */}
-							<motion.div
-								className="flex w-max gap-3 mb-3"
-								animate={{ x: ['0%', '-50%'] }}
-								transition={{ duration: 320, ease: 'linear', repeat: Infinity }}
-							>
-								{[...galleryTriples, ...galleryTriples].map((triple, index) => {
-									const primary = triple[0]
-									const secondaryA = triple[1] ?? triple[0]
-									const secondaryB = triple[2] ?? triple[1] ?? triple[0]
-
-									return (
-										<div key={`r1-triple-${index}`} className="flex shrink-0 items-stretch gap-2 rounded-[20px] border border-white/10 bg-slate-950/70 p-2">
-											<button
-												type="button"
-												className="block w-[180px] shrink-0 overflow-hidden rounded-[16px] border border-white/10 bg-slate-900/80"
-												onClick={() => setSelectedImage(primary)}
-											>
-												<img
-													src={primary}
-													alt="Rozgar Yatra highlight"
-													className={`h-full w-full aspect-[9/16] object-cover transition duration-700 hover:scale-[1.03] ${loadedImages[primary] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.04]'}`}
-													loading="lazy"
-													decoding="async"
-													onLoad={() => markImageLoaded(primary)}
-												/>
-											</button>
-
-											<div className="flex w-[140px] shrink-0 flex-col gap-2">
-												<button
-													type="button"
-													className="block h-1/2 overflow-hidden rounded-[14px] border border-white/10 bg-slate-900/80"
-													onClick={() => setSelectedImage(secondaryA)}
-												>
-													<img
-														src={secondaryA}
-														alt="Rozgar Yatra moment"
-														className={`h-full w-full aspect-[4/3] object-cover transition duration-700 hover:scale-[1.04] ${loadedImages[secondaryA] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.03]'}`}
-														loading="lazy"
-														decoding="async"
-														onLoad={() => markImageLoaded(secondaryA)}
-													/>
-												</button>
-												<button
-													type="button"
-													className="block h-1/2 overflow-hidden rounded-[14px] border border-white/10 bg-slate-900/80"
-													onClick={() => setSelectedImage(secondaryB)}
-												>
-													<img
-														src={secondaryB}
-														alt="Rozgar Yatra moment"
-														className={`h-full w-full aspect-[4/3] object-cover transition duration-700 hover:scale-[1.04] ${loadedImages[secondaryB] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.03]'}`}
-														loading="lazy"
-														decoding="async"
-														onLoad={() => markImageLoaded(secondaryB)}
-													/>
-												</button>
-											</div>
-										</div>
-									)
-								})}
-							</motion.div>
-
-							{/* Row 2: Moves Right */}
-							<motion.div
-								className="flex w-max gap-3"
-								animate={{ x: ['-50%', '0%'] }}
-								transition={{ duration: 340, ease: 'linear', repeat: Infinity }}
-							>
-								{[...galleryTriples, ...galleryTriples].reverse().map((triple, index) => {
-									const primary = triple[0]
-									const secondaryA = triple[1] ?? triple[0]
-									const secondaryB = triple[2] ?? triple[1] ?? triple[0]
-
-									return (
-										<div key={`r2-triple-${index}`} className="flex shrink-0 items-stretch gap-2 rounded-[20px] border border-white/10 bg-slate-950/70 p-2 flex-row-reverse">
-											<button
-												type="button"
-												className="block w-[180px] shrink-0 overflow-hidden rounded-[16px] border border-white/10 bg-slate-900/80"
-												onClick={() => setSelectedImage(primary)}
-											>
-												<img
-													src={primary}
-													alt="Rozgar Yatra highlight"
-													className={`h-full w-full aspect-[9/16] object-cover transition duration-700 hover:scale-[1.03] ${loadedImages[primary] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.04]'}`}
-													loading="lazy"
-													decoding="async"
-													onLoad={() => markImageLoaded(primary)}
-												/>
-											</button>
-
-											<div className="flex w-[140px] shrink-0 flex-col gap-2">
-												<button
-													type="button"
-													className="block h-1/2 overflow-hidden rounded-[14px] border border-white/10 bg-slate-900/80"
-													onClick={() => setSelectedImage(secondaryA)}
-												>
-													<img
-														src={secondaryA}
-														alt="Rozgar Yatra moment"
-														className={`h-full w-full aspect-[4/3] object-cover transition duration-700 hover:scale-[1.04] ${loadedImages[secondaryA] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.03]'}`}
-														loading="lazy"
-														decoding="async"
-														onLoad={() => markImageLoaded(secondaryA)}
-													/>
-												</button>
-												<button
-													type="button"
-													className="block h-1/2 overflow-hidden rounded-[14px] border border-white/10 bg-slate-900/80"
-													onClick={() => setSelectedImage(secondaryB)}
-												>
-													<img
-														src={secondaryB}
-														alt="Rozgar Yatra moment"
-														className={`h-full w-full aspect-[4/3] object-cover transition duration-700 hover:scale-[1.04] ${loadedImages[secondaryB] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.03]'}`}
-														loading="lazy"
-														decoding="async"
-														onLoad={() => markImageLoaded(secondaryB)}
-													/>
-												</button>
-											</div>
-										</div>
-									)
-								})}
-							</motion.div>
+					<div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+						<div className="services-header text-center">
+							<p className="services-subtitle text-sm font-bold uppercase tracking-[0.32em] text-orange-400">Grow Your Reach With Us</p>
+							<h2 className="services-title mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">Our Services</h2>
 						</div>
+
+						<div className="cards-wrapper mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+							{yatraGalleryCards.map((card) => (
+								<Link
+									key={card.slug}
+									to={`/yatra/gallery/${card.slug}`}
+									aria-label={`Open ${card.title} image page`}
+									className="service-card group relative min-h-[420px] overflow-hidden rounded-[28px] border border-white/10 bg-slate-900 shadow-[0_24px_80px_rgba(2,6,23,0.45)] transition-transform duration-500 hover:-translate-y-2 cursor-pointer"
+									style={{ backgroundImage: `url(${card.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+								>
+									<div className="card-overlay absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-slate-950/15" />
+									<div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-transparent to-blue-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+									<div className="absolute inset-x-0 bottom-0 p-6 text-white">
+										<div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md">
+											<Briefcase className="h-6 w-6 text-orange-300" />
+										</div>
+										<h3 className="card-title text-2xl font-black leading-tight">{card.title}</h3>
+										<p className="card-subtitle mt-3 text-sm font-medium uppercase tracking-[0.22em] text-slate-200/80">{card.subtitle}</p>
+									</div>
+								</Link>
+							))}
+						</div>
+
+						<div className="decorative-line mx-auto mt-14 h-px w-full max-w-3xl bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 					</div>
 				</section>
 
-				<section id="route" className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32">
+			<section id="route" className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32">
 					{/* 1. What Is Rojgar Yatra & Philosophy */}
 					<div className="grid gap-6 lg:grid-cols-12 mb-20">
 						{/* Intro Card */}
@@ -586,83 +459,65 @@ export default function YatraPage() {
 					</div>
 
 					{/* 4. FAQs & Commitment */}
-					<div className="grid gap-10 lg:grid-cols-12">
-						{/* Commitment */}
-						<div className="lg:col-span-4 flex flex-col justify-center">
-							<div className="rounded-[2.5rem] border border-orange-200 bg-gradient-to-b from-orange-50 to-white p-10 shadow-lg relative overflow-hidden group hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-								<div className="absolute -right-6 -top-6 text-orange-200 opacity-50 group-hover:scale-110 transition-transform duration-500">
-									<Heart className="w-32 h-32" />
+						<div className="grid gap-10 lg:grid-cols-12">
+							{/* Commitment */}
+							<div className="lg:col-span-4 flex flex-col justify-center">
+								<div className="rounded-[2.5rem] border border-orange-200 bg-gradient-to-b from-orange-50 to-white p-10 shadow-lg relative overflow-hidden group hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+									<div className="absolute -right-6 -top-6 text-orange-200 opacity-50 group-hover:scale-110 transition-transform duration-500">
+										<Heart className="w-32 h-32" />
+									</div>
+									<h4 className="text-3xl font-black text-orange-600 mb-6 relative z-10">Our Commitment</h4>
+									<p className="text-xl text-slate-800 leading-relaxed font-medium relative z-10">
+										"Rojgar Yatra is not just a recruitment campaign. It is an employment movement focused on taking genuine opportunities directly to people through outreach, awareness, and industry collaboration."
+									</p>
 								</div>
-								<h4 className="text-3xl font-black text-orange-600 mb-6 relative z-10">Our Commitment</h4>
-								<p className="text-xl text-slate-800 leading-relaxed font-medium relative z-10">
-									"Rojgar Yatra is not just a recruitment campaign. It is an employment movement focused on taking genuine opportunities directly to people through outreach, awareness, and industry collaboration."
-								</p>
+							</div>
+
+							{/* FAQs */}
+							<div className="lg:col-span-8 rounded-[2.5rem] border border-slate-200 bg-white p-8 sm:p-12 shadow-sm">
+								<h3 className="text-3xl font-black text-[#1A365D] mb-8 flex items-center gap-3">
+									<Lightbulb className="h-8 w-8 text-orange-500" />
+									Frequently Asked Questions
+								</h3>
+								<div className="space-y-4">
+									{faqItems.map((faq, index) => {
+										const isOpen = openFaqIndex === index
+										return (
+											<div key={index} className="overflow-hidden rounded-2xl border border-slate-200 transition-colors hover:border-blue-300">
+												<button
+													type="button"
+													className="flex w-full items-center justify-between bg-white px-6 py-5 text-left focus:outline-none"
+													onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
+												>
+													<span className="font-bold text-slate-900 text-lg pr-4">{faq.question}</span>
+													<span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? 'bg-[#FF8C00] text-white' : 'bg-slate-100 text-slate-500'}`}>
+														{isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+													</span>
+												</button>
+												<AnimatePresence>
+													{isOpen && (
+														<motion.div
+															initial={{ height: 0, opacity: 0 }}
+															animate={{ height: 'auto', opacity: 1 }}
+															exit={{ height: 0, opacity: 0 }}
+															transition={{ duration: 0.3, ease: "easeInOut" }}
+														>
+																<div className="border-t border-slate-100 bg-slate-50 px-6 py-5">
+																	<p className="text-slate-700 text-lg leading-relaxed">{faq.answer}</p>
+																</div>
+															</motion.div>
+														)}
+													</AnimatePresence>
+												</div>
+										)
+									})}
+								</div>
 							</div>
 						</div>
+					</section>
+				</main>
 
-						{/* FAQs */}
-						<div className="lg:col-span-8 rounded-[2.5rem] border border-slate-200 bg-white p-8 sm:p-12 shadow-sm">
-							<h3 className="text-3xl font-black text-[#1A365D] mb-8 flex items-center gap-3">
-								<Lightbulb className="h-8 w-8 text-orange-500" />
-								Frequently Asked Questions
-							</h3>
-							<div className="space-y-4">
-								{faqItems.map((faq, index) => {
-									const isOpen = openFaqIndex === index
-									return (
-										<div key={index} className="overflow-hidden rounded-2xl border border-slate-200 transition-colors hover:border-blue-300">
-											<button
-												type="button"
-												className="flex w-full items-center justify-between bg-white px-6 py-5 text-left focus:outline-none"
-												onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
-											>
-												<span className="font-bold text-slate-900 text-lg pr-4">{faq.question}</span>
-												<span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? 'bg-[#FF8C00] text-white' : 'bg-slate-100 text-slate-500'}`}>
-													{isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-												</span>
-											</button>
-											<AnimatePresence>
-												{isOpen && (
-													<motion.div
-														initial={{ height: 0, opacity: 0 }}
-														animate={{ height: 'auto', opacity: 1 }}
-														exit={{ height: 0, opacity: 0 }}
-														transition={{ duration: 0.3, ease: "easeInOut" }}
-													>
-														<div className="border-t border-slate-100 bg-slate-50 px-6 py-5">
-															<p className="text-slate-700 text-lg leading-relaxed">{faq.answer}</p>
-														</div>
-													</motion.div>
-												)}
-											</AnimatePresence>
-										</div>
-									)
-								})}
-							</div>
-						</div>
-					</div>
-				</section>
-			</main>
-
-			{selectedImage ? (
-				<div className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-950/85 px-4 py-8" onClick={() => setSelectedImage('')}>
-					<button
-						type="button"
-						className="absolute right-4 top-4 rounded-full bg-white/10 px-3 py-1 text-xl text-white backdrop-blur"
-						onClick={() => setSelectedImage('')}
-					>
-						x
-					</button>
-					<img
-						src={selectedImage}
-						alt="Rojgar Yatra preview"
-						className="max-h-full max-w-full rounded-2xl border border-white/20 object-contain shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
-						onClick={(e) => e.stopPropagation()}
-					/>
-				</div>
-			) : null}
-
-			<Footer />
-		</div>
+				<Footer />
+			</div>
 	)
 }

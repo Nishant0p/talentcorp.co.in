@@ -1,55 +1,105 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
+import gsap from 'gsap'
 
 export default function RozgaarPreloader({ onFinish }) {
+  const carRef = useRef(null)
+  const contentRef = useRef(null)
+  const containerRef = useRef(null)
   const onFinishRef = useRef(onFinish)
-  const [phase, setPhase] = useState('enter')
 
+  // Keep the ref up-to-date without re-running the effect
   useEffect(() => {
     onFinishRef.current = onFinish
-  }, [onFinish])
+  })
 
   useEffect(() => {
-    const enterTimer = window.setTimeout(() => {
-      setPhase('drive')
-    }, 40)
+    const ctx = gsap.context(() => {
+      gsap.set(containerRef.current, { opacity: 1, yPercent: 0 })
+      gsap.set(contentRef.current, { x: 0, y: 44, opacity: 0 })
+      // Car starts off-screen right; xPercent -50 keeps its own centre as the anchor
+      gsap.set(carRef.current, { xPercent: -50, yPercent: -50, x: '120vw', y: 0 })
 
-    const textTimer = window.setTimeout(() => {
-      setPhase((currentPhase) => (currentPhase === 'exit' ? currentPhase : 'drive-text'))
-    }, 1100)
+      let idleTween = null
 
-    const exitTimer = window.setTimeout(() => {
-      setPhase('exit')
-    }, 3000)
+      const introTl = gsap.timeline({
+        onComplete: () => {
+          idleTween = gsap.to(carRef.current, {
+            y: -6,
+            duration: 0.9,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+            force3D: true,
+          })
+        }
+      })
 
-    const finishTimer = window.setTimeout(() => {
-      if (typeof onFinishRef.current === 'function') onFinishRef.current()
-    }, 3650)
+      // Car sweeps all the way to the left third so the right side is clear for text
+      introTl.to(carRef.current, {
+        x: '-20vw',
+        duration: 1.5,
+        ease: 'power2.out',
+      })
 
-    return () => {
-      window.clearTimeout(enterTimer)
-      window.clearTimeout(textTimer)
-      window.clearTimeout(exitTimer)
-      window.clearTimeout(finishTimer)
-    }
-  }, [])
+      // Text reveals only after car has moved past centre (>1.1 s into the drive)
+      introTl.to(
+        contentRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+        },
+        1.1  // start fading in text once car is well past centre
+      )
 
-  const contentVisible = phase === 'drive-text' || phase === 'exit'
-  const containerExit = phase === 'exit'
-  const carDrive = phase === 'drive' || phase === 'drive-text'
+      // EXIT: move the car left once, reveal the text, then lift the overlay away.
+      const handleExit = () => {
+        if (idleTween) {
+          idleTween.kill()
+          idleTween = null
+        }
+        const exitTl = gsap.timeline()
+
+        // Main car moves to far left in a single pass.
+        exitTl.to(carRef.current, {
+          y: 0,
+          x: '-120vw',
+          duration: 1.25,
+          ease: 'power4.inOut',
+          overwrite: 'auto',
+        })
+
+        // Keep info visible briefly before switching to the hero page.
+        exitTl.to(containerRef.current, {
+          opacity: 1,
+          duration: 0.9,
+          ease: 'none',
+        })
+
+        // Complete preloader by sliding the whole overlay upward.
+        exitTl.to(containerRef.current, {
+          yPercent: -110,
+          duration: 0.65,
+          ease: 'power3.inOut',
+        })
+
+        exitTl.call(() => {
+          if (typeof onFinishRef.current === 'function') onFinishRef.current()
+        })
+      }
+
+      const timer = setTimeout(handleExit, 3000)
+      return () => clearTimeout(timer)
+    }, containerRef)
+
+    return () => ctx.revert()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // run once only — onFinish is accessed via ref
 
   return (
-    <div
-      className={`fixed inset-0 z-[999] flex items-center overflow-hidden bg-white transition-transform duration-[650ms] ease-in-out ${
-        containerExit ? '-translate-y-[110%]' : 'translate-y-0'
-      }`}
-    >
-      <style>{`\n        @keyframes preloaderFloat {\n          from { transform: translateY(-50%) translateX(-50%) translateY(0); }\n          to { transform: translateY(-50%) translateX(-50%) translateY(-6px); }\n        }\n      `}</style>
-
-      <div
-        className={`absolute right-4 z-30 max-w-[90vw] text-right transition-all duration-700 ease-out sm:right-8 sm:max-w-xl lg:right-16 lg:max-w-lg ${
-          contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-11 opacity-0'
-        }`}
-      >
+    <div ref={containerRef} className="fixed inset-0 z-[999] flex items-center overflow-hidden bg-white">
+      <div ref={contentRef} className="absolute right-4 z-30 max-w-[90vw] text-right opacity-0 will-change-transform sm:right-8 sm:max-w-xl lg:right-16 lg:max-w-lg">
         <h1 className="text-4xl font-extrabold leading-tight text-blue-900 sm:text-5xl lg:text-6xl">
           ROZGAAR <span className="text-orange-600">YATRA</span>
         </h1>
@@ -60,12 +110,7 @@ export default function RozgaarPreloader({ onFinish }) {
         </p>
       </div>
 
-      <div
-        className={`pointer-events-none absolute left-1/2 top-1/2 z-20 w-[680px] transition-transform duration-[1500ms] ease-out will-change-transform ${
-          carDrive ? 'translate-x-[-20vw] translate-y-[-50%]' : 'translate-x-[120vw] translate-y-[-50%]'
-        }`}
-        style={{ animation: 'preloaderFloat 0.9s ease-in-out infinite alternate' }}
-      >
+      <div ref={carRef} className="pointer-events-none absolute left-1/2 top-1/2 z-20 w-[680px] will-change-transform">
         <img
           src="/Rojgaar Yatra car.png"
           alt="Rozgaar Yatra Car"
