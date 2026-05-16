@@ -75,7 +75,7 @@ const employerBenefits = [
 
 const programmeHighlights = [
 	'NSQF Level-5 in Dual Education Model',
-	'3-year programme divided into 6 semesters',
+	'2-year programme divided into 4 semesters',
 	'On-the-Job Training (OJT) with industry exposure',
 	'Stipend paid as a single consolidated amount',
 	'Certificate after successful completion of training tenure',
@@ -148,7 +148,7 @@ function DvocHero() {
 						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
 							Diploma in Vocational Studies
 							<span className="mt-2 block text-[#2563EB]">(D. Voc)</span>
-							<span className="mt-2 block">3-Year Industry Integrated Programme</span>
+							<span className="mt-2 block">2-Year Industry Integrated Programme</span>
 						</h1>
 
 						<p className="max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
@@ -156,7 +156,7 @@ function DvocHero() {
 						</p>
 
 						<div className="flex flex-wrap gap-3">
-							{['3 Years', '6 Semesters', 'On-the-Job Training (OJT)'].map((item) => (
+							{['2 Years', '4 Semesters', 'On-the-Job Training (OJT)'].map((item) => (
 								<div key={item} className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 backdrop-blur-sm">
 									<CheckCircle2 className="h-5 w-5 text-[#22C55E]" />
 									<span className="font-medium text-white">{item}</span>
@@ -176,12 +176,12 @@ function DvocHero() {
 
 						<div className="flex items-center gap-6 border-t border-white/10 pt-4">
 							<div className="text-center">
-								<p className="text-3xl font-bold text-white">3 Years</p>
+								<p className="text-3xl font-bold text-white">2 Years</p>
 								<p className="text-sm text-white/60">Programme Duration</p>
 							</div>
 							<div className="h-12 w-px bg-white/20" />
 							<div className="text-center">
-								<p className="text-3xl font-bold text-[#2563EB]">6</p>
+								<p className="text-3xl font-bold text-[#2563EB]">4</p>
 								<p className="text-sm text-white/60">Semesters</p>
 							</div>
 							<div className="h-12 w-px bg-white/20" />
