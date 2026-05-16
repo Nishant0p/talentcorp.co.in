@@ -1,11 +1,44 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { CheckCircle2, PlayCircle, Circle, MapPin, ArrowRight, Eye, Target, Handshake, Briefcase, GraduationCap, Users, Megaphone, Map, Lightbulb, Heart, Truck, Check, Plus, Minus, ChevronDown, ChevronUp, ChevronRight, Activity } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import RozgaarPreloader from '../components/RozgaarPreloader'
-import { rojgarYatraImages } from '../data/rojgarYatraImages'
+import { rojgaarYatraOptimizedImages } from '../data/rojgaarYatraOptimizedImages'
+
+const journeyHighlightFolderConfigs = [
+	{
+		title: 'Banner Distribution & Pasting',
+		folder: '/Banner Distribution & Pasting/',
+		subtitle: 'Street-level visibility, wall branding, and hyperlocal outreach across the route.',
+		accent: 'from-orange-400 to-amber-300',
+	},
+	{
+		title: 'Campus Drive Held Overall India',
+		folder: '/Campus Drive Held Overall India/',
+		subtitle: 'Large-scale hiring drives connecting candidates directly with employers and recruiters.',
+		accent: 'from-blue-400 to-cyan-300',
+	},
+	{
+		title: 'Colleges Visits In Pan India',
+		folder: '/Colleges Visits In Pan India/',
+		subtitle: 'Campus visits, student engagement, and awareness sessions across institutes.',
+		accent: 'from-violet-400 to-fuchsia-300',
+	},
+	{
+		title: 'Offer Letter Distribution',
+		folder: '/Offer Letter Distribution/',
+		subtitle: 'Selection handovers, offer dispatch, and the final mile of candidate onboarding.',
+		accent: 'from-emerald-400 to-teal-300',
+	},
+]
+
+const journeyHighlightSections = journeyHighlightFolderConfigs.map((config, sectionIndex) => ({
+	...config,
+	sectionIndex,
+	images: rojgaarYatraOptimizedImages[config.title] ?? [],
+}))
 
 const participatingStates = [
 	'Andhra Pradesh',
@@ -37,11 +70,6 @@ const participatingStates = [
 	'Uttarakhand',
 	'West Bengal',
 ]
-
-const galleryTriples = []
-for (let index = 0; index < rojgarYatraImages.length; index += 3) {
-	galleryTriples.push(rojgarYatraImages.slice(index, index + 3))
-}
 
 const faqItems = [
 	{
@@ -81,6 +109,7 @@ export default function YatraPage() {
 	const [selectedImage, setSelectedImage] = useState('')
 	const [loadedImages, setLoadedImages] = useState({})
 	const [openFaqIndex, setOpenFaqIndex] = useState(0)
+	const shouldReduceMotion = useReducedMotion()
 
 	const heroRef = useRef(null)
 	const { scrollYProgress } = useScroll({
@@ -116,6 +145,31 @@ export default function YatraPage() {
 			return { ...current, [src]: true }
 		})
 	}
+
+	useEffect(() => {
+		const allJourneyImages = journeyHighlightSections.flatMap((section) => section.images)
+		let cancelled = false
+		const preloaders = allJourneyImages.map((src) => {
+			const image = new Image()
+			image.src = encodeURI(src)
+			image.decoding = 'async'
+			image.onload = () => {
+				if (!cancelled) markImageLoaded(src)
+			}
+			image.onerror = () => {
+				if (!cancelled) console.warn(`Failed to preload ${src}`)
+			}
+			return image
+		})
+
+		return () => {
+			cancelled = true
+			preloaders.forEach((image) => {
+				image.onload = null
+				image.onerror = null
+			})
+		}
+	}, [])
 
 	return (
 		<div className="bg-white text-slate-800">
@@ -262,142 +316,77 @@ export default function YatraPage() {
 					</div>
 				</section>
 
-				<section className="relative flex h-[100svh] flex-col justify-center overflow-hidden bg-slate-950 py-8">
+				<section className="relative overflow-hidden bg-slate-950 py-12 sm:py-16">
 					<div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.18),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.22),transparent_45%)]" />
-					<div className="relative mb-5">
-						<h2 className="px-6 text-3xl font-extrabold text-white sm:px-8 sm:text-4xl lg:px-12">Journey Highlights</h2>
-						<p className="mt-3 max-w-3xl px-6 text-slate-300 sm:px-8 lg:px-12">
-							Explore interactive moments from Rozgaar Yatra across regions.
-						</p>
-					</div>
-
 					<div className="relative px-6 sm:px-8 lg:px-12">
-						<div className="overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/45 p-2 shadow-[0_30px_80px_rgba(2,6,23,0.45)] sm:p-3">
-							{/* Row 1: Moves Left */}
-							<motion.div
-								className="flex w-max gap-3 mb-3"
-								animate={{ x: ['0%', '-50%'] }}
-								transition={{ duration: 320, ease: 'linear', repeat: Infinity }}
-							>
-								{[...galleryTriples, ...galleryTriples].map((triple, index) => {
-									const primary = triple[0]
-									const secondaryA = triple[1] ?? triple[0]
-									const secondaryB = triple[2] ?? triple[1] ?? triple[0]
+						<div className="mb-5">
+							<h2 className="text-3xl font-extrabold text-white sm:text-4xl">Journey Highlights</h2>
+							<p className="mt-3 max-w-3xl text-slate-300">
+								All photos from the four Rojgaar Yatra folders, arranged as creative marquee sections.
+							</p>
+						</div>
 
-									return (
-										<div key={`r1-triple-${index}`} className="flex shrink-0 items-stretch gap-2 rounded-[20px] border border-white/10 bg-slate-950/70 p-2">
-											<button
-												type="button"
-												className="block w-[180px] shrink-0 overflow-hidden rounded-[16px] border border-white/10 bg-slate-900/80"
-												onClick={() => setSelectedImage(primary)}
-											>
-												<img
-													src={primary}
-													alt="Rozgar Yatra highlight"
-													className={`h-full w-full aspect-[9/16] object-cover transition duration-700 hover:scale-[1.03] ${loadedImages[primary] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.04]'}`}
-													loading="lazy"
-													decoding="async"
-													onLoad={() => markImageLoaded(primary)}
-												/>
-											</button>
-
-											<div className="flex w-[140px] shrink-0 flex-col gap-2">
-												<button
-													type="button"
-													className="block h-1/2 overflow-hidden rounded-[14px] border border-white/10 bg-slate-900/80"
-													onClick={() => setSelectedImage(secondaryA)}
-												>
-													<img
-														src={secondaryA}
-														alt="Rozgar Yatra moment"
-														className={`h-full w-full aspect-[4/3] object-cover transition duration-700 hover:scale-[1.04] ${loadedImages[secondaryA] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.03]'}`}
-														loading="lazy"
-														decoding="async"
-														onLoad={() => markImageLoaded(secondaryA)}
-													/>
-												</button>
-												<button
-													type="button"
-													className="block h-1/2 overflow-hidden rounded-[14px] border border-white/10 bg-slate-900/80"
-													onClick={() => setSelectedImage(secondaryB)}
-												>
-													<img
-														src={secondaryB}
-														alt="Rozgar Yatra moment"
-														className={`h-full w-full aspect-[4/3] object-cover transition duration-700 hover:scale-[1.04] ${loadedImages[secondaryB] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.03]'}`}
-														loading="lazy"
-														decoding="async"
-														onLoad={() => markImageLoaded(secondaryB)}
-													/>
-												</button>
-											</div>
+						<div className="grid gap-6 xl:grid-cols-2">
+							{journeyHighlightSections.map((section, index) => (
+								<article key={section.title} className="overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/55 shadow-[0_30px_80px_rgba(2,6,23,0.45)] backdrop-blur-sm">
+									<div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
+										<div>
+											<p className={`text-[11px] font-bold uppercase tracking-[0.3em] bg-gradient-to-r ${section.accent} bg-clip-text text-transparent`}>
+												Section 0{index + 1}
+											</p>
+											<h3 className="mt-1 text-xl font-extrabold text-white sm:text-2xl">{section.title}</h3>
 										</div>
-									)
-								})}
-							</motion.div>
-
-							{/* Row 2: Moves Right */}
-							<motion.div
-								className="flex w-max gap-3"
-								animate={{ x: ['-50%', '0%'] }}
-								transition={{ duration: 340, ease: 'linear', repeat: Infinity }}
-							>
-								{[...galleryTriples, ...galleryTriples].reverse().map((triple, index) => {
-									const primary = triple[0]
-									const secondaryA = triple[1] ?? triple[0]
-									const secondaryB = triple[2] ?? triple[1] ?? triple[0]
-
-									return (
-										<div key={`r2-triple-${index}`} className="flex shrink-0 items-stretch gap-2 rounded-[20px] border border-white/10 bg-slate-950/70 p-2 flex-row-reverse">
-											<button
-												type="button"
-												className="block w-[180px] shrink-0 overflow-hidden rounded-[16px] border border-white/10 bg-slate-900/80"
-												onClick={() => setSelectedImage(primary)}
-											>
-												<img
-													src={primary}
-													alt="Rozgar Yatra highlight"
-													className={`h-full w-full aspect-[9/16] object-cover transition duration-700 hover:scale-[1.03] ${loadedImages[primary] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.04]'}`}
-													loading="lazy"
-													decoding="async"
-													onLoad={() => markImageLoaded(primary)}
-												/>
-											</button>
-
-											<div className="flex w-[140px] shrink-0 flex-col gap-2">
-												<button
-													type="button"
-													className="block h-1/2 overflow-hidden rounded-[14px] border border-white/10 bg-slate-900/80"
-													onClick={() => setSelectedImage(secondaryA)}
-												>
-													<img
-														src={secondaryA}
-														alt="Rozgar Yatra moment"
-														className={`h-full w-full aspect-[4/3] object-cover transition duration-700 hover:scale-[1.04] ${loadedImages[secondaryA] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.03]'}`}
-														loading="lazy"
-														decoding="async"
-														onLoad={() => markImageLoaded(secondaryA)}
-													/>
-												</button>
-												<button
-													type="button"
-													className="block h-1/2 overflow-hidden rounded-[14px] border border-white/10 bg-slate-900/80"
-													onClick={() => setSelectedImage(secondaryB)}
-												>
-													<img
-														src={secondaryB}
-														alt="Rozgar Yatra moment"
-														className={`h-full w-full aspect-[4/3] object-cover transition duration-700 hover:scale-[1.04] ${loadedImages[secondaryB] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.03]'}`}
-														loading="lazy"
-														decoding="async"
-														onLoad={() => markImageLoaded(secondaryB)}
-													/>
-												</button>
-											</div>
+										<div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-slate-200">
+											{section.images.length} Photos
 										</div>
-									)
-								})}
-							</motion.div>
+									</div>
+
+									<div className="px-4 py-4 sm:px-5">
+										<div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-slate-950/60 px-3 py-4 sm:px-4">
+											<div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-950 to-transparent" />
+											<div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-950 to-transparent" />
+											<motion.div
+												className="flex w-max items-stretch gap-4"
+												animate={shouldReduceMotion ? { x: 0 } : { x: index % 2 === 0 ? ['0%', '-50%'] : ['-50%', '0%'] }}
+													transition={shouldReduceMotion ? { duration: 0 } : { duration: 140 + index * 24, repeat: Infinity, ease: 'linear' }}
+												style={{ willChange: 'transform' }}
+											>
+												{[0, 1].map((loopIndex) => (
+													<div key={`${section.title}-loop-${loopIndex}`} className="flex items-stretch gap-4">
+														{section.images.map((image, imageIndex) => (
+															<button
+																key={`${section.title}-${loopIndex}-${imageIndex}`}
+																type="button"
+																className="group relative h-[240px] w-[180px] shrink-0 overflow-hidden rounded-[22px] border border-white/10 bg-slate-900/70 sm:h-[290px] sm:w-[220px]"
+																onClick={() => setSelectedImage(image)}
+															>
+																<img
+																	src={encodeURI(image)}
+																	alt={`${section.title} moment`}
+																	className={`h-full w-full object-cover transition duration-700 group-hover:scale-[1.06] ${loadedImages[image] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.03]'}`}
+																	loading="eager"
+																	fetchPriority="high"
+																	decoding="async"
+																	draggable="false"
+																	onLoad={() => markImageLoaded(image)}
+																/>
+																<div className={`absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t ${section.accent} opacity-0 transition-opacity duration-300 group-hover:opacity-30`} />
+																<div className="absolute left-3 top-3 rounded-full border border-white/15 bg-black/35 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white/90 backdrop-blur-md">
+																	{imageIndex + 1}
+																</div>
+															</button>
+														))}
+													</div>
+												))}
+											</motion.div>
+										</div>
+									</div>
+
+									<div className="border-t border-white/10 px-5 py-4 sm:px-6">
+										<p className="text-sm text-slate-300">{section.subtitle}</p>
+									</div>
+								</article>
+							))}
 						</div>
 					</div>
 				</section>
@@ -458,42 +447,8 @@ export default function YatraPage() {
 					</div>
 
 					{/* 2. Mission & What We Do Split */}
-					<div className="grid gap-10 lg:grid-cols-2 mb-20">
-						{/* Mission */}
-						<div>
-							<div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-bold tracking-widest text-blue-700 uppercase mb-6">
-								<Heart className="h-4 w-4" />
-								<span>Core Focus</span>
-							</div>
-							<h3 className="text-4xl font-black text-slate-900 mb-8">Our Mission</h3>
-							<ul className="space-y-6">
-								{[
-									"Provide genuine and transparent job opportunities.",
-									"Reduce unemployment among youth and skilled workers.",
-									"Connect industries with the right manpower.",
-									"Conduct employment drives in rural and urban areas.",
-									"Create awareness about career growth and industrial opportunities.",
-									"Support candidates with guidance and placement assistance."
-								].map((mission, i) => (
-									<motion.li 
-										initial={{ opacity: 0, x: -20 }}
-										whileInView={{ opacity: 1, x: 0 }}
-										viewport={{ once: true, margin: "-100px" }}
-										transition={{ delay: i * 0.1 }}
-										key={i} 
-										className="flex gap-4 items-start group"
-									>
-										<div className="mt-1 flex-shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-300">
-											<Check className="w-5 h-5 text-orange-600 group-hover:text-white transition-colors" />
-										</div>
-										<p className="text-xl text-slate-700 font-medium leading-relaxed">{mission}</p>
-									</motion.li>
-								))}
-							</ul>
-						</div>
-
-						{/* What We Do Grid */}
-						<div>
+					<div className="grid gap-6 lg:grid-cols-12 mb-20">
+						<div className="lg:col-span-12">
 							<div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-2 text-sm font-bold tracking-widest text-orange-700 uppercase mb-6">
 								<Briefcase className="h-4 w-4" />
 								<span>Operations</span>

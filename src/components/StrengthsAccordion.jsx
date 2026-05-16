@@ -151,12 +151,12 @@ export default function StrengthsAccordion() {
         <div className="mb-4 lg:mb-10 text-center lg:text-left">
           <div className="mb-2 lg:mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 lg:px-4 lg:py-2 backdrop-blur-md">
             <span className="h-1.5 lg:h-2 w-1.5 lg:w-2 rounded-full bg-[#F97316] animate-pulse" />
-            <span className="text-[10px] lg:text-xs font-bold tracking-widest text-[#F97316] uppercase">Why Choose Us</span>
+            <span className="text-[11px] lg:text-xs font-bold tracking-widest text-[#F97316] uppercase">Why Choose Us</span>
           </div>
-          <h2 className="mb-2 lg:mb-3 text-2xl sm:text-3xl lg:text-5xl font-extrabold text-white tracking-tight">
+          <h2 className="mb-2 lg:mb-3 text-3xl sm:text-3xl lg:text-5xl font-extrabold text-white tracking-tight">
             Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] to-[#F97316]">Strengths</span>
           </h2>
-          <p className="font-medium text-xs sm:text-sm lg:text-base text-gray-400 max-w-2xl mx-auto lg:mx-0">
+          <p className="font-medium text-sm sm:text-sm lg:text-base text-gray-400 max-w-2xl mx-auto lg:mx-0">
             Explore how we empower businesses with rapid deployment, unparalleled network, and guaranteed quality.
           </p>
         </div>
@@ -177,7 +177,7 @@ export default function StrengthsAccordion() {
                     transition={{ duration: prefersReducedMotion ? 0.1 : 0.25, delay: prefersReducedMotion ? 0 : index * 0.02 }}
                     className="relative cursor-pointer overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/10"
                   >
-                    <div className="relative z-10 p-3 sm:p-4">
+                    <div className="relative z-10 p-4 sm:p-4">
                       {/* Header */}
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <div className="flex flex-col gap-2">
@@ -185,25 +185,25 @@ export default function StrengthsAccordion() {
                           <Icon className="h-4 w-4 text-white/40" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-sm font-bold text-white leading-tight">{item.title}</h3>
+                          <h3 className="text-base font-bold text-white leading-tight">{item.title}</h3>
                         </div>
                       </div>
 
                       {/* Stat */}
                       <div className="mb-2">
-                        <p className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] to-[#F97316]">
+                        <p className="text-3xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] to-[#F97316]">
                           {item.stat}
                         </p>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-[#60A5FA]">{item.sub}</p>
+                        <p className="text-[11px] font-bold uppercase tracking-widest text-[#60A5FA]">{item.sub}</p>
                       </div>
 
                       {/* Description */}
-                      <p className="text-xs text-white/70 line-clamp-2 mb-2">{item.desc}</p>
+                      <p className="text-sm text-white/70 line-clamp-2 mb-2">{item.desc}</p>
 
                       {/* CTA Button */}
                       <Link
                         to="/achiment"
-                        className="inline-flex items-center gap-1 rounded-lg bg-white/10 px-3 py-1.5 text-[10px] font-bold text-white backdrop-blur-md transition-colors hover:bg-white/20 active:bg-white/30"
+                        className="inline-flex items-center gap-1 rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-bold text-white backdrop-blur-md transition-colors hover:bg-white/20 active:bg-white/30"
                       >
                         Explore
                         <ArrowUpRight className="h-3 w-3" />
