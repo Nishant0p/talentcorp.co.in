@@ -616,7 +616,7 @@ function LeadershipSection() {
 function AboutHero({ resolveAsset }) {
 	const aboutHeroAsset = resolveAsset(
 		'about.hero',
-		'/ABOUT.jpeg',
+		'https://images.pexels.com/photos/35082108/pexels-photo-35082108.jpeg',
 		'TSPL Group team'
 	)
 

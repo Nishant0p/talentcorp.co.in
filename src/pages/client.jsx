@@ -186,7 +186,7 @@ function AnimatedCounter({ value, suffix }) {
 }
 
 function ClientsHero({ resolveAsset, partnerLogos }) {
-	const heroAsset = resolveAsset('client.card.1', '/Gemini_Generated_Image_qskougqskougqsko.png', 'Office Background')
+	const heroAsset = resolveAsset('client.card.1', 'https://images.pexels.com/photos/8961068/pexels-photo-8961068.jpeg', 'Office Background')
 
 	return (
 		<section className="relative min-h-screen flex items-center overflow-visible bg-[#0f2a4d]">

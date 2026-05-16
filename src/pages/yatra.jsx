@@ -148,11 +148,6 @@ export default function YatraPage() {
 					<div className="relative z-20 mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-8">
 						{/* Left Column: Content */}
 						<div className="flex flex-col items-start text-left">
-							<div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-sm font-bold tracking-widest text-orange-400 uppercase mb-6 backdrop-blur-sm shadow-[0_0_15px_rgba(255,140,0,0.15)]">
-								<MapPin className="h-4 w-4" />
-								<span>Nationwide Mission</span>
-							</div>
-
 							<h1 className="text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl md:text-7xl mb-2">
 								<span className="text-[#FF8C00] drop-shadow-md">Rojgaar Yatra</span>
 								<br />
@@ -167,40 +162,74 @@ export default function YatraPage() {
 								Empowering careers across every state. Join the movement as we bridge the gap between talent and opportunity. The <span className="font-bold text-white">Rojgaar Yatra</span> is more than a journey; it’s a nationwide mission by TSPL Group to bring employment opportunities to your doorstep.
 							</p>
 
-							{/* Call to Actions */}
-							<div className="mt-10 flex flex-wrap items-center gap-4">
-								<button onClick={() => { document.getElementById('route')?.scrollIntoView({ behavior: 'smooth' }) }} className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#FF8C00] px-8 font-bold text-white shadow-[0_0_20px_rgba(255,140,0,0.4)] transition-all hover:bg-orange-500 hover:scale-105">
-									View Our Route
-									<ArrowRight className="h-5 w-5" />
-								</button>
-								<Link to="/contact-us" className="inline-flex h-14 items-center justify-center gap-2 rounded-full border-2 border-white/20 bg-white/5 px-8 font-bold text-white backdrop-blur-md transition-all hover:bg-white/10 hover:border-white/40">
-									Join the Yatra
-								</Link>
-							</div>
+							{/* The "Stop" Indicator Timeline - Horizontal Flow */}
+							<div className="mt-6 w-full rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-6 backdrop-blur-md">
+								<h3 className="text-sm font-bold text-white/80 uppercase tracking-widest mb-6">Yatra Progress Timeline</h3>
+								<div className="relative flex items-center justify-between gap-1 sm:gap-2 pb-4">
+									{/* Timeline Line */}
+									<div className="absolute left-0 right-0 top-8 h-1 bg-gradient-to-r from-emerald-500 via-orange-500 to-yellow-500 opacity-30" style={{ zIndex: 0 }} />
+									
+									{/* Maharashtra - Completed */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
+											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Maharashtra</span>
+										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
+									</div>
 
-							{/* The "Stop" Indicator Ticker */}
-							<div className="mt-12 w-full max-w-lg rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-6 backdrop-blur-md">
-								<div className="flex items-center justify-between text-sm sm:text-base">
-									<div className="flex flex-col items-center gap-1 text-emerald-400 w-1/3 text-center">
-										<CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6" />
-										<span className="font-bold">Maharashtra</span>
-										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-emerald-400/70">Completed</span>
+									{/* Madhya Pradesh - Completed */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
+											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">M.Pradesh</span>
+										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
 									</div>
-									<div className="h-[2px] flex-1 mx-2 bg-emerald-500/30 relative overflow-hidden">
-										<div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-orange-500 opacity-50" />
+
+									{/* Uttar Pradesh - Completed */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
+											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">U.Pradesh</span>
+										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
 									</div>
-									<div className="flex flex-col items-center gap-1 text-orange-400 w-1/3 text-center">
-										<PlayCircle className="h-5 w-5 sm:h-6 sm:w-6 animate-pulse" />
-										<span className="font-bold">Gujarat</span>
-										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-orange-400/70">Active</span>
+
+									{/* Bihar - Completed */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
+											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Bihar</span>
+										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
 									</div>
-									<div className="h-[2px] flex-1 mx-2 bg-white/10 relative overflow-hidden">
-										<div className="absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-orange-500/50 to-transparent animate-pulse" />
+
+									{/* Gujarat - Active */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-orange-500/20 border-2 border-orange-500 animate-pulse flex-shrink-0">
+											<PlayCircle className="h-7 w-7 text-orange-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Gujarat</span>
+										<span className="text-[7px] uppercase tracking-widest text-orange-400/70">Active</span>
 									</div>
-									<div className="flex flex-col items-center gap-1 text-slate-400 w-1/3 text-center">
-										<Circle className="h-5 w-5 sm:h-6 sm:w-6" />
-										<span className="font-bold">Rajasthan</span>
-										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500">Upcoming</span>
+
+									{/* West Bengal - In Process */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow-500/20 border-2 border-yellow-500 animate-pulse flex-shrink-0">
+											<Activity className="h-7 w-7 text-yellow-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">West Bengal</span>
+										<span className="text-[7px] uppercase tracking-widest text-yellow-400/70">In Process</span>
+									</div>
+
+									{/* Odisha - In Process */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow-500/20 border-2 border-yellow-500 animate-pulse flex-shrink-0">
+											<Activity className="h-7 w-7 text-yellow-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Odisha</span>
+										<span className="text-[7px] uppercase tracking-widest text-yellow-400/70">In Process</span>
 									</div>
 								</div>
 							</div>
