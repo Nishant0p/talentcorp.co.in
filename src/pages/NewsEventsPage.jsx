@@ -34,10 +34,11 @@ const defaultNewsEventsContent = {
   },
   spotlightCards: [
     {
-      category: '',
-      title: 'MSU, Sikkim, in collaboration with RSB Transmissions, inaugurates the Work Integrated ITI (CTS) training programme under the Flexi MoU scheme of DGT',
-      date: 'March 1, 2026',
-      img: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=400',
+      category: 'News',
+      title: "Poster Trailer of Dr. Mahiboob Sayyad's Third Book 'Apprenticeship Act 1961' Launched in Goa",
+      date: 'April 5, 2026',
+      img: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_05_17_at_21_29_50_a23ccb68f7.jpeg',
+      readMoreUrl: '/news-events',
     },
   ],
   allUpdates: [
