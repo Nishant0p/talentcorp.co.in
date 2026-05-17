@@ -169,17 +169,17 @@ Promotion Scheme is to promote apprenticeship training in the country. For the i
 						/>
 						</div>
 
-						<StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-							{aboutFeatures.map((feature) => (
-								<StaggerItem key={feature.title}>
-									{/* Removed the conditional styling and standardized to text-center */}
-									<div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#2563EB]/40 hover:shadow-xl">
-										<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] shadow-lg shadow-[#2563EB]/30">
-											<feature.icon className="h-6 w-6 text-white" />
-										</div>
-										{/* Standardized the typography to match the correct cards */}
-										<h3 className="mb-1 text-base font-bold text-[#0F172A]">{feature.title}</h3>
-										<p className="text-sm text-[#64748B]">{feature.desc}</p>
+					<StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
+						{aboutFeatures.map((feature) => (
+							<StaggerItem key={feature.title}>
+								{/* Removed the conditional styling and standardized to text-center */}
+								<div className="rounded-2xl border border-[#E2E8F0] bg-white p-4 sm:p-5 md:p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#2563EB]/40 hover:shadow-xl">
+									<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] shadow-lg shadow-[#2563EB]/30">
+										<feature.icon className="h-6 w-6 text-white" />
+									</div>
+									{/* Standardized the typography to match the correct cards */}
+									<h3 className="mb-1 text-sm sm:text-base md:text-lg font-bold text-[#0F172A]">{feature.title}</h3>
+									<p className="text-xs sm:text-sm text-[#64748B]">{feature.desc}</p>
 									</div>
 								</StaggerItem>
 							))}
@@ -213,14 +213,14 @@ function NAPSBenefits() {
 							</div>
 							<h3 className="text-2xl font-bold text-[#0F172A]">For Professionals</h3>
 						</div>
-							<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-								{applicantBenefits.map((benefit, i) => (
-									<div key={benefit.title} className="group flex flex-col h-full rounded-xl border border-[#E2E8F0] bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/40 hover:shadow-xl min-h-[140px]" style={{ animationDelay: `${i * 100}ms` }}>
-										<div className="mb-4 rounded-full bg-[#2563EB]/10 p-2 text-[#2563EB] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#2563EB] group-hover:text-white">
-											<benefit.icon className="h-5 w-5" />
-										</div>
-										<h4 className="mb-2 font-bold text-[#0F172A]">{benefit.title}</h4>
-										<p className="text-sm text-[#64748B]">{benefit.desc}</p>
+						<div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4">
+							{applicantBenefits.map((benefit, i) => (
+								<div key={benefit.title} className="group flex flex-col h-full rounded-xl border border-[#E2E8F0] bg-white p-4 sm:p-5 md:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/40 hover:shadow-xl min-h-[140px]" style={{ animationDelay: `${i * 100}ms` }}>
+									<div className="mb-4 rounded-full bg-[#2563EB]/10 p-2 text-[#2563EB] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#2563EB] group-hover:text-white">
+										<benefit.icon className="h-5 w-5" />
+									</div>
+									<h4 className="mb-2 text-sm sm:text-base font-bold text-[#0F172A]">{benefit.title}</h4>
+									<p className="text-xs sm:text-sm text-[#64748B]">{benefit.desc}</p>
 									</div>
 								))}
 							</div>
@@ -233,13 +233,13 @@ function NAPSBenefits() {
 							</div>
 							<h3 className="text-2xl font-bold text-[#0F172A]">For Employers</h3>
 						</div>
-						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-							{employerBenefits.map((item, i) => (
-								<div key={item} className="group flex flex-col items-start rounded-xl border border-[#E2E8F0] bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#F97316]/40 hover:shadow-xl" style={{ animationDelay: `${i * 100}ms` }}>
-									<div className="mb-4 rounded-full bg-[#F97316]/10 p-2 text-[#F97316] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#F97316] group-hover:text-white">
-										<CheckCircle2 className="h-5 w-5" />
-									</div>
-									<h4 className="font-bold text-[#0F172A]">{item}</h4>
+					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4">
+						{employerBenefits.map((item, i) => (
+							<div key={item} className="group flex flex-col items-start rounded-xl border border-[#E2E8F0] bg-white p-4 sm:p-5 md:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#F97316]/40 hover:shadow-xl" style={{ animationDelay: `${i * 100}ms` }}>
+								<div className="mb-4 rounded-full bg-[#F97316]/10 p-2 text-[#F97316] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#F97316] group-hover:text-white">
+									<CheckCircle2 className="h-5 w-5" />
+								</div>
+								<h4 className="text-sm sm:text-base font-bold text-[#0F172A]">{item}</h4>
 								</div>
 							))}
 						</div>
