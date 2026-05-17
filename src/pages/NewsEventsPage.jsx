@@ -43,6 +43,13 @@ const defaultNewsEventsContent = {
   allUpdates: [
   {
     type: 'news',
+    category: 'News',
+    title: "Poster Trailer of Dr. Mahiboob Sayyad's Third Book 'Apprenticeship Act 1961' Launched in Goa",
+    date: 'April 5, 2026',
+    image: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_05_17_at_21_29_50_a23ccb68f7.jpeg',
+  },
+  {
+    type: 'news',
     category: 'Events',
     title: 'Annual Skill Summit 2026 Draws 5000+ Participants in Pune',
     date: 'February 28, 2026',
