@@ -87,14 +87,22 @@ const companyOverviewPoints = [
 ]
 
 const servicesOffered = [
-	'National Apprenticeship Promotion Scheme (NAPS)',
-	'Board of Apprenticeship Training (BOAT / NATS)',
-	'Work Integrated Learning Programme (WILP) / WISE',
-	'D.VOC, B.VOC, M.VOC vocational programs',
-	'Apprenticeship Embedded Degree Program (AEDP)',
-	'Contract Staffing, Fixed Term Contract, and Contract Labour Staffing',
-	'Statutory Compliance Payroll Management',
-	'State schemes: MAPS, MATS, and CMAPS',
+	'NAPS',
+	'NATS / BOAT',
+	'MAPS',
+	'WILP / WISE',
+	'FLEXI ITI',
+	'D.Voc',
+	'B.Voc',
+	'M.Voc',
+	'AEDP',
+	'Contract Staffing',
+	'Manpower Planning',
+	'Trade (ITI) Apprenticeship',
+	'FTC',
+	'Statutory Compliance',
+	'Security & Housekeeping',
+	'Skill Training',
 ]
 
 const napsBenefits = [
@@ -185,7 +193,7 @@ function DetailedProfileSection() {
 					>
 						{/* Tab 0: Company Overview */}
 						{activeTab === 0 && (
-							<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[200px]">
+							<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
 								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="md:col-span-2 lg:col-span-2 row-span-2 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 to-blue-800 p-8 sm:p-10 text-white shadow-xl shadow-blue-900/10 group">
 									<div className="absolute right-0 top-0 opacity-10 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-12">
 										<Building2 className="h-64 w-64 -mr-16 -mt-16" />
@@ -240,13 +248,34 @@ function DetailedProfileSection() {
 									</ul>
 								</motion.div>
 
-								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.6 }} className="md:col-span-3 lg:col-span-4 row-span-auto rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl">
+								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.6 }} className="md:col-span-3 lg:col-span-4 row-span-auto rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl min-w-0">
 									<h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
 										<Target className="h-6 w-6 text-orange-500" /> Sectors Served
 									</h4>
-									<div className="flex flex-wrap gap-3">
-										{['Manufacturing', 'Healthcare', 'Hospitality', 'IT', 'Service Industry', 'Retail', 'E-Commerce', 'Construction'].map((sector) => (
-											<span key={sector} className="px-5 py-2.5 rounded-xl bg-slate-50 border border-slate-100 text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-700 hover:border-blue-100 transition-colors cursor-default">
+									<div className="w-full min-w-0 columns-2 gap-y-3 sm:columns-3 md:columns-4 lg:columns-5">
+										{[
+											'Manufacturing',
+											'Automobile',
+											'Electronics',
+											'IT & ITeS/BPO',
+											'Pharmaceuticals',
+											'Chemicals',
+											'Banking',
+											'Healthcare',
+											'Retail',
+											'BFSI',
+											'Logistics',
+											'E-Commerce',
+											'Construction',
+											'Food & Beverages',
+											'Renewable Energy',
+											'Mining',
+											'Steel',
+											'Power & Energy',
+											'Electric Vehicles',
+											'Apparel & Textiles',
+										].map((sector) => (
+											<span key={sector} className="inline-block w-full break-all py-1 px-2 text-[11px] sm:text-xs rounded-xl bg-slate-50 border border-slate-100 text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-700 hover:border-blue-100 transition-colors cursor-default whitespace-normal leading-snug mb-2">
 												{sector}
 											</span>
 										))}

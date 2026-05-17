@@ -9,10 +9,10 @@ import { rojgaarYatraOptimizedImages } from '../data/rojgaarYatraOptimizedImages
 
 const journeyHighlightFolderConfigs = [
 	{
-		title: 'Banner Distribution & Pasting',
-		folder: '/Banner Distribution & Pasting/',
-		subtitle: 'Street-level visibility, wall branding, and hyperlocal outreach across the route.',
-		accent: 'from-orange-400 to-amber-300',
+		title: 'Offer Letter Distribution',
+		folder: '/Offer Letter Distribution/',
+		subtitle: 'Selection handovers, offer dispatch, and the final mile of candidate onboarding.',
+		accent: 'from-emerald-400 to-teal-300',
 	},
 	{
 		title: 'Campus Drive Held Overall India',
@@ -27,10 +27,10 @@ const journeyHighlightFolderConfigs = [
 		accent: 'from-violet-400 to-fuchsia-300',
 	},
 	{
-		title: 'Offer Letter Distribution',
-		folder: '/Offer Letter Distribution/',
-		subtitle: 'Selection handovers, offer dispatch, and the final mile of candidate onboarding.',
-		accent: 'from-emerald-400 to-teal-300',
+		title: 'Banner Distribution & Pasting',
+		folder: '/Banner Distribution & Pasting/',
+		subtitle: 'Street-level visibility, wall branding, and hyperlocal outreach across the route.',
+		accent: 'from-orange-400 to-amber-300',
 	},
 ]
 

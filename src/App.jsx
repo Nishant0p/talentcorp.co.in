@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
 import './App.css'
 import GlobalTextureOverlay from './components/GlobalTextureOverlay'
+import ChatBot from './components/ChatBot'
 import AchimentPage from './pages/achiment'
 const HomePage = lazy(() => import('./pages/HomePage'))
 const JobDetailPage = lazy(() => import('./pages/JobDetailPage'))
@@ -186,6 +187,7 @@ function AppContent() {
     <>
       <ScrollToTop />
       <ScrollToTopButton />
+      <ChatBot />
       <div className="page-shell">
         <GlobalTextureOverlay />
         {isLoading && !skipMainPreloader && (
