@@ -177,7 +177,7 @@ function FlexiItiHero({ resolveAsset }) {
 							</a>
 						</div>
 
-						<div className="mt-6 rounded-2xl sm:rounded-3xl border border-white/20 bg-white/10 p-4 sm:p-5 shadow-2xl backdrop-blur-xl lg:hidden">
+						<div className="mt-6 hidden rounded-2xl sm:rounded-3xl border border-white/20 bg-white/10 p-4 sm:p-5 shadow-2xl backdrop-blur-xl lg:hidden">
 							<h3 className="mb-3 text-lg sm:text-xl font-bold text-white">What is FLEXI ITI?</h3>
 							<div className="grid gap-2 sm:grid-cols-2 sm:gap-3">
 								{[
