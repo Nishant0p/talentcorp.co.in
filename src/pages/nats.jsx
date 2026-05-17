@@ -117,11 +117,11 @@ This certificate can be registered at all employment exchanges across India as v
 									className="h-72 w-full max-w-xl object-contain transition-transform duration-500 group-hover:scale-105 md:h-[480px]"
 							/>
 						</div>
-						<div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
+						<div className="grid grid-cols-1 gap-3 px-2 text-center sm:grid-cols-3 sm:gap-4 sm:px-0">
 							{natsHighlights.map((item) => (
-								<div key={item.label} className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl">
-									<div className="mb-1 text-xl font-bold text-blue-600 whitespace-nowrap">{item.value}</div>
-									<div className="text-xs text-slate-500">{item.label}</div>
+								<div key={item.label} className="rounded-lg border border-slate-100 bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl sm:p-4">
+									<div className="mb-2 text-base font-bold text-blue-600 sm:text-lg md:text-xl">{item.value}</div>
+									<div className="text-xs text-slate-500 leading-snug sm:text-sm">{item.label}</div>
 								</div>
 							))}
 						</div>
