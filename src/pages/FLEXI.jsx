@@ -130,7 +130,7 @@ function FlexiItiHero({ resolveAsset }) {
 	const heroAsset = resolveAsset('flexi.hero', '/training%20tspl.jpeg', 'FLEXI ITI training')
 
 	return (
-		<section className="relative min-h-[82vh] overflow-hidden bg-[#0F172A] pt-20 lg:min-h-[calc(100vh-72px)] lg:pt-16">
+		<section className="relative min-h-screen overflow-hidden bg-[#0F172A] pt-20 lg:min-h-screen lg:pt-16">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/85 to-[#0F172A]/70" />
@@ -139,8 +139,9 @@ function FlexiItiHero({ resolveAsset }) {
 			<div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#2563EB]/20 blur-3xl sm:h-64 sm:w-64 md:h-72 md:w-72 md:-right-0 md:top-20 lg:right-20 lg:top-20" />
 			<div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-[#F97316]/10 blur-3xl sm:h-72 sm:w-72 md:h-96 md:w-96 md:-bottom-0 md:left-20 lg:bottom-20 lg:left-20" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 py-14 lg:px-8 lg:py-16">
-				<div className="grid items-center gap-10 lg:grid-cols-2">
+			<div className="relative z-10 mx-auto h-full max-w-7xl px-6 py-14 lg:px-8 lg:py-16">
+				<div className="flex h-full items-center">
+					<div className="grid w-full items-center gap-10 lg:grid-cols-2">
 					<div className="space-y-6">
 						<div className="inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/20 px-4 py-2">
 							<span className="h-2 w-2 animate-pulse rounded-full bg-[#F97316]" />
@@ -222,9 +223,10 @@ function FlexiItiHero({ resolveAsset }) {
 						</div>
 					</div>
 				</div>
+				</div>
 			</div>
 
-<div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+			<div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
 				<div className="flex h-12 w-8 items-start justify-center rounded-full border-2 border-white/30 p-2">
 					<div className="h-3 w-1.5 rounded-full bg-white/60" />
 				</div>
