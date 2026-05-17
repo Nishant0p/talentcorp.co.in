@@ -517,11 +517,11 @@ function CaseStudies({ resolveAsset }) {
 								<p className="text-gray-700">{caseStudies[activeCase].solution}</p>
 							</div>
 
-							<div className="grid grid-cols-3 gap-4">
+							<div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
 								{caseStudies[activeCase].results.map((result) => (
-									<div key={result.label} className="rounded-xl bg-gray-50 p-4 text-center">
-										<p className={`text-2xl md:text-3xl font-bold text-blue-600 ${result.label === 'Quota Range' ? 'whitespace-nowrap' : ''}`}>{result.value}</p>
-										<p className="mt-1 text-sm text-gray-500">{result.label}</p>
+									<div key={result.label} className="rounded-xl bg-gray-50 p-4 sm:p-5 md:p-6 text-center transition-all duration-300 hover:bg-blue-50 hover:shadow-md">
+										<p className={`text-xl sm:text-2xl md:text-3xl font-bold text-blue-600 ${result.label === 'Quota Range' ? 'whitespace-nowrap' : ''}`}>{result.value}</p>
+										<p className="mt-1 text-xs sm:text-sm text-gray-500">{result.label}</p>
 									</div>
 								))}
 							</div>

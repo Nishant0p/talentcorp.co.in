@@ -115,14 +115,6 @@ function NAPSHero() {
 						</Link>
 					</div>
 
-					<div className="grid grid-cols-1 gap-3 mt-12 px-2 sm:mt-16 sm:grid-cols-3 sm:gap-4 sm:px-0">
-						{heroStats.map((stat) => (
-							<div key={stat.label} className="rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm p-3 sm:p-4 text-center transition-all duration-300 hover:bg-white/15 hover:border-white/40">
-								<div className="text-base font-bold text-white sm:text-lg md:text-xl mb-1">{stat.value}</div>
-								<div className="text-xs text-white/80 leading-snug sm:text-sm">{stat.label}</div>
-							</div>
-						))}
-					</div>
 
 				</div>
 			</div>
