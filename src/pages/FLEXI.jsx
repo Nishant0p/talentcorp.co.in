@@ -130,67 +130,67 @@ function FlexiItiHero({ resolveAsset }) {
 	const heroAsset = resolveAsset('flexi.hero', '/training%20tspl.jpeg', 'FLEXI ITI training')
 
 	return (
-		<section className="relative min-h-[100svh] overflow-hidden bg-[#0F172A] pt-16">
+		<section className="relative min-h-[100svh] overflow-hidden bg-[#0F172A] pt-16 sm:pt-20 md:pt-24">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
 			</div>
 
-			<div className="absolute right-20 top-20 h-72 w-72 rounded-full bg-[#2563EB]/20 blur-3xl" />
-			<div className="absolute bottom-20 left-20 h-96 w-96 rounded-full bg-[#F97316]/10 blur-3xl" />
+			<div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#2563EB]/20 blur-3xl sm:h-64 sm:w-64 md:h-72 md:w-72 md:right-20 md:top-20" />
+			<div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-[#F97316]/10 blur-3xl sm:h-72 sm:w-72 md:h-96 md:w-96 md:bottom-20 md:left-20" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-16">
-				<div className="grid items-center gap-10 lg:grid-cols-2">
-					<div className="space-y-6">
-						<div className="inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/20 px-4 py-2">
+			<div className="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+				<div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-2">
+					<div className="space-y-4 sm:space-y-6">
+						<div className="inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/20 px-3 py-1.5 sm:px-4 sm:py-2">
 							<span className="h-2 w-2 animate-pulse rounded-full bg-[#F97316]" />
-							<span className="text-sm font-bold text-[#F97316]">Government Recognized Program</span>
+							<span className="text-xs sm:text-sm font-bold text-[#F97316]">Government Recognized Program</span>
 						</div>
 
-						<h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+						<h1 className="text-2xl font-bold leading-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
 							Learn Skills
-							<span className="mt-2 block text-[#2563EB]">At Your Own Pace</span>
-							<span className="mt-2 block">With FLEXI ITI</span>
+							<span className="mt-1 block text-[#2563EB] sm:mt-2">At Your Own Pace</span>
+							<span className="mt-1 block sm:mt-2">With FLEXI ITI</span>
 						</h1>
 
-						<p className="max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
+						<p className="max-w-xl text-sm leading-relaxed text-white/80 sm:text-base lg:text-lg">
 							FLEXI ITI helps you learn job skills while continuing your work. Study when you have time, earn a recognized certificate, and build a better future for yourself and your family.
 						</p>
 
-						<div className="flex flex-nowrap gap-3 overflow-x-auto">
+						<div className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-hide sm:gap-3">
 							{['Learn While Working', 'Government Certificate', 'Better Jobs'].map((item) => (
-								<div key={item} className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 backdrop-blur-sm whitespace-nowrap">
-									<CheckCircle2 className="h-5 w-5 text-[#22C55E] shrink-0" />
-									<span className="font-medium text-white text-sm">{item}</span>
+								<div key={item} className="flex items-center gap-1.5 rounded-lg bg-white/10 px-2.5 py-1.5 backdrop-blur-sm whitespace-nowrap sm:gap-2 sm:px-3 sm:py-2">
+									<CheckCircle2 className="h-4 w-4 text-[#22C55E] shrink-0 sm:h-5 sm:w-5" />
+									<span className="font-medium text-white text-xs sm:text-sm">{item}</span>
 								</div>
 							))}
 						</div>
 
-						<div className="flex flex-col gap-4 pt-4 sm:flex-row">
-							<Link to="/contact-us" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
+						<div className="flex flex-col gap-3 pt-2 sm:gap-4 sm:pt-4 sm:flex-row">
+							<Link to="/contact-us" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-lg font-bold text-white shadow-2xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
 								Apply Now - It's Free
-								<ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+								<ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-1" />
 							</Link>
-							<a href="#benefits" className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-white/5 px-8 py-4 text-lg font-bold text-white backdrop-blur-md transition-all duration-300 hover:border-white/60 hover:bg-white/10">
-								<Play className="h-5 w-5" />
+							<a href="#benefits" className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-white/5 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-lg font-bold text-white backdrop-blur-md transition-all duration-300 hover:border-white/60 hover:bg-white/10">
+								<Play className="h-4 w-4 sm:h-5 sm:w-5" />
 								Watch Video
 							</a>
 						</div>
 
-						<div className="mt-8 rounded-3xl border border-white/20 bg-white/10 p-5 shadow-2xl backdrop-blur-xl lg:hidden">
-							<h3 className="mb-4 text-xl font-bold text-white">What is FLEXI ITI?</h3>
-							<div className="grid gap-3 sm:grid-cols-2">
+						<div className="mt-6 rounded-2xl sm:rounded-3xl border border-white/20 bg-white/10 p-4 sm:p-5 shadow-2xl backdrop-blur-xl lg:hidden">
+							<h3 className="mb-3 text-lg sm:text-xl font-bold text-white">What is FLEXI ITI?</h3>
+							<div className="grid gap-2 sm:grid-cols-2 sm:gap-3">
 								{[
 									{ icon: '🎯', title: 'Flexible Timing', desc: 'Study in morning, evening, or weekends' },
 									{ icon: '📚', title: 'Practical Training', desc: 'Learn by doing real work with your hands' },
 									{ icon: '📜', title: 'Valid Certificate', desc: 'Get government approved ITI certificate' },
 									{ icon: '💼', title: 'Job Support', desc: 'We help you find good jobs after training' },
 								].map((item) => (
-									<div key={item.title} className="flex items-start gap-3 rounded-xl bg-white/5 p-3">
-										<span className="text-xl">{item.icon}</span>
+									<div key={item.title} className="flex items-start gap-2 rounded-lg bg-white/5 p-2.5 sm:gap-3 sm:p-3">
+										<span className="text-lg sm:text-xl shrink-0">{item.icon}</span>
 										<div>
-											<h4 className="text-sm font-bold text-white">{item.title}</h4>
-											<p className="text-xs leading-relaxed text-white/70">{item.desc}</p>
+											<h4 className="text-xs sm:text-sm font-bold text-white">{item.title}</h4>
+											<p className="text-xs leading-relaxed text-white/70 sm:text-xs">{item.desc}</p>
 										</div>
 									</div>
 								))}
@@ -211,7 +211,7 @@ function FlexiItiHero({ resolveAsset }) {
 									{ icon: '💼', title: 'Job Support', desc: 'We help you find good jobs after training' },
 								].map((item) => (
 									<div key={item.title} className="flex items-start gap-4 rounded-xl bg-white/5 p-4 transition-colors hover:bg-white/10">
-										<span className="text-2xl">{item.icon}</span>
+										<span className="text-2xl shrink-0">{item.icon}</span>
 										<div>
 											<h4 className="font-bold text-white">{item.title}</h4>
 											<p className="text-sm text-white/70">{item.desc}</p>
@@ -224,9 +224,9 @@ function FlexiItiHero({ resolveAsset }) {
 				</div>
 			</div>
 
-			<div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-				<div className="flex h-12 w-8 items-start justify-center rounded-full border-2 border-white/30 p-2">
-					<div className="h-3 w-1.5 rounded-full bg-white/60" />
+<div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce sm:bottom-8">
+				<div className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/30 p-2 sm:h-12 sm:w-8">
+					<div className="h-2 w-1 rounded-full bg-white/60 sm:h-3" />
 				</div>
 			</div>
 
