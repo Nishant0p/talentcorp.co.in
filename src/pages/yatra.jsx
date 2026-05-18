@@ -1,11 +1,45 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { CheckCircle2, PlayCircle, Circle, MapPin, ArrowRight, Eye, Target, Handshake, Briefcase, GraduationCap, Users, Megaphone, Map, Lightbulb, Heart, Truck, Check, Plus, Minus, ChevronDown, ChevronUp, ChevronRight, Activity } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import RozgaarPreloader from '../components/RozgaarPreloader'
-import { yatraGalleryCards } from '../data/yatraGalleryData'
+import { rojgaarYatraOptimizedImages } from '../data/rojgaarYatraOptimizedImages'
+
+const journeyHighlightFolderConfigs = [
+	{
+		title: 'Offer Letter Distribution',
+		folder: '/Offer Letter Distribution/',
+		subtitle: 'Selection handovers, offer dispatch, and the final mile of candidate onboarding.',
+		accent: 'from-emerald-400 to-teal-300',
+	},
+	{
+		title: 'Campus Drive Held Overall India',
+		folder: '/Campus Drive Held Overall India/',
+		subtitle: 'Large-scale hiring drives connecting candidates directly with employers and recruiters.',
+		accent: 'from-blue-400 to-cyan-300',
+	},
+	{
+		title: 'Colleges Visits In Pan India',
+		folder: '/Colleges Visits In Pan India/',
+		subtitle: 'Campus visits, student engagement, and awareness sessions across institutes.',
+		accent: 'from-violet-400 to-fuchsia-300',
+	},
+	{
+		title: 'Banner Distribution & Pasting',
+		folder: '/Banner Distribution & Pasting/',
+		subtitle: 'Street-level visibility, wall branding, and hyperlocal outreach across the route.',
+		accent: 'from-orange-400 to-amber-300',
+	},
+]
+
+const journeyHighlightSections = journeyHighlightFolderConfigs.map((config, sectionIndex) => ({
+	...config,
+	sectionIndex,
+	images: rojgaarYatraOptimizedImages[config.title] ?? [],
+}))
+
 const participatingStates = [
 	'Andhra Pradesh',
 	'Arunachal Pradesh',
@@ -102,7 +136,10 @@ const routeStatusItems = [
 
 export default function YatraPage() {
 	const [loading, setLoading] = useState(true)
+	const [selectedImage, setSelectedImage] = useState('')
+	const [loadedImages, setLoadedImages] = useState({})
 	const [openFaqIndex, setOpenFaqIndex] = useState(0)
+	const shouldReduceMotion = useReducedMotion()
 
 	const heroRef = useRef(null)
 	const { scrollYProgress } = useScroll({
@@ -117,6 +154,51 @@ export default function YatraPage() {
 		// Fallback hide only if callback fails; keep long enough for full GSAP sequence.
 		const t = setTimeout(() => setLoading(false), 7000)
 		return () => clearTimeout(t)
+	}, [])
+
+	useEffect(() => {
+		if (!selectedImage) return undefined
+
+		const onEsc = (e) => {
+			if (e.key === 'Escape') {
+				setSelectedImage('')
+			}
+		}
+
+		window.addEventListener('keydown', onEsc)
+		return () => window.removeEventListener('keydown', onEsc)
+	}, [selectedImage])
+
+	const markImageLoaded = (src) => {
+		setLoadedImages((current) => {
+			if (current[src]) return current
+			return { ...current, [src]: true }
+		})
+	}
+
+	useEffect(() => {
+		const allJourneyImages = journeyHighlightSections.flatMap((section) => section.images)
+		let cancelled = false
+		const preloaders = allJourneyImages.map((src) => {
+			const image = new Image()
+			image.src = encodeURI(src)
+			image.decoding = 'async'
+			image.onload = () => {
+				if (!cancelled) markImageLoaded(src)
+			}
+			image.onerror = () => {
+				if (!cancelled) console.warn(`Failed to preload ${src}`)
+			}
+			return image
+		})
+
+		return () => {
+			cancelled = true
+			preloaders.forEach((image) => {
+				image.onload = null
+				image.onerror = null
+			})
+		}
 	}, [])
 
 	return (
@@ -150,11 +232,6 @@ export default function YatraPage() {
 					<div className="relative z-20 mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-8">
 						{/* Left Column: Content */}
 						<div className="flex flex-col items-start text-left">
-							<div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-sm font-bold tracking-widest text-orange-400 uppercase mb-6 backdrop-blur-sm shadow-[0_0_15px_rgba(255,140,0,0.15)]">
-								<MapPin className="h-4 w-4" />
-								<span>Nationwide Mission</span>
-							</div>
-
 							<h1 className="text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl md:text-7xl mb-2">
 								<span className="text-[#FF8C00] drop-shadow-md">Rojgaar Yatra</span>
 								<br />
@@ -169,40 +246,74 @@ export default function YatraPage() {
 								Empowering careers across every state. Join the movement as we bridge the gap between talent and opportunity. The <span className="font-bold text-white">Rojgaar Yatra</span> is more than a journey; it’s a nationwide mission by TSPL Group to bring employment opportunities to your doorstep.
 							</p>
 
-							{/* Call to Actions */}
-							<div className="mt-10 flex flex-wrap items-center gap-4">
-								<button onClick={() => { document.getElementById('route')?.scrollIntoView({ behavior: 'smooth' }) }} className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#FF8C00] px-8 font-bold text-white shadow-[0_0_20px_rgba(255,140,0,0.4)] transition-all hover:bg-orange-500 hover:scale-105">
-									View Our Route
-									<ArrowRight className="h-5 w-5" />
-								</button>
-								<Link to="/contact-us" className="inline-flex h-14 items-center justify-center gap-2 rounded-full border-2 border-white/20 bg-white/5 px-8 font-bold text-white backdrop-blur-md transition-all hover:bg-white/10 hover:border-white/40">
-									Join the Yatra
-								</Link>
-							</div>
+							{/* The "Stop" Indicator Timeline - Horizontal Flow */}
+							<div className="mt-6 w-full rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-6 backdrop-blur-md">
+								<h3 className="text-sm font-bold text-white/80 uppercase tracking-widest mb-6">Yatra Progress Timeline</h3>
+								<div className="relative flex items-center justify-between gap-1 sm:gap-2 pb-4">
+									{/* Timeline Line */}
+									<div className="absolute left-0 right-0 top-8 h-1 bg-gradient-to-r from-emerald-500 via-orange-500 to-yellow-500 opacity-30" style={{ zIndex: 0 }} />
+									
+									{/* Maharashtra - Completed */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
+											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Maharashtra</span>
+										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
+									</div>
 
-							{/* The "Stop" Indicator Ticker */}
-							<div className="mt-12 w-full max-w-[1177px] rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-6 backdrop-blur-md">
-								<div className="flex items-center justify-between text-sm sm:text-base">
-									<div className="flex flex-col items-center gap-1 text-emerald-400 w-2/5 text-center">
-										<CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6" />
-										<span className="font-bold text-sm sm:text-base"> Maharashtra, Bihar, Madhya Pradesh, Uttar Pradesh</span>
-										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-emerald-400/70">Completed</span>
+									{/* Madhya Pradesh - Completed */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
+											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">M.Pradesh</span>
+										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
 									</div>
-									<div className="h-[2px] flex-1 mx-2 bg-emerald-500/30 relative overflow-hidden">
-										<div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-orange-500 opacity-50" />
+
+									{/* Uttar Pradesh - Completed */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
+											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">U.Pradesh</span>
+										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
 									</div>
-									<div className="flex flex-col items-center gap-1 text-orange-400 w-1/3 text-center">
-										<PlayCircle className="h-5 w-5 sm:h-6 sm:w-6 animate-pulse" />
-										<span className="font-bold">Gujarat</span>
-										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-orange-400/70">Active</span>
+
+									{/* Bihar - Completed */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
+											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Bihar</span>
+										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
 									</div>
-									<div className="h-[2px] flex-1 mx-2 bg-white/10 relative overflow-hidden">
-										<div className="absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-orange-500/50 to-transparent animate-pulse" />
+
+									{/* Gujarat - Active */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-orange-500/20 border-2 border-orange-500 animate-pulse flex-shrink-0">
+											<PlayCircle className="h-7 w-7 text-orange-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Gujarat</span>
+										<span className="text-[7px] uppercase tracking-widest text-orange-400/70">Active</span>
 									</div>
-									<div className="flex flex-col items-center gap-1 text-slate-400 w-1/3 text-center">
-										<Circle className="h-5 w-5 sm:h-6 sm:w-6" />
-										<span className="font-bold">Rajasthan, West Bengal, Odisha</span>
-										<span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500">Upcoming</span>
+
+									{/* West Bengal - In Process */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow-500/20 border-2 border-yellow-500 animate-pulse flex-shrink-0">
+											<Activity className="h-7 w-7 text-yellow-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">West Bengal</span>
+										<span className="text-[7px] uppercase tracking-widest text-yellow-400/70">In Process</span>
+									</div>
+
+									{/* Odisha - In Process */}
+									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow-500/20 border-2 border-yellow-500 animate-pulse flex-shrink-0">
+											<Activity className="h-7 w-7 text-yellow-400" />
+										</div>
+										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Odisha</span>
+										<span className="text-[7px] uppercase tracking-widest text-yellow-400/70">In Process</span>
 									</div>
 								</div>
 							</div>
@@ -235,37 +346,78 @@ export default function YatraPage() {
 					</div>
 				</section>
 
-				<section className="relative overflow-hidden bg-slate-950 py-24 sm:py-28">
+				<section className="relative overflow-hidden bg-slate-950 py-12 sm:py-16">
 					<div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.18),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.22),transparent_45%)]" />
-					<div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-						<div className="services-header text-center">
-							<p className="services-subtitle text-sm font-bold uppercase tracking-[0.32em] text-orange-400">Grow Your Reach With Us</p>
-							<h2 className="services-title mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">Our Services</h2>
+					<div className="relative px-6 sm:px-8 lg:px-12">
+						<div className="mb-5">
+							<h2 className="text-3xl font-extrabold text-white sm:text-4xl">Journey Highlights</h2>
+							<p className="mt-3 max-w-3xl text-slate-300">
+								All photos from the four Rojgaar Yatra folders, arranged as creative marquee sections.
+							</p>
 						</div>
 
-						<div className="cards-wrapper mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-							{yatraGalleryCards.map((card) => (
-								<Link
-									key={card.slug}
-									to={`/yatra/gallery/${card.slug}`}
-									aria-label={`Open ${card.title} image page`}
-									className="service-card group relative min-h-[420px] overflow-hidden rounded-[28px] border border-white/10 bg-slate-900 shadow-[0_24px_80px_rgba(2,6,23,0.45)] transition-transform duration-500 hover:-translate-y-2 cursor-pointer"
-									style={{ backgroundImage: `url(${card.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-								>
-									<div className="card-overlay absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-slate-950/15" />
-									<div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-transparent to-blue-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-									<div className="absolute inset-x-0 bottom-0 p-6 text-white">
-										<div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md">
-											<Briefcase className="h-6 w-6 text-orange-300" />
+						<div className="grid gap-6 xl:grid-cols-2">
+							{journeyHighlightSections.map((section, index) => (
+								<article key={section.title} className="overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/55 shadow-[0_30px_80px_rgba(2,6,23,0.45)] backdrop-blur-sm">
+									<div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
+										<div>
+											<p className={`text-[11px] font-bold uppercase tracking-[0.3em] bg-gradient-to-r ${section.accent} bg-clip-text text-transparent`}>
+												Section 0{index + 1}
+											</p>
+											<h3 className="mt-1 text-xl font-extrabold text-white sm:text-2xl">{section.title}</h3>
 										</div>
-										<h3 className="card-title text-2xl font-black leading-tight">{card.title}</h3>
-										<p className="card-subtitle mt-3 text-sm font-medium uppercase tracking-[0.22em] text-slate-200/80">{card.subtitle}</p>
+										<div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-slate-200">
+											{section.images.length} Photos
+										</div>
 									</div>
-								</Link>
+
+									<div className="px-4 py-4 sm:px-5">
+										<div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-slate-950/60 px-3 py-4 sm:px-4">
+											<div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-950 to-transparent" />
+											<div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-950 to-transparent" />
+											<motion.div
+												className="flex w-max items-stretch gap-4"
+												animate={shouldReduceMotion ? { x: 0 } : { x: index % 2 === 0 ? ['0%', '-50%'] : ['-50%', '0%'] }}
+												transition={shouldReduceMotion ? { duration: 0 } : { duration: 140 + index * 24, repeat: Infinity, ease: 'linear' }}
+												style={{ willChange: 'transform' }}
+											>
+												{[0, 1].map((loopIndex) => (
+													<div key={`${section.title}-loop-${loopIndex}`} className="flex items-stretch gap-4">
+														{section.images.map((image, imageIndex) => (
+															<button
+																key={`${section.title}-${loopIndex}-${imageIndex}`}
+																type="button"
+																className="group relative h-[240px] w-[180px] shrink-0 overflow-hidden rounded-[22px] border border-white/10 bg-slate-900/70 sm:h-[290px] sm:w-[220px]"
+																onClick={() => setSelectedImage(image)}
+															>
+																<img
+																	src={encodeURI(image)}
+																	alt={`${section.title} moment`}
+																	className={`h-full w-full object-cover transition duration-700 group-hover:scale-[1.06] ${loadedImages[image] ? 'opacity-100 blur-0' : 'opacity-60 blur-md scale-[1.03]'}`}
+																	loading="eager"
+																	fetchPriority="high"
+																	decoding="async"
+																	draggable="false"
+																	onLoad={() => markImageLoaded(image)}
+																/>
+																<div className={`absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t ${section.accent} opacity-0 transition-opacity duration-300 group-hover:opacity-30`} />
+																<div className="absolute left-3 top-3 rounded-full border border-white/15 bg-black/35 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white/90 backdrop-blur-md">
+																	{imageIndex + 1}
+																</div>
+															</button>
+														))}
+													</div>
+												))}
+											</motion.div>
+										</div>
+									</div>
+
+									<div className="border-t border-white/10 px-5 py-4 sm:px-6">
+										<p className="text-sm text-slate-300">{section.subtitle}</p>
+									</div>
+								</article>
 							))}
 						</div>
-
-						<div className="decorative-line mx-auto mt-14 h-px w-full max-w-3xl bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 					</div>
 				</section>
 
@@ -325,42 +477,8 @@ export default function YatraPage() {
 					</div>
 
 					{/* 2. Mission & What We Do Split */}
-					<div className="grid gap-10 lg:grid-cols-2 mb-20">
-						{/* Mission */}
-						<div>
-							<div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-bold tracking-widest text-blue-700 uppercase mb-6">
-								<Heart className="h-4 w-4" />
-								<span>Core Focus</span>
-							</div>
-							<h3 className="text-4xl font-black text-slate-900 mb-8">Our Mission</h3>
-							<ul className="space-y-6">
-								{[
-									"Provide genuine and transparent job opportunities.",
-									"Reduce unemployment among youth and skilled workers.",
-									"Connect industries with the right manpower.",
-									"Conduct employment drives in rural and urban areas.",
-									"Create awareness about career growth and industrial opportunities.",
-									"Support candidates with guidance and placement assistance."
-								].map((mission, i) => (
-									<motion.li 
-										initial={{ opacity: 0, x: -20 }}
-										whileInView={{ opacity: 1, x: 0 }}
-										viewport={{ once: true, margin: "-100px" }}
-										transition={{ delay: i * 0.1 }}
-										key={i} 
-										className="flex gap-4 items-start group"
-									>
-										<div className="mt-1 flex-shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-300">
-											<Check className="w-5 h-5 text-orange-600 group-hover:text-white transition-colors" />
-										</div>
-										<p className="text-xl text-slate-700 font-medium leading-relaxed">{mission}</p>
-									</motion.li>
-								))}
-							</ul>
-						</div>
-
-						{/* What We Do Grid */}
-						<div>
+					<div className="grid gap-6 lg:grid-cols-12 mb-20">
+						<div className="lg:col-span-12">
 							<div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-2 text-sm font-bold tracking-widest text-orange-700 uppercase mb-6">
 								<Briefcase className="h-4 w-4" />
 								<span>Operations</span>

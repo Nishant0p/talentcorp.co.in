@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Sparkles, Award, Calendar, MapPin, ChevronRight, Cake, Star } from 'lucide-react';
 import { extractMediaUrl, fetchNews, fetchSingleType } from '../utils/strapi';
+import localNews from '../data/localNews';
 
 const defaultNewsEventsContent = {
   pageContent: {
@@ -34,13 +35,35 @@ const defaultNewsEventsContent = {
   },
   spotlightCards: [
     {
-      category: '',
-      title: 'MSU, Sikkim, in collaboration with RSB Transmissions, inaugurates the Work Integrated ITI (CTS) training programme under the Flexi MoU scheme of DGT',
-      date: 'March 1, 2026',
-      img: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=400',
+      category: 'News',
+      title: "Poster Trailer of Dr. Mahiboob Sayyad's Third Book 'Apprenticeship Act 1961' Launched in Goa",
+      date: 'April 5, 2026',
+      img: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_05_17_at_21_29_50_a23ccb68f7.jpeg',
+      readMoreUrl: '/news-events/poster-trailer-2026',
+    },
+    {
+      category: 'Events',
+      title: 'Annual Skill Summit 2026 Draws 5000+ Participants in Pune',
+      date: 'February 28, 2026',
+      img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400',
+      readMoreUrl: '/news-events',
+    },
+    {
+      category: 'Partnerships',
+      title: 'TSPL Partners with Leading IT Companies for Campus Placements',
+      date: 'February 20, 2026',
+      img: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=400',
+      readMoreUrl: '/news-events',
     },
   ],
   allUpdates: [
+  {
+    type: 'news',
+    category: 'News',
+    title: "Poster Trailer of Dr. Mahiboob Sayyad's Third Book 'Apprenticeship Act 1961' Launched in Goa",
+    date: 'April 5, 2026',
+    image: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_05_17_at_21_29_50_a23ccb68f7.jpeg',
+  },
   {
     type: 'news',
     category: 'Events',
@@ -219,7 +242,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
   useEffect(() => {
     const loadLatestNews = async () => {
       const items = await fetchNews();
-      setLatestNews(items.slice(0, 6));
+      setLatestNews([...localNews, ...items].slice(0, 6));
     };
 
     loadLatestNews();
@@ -363,14 +386,14 @@ const NewsEventsPage = ({ prismicData = null }) => {
       {latestNews.length > 0 && (
         <section className="mx-auto mt-14 max-w-7xl">
           <div className="mb-8 flex items-center justify-between gap-4">
-            <h2 className="text-3xl font-bold text-[#006bb8]">Latest From Admin</h2>
+            <h2 className="text-3xl font-bold text-[#006bb8]">Latest News</h2>
             <Link to="/news-events" className="text-sm font-semibold text-orange-500 hover:text-orange-600">
               View all
             </Link>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {latestNews.map((item) => {
+            {latestNews.filter((item) => item.tag === 'News').map((item) => {
               const itemId = item.documentId || item.id;
               return (
                 <Link key={itemId} to={`/news-events/${itemId}`} className="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
@@ -526,6 +549,56 @@ const NewsEventsPage = ({ prismicData = null }) => {
             </motion.article>
           ))}
         </div>
+      </motion.section>
+
+      <motion.section
+        id="updates-events"
+        className="mx-auto mt-24 max-w-7xl"
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.18 }}
+        transition={{ duration: 0.65, ease: 'easeOut' }}
+      >
+        <div className="mb-12 flex items-center gap-4">
+          <div className="h-10 w-1.5 rounded-full bg-orange-500" />
+          <h2 className="text-4xl font-semibold tracking-tight text-[#006bb8]">Updates & Events</h2>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {latestNews
+            .filter((item) => item.tag === 'Events' || item.tag === 'Updates')
+            .slice(0, 6)
+            .map((item) => {
+              const itemId = item.documentId || item.id;
+              return (
+                <motion.article
+                  key={itemId}
+                  className="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.55, ease: 'easeOut' }}
+                >
+                  <img
+                    src={item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400'}
+                    alt={item.title || 'Update image'}
+                    className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="p-5">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'Update'}</p>
+                    <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900">{item.title}</h3>
+                    <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
+                  </div>
+                </motion.article>
+              );
+            })}
+        </div>
+
+        {latestNews.filter((item) => item.tag === 'Events' || item.tag === 'Updates').length === 0 && (
+          <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-12 text-center">
+            <p className="text-slate-500">No updates or events available yet.</p>
+          </div>
+        )}
       </motion.section>
 
       <motion.section

@@ -5,6 +5,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { extractMediaUrl, fetchNews } from '../../utils/strapi';
 import { useEffect, useState } from 'react';
+import localNews from '../../data/localNews';
 
 const stripHtml = (value) => {
   if (!value) return '';
@@ -18,7 +19,7 @@ const NewsDetailPage = () => {
   useEffect(() => {
     const load = async () => {
       const data = await fetchNews();
-      setItems(data);
+      setItems([...localNews, ...data]);
     };
 
     load();
