@@ -170,7 +170,7 @@ function PayrollSection() {
   return (
     <section id="payroll-benefits" className="relative overflow-hidden bg-[#0A0A0B] pb-20 pt-32 text-white lg:pb-24 lg:pt-36">
       <div className="absolute inset-0">
-        <img src={payrollHeroImage} alt="Payroll staffing services" className="h-full w-full object-cover" />
+       
         <div className="absolute inset-0 bg-[#0A0A0B]/80" />
       </div>
 
