@@ -232,7 +232,23 @@ function DetailedProfileSection() {
 								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="md:col-span-2 lg:col-span-2 row-span-1 rounded-[2rem] bg-slate-900 p-8 text-white shadow-xl group flex flex-col justify-center">
 									<h4 className="text-xl font-bold mb-4 text-orange-400">Trusted Provider For</h4>
 									<div className="flex flex-wrap gap-3">
-										{['OJT', 'Employment Programs', 'D.Voc (2-3 years)', 'B.Voc (3 years)'].map((prog) => (
+										{['NAPS',
+											'NATS / BOAT',
+											'MAPS',
+											'WILP / WISE',
+											'FLEXI ITI',
+											'D.Voc',
+											'B.Voc',
+											'M.Voc',
+											'AEDP',
+											'Contract Staffing',
+											'Manpower Planning',
+											'Trade (ITI) Apprenticeship',
+											'FTC',
+											'Statutory Compliance',
+											'Security & Housekeeping',
+											'Skill Training',
+											'Trusted Provider'].map((prog) => (
 											<span key={prog} className="px-4 py-2 rounded-xl bg-white/10 border border-white/10 text-sm font-semibold backdrop-blur-md">{prog}</span>
 										))}
 									</div>
@@ -282,36 +298,7 @@ function DetailedProfileSection() {
 									</div>
 								</motion.div>
 
-								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.7 }} className="md:col-span-3 lg:col-span-4 row-span-auto rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl min-w-0">
-									<h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-										<Briefcase className="h-6 w-6 text-orange-500" /> Trusted Provider For
-									</h4>
-									<div className="w-full min-w-0 columns-2 gap-y-3 sm:columns-3 md:columns-4 lg:columns-5">
-										{[
-											'NAPS',
-											'NATS / BOAT',
-											'MAPS',
-											'WILP / WISE',
-											'FLEXI ITI',
-											'D.Voc',
-											'B.Voc',
-											'M.Voc',
-											'AEDP',
-											'Contract Staffing',
-											'Manpower Planning',
-											'Trade (ITI) Apprenticeship',
-											'FTC',
-											'Statutory Compliance',
-											'Security & Housekeeping',
-											'Skill Training',
-											'Trusted Provider',
-										].map((provider) => (
-											<span key={provider} className="inline-block w-full break-all py-1 px-2 text-[11px] sm:text-xs rounded-xl bg-slate-50 border border-slate-100 text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-700 hover:border-blue-100 transition-colors cursor-default whitespace-normal leading-snug mb-2">
-												{provider}
-											</span>
-										))}
-									</div>
-								</motion.div>
+								
 							</div>
 						)}
 
