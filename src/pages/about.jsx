@@ -11,8 +11,8 @@ const milestones = [
 	{ year: '2016', title: '100+ Companies', description: 'Partnered with 100 businesses across India' },
 	{ year: '2018', title: '10,000 Workers', description: 'Helped 10,000 workers find jobs' },
 	{ year: '2020', title: 'NAPS Authorized', description: 'Became government authorized for NAPS' },
-	/* { id: '8', name: 'Dheepan Chakravarthi', role: 'Southern Director', imageUrl: 'https://i.pravatar.cc/400?img=33' }, */
-	{ year: '2024', title: '40,000+ Placements', description: 'Crossed 40,000 successful placements' },
+	{ year: '2024', title: '15,000+ Placements', description: 'Crossed 15,000 successful placements' },
+	{ year: '2025', title: '1st Rank TPA in NATS', description: 'Achieved the No. 1 rank as a Third-Party Aggregator for NATS.' },
 ]
 
 const achievements = [
@@ -887,102 +887,86 @@ function OurValues() {
 }
 
 function Achievements() {
-	const sectionRef = useRef(null);
-	const [isMobile, setIsMobile] = useState(false);
-
-	useEffect(() => {
-		const checkMobile = () => setIsMobile(window.innerWidth < 768);
-		// Check on mount
-		checkMobile();
-		window.addEventListener('resize', checkMobile);
-		return () => window.removeEventListener('resize', checkMobile);
-	}, []);
-	
-	const { scrollYProgress } = useScroll({
-		target: sectionRef,
-		offset: ["start start", "end end"]
-	});
-
-	const xTransform = useTransform(scrollYProgress, [0, 1], ["10%", "-70%"]);
-	const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
 	return (
-		<section ref={sectionRef} className="relative md:h-[300vh] bg-slate-50 py-20 md:py-0">
-			<div className="md:sticky md:top-0 flex flex-col justify-center md:h-screen overflow-hidden md:pt-16 lg:pt-28 md:pb-6 lg:pb-10">
-				{/* Decorative Background Elements */}
-				<div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #0F172A 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-				<div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-400/20 blur-[120px] pointer-events-none" />
-				<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-400/20 blur-[120px] pointer-events-none" />
+		<section className="bg-slate-50 py-20 lg:py-28 relative overflow-hidden">
+			{/* Decorative Background Elements */}
+			<div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #0F172A 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+			<div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-400/20 blur-[120px] pointer-events-none" />
+			<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-400/20 blur-[120px] pointer-events-none" />
 
-				<div className="relative z-10 mx-auto w-full max-w-[96rem] px-6 lg:px-8 flex flex-col h-full justify-center lg:justify-between gap-6 lg:gap-12">
+			<div className="relative z-10 mx-auto w-full max-w-[96rem] px-6 lg:px-8 flex flex-col h-full justify-center lg:justify-between gap-6 lg:gap-12">
+				
+				{/* Top Section: Header & Stats */}
+				<div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 lg:gap-10 shrink-0 mb-12">
+					<div className="max-w-xl">
+						<div className="mb-2 lg:mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 backdrop-blur-md">
+							<span className="text-[10px] lg:text-xs font-bold tracking-widest text-blue-700 uppercase">Our Journey</span>
+						</div>
+						<h2 className="text-3xl font-black text-slate-900 sm:text-4xl lg:text-6xl tracking-tight">Our Achievements</h2>
+						<p className="mt-2 lg:mt-4 text-base lg:text-lg text-slate-600">A decade of helping workers and businesses grow together.</p>
+					</div>
 					
-					{/* Top Section: Header & Stats */}
-					<div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 lg:gap-10 shrink-0">
-						<div className="max-w-xl">
-							<div className="mb-2 lg:mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 backdrop-blur-md">
-								<span className="text-[10px] lg:text-xs font-bold tracking-widest text-blue-700 uppercase">Our Journey</span>
+					{/* Stats Grid */}
+					<div className="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4 w-full lg:w-auto shrink-0">
+						{achievements.map((item, i) => (
+							<div key={item.label} className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-white p-4 lg:p-5 shadow-sm transition-shadow hover:shadow-md">
+								<item.icon className="mb-2 lg:mb-3 h-5 w-5 lg:h-6 lg:w-6 text-blue-600" />
+								<p className="text-xl lg:text-2xl font-bold text-slate-900">{item.number}</p>
+								<p className="text-[9px] lg:text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{item.label}</p>
 							</div>
-							<h2 className="text-3xl font-black text-slate-900 sm:text-4xl lg:text-6xl tracking-tight">Our Achievements</h2>
-							<p className="mt-2 lg:mt-4 text-base lg:text-lg text-slate-600">A decade of helping workers and businesses grow together.</p>
-						</div>
-						
-						{/* Stats Grid */}
-						<div className="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4 w-full lg:w-auto shrink-0">
-							{achievements.map((item, i) => (
-								<div key={item.label} className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-white p-4 lg:p-5 shadow-sm transition-shadow hover:shadow-md">
-									<item.icon className="mb-2 lg:mb-3 h-5 w-5 lg:h-6 lg:w-6 text-blue-600" />
-									<p className="text-xl lg:text-2xl font-bold text-slate-900">{item.number}</p>
-									<p className="text-[9px] lg:text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{item.label}</p>
-								</div>
-							))}
-						</div>
+						))}
 					</div>
+				</div>
 
-					{/* Middle Section: Animated Timeline */}
-					<div className="relative w-full md:h-[280px] lg:h-[400px] flex items-center my-6 lg:my-auto shrink-0">
-						
-						{/* Base Tracks */}
-						<div className="hidden md:block absolute top-1/2 left-0 w-full h-px bg-slate-300 -translate-y-1/2" />
-						<div className="md:hidden absolute top-0 left-6 w-px h-full bg-slate-300" />
-						
-						{/* Animated Fill Tracks */}
-						{!isMobile && (
-							<motion.div 
-								className="hidden md:block absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-orange-400 to-orange-500 -translate-y-1/2 origin-left shadow-[0_0_15px_rgba(59,130,246,0.3)]"
-								style={{ scaleX, width: '100%' }}
-							/>
-						)}
-
-						{/* Milestones Container */}
-						<motion.div 
-							className="flex flex-col md:flex-row gap-8 md:gap-8 lg:gap-24 relative md:absolute md:left-0 items-start md:items-center w-full md:w-auto px-4 md:px-[5vw] lg:px-[10vw]"
-							style={isMobile ? {} : { x: xTransform }}
-						>
-							{milestones.map((milestone, i) => (
-								<div key={i} className="relative flex flex-col items-start md:items-center w-full md:w-64 lg:w-80 shrink-0 group pl-12 md:pl-0">
-									{/* Node on the line */}
-									<div className="absolute top-8 md:top-1/2 left-2 md:left-1/2 md:-translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-4 border-white bg-orange-500 z-20 shadow-md transition-transform duration-300 group-hover:scale-150" />
+				{/* Middle Section: Interactive Alternating Timeline */}
+				<div className="relative mx-auto w-full max-w-5xl py-12">
+					{/* Center line for desktop, left line for mobile */}
+					<div className="absolute left-4 md:left-1/2 md:-ml-px top-0 bottom-0 w-[2px] bg-slate-300/50" />
+					
+					<div className="space-y-12 md:space-y-24">
+						{milestones.map((milestone, i) => {
+							const isEven = i % 2 === 0;
+							return (
+								<div key={i} className={`relative flex flex-col md:flex-row items-center ${isEven ? 'md:flex-row-reverse' : ''} group`}>
 									
-									{/* Card (Alternating top/bottom on Desktop only) */}
-									<div className={`w-full p-5 lg:p-8 rounded-[1.5rem] lg:rounded-[2rem] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 md:mb-0 md:mt-0 ${!isMobile && i % 2 === 0 ? 'md:mb-28 lg:mb-48' : ''} ${!isMobile && i % 2 !== 0 ? 'md:mt-28 lg:mt-48' : ''}`}>
-										<p className="mb-1 lg:mb-2 text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-orange-500">{milestone.year}</p>
-										<h4 className="mb-2 lg:mb-3 text-lg lg:text-xl font-bold text-slate-900">{milestone.title}</h4>
-										<p className="text-slate-600 text-xs lg:text-sm leading-relaxed">{milestone.description}</p>
+									{/* Node on the line */}
+									<div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-6 h-6 rounded-full border-4 border-white bg-orange-500 z-10 shadow-lg transition-transform duration-300 group-hover:scale-150 group-hover:bg-blue-600" />
+									
+									{/* Content Card Container */}
+									<div className={`w-full md:w-1/2 pl-12 pr-4 md:px-12 ${isEven ? 'md:text-left' : 'md:text-right'}`}>
+										<motion.div 
+											initial={{ opacity: 0, x: isEven ? 50 : -50, y: 20 }}
+											whileInView={{ opacity: 1, x: 0, y: 0 }}
+											viewport={{ once: true, margin: "-50px" }}
+											transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
+											className="w-full p-6 lg:p-8 rounded-[1.5rem] lg:rounded-[2rem] border border-slate-200 bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-blue-300 relative overflow-hidden"
+										>
+											{/* Decorative background glow on hover */}
+											<div className={`absolute inset-0 bg-gradient-to-br from-blue-50/50 to-orange-50/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none`} />
+											
+											<div className="relative z-10">
+												<p className="mb-2 text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-orange-500">{milestone.year}</p>
+												<h4 className="mb-3 text-xl md:text-2xl font-bold text-slate-900">{milestone.title}</h4>
+												<p className="text-slate-600 text-sm md:text-base leading-relaxed">{milestone.description}</p>
+											</div>
+										</motion.div>
 									</div>
+
+									{/* Empty space for the other side on desktop */}
+									<div className="hidden md:block w-1/2" />
 								</div>
-							))}
-						</motion.div>
+							);
+						})}
 					</div>
+				</div>
 
-					{/* Bottom Section: CTA */}
-					<div className="mt-2 lg:mt-auto flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-blue-100 bg-blue-50 px-6 py-4 shadow-sm mx-auto w-full max-w-4xl shrink-0">
-						<h3 className="text-base lg:text-lg font-bold text-slate-900 text-center sm:text-left">Ready to be part of our success story?</h3>
-						<Link to="/contact-us" className="shrink-0 group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-5 lg:px-6 py-2.5 lg:py-3 text-[10px] lg:text-xs font-bold uppercase tracking-widest text-white shadow-md transition-all hover:scale-105 hover:shadow-orange-500/25">
-							Join Us Today
-							<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-						</Link>
-					</div>
-
+				{/* Bottom Section: CTA */}
+				<div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-blue-100 bg-blue-50 px-6 py-4 shadow-sm mx-auto w-full max-w-4xl shrink-0">
+					<h3 className="text-base lg:text-lg font-bold text-slate-900 text-center sm:text-left">Ready to be part of our success story?</h3>
+					<Link to="/contact-us" className="shrink-0 group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-5 lg:px-6 py-2.5 lg:py-3 text-[10px] lg:text-xs font-bold uppercase tracking-widest text-white shadow-md transition-all hover:scale-105 hover:shadow-orange-500/25">
+						Join Us Today
+						<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+					</Link>
 				</div>
 			</div>
 		</section>

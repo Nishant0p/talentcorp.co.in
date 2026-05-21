@@ -73,7 +73,7 @@ const industries = [
 	},
 	{
 		icon: Award,
-		name: 'WLP',
+		name: 'WILP',
 		image: '/training.jpeg',
 		clients: 20,
 		workers: 'Learn & Earn',
@@ -289,7 +289,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 
 function LogoMarquee({ partnerLogos }) {
 	const renderPartnerRow = (reverse = false) => (
-		<div className="logo-marquee-track gap-4" style={{ animationDirection: reverse ? 'reverse' : 'normal', animationDuration: '45s' }}>
+		<div className="logo-marquee-track gap-4" style={{ animationDirection: reverse ? 'reverse' : 'normal', animationDuration: '25s' }}>
 			{[...partnerLogos, ...partnerLogos, ...partnerLogos].map((brand, idx) => (
 				<div
 					key={`${brand.name}-${reverse ? 'rev' : 'fwd'}-${idx}`}
