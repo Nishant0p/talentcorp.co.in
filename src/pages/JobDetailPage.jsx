@@ -155,6 +155,7 @@ const JobDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [form, setForm] = useState(EMPTY_FORM);
 
   // Fetch from Strapi (No changes here as requested)
@@ -197,14 +198,9 @@ const JobDetailPage = () => {
     e.preventDefault();
     if (!job?.id) return;
     setSubmitting(true);
+    setSubmitError('');
     try {
-      // Prepare FormData for file upload
-      const formData = new FormData();
-      if (form.cv) {
-        formData.append('cv', form.cv);
-      }
-
-      await Promise.allSettled([
+      const [applicantResult, adminResult] = await Promise.allSettled([
         submitApplicant({
           jobId: job.id,
           name: form.name,
@@ -235,14 +231,27 @@ const JobDetailPage = () => {
             location: job.location,
             pageName: form.pageName,
             salary: job.salary,
-            jobType: job.type
+            jobType: job.type,
+            resume: form.cv ? form.cv.name : 'Not provided',
+            source: 'job detail page'
           }
         }, { cv: form.cv })
       ]);
+
+      const adminSubmission = adminResult.status === 'fulfilled' ? adminResult.value : null;
+      if (!adminSubmission || adminSubmission.ok === false) {
+        throw new Error(adminSubmission?.error || 'Submission to the new admin backend failed. Please try again.');
+      }
+
+      if (applicantResult.status !== 'fulfilled') {
+        console.warn('Legacy applicant sync failed:', applicantResult.reason);
+      }
       
       setSubmitted(true);
       setForm(EMPTY_FORM);
       setTimeout(() => setSubmitted(false), 6000);
+    } catch (error) {
+      setSubmitError(error?.message || 'Submission failed. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -341,6 +350,11 @@ const JobDetailPage = () => {
               </div>
             ) : (
               <form className="pro-form" onSubmit={handleApply}>
+                {submitError && (
+                  <div className="pro-form-error" role="alert">
+                    {submitError}
+                  </div>
+                )}
                 <div className="pro-form-group">
                   <label>Full Name *</label>
                   <input
