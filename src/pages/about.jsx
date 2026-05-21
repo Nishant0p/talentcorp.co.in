@@ -232,7 +232,23 @@ function DetailedProfileSection() {
 								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="md:col-span-2 lg:col-span-2 row-span-1 rounded-[2rem] bg-slate-900 p-8 text-white shadow-xl group flex flex-col justify-center">
 									<h4 className="text-xl font-bold mb-4 text-orange-400">Trusted Provider For</h4>
 									<div className="flex flex-wrap gap-3">
-										{['OJT', 'Employment Programs', 'D.Voc (2-3 years)', 'B.Voc (3 years)'].map((prog) => (
+										{['NAPS',
+											'NATS / BOAT',
+											'MAPS',
+											'WILP / WISE',
+											'FLEXI ITI',
+											'D.Voc',
+											'B.Voc',
+											'M.Voc',
+											'AEDP',
+											'Contract Staffing',
+											'Manpower Planning',
+											'Trade (ITI) Apprenticeship',
+											'FTC',
+											'Statutory Compliance',
+											'Security & Housekeeping',
+											'Skill Training',
+											'Trusted Provider'].map((prog) => (
 											<span key={prog} className="px-4 py-2 rounded-xl bg-white/10 border border-white/10 text-sm font-semibold backdrop-blur-md">{prog}</span>
 										))}
 									</div>
@@ -281,6 +297,8 @@ function DetailedProfileSection() {
 										))}
 									</div>
 								</motion.div>
+
+								
 							</div>
 						)}
 

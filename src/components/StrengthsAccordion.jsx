@@ -105,13 +105,13 @@ export default function StrengthsAccordion() {
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const prefersReducedMotion = useReducedMotion();
-  
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  
+
   useEffect(() => {
     const loadStrengths = async () => {
       setLoading(true);
@@ -144,6 +144,7 @@ export default function StrengthsAccordion() {
         <div
           className="absolute top-[50%] -right-[30%] w-[100%] h-[100%] sm:w-[60%] sm:h-[60%] rounded-full bg-[#F97316] blur-[40px] sm:blur-[80px]"
           style={{ willChange: 'transform, opacity' }}
+
         />
       </div>
 
@@ -196,6 +197,7 @@ export default function StrengthsAccordion() {
                         </p>
                         <p className="text-[11px] font-bold uppercase tracking-widest text-[#60A5FA]">{item.sub}</p>
                       </div>
+
 
                       {/* Description */}
                       <p className="text-sm text-white/70 line-clamp-2 mb-2">{item.desc}</p>
@@ -341,6 +343,7 @@ export default function StrengthsAccordion() {
               })}
             </div>
           )}
+
         </div>
       </div>
     </section>

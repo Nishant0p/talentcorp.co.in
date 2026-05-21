@@ -34,6 +34,7 @@ const ArticlePage = lazy(() => import('./pages/ArticlePage'))
 const TermsPage = lazy(() => import('./pages/terms'))
 const PrivacyPolicyPage = lazy(() => import('./pages/privacy'))
 const YatraPage = lazy(() => import('./pages/yatra'))
+const YatraGalleryPage = lazy(() => import('./pages/yatraGallery'))
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -145,6 +146,7 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="jobs" path="/jobs" element={<JobsPage />} />
           <Route key="news-events" path="/news-events" element={<NewsEventsPage />} />
           <Route key="news-detail" path="/news-events/:newsId" element={<NewsDetailPage />} />
+          <Route key="yatra-gallery" path="/yatra/gallery/:slug" element={<YatraGalleryPage />} />
           <Route key="yatra" path="/yatra" element={<YatraPage />} />
           <Route key="medhavi-article" path="/news-events/medhavi-flexi-iti" element={<ArticlePage />} />
           <Route key="terms-and-conditions" path="/terms-and-conditions" element={<TermsPage />} />

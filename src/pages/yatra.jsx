@@ -104,6 +104,36 @@ const faqItems = [
 	},
 ]
 
+const routeStatusItems = [
+	{
+		state: 'Completed',
+		label: 'MP, UP, BR, MH',
+		states: ['MP', 'UP', 'BR', 'MH'],
+		icon: CheckCircle2,
+		iconClassName: 'h-5 w-5 sm:h-6 sm:w-6',
+		textClassName: 'text-emerald-400',
+		subTextClassName: 'text-emerald-400/70',
+	},
+	{
+		state: 'Active',
+		label: 'GJ',
+		states: ['GJ'],
+		icon: PlayCircle,
+		iconClassName: 'h-5 w-5 sm:h-6 sm:w-6 animate-pulse',
+		textClassName: 'text-orange-400',
+		subTextClassName: 'text-orange-400/70',
+	},
+	{
+		state: 'Upcoming',
+		label: 'RJ, WB, OD',
+		states: ['RJ', 'WB', 'OD'],
+		icon: Circle,
+		iconClassName: 'h-5 w-5 sm:h-6 sm:w-6',
+		textClassName: 'text-slate-400',
+		subTextClassName: 'text-slate-500',
+	},
+]
+
 export default function YatraPage() {
 	const [loading, setLoading] = useState(true)
 	const [selectedImage, setSelectedImage] = useState('')
@@ -348,7 +378,7 @@ export default function YatraPage() {
 											<motion.div
 												className="flex w-max items-stretch gap-4"
 												animate={shouldReduceMotion ? { x: 0 } : { x: index % 2 === 0 ? ['0%', '-50%'] : ['-50%', '0%'] }}
-													transition={shouldReduceMotion ? { duration: 0 } : { duration: 140 + index * 24, repeat: Infinity, ease: 'linear' }}
+												transition={shouldReduceMotion ? { duration: 0 } : { duration: 140 + index * 24, repeat: Infinity, ease: 'linear' }}
 												style={{ willChange: 'transform' }}
 											>
 												{[0, 1].map((loopIndex) => (
@@ -391,7 +421,7 @@ export default function YatraPage() {
 					</div>
 				</section>
 
-				<section id="route" className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32">
+			<section id="route" className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32">
 					{/* 1. What Is Rojgar Yatra & Philosophy */}
 					<div className="grid gap-6 lg:grid-cols-12 mb-20">
 						{/* Intro Card */}
@@ -547,83 +577,65 @@ export default function YatraPage() {
 					</div>
 
 					{/* 4. FAQs & Commitment */}
-					<div className="grid gap-10 lg:grid-cols-12">
-						{/* Commitment */}
-						<div className="lg:col-span-4 flex flex-col justify-center">
-							<div className="rounded-[2.5rem] border border-orange-200 bg-gradient-to-b from-orange-50 to-white p-10 shadow-lg relative overflow-hidden group hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-								<div className="absolute -right-6 -top-6 text-orange-200 opacity-50 group-hover:scale-110 transition-transform duration-500">
-									<Heart className="w-32 h-32" />
+						<div className="grid gap-10 lg:grid-cols-12">
+							{/* Commitment */}
+							<div className="lg:col-span-4 flex flex-col justify-center">
+								<div className="rounded-[2.5rem] border border-orange-200 bg-gradient-to-b from-orange-50 to-white p-10 shadow-lg relative overflow-hidden group hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+									<div className="absolute -right-6 -top-6 text-orange-200 opacity-50 group-hover:scale-110 transition-transform duration-500">
+										<Heart className="w-32 h-32" />
+									</div>
+									<h4 className="text-3xl font-black text-orange-600 mb-6 relative z-10">Our Commitment</h4>
+									<p className="text-xl text-slate-800 leading-relaxed font-medium relative z-10">
+										"Rojgar Yatra is not just a recruitment campaign. It is an employment movement focused on taking genuine opportunities directly to people through outreach, awareness, and industry collaboration."
+									</p>
 								</div>
-								<h4 className="text-3xl font-black text-orange-600 mb-6 relative z-10">Our Commitment</h4>
-								<p className="text-xl text-slate-800 leading-relaxed font-medium relative z-10">
-									"Rojgar Yatra is not just a recruitment campaign. It is an employment movement focused on taking genuine opportunities directly to people through outreach, awareness, and industry collaboration."
-								</p>
+							</div>
+
+							{/* FAQs */}
+							<div className="lg:col-span-8 rounded-[2.5rem] border border-slate-200 bg-white p-8 sm:p-12 shadow-sm">
+								<h3 className="text-3xl font-black text-[#1A365D] mb-8 flex items-center gap-3">
+									<Lightbulb className="h-8 w-8 text-orange-500" />
+									Frequently Asked Questions
+								</h3>
+								<div className="space-y-4">
+									{faqItems.map((faq, index) => {
+										const isOpen = openFaqIndex === index
+										return (
+											<div key={index} className="overflow-hidden rounded-2xl border border-slate-200 transition-colors hover:border-blue-300">
+												<button
+													type="button"
+													className="flex w-full items-center justify-between bg-white px-6 py-5 text-left focus:outline-none"
+													onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
+												>
+													<span className="font-bold text-slate-900 text-lg pr-4">{faq.question}</span>
+													<span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? 'bg-[#FF8C00] text-white' : 'bg-slate-100 text-slate-500'}`}>
+														{isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+													</span>
+												</button>
+												<AnimatePresence>
+													{isOpen && (
+														<motion.div
+															initial={{ height: 0, opacity: 0 }}
+															animate={{ height: 'auto', opacity: 1 }}
+															exit={{ height: 0, opacity: 0 }}
+															transition={{ duration: 0.3, ease: "easeInOut" }}
+														>
+																<div className="border-t border-slate-100 bg-slate-50 px-6 py-5">
+																	<p className="text-slate-700 text-lg leading-relaxed">{faq.answer}</p>
+																</div>
+															</motion.div>
+														)}
+													</AnimatePresence>
+												</div>
+										)
+									})}
+								</div>
 							</div>
 						</div>
+					</section>
+				</main>
 
-						{/* FAQs */}
-						<div className="lg:col-span-8 rounded-[2.5rem] border border-slate-200 bg-white p-8 sm:p-12 shadow-sm">
-							<h3 className="text-3xl font-black text-[#1A365D] mb-8 flex items-center gap-3">
-								<Lightbulb className="h-8 w-8 text-orange-500" />
-								Frequently Asked Questions
-							</h3>
-							<div className="space-y-4">
-								{faqItems.map((faq, index) => {
-									const isOpen = openFaqIndex === index
-									return (
-										<div key={index} className="overflow-hidden rounded-2xl border border-slate-200 transition-colors hover:border-blue-300">
-											<button
-												type="button"
-												className="flex w-full items-center justify-between bg-white px-6 py-5 text-left focus:outline-none"
-												onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
-											>
-												<span className="font-bold text-slate-900 text-lg pr-4">{faq.question}</span>
-												<span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? 'bg-[#FF8C00] text-white' : 'bg-slate-100 text-slate-500'}`}>
-													{isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-												</span>
-											</button>
-											<AnimatePresence>
-												{isOpen && (
-													<motion.div
-														initial={{ height: 0, opacity: 0 }}
-														animate={{ height: 'auto', opacity: 1 }}
-														exit={{ height: 0, opacity: 0 }}
-														transition={{ duration: 0.3, ease: "easeInOut" }}
-													>
-														<div className="border-t border-slate-100 bg-slate-50 px-6 py-5">
-															<p className="text-slate-700 text-lg leading-relaxed">{faq.answer}</p>
-														</div>
-													</motion.div>
-												)}
-											</AnimatePresence>
-										</div>
-									)
-								})}
-							</div>
-						</div>
-					</div>
-				</section>
-			</main>
-
-			{selectedImage ? (
-				<div className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-950/85 px-4 py-8" onClick={() => setSelectedImage('')}>
-					<button
-						type="button"
-						className="absolute right-4 top-4 rounded-full bg-white/10 px-3 py-1 text-xl text-white backdrop-blur"
-						onClick={() => setSelectedImage('')}
-					>
-						x
-					</button>
-					<img
-						src={selectedImage}
-						alt="Rojgar Yatra preview"
-						className="max-h-full max-w-full rounded-2xl border border-white/20 object-contain shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
-						onClick={(e) => e.stopPropagation()}
-					/>
-				</div>
-			) : null}
-
-			<Footer />
-		</div>
+				<Footer />
+			</div>
 	)
 }
