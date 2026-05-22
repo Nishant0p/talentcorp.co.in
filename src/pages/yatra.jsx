@@ -135,7 +135,12 @@ const routeStatusItems = [
 ]
 
 export default function YatraPage() {
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState(() => {
+		if (typeof window !== 'undefined') {
+			return window.innerWidth >= 768
+		}
+		return true
+	})
 	const [selectedImage, setSelectedImage] = useState('')
 	const [loadedImages, setLoadedImages] = useState({})
 	const [openFaqIndex, setOpenFaqIndex] = useState(0)
@@ -151,6 +156,9 @@ export default function YatraPage() {
 	const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
 
 	useEffect(() => {
+		if (typeof window !== 'undefined' && window.innerWidth < 768) {
+			return
+		}
 		// Fallback hide only if callback fails; keep long enough for full GSAP sequence.
 		const t = setTimeout(() => setLoading(false), 7000)
 		return () => clearTimeout(t)

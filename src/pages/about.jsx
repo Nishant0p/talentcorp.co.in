@@ -137,7 +137,7 @@ const hiringCapacity = [
 	{ region: 'Maharashtra', executives: '16', recruiters: '100', strength: '320', capacity: '4,500/month' },
 ]
 
-function DetailedProfileSection() {
+function DetailedProfileSection({ isMobile }) {
 	const [activeTab, setActiveTab] = useState(0);
 
 	const tabs = [
@@ -152,11 +152,36 @@ function DetailedProfileSection() {
 		{ id: 8, title: 'Recruitment Strategy' },
 	];
 
+	const cardAnimProps = isMobile ? {} : {
+		initial: { opacity: 0, y: 20 },
+		whileInView: { opacity: 1, y: 0 },
+		viewport: { once: true }
+	};
+
+	const getCardAnimProps = (delay) => isMobile ? {} : {
+		initial: { opacity: 0, y: 20 },
+		whileInView: { opacity: 1, y: 0 },
+		viewport: { once: true },
+		transition: { delay }
+	};
+
+	const tabAnimProps = isMobile ? {
+		initial: { opacity: 1 },
+		animate: { opacity: 1 },
+		exit: { opacity: 1 },
+		transition: { duration: 0 }
+	} : {
+		initial: { opacity: 0, y: 20 },
+		animate: { opacity: 1, y: 0 },
+		exit: { opacity: 0, y: -20 },
+		transition: { duration: 0.3 }
+	};
+
 	return (
 		<section className="bg-slate-50 py-24 lg:py-32 relative overflow-hidden">
 			{/* Decorative Elements */}
-			<div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-blue-100/40 blur-3xl pointer-events-none" />
-			<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-100/30 blur-3xl pointer-events-none" />
+			<div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-blue-100/40 blur-3xl pointer-events-none hidden md:block" />
+			<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-100/30 blur-3xl pointer-events-none hidden md:block" />
 
 			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
 				<div className="mb-10 text-center">
@@ -186,16 +211,13 @@ function DetailedProfileSection() {
 				<AnimatePresence mode="wait">
 					<motion.div
 						key={activeTab}
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: -20 }}
-						transition={{ duration: 0.3 }}
+						{...tabAnimProps}
 						className="min-h-[500px]"
 					>
 						{/* Tab 0: Company Overview */}
 						{activeTab === 0 && (
 							<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="md:col-span-2 lg:col-span-2 row-span-2 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 to-blue-800 p-8 sm:p-10 text-white shadow-xl shadow-blue-900/10 group">
+								<motion.div {...cardAnimProps} className="md:col-span-2 lg:col-span-2 row-span-2 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 to-blue-800 p-8 sm:p-10 text-white shadow-xl shadow-blue-900/10 group">
 									<div className="absolute right-0 top-0 opacity-10 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-12">
 										<Building2 className="h-64 w-64 -mr-16 -mt-16" />
 									</div>
@@ -208,7 +230,7 @@ function DetailedProfileSection() {
 									</div>
 								</motion.div>
 
-								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="md:col-span-1 lg:col-span-2 row-span-1 relative overflow-hidden rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl hover:border-orange-200 group flex items-center gap-6">
+								<motion.div {...getCardAnimProps(0.1)} className="md:col-span-1 lg:col-span-2 row-span-1 relative overflow-hidden rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl hover:border-orange-200 group flex items-center gap-6">
 									<div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-orange-100 transition-transform group-hover:scale-110">
 										<Trophy className="h-10 w-10 text-orange-600" />
 									</div>
@@ -218,19 +240,19 @@ function DetailedProfileSection() {
 									</div>
 								</motion.div>
 
-								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="md:col-span-1 lg:col-span-1 row-span-1 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl group flex flex-col justify-center">
+								<motion.div {...getCardAnimProps(0.2)} className="md:col-span-1 lg:col-span-1 row-span-1 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl group flex flex-col justify-center">
 									<Users className="h-10 w-10 text-blue-500 mb-4 transition-transform group-hover:scale-110" />
 									<h4 className="text-4xl font-black text-slate-900 mb-1">40,000+</h4>
 									<p className="text-slate-600 font-medium">Trainees Deployed Nationwide</p>
 								</motion.div>
 
-								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="md:col-span-1 lg:col-span-1 row-span-1 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl group flex flex-col justify-center">
+								<motion.div {...getCardAnimProps(0.3)} className="md:col-span-1 lg:col-span-1 row-span-1 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl group flex flex-col justify-center">
 									<Building2 className="h-10 w-10 text-emerald-500 mb-4 transition-transform group-hover:scale-110" />
 									<h4 className="text-4xl font-black text-slate-900 mb-1">450+</h4>
 									<p className="text-slate-600 font-medium">Clients with Pan-India Presence</p>
 								</motion.div>
 
-								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="md:col-span-2 lg:col-span-2 row-span-1 rounded-[2rem] bg-slate-900 p-8 text-white shadow-xl group flex flex-col justify-center">
+								<motion.div {...getCardAnimProps(0.4)} className="md:col-span-2 lg:col-span-2 row-span-1 rounded-[2rem] bg-slate-900 p-8 text-white shadow-xl group flex flex-col justify-center">
 									<h4 className="text-xl font-bold mb-4 text-orange-400">Trusted Provider For</h4>
 									<div className="flex flex-wrap gap-3">
 										{['NAPS',
@@ -255,7 +277,7 @@ function DetailedProfileSection() {
 									</div>
 								</motion.div>
 
-								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.5 }} className="md:col-span-1 lg:col-span-2 row-span-1 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl flex flex-col justify-center gap-4">
+								<motion.div {...getCardAnimProps(0.5)} className="md:col-span-1 lg:col-span-2 row-span-1 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl flex flex-col justify-center gap-4">
 									<h4 className="text-lg font-bold text-slate-900 flex items-center gap-2">
 										<Globe className="h-5 w-5 text-blue-500" /> Global Affiliations
 									</h4>
@@ -265,7 +287,7 @@ function DetailedProfileSection() {
 									</ul>
 								</motion.div>
 
-								<motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.6 }} className="md:col-span-3 lg:col-span-4 row-span-auto rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl min-w-0">
+								<motion.div {...getCardAnimProps(0.6)} className="md:col-span-3 lg:col-span-4 row-span-auto rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl min-w-0">
 									<h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
 										<Target className="h-6 w-6 text-orange-500" /> Sectors Served
 									</h4>
@@ -593,7 +615,7 @@ function DetailedProfileSection() {
 	);
 }
 
-function LeadershipSection() {
+function LeadershipSection({ isMobile }) {
 	const leaders = [
 		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png' },
 		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/Sunil Chavan.png' },
@@ -603,9 +625,16 @@ function LeadershipSection() {
 		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Sarang Chavan.png' },
 	];
 
+	const getLeaderAnimProps = (i) => isMobile ? {} : {
+		initial: { opacity: 0, y: 20 },
+		whileInView: { opacity: 1, y: 0 },
+		viewport: { once: true, amount: 0.2 },
+		transition: { duration: 0.5, delay: i * 0.1 }
+	};
+
 	return (
 		<section className="py-24 bg-slate-50 relative overflow-hidden">
-			<div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-blue-100/30 blur-3xl" />
+			<div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-blue-100/30 blur-3xl hidden md:block" />
 			<div className="mx-auto max-w-[96rem] px-4 lg:px-8 relative z-10">
 				{/* Section Heading */}
 				<div className="mb-16 text-center">
@@ -625,10 +654,7 @@ function LeadershipSection() {
 					{leaders.map((leader, i) => (
 						<motion.div
 							key={leader.id}
-							initial={{ opacity: 0, y: 20 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							viewport={{ once: true, amount: 0.2 }}
-							transition={{ duration: 0.5, delay: i * 0.1 }}
+							{...getLeaderAnimProps(i)}
 							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200"
 						>
 							{/* Uniform Aspect Ratio Container */}
@@ -661,7 +687,7 @@ function LeadershipSection() {
 }
 
 
-function AboutHero({ resolveAsset }) {
+function AboutHero({ resolveAsset, isMobile }) {
 	const aboutHeroAsset = resolveAsset(
 		'about.hero',
 		'https://images.pexels.com/photos/35082108/pexels-photo-35082108.jpeg',
@@ -675,8 +701,8 @@ function AboutHero({ resolveAsset }) {
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
 			</div>
 
-			<div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-[#2563EB]/10 blur-3xl" />
-			<div className="absolute bottom-0 left-1/4 h-80 w-80 rounded-full bg-[#F97316]/8 blur-3xl" />
+			<div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-[#2563EB]/10 blur-3xl hidden md:block" />
+			<div className="absolute bottom-0 left-1/4 h-80 w-80 rounded-full bg-[#F97316]/8 blur-3xl hidden md:block" />
 
 			<div className="relative z-10 w-full px-6 md:px-16 lg:px-24 xl:px-32">
 				<div className="max-w-3xl">
@@ -722,42 +748,64 @@ function AboutHero({ resolveAsset }) {
 	)
 }
 
-function OurStory({ resolveAsset }) {
+function OurStory({ resolveAsset, isMobile }) {
 	const tsplLogoAsset = resolveAsset(
 		'about.tsplLogo',
 		'/tspl main logo.png',
 		'TSPL logo'
 	)
 
+	const getOurStoryTextAnimProps = () => isMobile ? {} : {
+		initial: { opacity: 0, y: 10 },
+		whileInView: { opacity: 1, y: 0 },
+		viewport: { once: true }
+	};
+
+	const getOurStoryH2AnimProps = () => isMobile ? {} : {
+		initial: { opacity: 0, y: 20 },
+		whileInView: { opacity: 1, y: 0 },
+		viewport: { once: true },
+		transition: { delay: 0.1 }
+	};
+
+	const getOurStoryLogoAnimProps = () => isMobile ? {} : {
+		initial: { opacity: 0, scale: 0.9 },
+		whileInView: { opacity: 1, scale: 1 },
+		viewport: { once: true },
+		transition: { delay: 0.2 }
+	};
+
+	const getOurStoryGridAnimProps = (delay) => isMobile ? {} : {
+		initial: { opacity: 0, y: 20 },
+		whileInView: { opacity: 1, y: 0 },
+		viewport: { once: true },
+		transition: { delay }
+	};
+
 	return (
 		<section className="relative overflow-hidden bg-[#0A0A0B] py-32 text-white">
 			{/* Mesh Gradient Background */}
-			<div className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none">
+			<div className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none hidden md:block">
 				<div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-[#2563EB] blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
 				<div className="absolute top-[40%] -right-[20%] w-[60%] h-[60%] rounded-full bg-[#F97316] blur-[120px] animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }} />
 				<div className="absolute -bottom-[20%] left-[20%] w-[50%] h-[50%] rounded-full bg-[#8B5CF6] blur-[120px] animate-pulse" style={{ animationDuration: '10s', animationDelay: '4s' }} />
 			</div>
 
 			{/* Noise Overlay */}
-			<div className="absolute inset-0 opacity-[0.15] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+')] mix-blend-overlay" />
+			<div className="absolute inset-0 opacity-[0.15] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+')] mix-blend-overlay hidden md:block" />
 
 			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
 				
 				<div className="mb-16 flex flex-col items-center justify-between gap-8 md:flex-row md:items-end">
 					<div className="max-w-2xl text-center md:text-left">
 						<motion.p 
-							initial={{ opacity: 0, y: 10 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							viewport={{ once: true }}
+							{...getOurStoryTextAnimProps()}
 							className="mb-4 text-sm font-bold tracking-[0.2em] text-[#F97316] uppercase"
 						>
 							Beyond Traditional Staffing
 						</motion.p>
 						<motion.h2 
-							initial={{ opacity: 0, y: 20 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							viewport={{ once: true }}
-							transition={{ delay: 0.1 }}
+							{...getOurStoryH2AnimProps()}
 							className="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl"
 						>
 							We are the <br className="hidden md:block" />
@@ -765,10 +813,7 @@ function OurStory({ resolveAsset }) {
 						</motion.h2>
 					</div>
 					<motion.div 
-						initial={{ opacity: 0, scale: 0.9 }}
-						whileInView={{ opacity: 1, scale: 1 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.2 }}
+						{...getOurStoryLogoAnimProps()}
 						className="flex h-32 w-32 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white shadow-2xl"
 					>
 						<img src={tsplLogoAsset.url} alt="TSPL Logo" className="w-20 h-20 object-contain" />
@@ -780,10 +825,7 @@ function OurStory({ resolveAsset }) {
 					
 					{/* The Vision Block (Spans 8 cols) */}
 					<motion.div 
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.1 }}
+						{...getOurStoryGridAnimProps(0.1)}
 						className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-white/10 to-white/5 p-8 backdrop-blur-xl md:col-span-8 md:p-12"
 					>
 						<div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#2563EB]/20 blur-3xl transition-transform duration-700 group-hover:scale-150" />
@@ -802,10 +844,7 @@ function OurStory({ resolveAsset }) {
 
 					{/* The Impact Stat (Spans 4 cols) */}
 					<motion.div 
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.2 }}
+						{...getOurStoryGridAnimProps(0.2)}
 						className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#F97316] p-10 md:col-span-4"
 					>
 						{/* Subtle pattern overlay */}
@@ -819,10 +858,7 @@ function OurStory({ resolveAsset }) {
 
 					{/* Image / Graphic Block (Spans 5 cols) */}
 					<motion.div 
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.3 }}
+						{...getOurStoryGridAnimProps(0.3)}
 						className="group relative h-80 overflow-hidden rounded-[2.5rem] bg-white md:col-span-5 md:h-auto"
 					>
 						<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
@@ -838,10 +874,7 @@ function OurStory({ resolveAsset }) {
 
 					{/* The Method Block (Spans 7 cols) */}
 					<motion.div 
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.4 }}
+						{...getOurStoryGridAnimProps(0.4)}
 						className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl md:col-span-7 md:p-12 flex flex-col justify-center"
 					>
 						<div className="grid gap-6 sm:grid-cols-2">
@@ -868,11 +901,11 @@ function OurStory({ resolveAsset }) {
 	)
 }
 
-function OurValues() {
+function OurValues({ isMobile }) {
 	return (
 		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
-			<div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
-			<div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-[#F97316]/5 blur-3xl" />
+			<div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl hidden md:block" />
+			<div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-[#F97316]/5 blur-3xl hidden md:block" />
 
 			<div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
 				<div className="mb-16 text-center">
@@ -905,13 +938,13 @@ function OurValues() {
 	)
 }
 
-function Achievements() {
+function Achievements({ isMobile }) {
 	return (
 		<section className="bg-slate-50 py-20 lg:py-28 relative overflow-hidden">
 			{/* Decorative Background Elements */}
 			<div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #0F172A 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-			<div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-400/20 blur-[120px] pointer-events-none" />
-			<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-400/20 blur-[120px] pointer-events-none" />
+			<div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-400/20 blur-[120px] pointer-events-none hidden md:block" />
+			<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-400/20 blur-[120px] pointer-events-none hidden md:block" />
 
 			<div className="relative z-10 mx-auto w-full max-w-[96rem] px-6 lg:px-8 flex flex-col h-full justify-center lg:justify-between gap-6 lg:gap-12">
 				
@@ -945,6 +978,12 @@ function Achievements() {
 					<div className="space-y-12 md:space-y-24">
 						{milestones.map((milestone, i) => {
 							const isEven = i % 2 === 0;
+							const getTimelineAnimProps = (isEven) => isMobile ? {} : {
+								initial: { opacity: 0, x: isEven ? 50 : -50, y: 20 },
+								whileInView: { opacity: 1, x: 0, y: 0 },
+								viewport: { once: true, margin: "-50px" },
+								transition: { duration: 0.6, type: "spring", bounce: 0.4 }
+							};
 							return (
 								<div key={i} className={`relative flex flex-col md:flex-row items-center ${isEven ? 'md:flex-row-reverse' : ''} group`}>
 									
@@ -954,10 +993,7 @@ function Achievements() {
 									{/* Content Card Container */}
 									<div className={`w-full md:w-1/2 pl-12 pr-4 md:px-12 ${isEven ? 'md:text-left' : 'md:text-right'}`}>
 										<motion.div 
-											initial={{ opacity: 0, x: isEven ? 50 : -50, y: 20 }}
-											whileInView={{ opacity: 1, x: 0, y: 0 }}
-											viewport={{ once: true, margin: "-50px" }}
-											transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
+											{...getTimelineAnimProps(isEven)}
 											className="w-full p-6 lg:p-8 rounded-[1.5rem] lg:rounded-[2rem] border border-slate-200 bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-blue-300 relative overflow-hidden"
 										>
 											{/* Decorative background glow on hover */}
@@ -995,19 +1031,27 @@ function Achievements() {
 export default function AboutPage() {
 	const pageAssets = usePageAssets()
 	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
+	const [isMobile, setIsMobile] = useState(false);
 
-	const tsplLogoAsset = resolveAsset('about.tsplLogo', '/tspl main logo.png', 'TSPL logo')
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+		return () => window.removeEventListener('resize', checkMobile);
+	}, []);
 
 	return (
 		<div className="min-h-screen bg-white text-slate-800">
 			<Navbar />
 			<main>
-				<AboutHero resolveAsset={resolveAsset} />
-				<OurStory resolveAsset={resolveAsset} />
-				<OurValues />
-				<Achievements />
-				<LeadershipSection />
-				<DetailedProfileSection />
+				<AboutHero resolveAsset={resolveAsset} isMobile={isMobile} />
+				<OurStory resolveAsset={resolveAsset} isMobile={isMobile} />
+				<OurValues isMobile={isMobile} />
+				<Achievements isMobile={isMobile} />
+				<LeadershipSection isMobile={isMobile} />
+				<DetailedProfileSection isMobile={isMobile} />
 			</main>
 			<Footer />
 		</div>
