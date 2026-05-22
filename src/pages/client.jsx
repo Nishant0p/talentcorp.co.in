@@ -186,7 +186,7 @@ function AnimatedCounter({ value, suffix }) {
 }
 
 function ClientsHero({ resolveAsset, partnerLogos }) {
-	const heroAsset = resolveAsset('client.card.1', 'https://images.pexels.com/photos/8961068/pexels-photo-8961068.jpeg', 'Office Background')
+	const heroAsset = resolveAsset('client.card.1', '/clients.png', 'Clients Hero Banner')
 
 	return (
 		<section className="relative min-h-screen flex items-center overflow-visible bg-[#0f2a4d]">
@@ -194,7 +194,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 				<img
 					src={heroAsset.url}
 					alt={heroAsset.alt}
-					className="h-full w-full object-cover object-[78%_center] scale-[1.12] opacity-35"
+					className="h-full w-full object-cover object-[78%_center] scale-[1.12] opacity-85"
 				/>
 				<div className="absolute left-0 top-0 bottom-0 w-[72%] bg-gradient-to-r from-[#0f2a4d]/90 via-[#0f2a4d]/60 to-transparent" />
 				<div className="absolute right-0 top-0 bottom-0 w-[58%] bg-gradient-to-l from-cyan-500/25 via-blue-500/20 to-transparent" />
@@ -289,7 +289,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 
 function LogoMarquee({ partnerLogos }) {
 	const renderPartnerRow = (reverse = false) => (
-		<div className="logo-marquee-track gap-4" style={{ animationDirection: reverse ? 'reverse' : 'normal', animationDuration: '25s' }}>
+		<div className="logo-marquee-track gap-4" style={{ animationDirection: reverse ? 'reverse' : 'normal', animationDuration: '120s' }}>
 			{[...partnerLogos, ...partnerLogos, ...partnerLogos].map((brand, idx) => (
 				<div
 					key={`${brand.name}-${reverse ? 'rev' : 'fwd'}-${idx}`}
@@ -653,7 +653,7 @@ function ClientsCTA() {
 						<div className="flex flex-wrap gap-6 text-white">
 							<div className="flex items-center gap-3">
 								<Phone className="h-5 w-5 text-blue-600" />
-								<a href="tel:+917397971322" className="hover:underline">+91 7397971322</a>
+								<a href="tel:+919561504911" className="hover:underline">+91 95615 04911</a>
 							</div>
 							<div className="flex items-center gap-2">
 								<Mail className="h-5 w-5 text-blue-300" />

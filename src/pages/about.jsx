@@ -13,6 +13,7 @@ const milestones = [
 	{ year: '2020', title: 'NAPS Authorized', description: 'Became government authorized for NAPS' },
 	{ year: '2024', title: '15,000+ Placements', description: 'Crossed 15,000 successful placements' },
 	{ year: '2025', title: '1st Rank TPA in NATS', description: 'Achieved the No. 1 rank as a Third-Party Aggregator for NATS.' },
+	{ year: '2026', title: '40,000+ Placements', description: 'Crossed 40,000 successful placements' },
 ]
 
 const achievements = [

@@ -302,7 +302,7 @@
 .logo-marquee-track {
   display: flex;
   width: max-content;
-  animation: logo-marquee-slide 24s linear infinite;
+  animation: logo-marquee-slide 120s linear infinite;
 }
 
 .logo-marquee:hover .logo-marquee-track {
