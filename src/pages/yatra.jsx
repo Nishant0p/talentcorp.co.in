@@ -155,6 +155,14 @@ export default function YatraPage() {
 	const carX = useTransform(scrollYProgress, [0, 1], ["0%", "15%"])
 	const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
 
+	const [isMobile, setIsMobile] = useState(false)
+	useEffect(() => {
+		const checkMobile = () => setIsMobile(window.innerWidth < 768)
+		checkMobile()
+		window.addEventListener('resize', checkMobile)
+		return () => window.removeEventListener('resize', checkMobile)
+	}, [])
+
 	useEffect(() => {
 		if (typeof window !== 'undefined' && window.innerWidth < 768) {
 			return
@@ -221,7 +229,11 @@ export default function YatraPage() {
 					{/* Parallax Image Background with Left Fade */}
 					<motion.div 
 						className="absolute inset-0 z-0 pointer-events-none"
-						style={{ 
+						style={isMobile ? { 
+							backgroundImage: 'url("https://i0.wp.com/indianinfrastructure.com/wp-content/uploads/2024/12/42.jpg?resize=678%2C381&ssl=1")',
+							backgroundSize: 'cover',
+							backgroundPosition: 'center',
+						} : { 
 							y: bgY,
 							backgroundImage: 'url("https://i0.wp.com/indianinfrastructure.com/wp-content/uploads/2024/12/42.jpg?resize=678%2C381&ssl=1")',
 							backgroundSize: 'cover',
@@ -254,10 +266,12 @@ export default function YatraPage() {
 								Empowering careers across every state. Join the movement as we bridge the gap between talent and opportunity. The <span className="font-bold text-white">Rojgaar Yatra</span> is more than a journey; it’s a nationwide mission by TSPL Group to bring employment opportunities to your doorstep.
 							</p>
 
-							{/* The "Stop" Indicator Timeline - Horizontal Flow */}
+							{/* The "Stop" Indicator Timeline */}
 							<div className="mt-6 w-full rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-6 backdrop-blur-md">
 								<h3 className="text-sm font-bold text-white/80 uppercase tracking-widest mb-6">Yatra Progress Timeline</h3>
-								<div className="relative flex items-center justify-between gap-1 sm:gap-2 pb-4">
+								
+								{/* Desktop/Tablet Horizontal Timeline */}
+								<div className="hidden md:flex relative items-center justify-between gap-1 sm:gap-2 pb-4">
 									{/* Timeline Line */}
 									<div className="absolute left-0 right-0 top-8 h-1 bg-gradient-to-r from-emerald-500 via-orange-500 to-yellow-500 opacity-30" style={{ zIndex: 0 }} />
 									
@@ -324,24 +338,107 @@ export default function YatraPage() {
 										<span className="text-[7px] uppercase tracking-widest text-yellow-400/70">In Process</span>
 									</div>
 								</div>
+
+								{/* Mobile Vertical Timeline */}
+								<div className="flex md:hidden relative flex-col gap-6 pl-2 pr-2 pb-2">
+									{/* Vertical Timeline Line */}
+									<div className="absolute left-7 top-6 bottom-6 w-0.5 bg-gradient-to-b from-emerald-500 via-orange-500 to-yellow-500 opacity-30" style={{ zIndex: 0 }} />
+
+									{/* Maharashtra - Completed */}
+									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
+										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+											<CheckCircle2 className="h-6 w-6 text-emerald-400" />
+										</div>
+										<div className="flex flex-col">
+											<span className="font-bold text-sm text-white">Maharashtra</span>
+											<span className="text-[9px] font-bold uppercase tracking-widest text-emerald-400/70">Completed</span>
+										</div>
+									</div>
+
+									{/* Madhya Pradesh - Completed */}
+									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
+										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+											<CheckCircle2 className="h-6 w-6 text-emerald-400" />
+										</div>
+										<div className="flex flex-col">
+											<span className="font-bold text-sm text-white">Madhya Pradesh</span>
+											<span className="text-[9px] font-bold uppercase tracking-widest text-emerald-400/70">Completed</span>
+										</div>
+									</div>
+
+									{/* Uttar Pradesh - Completed */}
+									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
+										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+											<CheckCircle2 className="h-6 w-6 text-emerald-400" />
+										</div>
+										<div className="flex flex-col">
+											<span className="font-bold text-sm text-white">Uttar Pradesh</span>
+											<span className="text-[9px] font-bold uppercase tracking-widest text-emerald-400/70">Completed</span>
+										</div>
+									</div>
+
+									{/* Bihar - Completed */}
+									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
+										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+											<CheckCircle2 className="h-6 w-6 text-emerald-400" />
+										</div>
+										<div className="flex flex-col">
+											<span className="font-bold text-sm text-white">Bihar</span>
+											<span className="text-[9px] font-bold uppercase tracking-widest text-emerald-400/70">Completed</span>
+										</div>
+									</div>
+
+									{/* Gujarat - Active */}
+									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
+										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/20 border-2 border-orange-500 animate-pulse flex-shrink-0 shadow-[0_0_15px_rgba(249,115,22,0.3)]">
+											<PlayCircle className="h-6 w-6 text-orange-400 animate-pulse" />
+										</div>
+										<div className="flex flex-col">
+											<span className="font-bold text-sm text-white">Gujarat</span>
+											<span className="text-[9px] font-bold uppercase tracking-widest text-orange-400/70 animate-pulse">Active</span>
+										</div>
+									</div>
+
+									{/* West Bengal - In Process */}
+									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
+										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-yellow-500/20 border-2 border-yellow-500 animate-pulse flex-shrink-0 shadow-[0_0_15px_rgba(234,179,8,0.3)]">
+											<Activity className="h-6 w-6 text-yellow-400" />
+										</div>
+										<div className="flex flex-col">
+											<span className="font-bold text-sm text-white">West Bengal</span>
+											<span className="text-[9px] font-bold uppercase tracking-widest text-yellow-400/70">In Process</span>
+										</div>
+									</div>
+
+									{/* Odisha - In Process */}
+									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
+										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-yellow-500/20 border-2 border-yellow-500 animate-pulse flex-shrink-0 shadow-[0_0_15px_rgba(234,179,8,0.3)]">
+											<Activity className="h-6 w-6 text-yellow-400" />
+										</div>
+										<div className="flex flex-col">
+											<span className="font-bold text-sm text-white">Odisha</span>
+											<span className="text-[9px] font-bold uppercase tracking-widest text-yellow-400/70">In Process</span>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 
 						{/* Right Column: Hero Image with Motion Blur & Glow */}
 						<div className="relative flex items-center justify-center lg:justify-end mt-16 lg:mt-0">
 							{/* Motion Trails */}
-							<div className="absolute left-0 top-1/2 -translate-y-1/2 w-[120%] h-32 -z-10 opacity-60 pointer-events-none">
+							<div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 w-[120%] h-32 -z-10 opacity-60 pointer-events-none">
 								<div className="h-1 w-3/4 bg-gradient-to-r from-transparent via-orange-500 to-transparent absolute top-4 -left-20 transform -rotate-2 animate-pulse" style={{ filter: 'blur(2px)' }} />
 								<div className="h-2 w-full bg-gradient-to-r from-transparent via-orange-400 to-transparent absolute top-1/2 -left-10 transform -rotate-1 animate-pulse" style={{ filter: 'blur(4px)' }} />
 								<div className="h-0.5 w-2/3 bg-gradient-to-r from-transparent via-blue-400 to-transparent absolute bottom-4 -left-16 transform -rotate-3 animate-pulse" />
 							</div>
 
 							{/* Tire Glow */}
-							<div className="absolute bottom-[10%] left-1/4 h-24 w-3/4 rounded-[100%] bg-[#FF8C00] opacity-40 mix-blend-screen blur-[60px] animate-pulse pointer-events-none" />
+							<div className="hidden md:block absolute bottom-[10%] left-1/4 h-24 w-3/4 rounded-[100%] bg-[#FF8C00] opacity-40 mix-blend-screen blur-[60px] animate-pulse pointer-events-none" />
 
 							{/* Parallax Vehicle */}
 							<motion.div 
-								style={{ x: carX }}
+								style={isMobile ? {} : { x: carX }}
 								className="relative z-10 w-[115%] max-w-[800px] lg:w-[130%] lg:-mr-20 xl:-mr-32 flex justify-end"
 							>
 								<img
@@ -502,10 +599,10 @@ export default function YatraPage() {
 									{ icon: MapPin, text: "Rural outreach for villages and small towns." }
 								].map((item, i) => (
 									<motion.div 
-										initial={{ opacity: 0, y: 20 }}
-										whileInView={{ opacity: 1, y: 0 }}
-										viewport={{ once: true, margin: "-100px" }}
-										transition={{ delay: i * 0.1 }}
+										initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+										whileInView={isMobile ? {} : { opacity: 1, y: 0 }}
+										viewport={isMobile ? {} : { once: true, margin: "-100px" }}
+										transition={isMobile ? {} : { delay: i * 0.1 }}
 										key={i} 
 										className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-300 group"
 									>
