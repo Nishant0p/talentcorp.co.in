@@ -13,7 +13,7 @@ const DEFAULT_WORKFORCE_CARDS = [
     buttonLink: '/jobs',
     points: [
       'Get access to verified job openings quickly.',
-      'Apply faster with guided support at every step.',
+      'We manage all compliance part for you.',
       'Build long-term growth with trusted employers.',
     ],
     image: 'https://backend.tsplgroup.in/uploads/first_2_2d6bb37164.png',
@@ -21,7 +21,7 @@ const DEFAULT_WORKFORCE_CARDS = [
   },
   {
     cardType: 'employer',
-    eyebrow: 'FOR EMPLOYERS',
+    eyebrow: 'FOR CLIENTS',
     title: 'Build Your Team',
     highlight: 'Team',
     description: 'Recruit high-quality manpower with operational support.',
@@ -76,7 +76,7 @@ function WorkforcePanel({ card, index }) {
   const lines = normalizePoints(card.points);
   const highlight = card.highlight || card.title.split(' ').slice(-1)[0] || '';
   const baseTitle = highlight ? card.title.replace(highlight, '').trim() : card.title;
-  const panelLabel = isEmployee ? 'Job Seeker Side' : 'Employer Side';
+  const panelLabel = isEmployee ? 'Job Seeker Side' : 'Client Side';
 
   return (
     <article
@@ -120,9 +120,9 @@ function WorkforcePanel({ card, index }) {
             </div>
           </div>
 
-          <div className={`rounded-[2rem] border ${isEmployee ? 'border-blue-100 bg-blue-50/70' : 'border-orange-100 bg-orange-50/70'} p-5 shadow-lg shadow-slate-200/50 ${isEmployee ? 'md:order-1' : 'md:order-2'}`}>
+          <div className={`rounded-[2rem] border ${isEmployee ? 'border-orange-100 bg-orange-50/70' : 'border-blue-100 bg-blue-50/70'} p-5 shadow-lg shadow-slate-200/50 ${isEmployee ? 'md:order-1' : 'md:order-2'}`}>
             <div className="mb-5 flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.28em] text-slate-400">
-              <span className={`h-px w-10 ${isEmployee ? 'bg-blue-300' : 'bg-orange-300'}`} />
+              <span className={`h-px w-10 ${isEmployee ? 'bg-orange-300' : 'bg-blue-300'}`} />
               <span>{panelLabel}</span>
             </div>
             <ul className="space-y-4">
@@ -220,7 +220,7 @@ const WorkforceSection = () => {
               onClick={() => setActiveTab('employer')}
               className={`relative z-10 flex-1 rounded-full py-2 text-xs font-bold transition-colors ${activeTab === 'employer' ? 'text-white' : 'text-slate-500'}`}
             >
-              For Employers
+              For Clients
             </button>
           </div>
         </div>
@@ -240,7 +240,7 @@ const WorkforceSection = () => {
 
         <div className="pointer-events-none fixed inset-x-4 bottom-4 z-20 mx-auto flex max-w-md justify-center md:hidden">
           <div className="rounded-full border border-white/80 bg-white/90 px-4 py-3 text-[10px] font-black uppercase tracking-[0.28em] text-slate-500 shadow-[0_20px_60px_-25px_rgba(15,23,42,0.45)] backdrop-blur-md">
-            Are you a Job Seeker or Employer?
+            Are you a Job Seeker or Client?
           </div>
         </div>
       </div>

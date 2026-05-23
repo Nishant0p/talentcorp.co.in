@@ -18,7 +18,7 @@ const fallbackFaqs = [
   {
     id: '03',
     question: 'Who is eligible for apprenticeship programs?',
-    answer: 'Eligibility varies by scheme, but generally includes ITI holders, Diploma holders, and Graduates looking for industry-standard skill development.',
+    answer: 'Eligibility varies by scheme, but generally includes students from 1st to 10th to 12th, ITI holders, diploma holders, and graduates looking for industry-standard skill development.',
   },
   {
     id: '04',

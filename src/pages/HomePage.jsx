@@ -97,24 +97,33 @@ function DeferredSection({
   }, [isVisible, rootMargin]);
 
   const toneClass =
-    tone === 'orange'
-      ? 'bg-[#fff4ec] border-y border-orange-100'
-      : tone === 'blue'
-        ? 'bg-[#edf5ff] border-y border-blue-100'
-        : 'bg-white';
+    tone === 'marquee'
+      ? 'bg-gradient-to-br from-[#fffdfa] via-[#fffbf7] to-[#f6faff] border-y border-orange-100/40 shadow-sm'
+      : tone === 'orange'
+        ? 'bg-[#fff4ec] border-y border-orange-100'
+        : tone === 'blue'
+          ? 'bg-gradient-to-br from-[#f6faff] via-[#edf5ff] to-[#e3efff] border-b border-blue-100/50 shadow-sm'
+          : 'bg-white';
 
   const textureStyle =
-    tone === 'orange'
+    tone === 'marquee'
       ? {
           backgroundImage:
-            'radial-gradient(circle at 20% 25%, rgba(249,115,22,0.13) 0, rgba(249,115,22,0) 45%), repeating-linear-gradient(135deg, rgba(249,115,22,0.06) 0, rgba(249,115,22,0.06) 1px, transparent 1px, transparent 13px)',
+            'radial-gradient(circle at 15% 35%, rgba(249,115,22,0.12) 0%, transparent 45%), radial-gradient(circle at 85% 65%, rgba(37,99,235,0.09) 0%, transparent 45%), radial-gradient(rgba(249,115,22,0.08) 1.5px, transparent 1.5px)',
+          backgroundSize: '100% 100%, 100% 100%, 24px 24px',
         }
-      : tone === 'blue'
+      : tone === 'orange'
         ? {
             backgroundImage:
-              'radial-gradient(circle at 82% 22%, rgba(37,99,235,0.13) 0, rgba(37,99,235,0) 45%), repeating-linear-gradient(135deg, rgba(37,99,235,0.06) 0, rgba(37,99,235,0.06) 1px, transparent 1px, transparent 13px)',
+              'radial-gradient(circle at 20% 25%, rgba(249,115,22,0.13) 0, rgba(249,115,22,0) 45%), repeating-linear-gradient(135deg, rgba(249,115,22,0.06) 0, rgba(249,115,22,0.06) 1px, transparent 1px, transparent 13px)',
           }
-        : undefined;
+        : tone === 'blue'
+          ? {
+              backgroundImage:
+                'radial-gradient(circle at 80% 30%, rgba(37,99,235,0.14) 0%, transparent 50%), radial-gradient(circle at 20% 75%, rgba(249,115,22,0.1) 0%, transparent 50%), radial-gradient(rgba(37,99,235,0.07) 1.5px, transparent 1.5px)',
+              backgroundSize: '100% 100%, 100% 100%, 24px 24px',
+            }
+          : undefined;
 
   return (
     <section
@@ -128,12 +137,12 @@ function DeferredSection({
           <div className="pointer-events-none absolute inset-0 opacity-90" style={textureStyle} />
           <div
             className={`pointer-events-none absolute -left-16 -top-16 h-44 w-44 rounded-full blur-2xl ${
-              tone === 'orange' ? 'bg-orange-200/50' : 'bg-blue-200/55'
+              tone === 'orange' || tone === 'marquee' ? 'bg-orange-200/50' : 'bg-blue-200/55'
             }`}
           />
           <div
             className={`pointer-events-none absolute -bottom-20 right-0 h-56 w-56 rounded-full blur-2xl ${
-              tone === 'orange' ? 'bg-orange-300/35' : 'bg-blue-300/35'
+              tone === 'orange' || tone === 'marquee' ? 'bg-orange-300/35' : 'bg-blue-300/35'
             }`}
           />
         </>
@@ -238,7 +247,7 @@ export default function HomePage() {
         onHireTalent={(e) => startWhirlpool('hire', e)}
       />
 
-      <DeferredSection minHeight={140} rootMargin="120px 0px" tone="orange" placeholder={<MarqueeSkeleton />}>
+      <DeferredSection minHeight={140} rootMargin="120px 0px" tone="marquee" placeholder={<MarqueeSkeleton />}>
         <Suspense fallback={<MarqueeSkeleton />}>
           <CompanyMarquee />
         </Suspense>
