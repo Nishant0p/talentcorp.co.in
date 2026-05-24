@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
 export default function RozgaarPreloader({ onFinish }) {
+  const [carLoaded, setCarLoaded] = useState(false)
   const carRef = useRef(null)
   const contentRef = useRef(null)
   const containerRef = useRef(null)
@@ -112,8 +113,20 @@ export default function RozgaarPreloader({ onFinish }) {
 
       <div ref={carRef} className="pointer-events-none absolute left-1/2 top-1/2 z-20 w-[680px] will-change-transform">
         <img
+          ref={(el) => {
+            if (el && el.complete && !carLoaded) {
+              setTimeout(() => setCarLoaded(true), 0);
+            }
+          }}
           src="/Rojgaar Yatra car.png"
           alt="Rozgaar Yatra Car"
+          onLoad={() => setCarLoaded(true)}
+          style={{
+            filter: carLoaded ? 'none' : 'blur(8px)',
+            opacity: carLoaded ? 1 : 0.5,
+            transform: carLoaded ? 'scale(1)' : 'scale(0.99)',
+            transition: 'filter 1s ease-out, opacity 1s ease-out, transform 1s ease-out'
+          }}
           className="h-auto w-full transform-gpu drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
         />
         <div className="absolute bottom-[-10px] left-[10%] h-[20px] w-[80%] rounded-[100%] bg-black/10 blur-xl"></div>

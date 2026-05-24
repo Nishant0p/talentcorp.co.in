@@ -25,6 +25,23 @@ const ProgressiveImage = ({
 
   if (!highSrc && !lowSrc) return null;
 
+  const isIdentical = lowSrc === highSrc;
+
+  if (isIdentical) {
+    return (
+      <img
+        src={highSrc}
+        alt={alt}
+        className={`transition-all duration-700 ease-out ${highLoaded ? 'blur-0 scale-100 opacity-100' : 'blur-md scale-95 opacity-0'} ${className} ${highClassName}`}
+        loading={loading}
+        decoding={decoding}
+        width={width}
+        height={height}
+        onLoad={() => setHighLoaded(true)}
+      />
+    );
+  }
+
   return (
     <>
       {lowSrc && (

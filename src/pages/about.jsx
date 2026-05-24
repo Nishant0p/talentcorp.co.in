@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
-import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import ProgressiveImage from '../components/ProgressiveImage';
 
 const milestones = [
 	{ year: '2014', title: 'Company Founded', description: 'Started with a small team of 5 people' },
@@ -668,11 +669,10 @@ function LeadershipSection({ isMobile }) {
 						>
 							{/* Uniform Aspect Ratio Container */}
 							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200">
-								<img
+								<ProgressiveImage
 									src={leader.imageUrl}
 									alt={leader.name}
 									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-									loading="lazy"
 								/>
 								{/* Gradient Overlay for Text Readability */}
 								<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
@@ -703,11 +703,10 @@ function LeadershipSection({ isMobile }) {
 						>
 							{/* Uniform Aspect Ratio Container */}
 							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200">
-								<img
+								<ProgressiveImage
 									src={leader.imageUrl}
 									alt={leader.name}
 									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-									loading="lazy"
 								/>
 								{/* Gradient Overlay for Text Readability */}
 								<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
@@ -741,7 +740,7 @@ function AboutHero({ resolveAsset, isMobile }) {
 	return (
 		<section className="relative flex flex-col justify-center min-h-[100svh] overflow-hidden pb-20 pt-40">
 			<div className="absolute inset-0">
-				<img src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
+				<ProgressiveImage src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
 			</div>
 
@@ -906,7 +905,7 @@ function OurStory({ resolveAsset, isMobile }) {
 						className="group relative h-80 overflow-hidden rounded-[2.5rem] bg-white md:col-span-5 md:h-auto"
 					>
 						<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
-						<img src="/ABOUT.jpeg" alt="Workers" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+						<ProgressiveImage src="/ABOUT.jpeg" alt="Workers" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
 						<div className="absolute bottom-0 left-0 z-20 p-8">
 							<div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-md">
 								<span className="h-2 w-2 rounded-full bg-[#4ADE80] animate-pulse" />
