@@ -52,16 +52,24 @@ function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.scrollY > 300) {
+    let hideTimer = null
+
+    const onScroll = () => {
+      if (window.scrollY > 100) {
         setIsVisible(true)
-      } else {
-        setIsVisible(false)
       }
+      // Reset the 2-second hide timer on every scroll event
+      clearTimeout(hideTimer)
+      hideTimer = setTimeout(() => {
+        setIsVisible(false)
+      }, 2000)
     }
 
-    window.addEventListener('scroll', toggleVisibility)
-    return () => window.removeEventListener('scroll', toggleVisibility)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      clearTimeout(hideTimer)
+    }
   }, [])
 
   const scrollToTop = () => {
@@ -79,7 +87,7 @@ function ScrollToTopButton() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-[100] p-4 rounded-full bg-blue-600 text-white shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="fixed bottom-8 left-6 z-[100] p-4 rounded-full bg-blue-600 text-white shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           aria-label="Scroll to top"
         >
           <ArrowUp className="w-6 h-6" />

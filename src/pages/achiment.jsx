@@ -22,6 +22,7 @@ import {
 	ChevronLeft,
 	ChevronRight,
 	X,
+	Sparkles,
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -29,13 +30,121 @@ import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 import { useSectionReveal } from '../hooks/useSectionReveal'
 import AwardsSectionComponent from '../components/AwardsSection'
 import ClientVoicesSection from '../components/ClientVoicesSection'
-import { extractMediaUrl, fetchTestimonials } from '../utils/strapi'
+import { extractMediaUrl, fetchTestimonials, STRAPI_BASE_URL, fetchCollection } from '../utils/strapi'
 import heroImage from '../assets/hero.png'
+
+function renderFloatingLogo(logo) {
+	if (logo.src) {
+		return (
+			<img 
+				src={logo.src} 
+				alt={logo.name} 
+				className="block max-h-7 max-w-[85%] object-contain filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.02)] select-none" 
+				loading="eager"
+				draggable={false}
+			/>
+		);
+	}
+
+	const key = String(logo.name || '').trim().toUpperCase();
+	switch (key) {
+		case 'HAIER':
+			return <span className="text-[#005A9C] font-sans font-black tracking-widest text-[9px] uppercase select-none">Haier</span>;
+		case 'LG':
+			return (
+				<div className="flex items-center gap-0.5 scale-90 select-none">
+					<div className="relative flex h-4.5 w-4.5 flex-shrink-0 items-center justify-center rounded-full bg-[#A50034]">
+						<span className="absolute left-[2.5px] top-[1.5px] text-[7px] font-black text-white font-sans leading-none">L</span>
+						<span className="absolute right-[3px] bottom-[2px] text-[5.5px] font-black text-white font-sans leading-none">G</span>
+					</div>
+					<span className="text-[#A50034] font-sans font-black text-[9px] leading-none">LG</span>
+				</div>
+			);
+		case 'HYUNDAI':
+			return (
+				<div className="flex flex-col items-center scale-90 leading-none select-none">
+					<span className="flex h-3.5 w-5 items-center justify-center rounded-full border border-[#002C5F] text-[6.5px] font-black text-[#002C5F] -skew-x-12 italic">H</span>
+					<span className="text-[#002C5F] font-sans font-black text-[7px] mt-0.5 uppercase tracking-tighter">HYUNDAI</span>
+				</div>
+			);
+		case 'JCB':
+			return (
+				<div className="flex flex-col items-center leading-none scale-90 bg-amber-400 p-1.5 rounded-md border border-amber-500 shadow-sm select-none">
+					<span className="text-black font-sans font-black text-[9px] tracking-wide">JCB</span>
+				</div>
+			);
+		case 'TATA AUTOCOMP':
+		case 'TATA':
+			return (
+				<div className="flex flex-col items-center leading-none scale-90 select-none">
+					<span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#005A9C] text-[7.5px] font-bold text-white">T</span>
+					<span className="text-[#005A9C] font-sans font-black text-[8px] mt-0.5 tracking-wide">TATA</span>
+				</div>
+			);
+		case 'FIAT':
+			return (
+				<div className="flex items-center gap-0.5 scale-90 select-none">
+					<span className="flex h-3.5 w-3.5 items-center justify-center rounded-full border border-[#8F1630] text-[5px] font-bold text-[#8F1630]">F</span>
+					<span className="text-[#8F1630] font-serif font-black tracking-wider text-[9px] uppercase italic">FIAT</span>
+				</div>
+			);
+		default:
+			return <span className="text-slate-800 font-extrabold text-[9.5px] tracking-wider uppercase select-none">{logo.name}</span>;
+	}
+}
+
 function AwardsHero() {
 	const { isVisible, sectionRef } = useSectionReveal(0.25)
 	const [count, setCount] = useState({ years: 0, workers: 0, clients: 0, awardsWon: 0 })
 	const pageAssets = usePageAssets()
 	const achievementsHeroAsset = getPageAsset(pageAssets, 'achievements.hero', heroImage, 'TSPL achievements')
+
+	// Dynamic CMS logos from backend
+	const [cmsLogos, setCmsLogos] = useState([]);
+
+	useEffect(() => {
+		if (!STRAPI_BASE_URL) return;
+		(async () => {
+			try {
+				const data = await fetchCollection('/api/client-logos?populate=logo&sort=order:asc&pagination[pageSize]=100');
+				const mapped = data
+					.map((entry) => {
+						const logoUrl = extractMediaUrl(entry.logo);
+						const name = entry.name;
+						const version = entry.updatedAt || entry.logo?.updatedAt || entry.documentId || entry.id;
+						return {
+							src: logoUrl ? `${logoUrl}${logoUrl.includes('?') ? '&' : '?'}v=${encodeURIComponent(version)}` : null,
+							name: name || 'Company logo',
+						};
+					})
+					.filter((item) => Boolean(item.src || item.name));
+				setCmsLogos(mapped);
+			} catch {
+				// preserve fallbacks
+			}
+		})();
+	}, []);
+
+	// Symmetrically map floating brands by dynamic matching from the backend CMS entries
+	const getConstellationLogo = (fallbackName) => {
+		const match = cmsLogos.find((item) => {
+			const itemName = String(item.name || '').toUpperCase().trim();
+			const targetName = String(fallbackName).toUpperCase().trim();
+			return itemName === targetName || itemName.includes(targetName) || targetName.includes(itemName);
+		});
+
+		if (match && match.src) {
+			return { name: fallbackName, src: match.src };
+		}
+		return { name: fallbackName, src: null };
+	};
+
+	const haierLogo = getConstellationLogo('Haier');
+	const lgLogo = getConstellationLogo('LG');
+	const hyundaiLogo = getConstellationLogo('Hyundai');
+	const jcbLogo = getConstellationLogo('JCB');
+	const tataLogo = getConstellationLogo('TATA');
+	const fiatLogo = getConstellationLogo('FIAT');
 
 	useEffect(() => {
 		const duration = 2000
@@ -63,12 +172,7 @@ function AwardsHero() {
 		return () => window.clearInterval(timer)
 	}, [])
 
-	const stats = [
-		{ icon: TrendingUp, value: `${count.years}+`, label: 'Years of Excellence' },
-		{ icon: Star, value: `${count.workers.toLocaleString()}+`, label: 'Workers Placed' },
-		{ icon: Award, value: `${count.clients}+`, label: 'Happy Clients' },
-		{ icon: Trophy, value: `${count.awardsWon}+`, label: 'Awards Won' },
-	]
+
 
 	return (
 		<section ref={sectionRef} className="relative min-h-[78vh] overflow-hidden bg-white pt-16 md:min-h-[90vh] md:pt-24">
@@ -143,49 +247,98 @@ function AwardsHero() {
 								<Trophy className="absolute h-24 w-24 text-white drop-shadow-lg" />
 							</div>
 
-							<div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-2">
-								<div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-gray-100 bg-white shadow-xl animate-bounce">
-									<span className="text-2xl font-bold text-blue-600">#1</span>
+							{/* Center Top: Symmetrical #1 Rank Badge */}
+							<div className="absolute left-1/2 top-[-2rem] -translate-x-1/2 z-20">
+								<div className="flex h-12 w-28 items-center justify-center rounded-full bg-gradient-to-r from-blue-700 to-[#0f2a4d] border border-blue-500/30 text-white shadow-xl shadow-blue-500/25 animate-bounce py-1.5 px-3">
+									<span className="text-xs font-black uppercase tracking-wider text-orange-400">Rank #1</span>
 								</div>
 							</div>
 
-							<div className="absolute bottom-4 left-0">
-								<div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl">
-									<img src="/images-10.jpeg" alt="Recognition" className="h-full w-full object-cover" />
+							{/* FLOATING BRAND badges surrounding the Trophy */}
+							{/* Haier (Top-Left) */}
+							<div className="absolute left-[-1rem] top-[8%] z-10 animate-[bounce_3.5s_infinite_ease-in-out]">
+								<div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-slate-100 bg-white/95 shadow-md p-1.5 hover:scale-110 hover:shadow-xl transition-all duration-300">
+									{renderFloatingLogo(haierLogo)}
 								</div>
 							</div>
 
-							<div className="absolute bottom-4 right-0">
-								<div className="flex h-14 w-14 items-center justify-center rounded-xl border border-gray-100 bg-white shadow-xl">
-									<Award className="h-7 w-7 text-orange-500" />
+							{/* LG (Top-Right) */}
+							<div className="absolute right-[-1rem] top-[8%] z-10 animate-[bounce_4.2s_infinite_ease-in-out_0.5s]">
+								<div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-slate-100 bg-white/95 shadow-md p-1.5 hover:scale-110 hover:shadow-xl transition-all duration-300">
+									{renderFloatingLogo(lgLogo)}
+								</div>
+							</div>
+
+							{/* Hyundai (Mid-Left) */}
+							<div className="absolute left-[-3.5rem] top-[42%] z-10 animate-[bounce_4.8s_infinite_ease-in-out_1s]">
+								<div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-slate-100 bg-white/95 shadow-md p-1.5 hover:scale-110 hover:shadow-xl transition-all duration-300">
+									{renderFloatingLogo(hyundaiLogo)}
+								</div>
+							</div>
+
+							{/* JCB (Mid-Right) */}
+							<div className="absolute right-[-3.5rem] top-[42%] z-10 animate-[bounce_3.9s_infinite_ease-in-out_1.5s]">
+								<div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-slate-100 bg-white/95 shadow-md p-1.5 hover:scale-110 hover:shadow-xl transition-all duration-300">
+									{renderFloatingLogo(jcbLogo)}
+								</div>
+							</div>
+
+							{/* TATA (Bottom-Left) */}
+							<div className="absolute left-[-0.5rem] bottom-[4%] z-10 animate-[bounce_5.2s_infinite_ease-in-out_2s]">
+								<div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-slate-100 bg-white/95 shadow-md p-1.5 hover:scale-110 hover:shadow-xl transition-all duration-300">
+									{renderFloatingLogo(tataLogo)}
+								</div>
+							</div>
+
+							{/* Fiat (Bottom-Right) */}
+							<div className="absolute right-[-0.5rem] bottom-[4%] z-10 animate-[bounce_4.4s_infinite_ease-in-out_2.5s]">
+								<div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-slate-100 bg-white/95 shadow-md p-1.5 hover:scale-110 hover:shadow-xl transition-all duration-300">
+									{renderFloatingLogo(fiatLogo)}
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div className={`mt-10 grid grid-cols-2 gap-4 transition-all duration-1000 delay-500 md:mt-16 md:gap-6 md:grid-cols-4 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-					{stats.map((stat) => (
-						<div key={stat.label} className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/10">
-							<div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-orange-50 opacity-0 transition-opacity group-hover:opacity-100" />
-							<div className="relative">
-								<div className="mb-2 flex items-center gap-3">
-									<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 transition-transform group-hover:scale-110">
-										<stat.icon className="h-5 w-5 text-white" />
-									</div>
-									<p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-orange-500 lg:text-4xl">
-										{stat.value}
-									</p>
-								</div>
-								<p className="font-medium text-gray-700">{stat.label}</p>
-							</div>
-						</div>
-					))}
-				</div>
 			</div>
 		</section>
 	)
 }
+
+const milestones = [
+	{
+		year: '2011',
+		title: 'Company Incorporated',
+		description: 'TSPL Group was founded, beginning its mission to provide workforce solutions and professional HR services.',
+		icon: Building2,
+		color: 'blue',
+		image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (4).jpeg'
+	},
+	{
+		year: '2016',
+		title: 'Authorized NAPS TPA',
+		description: 'Appointed as an official Third-Party Aggregator for NAPS, scaling operations across Maharashtra and beyond.',
+		icon: Shield,
+		color: 'orange',
+		image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (3).jpeg'
+	},
+	{
+		year: '2018',
+		title: '10,000+ Apprentices Trained',
+		description: 'Crossed the major milestone of upskilling and training over 10,000 apprentices under premium corporate clients.',
+		icon: Users,
+		color: 'green',
+		image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (2).jpeg'
+	},
+	{
+		year: '2024',
+		title: 'World Record & Excellence',
+		description: 'Awarded the World Book of Records and named Fastest Growing Indian Company Excellence Award Winner.',
+		icon: Trophy,
+		color: 'purple',
+		image: '/achivments/WhatsApp Image 2026-05-04 at 5.34.10 PM (1).jpeg'
+	}
+]
 
 function Milestones() {
 	const { isVisible, sectionRef } = useSectionReveal(0.2)
