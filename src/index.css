@@ -31,8 +31,23 @@ body {
   }
 }
 
+@keyframes tspl-marquee-reverse {
+  0% {
+    transform: translateX(-33.3333%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .tspl-marquee__track {
   animation: tspl-marquee 80s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.tspl-marquee__track--reverse {
+  animation: tspl-marquee-reverse 80s linear infinite;
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }

@@ -69,7 +69,7 @@ function FooterSkeleton() {
 function DeferredSection({
   children,
   minHeight = 0,
-  rootMargin = '320px 0px',
+  rootMargin = '800px 0px',
   sectionId,
   className,
   tone = 'blue',
@@ -147,7 +147,24 @@ function DeferredSection({
           />
         </>
       )}
-      <div className="relative z-10">{isVisible ? children : placeholder || null}</div>
+      <div className="relative z-10">
+        <AnimatePresence mode="wait">
+          {isVisible ? (
+            <motion.div
+              key="content"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, ease: [0.215, 0.61, 0.355, 1] }}
+            >
+              {children}
+            </motion.div>
+          ) : (
+            <div key="placeholder">
+              {placeholder || null}
+            </div>
+          )}
+        </AnimatePresence>
+      </div>
     </section>
   );
 }
@@ -247,25 +264,25 @@ export default function HomePage() {
         onHireTalent={(e) => startWhirlpool('hire', e)}
       />
 
-      <DeferredSection minHeight={140} rootMargin="120px 0px" tone="marquee" placeholder={<MarqueeSkeleton />}>
+      <DeferredSection minHeight={140} tone="marquee" placeholder={<MarqueeSkeleton />}>
         <Suspense fallback={<MarqueeSkeleton />}>
           <CompanyMarquee />
         </Suspense>
       </DeferredSection>
 
-      <DeferredSection minHeight={520} rootMargin="120px 0px" tone="blue" placeholder={<SectionSkeleton rows={2} />}>
+      <DeferredSection minHeight={520} tone="blue" placeholder={<SectionSkeleton rows={2} />}>
         <Suspense fallback={<SectionSkeleton rows={2} />}>
           <WorkforceSection />
         </Suspense>
       </DeferredSection>
 
-      <DeferredSection minHeight={440} rootMargin="110px 0px" tone="orange" placeholder={<SectionSkeleton rows={3} />}>
+      <DeferredSection minHeight={440} tone="orange" placeholder={<SectionSkeleton rows={3} />}>
         <Suspense fallback={<SectionSkeleton rows={3} />}>
           <StrengthsAccordion />
         </Suspense>
       </DeferredSection>
 
-      <DeferredSection sectionId="open-jobs" className="px-4 py-14 sm:px-6 lg:px-8" minHeight={340} rootMargin="100px 0px" tone="blue" placeholder={<SectionSkeleton rows={3} className="px-0 py-0" />}>
+      <DeferredSection sectionId="open-jobs" className="px-4 py-14 sm:px-6 lg:px-8" minHeight={340} tone="blue" placeholder={<SectionSkeleton rows={3} className="px-0 py-0" />}>
         <div className="mx-auto max-w-7xl text-center lg:text-left">
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Open Jobs</h2>
           <p className="mx-auto mt-2 max-w-2xl text-slate-600 lg:mx-0">
@@ -297,7 +314,7 @@ export default function HomePage() {
         </Suspense>
       </DeferredSection>
 
-      <DeferredSection minHeight={260} rootMargin="160px 0px" tone="blue" placeholder={<FooterSkeleton />}>
+      <DeferredSection minHeight={260} tone="blue" placeholder={<FooterSkeleton />}>
         <Suspense fallback={<FooterSkeleton />}>
           <Footer />
         </Suspense>

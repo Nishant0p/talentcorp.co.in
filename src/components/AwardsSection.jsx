@@ -1,55 +1,86 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Trophy, Award, CheckCircle, Sparkles, Star } from 'lucide-react';
+import { 
+  Shield, 
+  Trophy, 
+  Award, 
+  Star, 
+  CheckCircle2, 
+  Sparkles 
+} from 'lucide-react';
 
 const awardsData = [
   {
-    icon: ShieldCheck,
+    id: 'compliant',
+    icon: Shield,
     highlight: '100%+',
     subtext: 'Compliant',
     pill: 'Official Partner',
     title: 'Government Authorized',
     description: 'Compliant with all norms',
-    gradient: 'from-blue-600 to-blue-400',
-    bgGradient: 'from-blue-50 to-cyan-50',
-    iconColor: 'text-blue-600',
-    accentColor: 'bg-blue-100',
+    tag: '✓ Verified & Recognized',
+    glow: 'rgba(249,115,22,0.08)',
+    color: '#F97316',
+    percentage: 100,
+    bulletPoints: [
+      'Official Ministry of Skill Dev TPA partner',
+      'Comprehensive PF & ESIC statutory audits',
+      'Automated Government DBT portal checks'
+    ]
   },
   {
+    id: 'world-record',
     icon: Trophy,
     highlight: '#1',
     subtext: 'In India',
     pill: 'World Record',
     title: 'World Record Holder',
     description: 'Recognized globally',
-    gradient: 'from-amber-600 to-amber-400',
-    bgGradient: 'from-amber-50 to-orange-50',
-    iconColor: 'text-amber-600',
-    accentColor: 'bg-amber-100',
+    tag: '✓ Verified & Recognized',
+    glow: 'rgba(37,99,235,0.08)',
+    color: '#2563EB',
+    percentage: 98,
+    bulletPoints: [
+      'Honored in Delhi World Book of Records',
+      'Top Ranking Third Party Aggregator',
+      '40,000+ certified placements nationwide'
+    ]
   },
   {
+    id: 'awards',
     icon: Award,
     highlight: '15%+',
     subtext: 'Awards',
     pill: '2024 Winner',
     title: 'Excellence Award',
     description: 'Awards for contribution',
-    gradient: 'from-purple-600 to-purple-400',
-    bgGradient: 'from-purple-50 to-pink-50',
-    iconColor: 'text-purple-600',
-    accentColor: 'bg-purple-100',
+    tag: '✓ Verified & Recognized',
+    glow: 'rgba(168,85,247,0.08)',
+    color: '#A855F7',
+    percentage: 85,
+    bulletPoints: [
+      'Excellence in skilling mission award 2024',
+      'State Human Resource Federation honors',
+      'Leading emerging service provider accolade'
+    ]
   },
   {
-    icon: CheckCircle,
+    id: 'satisfaction',
+    icon: Star,
     highlight: '100%+',
     subtext: 'Satisfaction',
     pill: 'ISO 9001',
     title: 'ISO Certified',
     description: 'Satisfaction rate',
-    gradient: 'from-emerald-600 to-emerald-400',
-    bgGradient: 'from-emerald-50 to-teal-50',
-    iconColor: 'text-emerald-600',
-    accentColor: 'bg-emerald-100',
-  },
+    tag: '✓ Verified & Recognized',
+    glow: 'rgba(16,185,129,0.08)',
+    color: '#10B981',
+    percentage: 100,
+    bulletPoints: [
+      'ISO 9001:2015 premium quality standard',
+      'Dedicated client resolution within 24 hours',
+      '99.4% annual client retention quotient'
+    ]
+  }
 ];
 
 const AwardsSection = () => {
@@ -63,23 +94,23 @@ const AwardsSection = () => {
   return (
     <section id="achievements" className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white px-4 py-16 sm:px-6 lg:px-8">
       {/* Background decorative elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" style={{ animationDelay: '1s' }} />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-100/30 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-100/30 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" style={{ animationDelay: '1s' }} />
 
       <div className="relative mx-auto max-w-7xl">
         {/* Header Section */}
-        <div className="mb-20 text-center">
+        <div className="mb-16 text-center">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100">
-            <Sparkles className="h-4 w-4 text-blue-600" />
-            <span className="text-sm font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+            <Sparkles className="h-4 w-4 text-blue-600 animate-spin" style={{ animationDuration: '3s' }} />
+            <span className="text-sm font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 uppercase tracking-wider">
               Industry Recognition
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-            Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500">Recognition & Awards</span>
+          <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900 tracking-tight">
+            Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0f2a4d] via-[#1a4f87] to-orange-500">Recognition & Awards</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Celebrating excellence and global recognition for innovation, compliance, and outstanding service
+          <p className="text-lg font-medium text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            Celebrating excellence and global recognition for innovation, compliance, and outstanding service.
           </p>
         </div>
 
@@ -88,94 +119,115 @@ const AwardsSection = () => {
           {awardsData.map((award, index) => {
             const IconComponent = award.icon;
             return (
-              <article
+              <div
                 key={index}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className={`group relative flex flex-col overflow-hidden rounded-3xl transition-all duration-500 transform ${
+                className={`group relative overflow-hidden rounded-[2.2rem] border border-slate-200/50 bg-white/95 p-6 shadow-xl shadow-slate-100/20 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/5 flex flex-col justify-between transform ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                } ${hoveredIndex === index ? 'scale-105 -translate-y-2' : 'hover:scale-102'}`}
+                }`}
                 style={{
                   transitionDelay: `${index * 100}ms`,
                 }}
               >
-                {/* Gradient Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${award.bgGradient}`} />
+                {/* Card Glow Highlight */}
+                <div 
+                  className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100 blur-3xl" 
+                  style={{ backgroundColor: award.glow }}
+                />
                 
-                {/* Card Border Gradient */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-white/20 to-transparent rounded-3xl" />
+                {/* Holographic sweep-shine reflection */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-1000 ease-out pointer-events-none z-20" />
 
-                {/* Shadow enhancement on hover */}
-                <div className={`absolute inset-0 rounded-3xl transition-all duration-500 ${
-                  hoveredIndex === index 
-                    ? `shadow-2xl shadow-${award.gradient.split('-')[1]}-500/40` 
-                    : 'shadow-lg shadow-gray-400/10'
-                }`} />
+                <div>
+                  {/* Top Row: Icon + Highlight + SVG Meter */}
+                  <div className="mb-4 flex items-center justify-between relative z-10">
+                    <div className="flex items-center gap-3">
+                      <div 
+                        className="flex h-11 w-11 items-center justify-center rounded-2xl transition-transform duration-500 group-hover:scale-110 shadow-md shrink-0 text-white"
+                        style={{ backgroundColor: award.color + '20', border: `1.5px solid ${award.color}40` }}
+                      >
+                        <IconComponent className="h-5 w-5" style={{ color: award.color }} />
+                      </div>
+                      <div className="flex flex-col leading-none">
+                        <span className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-[#0f2a4d] to-[#FF8C00] lg:text-4xl tracking-tight">
+                          {award.highlight}
+                        </span>
+                        <span className="text-xs font-black uppercase tracking-wider text-slate-400 mt-1">
+                          {award.subtext}
+                        </span>
+                      </div>
+                    </div>
 
-                {/* Top accent line */}
-                <div className={`absolute left-0 top-0 h-1 w-full bg-gradient-to-r ${award.gradient} transition-all duration-500 group-hover:h-1.5`} />
-
-                {/* Content */}
-                <div className="relative z-10 p-8 flex flex-col h-full">
-                  {/* Icon Container */}
-                  <div className={`mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl transition-all duration-500 ${
-                    hoveredIndex === index 
-                      ? `bg-gradient-to-br ${award.gradient} shadow-lg` 
-                      : `bg-gradient-to-br ${award.gradient} bg-opacity-10 border border-gray-200`
-                  }`}>
-                    <IconComponent className={`h-8 w-8 transition-all duration-500 ${
-                      hoveredIndex === index ? 'text-white scale-110 rotate-12' : award.iconColor
-                    }`} />
-                  </div>
-
-                  {/* Highlight number and subtext */}
-                  <div className="mb-4 flex items-baseline gap-2">
-                    <span className={`text-5xl font-extrabold tracking-tight transition-all duration-500 bg-clip-text text-transparent bg-gradient-to-r ${award.gradient}`}>
-                      {award.highlight}
-                    </span>
-                    {award.subtext && (
-                      <span className="text-sm font-semibold text-gray-600 group-hover:text-gray-900 transition-colors">
-                        {award.subtext}
+                    {/* Dynamic SVG Meter */}
+                    <div className="relative h-12 w-12 shrink-0">
+                      <svg className="h-full w-full -rotate-90">
+                        <circle cx="24" cy="24" r="19" className="stroke-slate-100 fill-none" strokeWidth="2.5" />
+                        <circle 
+                          cx="24" 
+                          cy="24" 
+                          r="19" 
+                          className="transition-all duration-1000 ease-out fill-none"
+                          strokeWidth="3" 
+                          stroke={award.color}
+                          strokeDasharray="119.38"
+                          strokeDashoffset={119.38 - (119.38 * award.percentage) / 100}
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <span className="absolute inset-0 flex items-center justify-center text-[9px] font-black text-slate-700">
+                        {award.id === 'world-record' ? 'Rank' : `${award.percentage}%`}
                       </span>
-                    )}
+                    </div>
                   </div>
 
-                  {/* Pill / Tag */}
-                  <div className="mb-5 flex">
-                    <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-widest transition-all duration-500 bg-gradient-to-r ${award.gradient} text-white`}>
-                      <Star className="h-3 w-3" />
+                  {/* Pill Stack / Tag */}
+                  <div className="mb-4 flex flex-wrap gap-1.5 relative z-10">
+                    <span className="rounded-full px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider border bg-orange-50 border-orange-100/50 text-[#FF8C00]">
                       {award.pill}
                     </span>
+                    <span className="rounded-full px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider border bg-blue-50 border-blue-100/50 text-[#1a4f87]">
+                      {award.title}
+                    </span>
                   </div>
 
-                  {/* Title and Description */}
-                  <h3 className="mb-3 text-xl font-bold text-gray-900 leading-tight group-hover:text-gray-900 transition-colors">
-                    {award.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-gray-600 group-hover:text-gray-700 transition-colors flex-grow">
+                  {/* Description text */}
+                  <p className="text-xs font-black text-[#0f2a4d] mb-4 relative z-10">
                     {award.description}
                   </p>
 
-                  {/* Bottom accent */}
-                  <div className="mt-4 pt-4 border-t border-gray-300/30 group-hover:border-gray-400 transition-colors">
-                    <div className={`text-xs font-semibold text-transparent bg-clip-text bg-gradient-to-r ${award.gradient} group-hover:opacity-100 opacity-70 transition-opacity`}>
-                      ✓ Verified & Recognized
-                    </div>
+                  {/* Detailed Checks */}
+                  <div className="space-y-2 mb-4 border-t border-slate-100 pt-4 relative z-10">
+                    {award.bulletPoints.map((point, idx) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <span className="mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+                          <CheckCircle2 className="h-2.5 w-2.5" />
+                        </span>
+                        <span className="text-[11px] font-medium text-slate-500 leading-snug">
+                          {point}
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Hover glow effect */}
-                <div className={`absolute -inset-0.5 bg-gradient-to-r ${award.gradient} rounded-3xl opacity-0 group-hover:opacity-20 blur transition-all duration-500 -z-10`} />
-              </article>
+                {/* Bottom Verified Tag */}
+                <div className="mt-auto border-t border-slate-100 pt-3 flex items-center justify-between relative z-10">
+                  <span className="inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-emerald-600 border border-emerald-100/30 shadow-sm shadow-emerald-100/20">
+                    {award.tag}
+                  </span>
+                  <Sparkles size={11} className="text-amber-400 animate-pulse" />
+                </div>
+              </div>
             );
           })}
         </div>
 
         {/* Bottom accent */}
-        <div className="mt-20 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100">
-            <span className="text-sm text-gray-600">
-              Trusted by <span className="font-bold text-gray-900">450+ companies</span> across India
+        <div className="mt-16 text-center">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-100/80 border border-slate-200/50 shadow-sm">
+            <span className="text-sm font-medium text-slate-600">
+              Trusted by <span className="font-black text-[#0f2a4d]">450+ companies</span> across India
             </span>
           </div>
         </div>

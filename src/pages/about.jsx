@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
-import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import ProgressiveImage from '../components/ProgressiveImage';
 
 const milestones = [
 	{ year: '2014', title: 'Company Founded', description: 'Started with a small team of 5 people' },
@@ -616,13 +617,18 @@ function DetailedProfileSection({ isMobile }) {
 }
 
 function LeadershipSection({ isMobile }) {
-	const leaders = [
+	const topLeaders = [
 		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png' },
 		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/Sunil Chavan.png' },
-		{ id: '3', name: 'Deshbhushan Jain', role: 'Western Director', imageUrl: '/visionaries/Deshbushan jain.png' },
-		{ id: '4', name: 'Vikas Patil', role: 'Western Director', imageUrl: '/visionaries/Vikas Patil.png' },
-		{ id: '5', name: 'Prakash Rathod', role: 'North Western Director', imageUrl: '/visionaries/Prakash Rathod.png' },
-		{ id: '6', name: 'Sarang Chavan', role: 'Board Director', imageUrl: '/visionaries/Sarang Chavan.png' },
+	];
+
+	const otherDirectors = [
+		{ id: '3', name: 'Deshbhushan Jain', role: 'Director', imageUrl: '/visionaries/Deshbushan jain.png' },
+		{ id: '4', name: 'Vikas Patil', role: 'Director', imageUrl: '/visionaries/Vikas Patil.png' },
+		{ id: '5', name: 'Prakash Rathod', role: 'Director', imageUrl: '/visionaries/Prakash Rathod.png' },
+		{ id: '7', name: 'Babasaheb Khilari', role: 'Director', imageUrl: '/visionaries/Babasaheb Khilari.png' },
+		{ id: '8', name: 'Ruma Sayyad', role: 'Director', imageUrl: '/visionaries/Ruma Sayyad.png' },
+		{ id: '6', name: 'Sarang Chavan', role: 'Director', imageUrl: '/visionaries/Sarang Chavan.png' },
 	];
 
 	const getLeaderAnimProps = (i) => isMobile ? {} : {
@@ -649,9 +655,13 @@ function LeadershipSection({ isMobile }) {
 					</p>
 				</div>
 
-				{/* Single Line Symmetrical Grid Layout */}
-				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
-					{leaders.map((leader, i) => (
+				{/* Top Leaders (Chairman & Sunil Chavan) */}
+				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6 mb-16 justify-center">
+					{/* Spacer columns on desktop / tablet to center them */}
+					<div className="hidden lg:block lg:col-span-2" />
+					<div className="hidden md:block lg:hidden md:col-span-1" />
+
+					{topLeaders.map((leader, i) => (
 						<motion.div
 							key={leader.id}
 							{...getLeaderAnimProps(i)}
@@ -659,11 +669,44 @@ function LeadershipSection({ isMobile }) {
 						>
 							{/* Uniform Aspect Ratio Container */}
 							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200">
-								<img
+								<ProgressiveImage
 									src={leader.imageUrl}
 									alt={leader.name}
 									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-									loading="lazy"
+								/>
+								{/* Gradient Overlay for Text Readability */}
+								<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+								
+								{/* Leadership Info Overlay */}
+								<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
+									<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+										{leader.name}
+									</h3>
+									<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+										{leader.role}
+									</p>
+								</div>
+							</div>
+						</motion.div>
+					))}
+
+					<div className="hidden lg:block lg:col-span-2" />
+				</div>
+
+				{/* Other Directors Down */}
+				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
+					{otherDirectors.map((leader, i) => (
+						<motion.div
+							key={leader.id}
+							{...getLeaderAnimProps(i + 2)}
+							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200"
+						>
+							{/* Uniform Aspect Ratio Container */}
+							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200">
+								<ProgressiveImage
+									src={leader.imageUrl}
+									alt={leader.name}
+									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 								/>
 								{/* Gradient Overlay for Text Readability */}
 								<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
@@ -697,7 +740,7 @@ function AboutHero({ resolveAsset, isMobile }) {
 	return (
 		<section className="relative flex flex-col justify-center min-h-[100svh] overflow-hidden pb-20 pt-40">
 			<div className="absolute inset-0">
-				<img src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
+				<ProgressiveImage src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
 			</div>
 
@@ -862,7 +905,7 @@ function OurStory({ resolveAsset, isMobile }) {
 						className="group relative h-80 overflow-hidden rounded-[2.5rem] bg-white md:col-span-5 md:h-auto"
 					>
 						<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
-						<img src="/ABOUT.jpeg" alt="Workers" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+						<ProgressiveImage src="/ABOUT.jpeg" alt="Workers" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
 						<div className="absolute bottom-0 left-0 z-20 p-8">
 							<div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-md">
 								<span className="h-2 w-2 rounded-full bg-[#4ADE80] animate-pulse" />
