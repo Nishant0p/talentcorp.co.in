@@ -177,6 +177,12 @@ const mapApiJobToListing = (job, index, placeholderImages, fallbackImage) => {
 	};
 };
 
+const getJobPostedTimestamp = (job) => {
+	const timestamp = job?.createdAt || job?.publishedAt || job?.updatedAt || 0;
+	const parsed = new Date(timestamp).getTime();
+	return Number.isFinite(parsed) ? parsed : 0;
+};
+
 const jobTypeOptions = [
 	{ value: 'welder', label: 'Welder' },
 	{ value: 'electrician', label: 'Electrician' },
@@ -1178,9 +1184,17 @@ export default function JobsPage() {
 		const loadJobs = async () => {
 			setLoading(true);
 			const data = await fetchJobs();
+			const latestFirstJobs = [...data].sort((left, right) => {
+				const leftTimestamp = getJobPostedTimestamp(left);
+				const rightTimestamp = getJobPostedTimestamp(right);
+				if (rightTimestamp !== leftTimestamp) {
+					return rightTimestamp - leftTimestamp;
+				}
+				return Number(right.id) - Number(left.id);
+			});
 			setJobs(
-				data.length > 0
-					? data.map((job, index) => mapApiJobToListing(job, index, managedPlaceholders, fallbackJobImage))
+				latestFirstJobs.length > 0
+					? latestFirstJobs.map((job, index) => mapApiJobToListing(job, index, managedPlaceholders, fallbackJobImage))
 					: allJobs.map((job, index) => ({ ...job, image: managedPlaceholders[index % managedPlaceholders.length] || fallbackJobImage }))
 			);
 			setLoading(false);
