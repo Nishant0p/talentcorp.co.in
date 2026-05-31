@@ -656,7 +656,7 @@ function LeadershipSection({ isMobile }) {
 				</div>
 
 				{/* Top Leaders (Chairman & Sunil Chavan) */}
-				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6 mb-16 justify-center">
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6 mb-16 justify-center">
 					{/* Spacer columns on desktop / tablet to center them */}
 					<div className="hidden lg:block lg:col-span-2" />
 					<div className="hidden md:block lg:hidden md:col-span-1" />
@@ -668,10 +668,11 @@ function LeadershipSection({ isMobile }) {
 							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200"
 						>
 							{/* Uniform Aspect Ratio Container */}
-							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200">
+							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
 								<ProgressiveImage
 									src={leader.imageUrl}
 									alt={leader.name}
+									loading="eager"
 									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 								/>
 								{/* Gradient Overlay for Text Readability */}
@@ -694,7 +695,7 @@ function LeadershipSection({ isMobile }) {
 				</div>
 
 				{/* Other Directors Down */}
-				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
 					{otherDirectors.map((leader, i) => (
 						<motion.div
 							key={leader.id}
@@ -702,10 +703,11 @@ function LeadershipSection({ isMobile }) {
 							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200"
 						>
 							{/* Uniform Aspect Ratio Container */}
-							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200">
+							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
 								<ProgressiveImage
 									src={leader.imageUrl}
 									alt={leader.name}
+									loading="eager"
 									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 								/>
 								{/* Gradient Overlay for Text Readability */}
@@ -767,7 +769,7 @@ function AboutHero({ resolveAsset, isMobile }) {
 						<ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
 					</Link>
 
-					<div className="mt-16 grid grid-cols-2 gap-8 sm:grid-cols-4">
+					<div className="mt-16 grid grid-cols-2 gap-8 sm:grid-cols-4 hidden">
 						<div>
 							<p className="text-4xl font-bold text-white">40K+</p>
 							<p className="mt-1 text-white/60">Workers Placed</p>
@@ -827,11 +829,11 @@ function OurStory({ resolveAsset, isMobile }) {
 
 	return (
 		<section className="relative overflow-hidden bg-[#0A0A0B] py-32 text-white">
-			{/* Mesh Gradient Background */}
+			{/* Mesh Gradient Background — static, no animate-pulse to avoid GPU repaints */}
 			<div className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none hidden md:block">
-				<div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-[#2563EB] blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
-				<div className="absolute top-[40%] -right-[20%] w-[60%] h-[60%] rounded-full bg-[#F97316] blur-[120px] animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }} />
-				<div className="absolute -bottom-[20%] left-[20%] w-[50%] h-[50%] rounded-full bg-[#8B5CF6] blur-[120px] animate-pulse" style={{ animationDuration: '10s', animationDelay: '4s' }} />
+				<div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-[#2563EB] blur-[120px]" />
+				<div className="absolute top-[40%] -right-[20%] w-[60%] h-[60%] rounded-full bg-[#F97316] blur-[120px]" />
+				<div className="absolute -bottom-[20%] left-[20%] w-[50%] h-[50%] rounded-full bg-[#8B5CF6] blur-[120px]" />
 			</div>
 
 			{/* Noise Overlay */}
@@ -1028,16 +1030,16 @@ function Achievements({ isMobile }) {
 								transition: { duration: 0.6, type: "spring", bounce: 0.4 }
 							};
 							return (
-								<div key={i} className={`relative flex flex-col md:flex-row items-center ${isEven ? 'md:flex-row-reverse' : ''} group`}>
+								<div key={i} className={`relative flex flex-col md:flex-row items-stretch md:items-center ${isEven ? 'md:flex-row-reverse' : ''} group`}>
 									
 									{/* Node on the line */}
-									<div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-6 h-6 rounded-full border-4 border-white bg-orange-500 z-10 shadow-lg transition-transform duration-300 group-hover:scale-150 group-hover:bg-blue-600" />
+									<div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-6 h-6 rounded-full border-4 border-white bg-orange-500 z-10 shadow-lg transition-transform duration-300 group-hover:scale-150 group-hover:bg-blue-600 -translate-y-1/2 top-6 md:top-auto md:translate-y-0" />
 									
 									{/* Content Card Container */}
-									<div className={`w-full md:w-1/2 pl-12 pr-4 md:px-12 ${isEven ? 'md:text-left' : 'md:text-right'}`}>
+									<div className={`w-full min-w-0 pl-14 pr-4 md:w-1/2 md:px-12 ${isEven ? 'md:text-left' : 'md:text-right'}`}>
 										<motion.div 
 											{...getTimelineAnimProps(isEven)}
-											className="w-full p-6 lg:p-8 rounded-[1.5rem] lg:rounded-[2rem] border border-slate-200 bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-blue-300 relative overflow-hidden"
+											className="w-full min-w-0 max-w-full p-6 lg:p-8 rounded-[1.5rem] lg:rounded-[2rem] border border-slate-200 bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-blue-300 relative overflow-hidden"
 										>
 											{/* Decorative background glow on hover */}
 											<div className={`absolute inset-0 bg-gradient-to-br from-blue-50/50 to-orange-50/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none`} />
@@ -1074,13 +1076,19 @@ function Achievements({ isMobile }) {
 export default function AboutPage() {
 	const pageAssets = usePageAssets()
 	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
-	const [isMobile, setIsMobile] = useState(false);
+	// Initialize mobile-first (true) so Framer Motion never hides content with
+	// initial: { opacity: 0 } before useEffect runs on mobile devices.
+	const [isMobile, setIsMobile] = useState(() => {
+		if (typeof window !== 'undefined') {
+			return window.innerWidth < 768;
+		}
+		return true; // safe default: no animations until we know it's desktop
+	});
 
 	useEffect(() => {
 		const checkMobile = () => {
 			setIsMobile(window.innerWidth < 768);
 		};
-		checkMobile();
 		window.addEventListener('resize', checkMobile);
 		return () => window.removeEventListener('resize', checkMobile);
 	}, []);

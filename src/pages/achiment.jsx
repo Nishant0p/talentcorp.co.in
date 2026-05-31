@@ -31,7 +31,7 @@ import { useSectionReveal } from '../hooks/useSectionReveal'
 import AwardsSectionComponent from '../components/AwardsSection'
 import ClientVoicesSection from '../components/ClientVoicesSection'
 import { extractMediaUrl, fetchTestimonials, STRAPI_BASE_URL, fetchCollection } from '../utils/strapi'
-import heroImage from '../assets/hero.png'
+
 
 function renderFloatingLogo(logo) {
 	if (logo.src) {
@@ -97,7 +97,7 @@ function AwardsHero() {
 	const { isVisible, sectionRef } = useSectionReveal(0.25)
 	const [count, setCount] = useState({ years: 0, workers: 0, clients: 0, awardsWon: 0 })
 	const pageAssets = usePageAssets()
-	const achievementsHeroAsset = getPageAsset(pageAssets, 'achievements.hero', heroImage, 'TSPL achievements')
+	const achievementsHeroAsset = getPageAsset(pageAssets, 'achievements.hero', '/ABOUT.jpeg', 'TSPL achievements')
 
 	// Dynamic CMS logos from backend
 	const [cmsLogos, setCmsLogos] = useState([]);

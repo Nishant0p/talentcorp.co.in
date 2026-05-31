@@ -40,7 +40,12 @@ export const resolveStrapiUrl = (url) => {
   if (!url) return '';
   if (typeof url !== 'string') return '';
   if (url.startsWith('http')) return url;
-  if (url.startsWith('/')) return `${STRAPI_BASE_URL}${url}`;
+  if (url.startsWith('/')) {
+    if (url.startsWith('/uploads/')) {
+      return `${STRAPI_BASE_URL}${url}`;
+    }
+    return url;
+  }
   return `${STRAPI_BASE_URL}/uploads/${url}`;
 };
 

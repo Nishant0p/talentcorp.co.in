@@ -112,6 +112,23 @@ export default function ChatBot() {
   
   // Interactive Flows: 'idle', 'waiting_for_trainees', 'waiting_for_qualification'
   const [flowState, setFlowState] = useState('idle')
+
+  // Hide chat button on mobile while scrolling
+  const [scrollHidden, setScrollHidden] = useState(false)
+  const scrollTimerRef = useRef(null)
+  useEffect(() => {
+    const onScroll = () => {
+      if (open) return // don't hide when chat is open
+      setScrollHidden(true)
+      clearTimeout(scrollTimerRef.current)
+      scrollTimerRef.current = setTimeout(() => setScrollHidden(false), 1000)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      clearTimeout(scrollTimerRef.current)
+    }
+  }, [open])
   
   const listRef = useRef(null)
 
@@ -526,7 +543,7 @@ export default function ChatBot() {
 
   return (
     <div>
-      <div className={`fixed right-6 bottom-8 z-50 flex flex-col items-end gap-4 transition-all duration-500 ${open ? 'w-[360px] sm:w-[400px]' : ''}`}>
+      <div className={`fixed right-6 bottom-8 z-50 flex flex-col items-end gap-4 transition-all duration-500 ${open ? 'w-[360px] sm:w-[400px]' : ''} ${scrollHidden && !open ? 'translate-y-24 opacity-0 pointer-events-none sm:translate-y-0 sm:opacity-100 sm:pointer-events-auto' : ''}`}>
         
         {/* Chat Drawer container */}
         {open && (

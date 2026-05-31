@@ -74,9 +74,9 @@ export default function GlobalTextureOverlay() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            opacity: 0.1,
+            opacity: 0.08,
             mixBlendMode: 'normal',
-            filter: 'grayscale(1) blur(2px) contrast(0.6) brightness(1.35) saturate(0)',
+            filter: 'grayscale(1) contrast(0.6) brightness(1.35) saturate(0)',
             WebkitMaskImage:
               'linear-gradient(to bottom, transparent 0, transparent 82svh, rgba(0,0,0,0.92) 96svh, rgba(0,0,0,1) 100svh)',
             maskImage:
