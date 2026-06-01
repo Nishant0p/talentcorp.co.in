@@ -306,12 +306,6 @@ const WorkforceSection = () => {
           })}
         </div>
 
-        {/* Mobile floating feedback */}
-        <div className="pointer-events-none fixed inset-x-4 bottom-4 z-20 mx-auto flex max-w-md justify-center md:hidden">
-          <div className="rounded-full border border-white/80 bg-white/90 px-4 py-3 text-[10px] font-black uppercase tracking-[0.28em] text-slate-500 shadow-[0_20px_60px_-25px_rgba(15,23,42,0.45)] backdrop-blur-md">
-            Are you a Job Seeker or Client?
-          </div>
-        </div>
       </div>
     </section>
   );

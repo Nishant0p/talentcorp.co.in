@@ -16,14 +16,25 @@ export const CountUpNumber = ({ target, duration = 1.5, suffix = '+' }) => {
   React.useEffect(() => {
     if (!isInView) return;
 
-    let start = 0;
-    const increment = target / (duration * 60);
+    let startTime = null;
+    let lastDisplayed = 0;
     let animationFrameId;
 
-    const animate = () => {
-      start += increment;
-      if (start < target) {
-        setCount(Math.floor(start));
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / (duration * 1000), 1);
+      // ease-out quad
+      const eased = 1 - (1 - progress) * (1 - progress);
+      const next = Math.floor(eased * target);
+
+      // Only call setCount when the displayed value changes — avoids redundant re-renders
+      if (next !== lastDisplayed) {
+        lastDisplayed = next;
+        setCount(next);
+      }
+
+      if (progress < 1) {
         animationFrameId = requestAnimationFrame(animate);
       } else {
         setCount(target);

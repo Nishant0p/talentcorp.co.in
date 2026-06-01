@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { extractMediaVariants } from '../utils/strapi';
 
 const ProgressiveImage = ({
@@ -14,6 +14,14 @@ const ProgressiveImage = ({
   height,
 }) => {
   const [highLoaded, setHighLoaded] = useState(false);
+  const imgRef = useRef(null);
+
+  // Handle cached images that never fire onLoad
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete) {
+      setHighLoaded(true);
+    }
+  }, []);
 
   const variants = useMemo(() => {
     if (media) return extractMediaVariants(media);
@@ -30,6 +38,7 @@ const ProgressiveImage = ({
   if (isIdentical) {
     return (
       <img
+        ref={imgRef}
         src={highSrc}
         alt={alt}
         className={`transition-all duration-700 ease-out ${highLoaded ? 'blur-0 scale-100 opacity-100' : 'blur-md scale-95 opacity-0'} ${className} ${highClassName}`}
@@ -58,6 +67,7 @@ const ProgressiveImage = ({
       )}
       {highSrc && (
         <img
+          ref={imgRef}
           src={highSrc}
           alt={alt}
           className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${highLoaded ? 'opacity-100' : 'opacity-0'} ${className} ${highClassName}`}

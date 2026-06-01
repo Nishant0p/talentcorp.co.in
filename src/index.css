@@ -44,12 +44,14 @@ body {
   animation: tspl-marquee 80s linear infinite;
   will-change: transform;
   transform: translate3d(0, 0, 0);
+  contain: layout style;
 }
 
 .tspl-marquee__track--reverse {
   animation: tspl-marquee-reverse 80s linear infinite;
   will-change: transform;
   transform: translate3d(0, 0, 0);
+  contain: layout style;
 }
 
 .tspl-marquee img {
