@@ -410,13 +410,13 @@ export default function CompanyMarquee() {
       <div className="mx-auto max-w-6xl relative z-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#FF8C00] border border-orange-100/50">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#FF8C00] animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-orange-800 border border-orange-100/50">
+              <span className="h-1.5 w-1.5 rounded-full bg-orange-600 animate-pulse" />
               Trusted Partner Network
             </span>
             <h2 className="mt-3.5 text-3xl font-extrabold tracking-tight text-[#0f2a4d] sm:text-4xl">
               Connecting Talent with{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0f2a4d] via-[#1a4f87] to-[#FF8C00]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0f2a4d] via-[#1a4f87] to-orange-700">
                 450+ Industry Leaders
               </span>
             </h2>

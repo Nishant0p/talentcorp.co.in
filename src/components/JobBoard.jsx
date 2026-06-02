@@ -188,7 +188,7 @@ const JobBoard = () => {
               <div className="pointer-events-none absolute -right-14 bottom-[-4.5rem] h-44 w-44 rounded-full bg-orange-300/25 blur-2xl" />
               
               <div className="relative z-10 text-center lg:text-left">
-                <span className="rounded-full border border-orange-200 bg-orange-50 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-[#f07a1a]">
+                <span className="rounded-full border border-orange-200 bg-orange-50 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-orange-800">
                   Latest Openings
                 </span>
                 <h2 className="mt-3 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">Find Your Perfect Role</h2>
@@ -252,7 +252,7 @@ const JobBoard = () => {
                         <h4 className={`font-bold text-sm tracking-tight line-clamp-2 ${isActive ? 'text-white' : 'text-slate-900'}`}>
                           {type.label}
                         </h4>
-                        <p className={`text-xs mt-1.5 font-semibold ${isActive ? 'text-blue-100' : 'text-slate-400'}`}>
+                        <p className={`text-xs mt-1.5 font-semibold ${isActive ? 'text-blue-50' : 'text-slate-600'}`}>
                           {count} {count === 1 ? 'Job' : 'Jobs'}
                         </p>
                       </div>

@@ -151,13 +151,13 @@ export default function StrengthsAccordion() {
       <div className="relative z-10 mx-auto w-full max-w-7xl">
         <div className="mb-4 lg:mb-10 text-center lg:text-left">
           <div className="mb-2 lg:mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 lg:px-4 lg:py-2 backdrop-blur-md">
-            <span className="h-1.5 lg:h-2 w-1.5 lg:w-2 rounded-full bg-[#F97316] animate-pulse" />
-            <span className="text-[11px] lg:text-xs font-bold tracking-widest text-[#F97316] uppercase">Why Choose Us</span>
+            <span className="h-1.5 lg:h-2 w-1.5 lg:w-2 rounded-full bg-[#FB923C] animate-pulse" />
+            <span className="text-[11px] lg:text-xs font-bold tracking-widest text-[#FB923C] uppercase">Why Choose Us</span>
           </div>
           <h2 className="mb-2 lg:mb-3 text-3xl sm:text-3xl lg:text-5xl font-extrabold text-white tracking-tight">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] to-[#F97316]">Strengths</span>
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] to-[#FB923C]">Strengths</span>
           </h2>
-          <p className="font-medium text-sm sm:text-sm lg:text-base text-gray-400 max-w-2xl mx-auto lg:mx-0">
+          <p className="font-medium text-sm sm:text-sm lg:text-base text-slate-300 max-w-2xl mx-auto lg:mx-0">
             Explore how we empower businesses with rapid deployment, unparalleled network, and guaranteed quality.
           </p>
         </div>
@@ -182,8 +182,8 @@ export default function StrengthsAccordion() {
                       {/* Header */}
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <div className="flex flex-col gap-2">
-                          <span className="text-base font-black text-white/60">{item.id}</span>
-                          <Icon className="h-4 w-4 text-white/40" />
+                          <span className="text-base font-black text-white/80">{item.id}</span>
+                          <Icon className="h-4 w-4 text-white/50" />
                         </div>
                         <div className="flex-1">
                           <h3 className="text-base font-bold text-white leading-tight">{item.title}</h3>
@@ -192,20 +192,21 @@ export default function StrengthsAccordion() {
 
                       {/* Stat */}
                       <div className="mb-2">
-                        <p className="text-3xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] to-[#F97316]">
+                        <p className="text-3xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] to-[#FB923C]">
                           {item.stat}
                         </p>
-                        <p className="text-[11px] font-bold uppercase tracking-widest text-[#60A5FA]">{item.sub}</p>
+                        <p className="text-[11px] font-bold uppercase tracking-widest text-[#93C5FD]">{item.sub}</p>
                       </div>
 
 
                       {/* Description */}
-                      <p className="text-sm text-white/70 line-clamp-2 mb-2">{item.desc}</p>
+                      <p className="text-sm text-white/75 line-clamp-2 mb-2">{item.desc}</p>
 
                       {/* CTA Button */}
                       <Link
                         to="/achiment"
-                        className="inline-flex items-center gap-1 rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-bold text-white backdrop-blur-md transition-colors hover:bg-white/20 active:bg-white/30"
+                        aria-label={`Explore details for ${item.title}`}
+                        className="inline-flex items-center gap-1 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-bold text-white backdrop-blur-md transition-colors hover:bg-white/20 active:bg-white/30"
                       >
                         Explore
                         <ArrowUpRight className="h-3 w-3" />
@@ -262,11 +263,11 @@ export default function StrengthsAccordion() {
                       {/* Top Header */}
                       <div className="flex items-start justify-between">
                         <div className="flex flex-col gap-3">
-                          <span className={`text-lg lg:text-xl font-black transition-colors duration-500 ${hoveredIndex === index ? 'text-white' : 'text-white/30'}`}>
+                          <span className={`text-lg lg:text-xl font-black transition-colors duration-500 ${hoveredIndex === index ? 'text-white' : 'text-white/55'}`}>
                             {item.id}
                           </span>
                           <div className={`transition-opacity duration-300 hidden lg:block ${hoveredIndex !== index ? 'opacity-100' : 'opacity-0'}`}>
-                            <Icon className="h-5 w-5 text-white/30" />
+                            <Icon className="h-5 w-5 text-white/55" />
                           </div>
                         </div>
                         
@@ -292,14 +293,14 @@ export default function StrengthsAccordion() {
                           className={`font-black leading-none transition-all duration-500 ${
                             hoveredIndex === index
                               ? 'text-5xl lg:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-white to-white/70 drop-shadow-lg'
-                              : 'text-2xl lg:text-3xl text-white/20 lg:-rotate-90 origin-left'
+                              : 'text-2xl lg:text-3xl text-white/50 lg:-rotate-90 origin-left'
                           }`}
                         >
                           {item.stat}
                         </p>
                         <p
                           className={`mt-2 font-bold uppercase tracking-[0.2em] transition-all duration-500 ${
-                            hoveredIndex === index ? 'text-xs lg:text-sm text-[#60A5FA]' : 'hidden'
+                            hoveredIndex === index ? 'text-xs lg:text-sm text-[#93C5FD]' : 'hidden'
                           }`}
                         >
                           {item.sub}
@@ -312,7 +313,7 @@ export default function StrengthsAccordion() {
                           className={`whitespace-nowrap font-black transition-all duration-500 ${
                             hoveredIndex === index
                               ? 'mb-3 text-2xl lg:text-3xl text-white drop-shadow-md'
-                              : 'text-lg lg:text-xl text-white/40 lg:origin-left lg:-rotate-90 lg:translate-x-10 lg:-translate-y-6'
+                              : 'text-lg lg:text-xl text-white/60 lg:origin-left lg:-rotate-90 lg:translate-x-10 lg:-translate-y-6'
                           }`}
                         >
                           {item.title}

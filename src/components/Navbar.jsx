@@ -271,7 +271,7 @@ const Navbar = () => {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
                   to="/jobs"
-                  className="bg-[#FF8C00] hover:bg-orange-600 text-white px-4 py-2 rounded-xl font-semibold transition-all"
+                  className="bg-orange-700 hover:bg-orange-800 text-white px-4 py-2 rounded-xl font-semibold transition-all"
                 >
                   Apply Job
                 </Link>
@@ -450,7 +450,7 @@ const Navbar = () => {
                   <Link
                     to="/jobs"
                     onClick={closeMenu}
-                    className="bg-[#FF8C00] hover:bg-orange-600 text-white px-4 py-2 rounded-xl font-semibold transition-all text-center block"
+                    className="bg-orange-700 hover:bg-orange-800 text-white px-4 py-2 rounded-xl font-semibold transition-all text-center block"
                   >
                     Apply Job
                   </Link>

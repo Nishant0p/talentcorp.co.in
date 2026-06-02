@@ -57,17 +57,17 @@ function WorkforcePanel({ card, index }) {
     ? {
         shell: 'from-orange-50/50 via-white to-white',
         glow: 'bg-orange-200/50',
-        chip: 'bg-[#FF8C00] text-white',
-        text: 'text-[#FF8C00]',
-        button: 'from-[#FF8C00] to-orange-600 shadow-orange-500/20 hover:shadow-orange-500/35 hover:from-orange-600 hover:to-orange-700',
+        chip: 'bg-orange-700 text-white',
+        text: 'text-orange-800',
+        button: 'from-orange-700 to-orange-800 shadow-orange-500/20 hover:shadow-orange-500/35 hover:from-orange-800 hover:to-orange-900',
         border: 'border-orange-100/70 hover:border-orange-300/60',
-        accent: 'bg-[radial-gradient(circle_at_top_right,_rgba(255,140,0,0.12),_transparent_50%)]',
+        accent: 'bg-[radial-gradient(circle_at_top_right,_rgba(194,65,12,0.12),_transparent_50%)]',
         accentLight: 'bg-orange-50/40 border-orange-100/50',
         badgeText: 'Seeker Hub',
         metricVal: '15,000+',
         metricSub: 'Verified Openings',
         statusText: 'Hiring',
-        accentColor: '#FF8C00'
+        accentColor: '#C2410C'
       }
     : {
         shell: 'from-blue-50/50 via-white to-white',
@@ -245,13 +245,13 @@ const WorkforceSection = () => {
         
         {/* Creative Title Block */}
         <div className="mb-12 flex flex-col items-center text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#FF8C00] border border-orange-100/50">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FF8C00] animate-pulse" />
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-orange-800 border border-orange-100/50">
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-600 animate-pulse" />
             Spotlight Solutions
           </span>
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#0f2a4d] sm:text-4xl">
             Tailored Pathways for{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8C00] via-[#1a4f87] to-[#0f2a4d]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-700 via-[#1a4f87] to-[#0f2a4d]">
               Seekers & Employers
             </span>
           </h2>
