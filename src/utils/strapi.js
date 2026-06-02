@@ -2,6 +2,13 @@ export const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL || 'https://b
 export const ADMIN_BACKEND_URL = import.meta.env.VITE_ADMIN_BACKEND_URL || 'https://api.tsplgroup.in';
 import { submitToGoogleSheet } from './googleSheets';
 
+const ADMIN_BACKEND_SUBMIT_PATHS = {
+  job: ['/jobs', '/api/jobs', '/api/forms/submit'],
+  contact: ['/api/forms/submit'],
+  service: ['/api/forms/submit'],
+  default: ['/api/forms/submit'],
+};
+
 // Submit to new admin backend (contact/service/job forms)
 export const submitToAdminBackend = async (type, formData, files = {}) => {
   try {
@@ -19,17 +26,29 @@ export const submitToAdminBackend = async (type, formData, files = {}) => {
     // Attach files if provided
     if (files.pdf) form.append('pdf', files.pdf);
     if (files.cv) form.append('cv', files.cv);
-    
-    const response = await fetch(`${ADMIN_BACKEND_URL}/api/forms/submit`, {
-      method: 'POST',
-      body: form
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Admin backend submit failed (${response.status})`);
+
+    const paths = ADMIN_BACKEND_SUBMIT_PATHS[type] || ADMIN_BACKEND_SUBMIT_PATHS.default;
+    let lastError = null;
+
+    for (const path of paths) {
+      try {
+        const response = await fetch(`${ADMIN_BACKEND_URL}${path}`, {
+          method: 'POST',
+          body: form,
+        });
+
+        if (!response.ok) {
+          const responseText = await response.text().catch(() => '');
+          throw new Error(`Admin backend submit failed (${response.status})${responseText ? `: ${responseText}` : ''}`);
+        }
+
+        return await response.json();
+      } catch (error) {
+        lastError = error;
+      }
     }
-    
-    return await response.json();
+
+    throw lastError || new Error('Admin backend submit failed');
   } catch (error) {
     console.warn('Admin backend submission failed:', error.message);
     return { ok: false, error: error.message };
@@ -40,12 +59,8 @@ export const resolveStrapiUrl = (url) => {
   if (!url) return '';
   if (typeof url !== 'string') return '';
   if (url.startsWith('http')) return url;
-  if (url.startsWith('/')) {
-    if (url.startsWith('/uploads/')) {
-      return `${STRAPI_BASE_URL}${url}`;
-    }
-    return url;
-  }
+  if (url.startsWith('/') && !url.startsWith('/api/') && !url.startsWith('/uploads/')) return url;
+  if (url.startsWith('/')) return `${STRAPI_BASE_URL}${url}`;
   return `${STRAPI_BASE_URL}/uploads/${url}`;
 };
 
