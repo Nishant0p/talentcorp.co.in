@@ -623,7 +623,7 @@ function LeadershipSection({ isMobile }) {
 	];
 
 	const otherDirectors = [
-		{ id: '3', name: 'Deshbhushan Jain', role: 'Director', imageUrl: '/visionaries/Deshbushan jain.png' },
+		{ id: '3', name: 'Deshbhushan Jain', role: 'Director', imageUrl: '/visionaries/Deshbushan Jain.png' },
 		{ id: '4', name: 'Vikas Patil', role: 'Director', imageUrl: '/visionaries/Vikas Patil.png' },
 		{ id: '5', name: 'Prakash Rathod', role: 'Director', imageUrl: '/visionaries/Prakash Rathod.png' },
 		{ id: '7', name: 'Babasaheb Khilari', role: 'Director', imageUrl: '/visionaries/Babasaheb Khilari.png' },
