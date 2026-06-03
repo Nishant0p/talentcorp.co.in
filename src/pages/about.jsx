@@ -673,6 +673,8 @@ function LeadershipSection({ isMobile }) {
 									alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
 									title={`${leader.name} - ${leader.role}`}
 									loading="eager"
+									width="300"
+									height="400"
 									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 								/>
 								{/* Gradient Overlay for Text Readability */}
@@ -709,6 +711,8 @@ function LeadershipSection({ isMobile }) {
 									alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
 									title={`${leader.name} - ${leader.role}`}
 									loading="eager"
+									width="300"
+									height="400"
 									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 								/>
 								{/* Gradient Overlay for Text Readability */}
@@ -743,7 +747,7 @@ function AboutHero({ resolveAsset, isMobile }) {
 	return (
 		<section className="relative flex flex-col justify-center min-h-[100svh] overflow-hidden pb-20 pt-40">
 			<div className="absolute inset-0">
-				<ProgressiveImage src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} className="h-full w-full object-cover" />
+				<ProgressiveImage src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} width="1920" height="1080" className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
 			</div>
 
@@ -908,7 +912,7 @@ function OurStory({ resolveAsset, isMobile }) {
 						className="group relative h-80 overflow-hidden rounded-[2.5rem] bg-white md:col-span-5 md:h-auto"
 					>
 						<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
-						<ProgressiveImage src="/ABOUT.jpeg" alt="Workers" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+						<ProgressiveImage src="/ABOUT.jpeg" alt="Workers" width="800" height="600" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
 						<div className="absolute bottom-0 left-0 z-20 p-8">
 							<div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-md">
 								<span className="h-2 w-2 rounded-full bg-[#4ADE80] animate-pulse" />

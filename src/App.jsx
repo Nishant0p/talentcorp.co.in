@@ -36,6 +36,7 @@ const TermsPage = lazy(() => import('./pages/terms'))
 const PrivacyPolicyPage = lazy(() => import('./pages/privacy'))
 const YatraPage = lazy(() => import('./pages/yatra'))
 const YatraGalleryPage = lazy(() => import('./pages/yatraGallery'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -165,6 +166,7 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="privacy" path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route key="contact" path="/contact" element={<ContactUs />} />
           <Route key="contact-us" path="/contact-us" element={<ContactUs />} />
+          <Route key="notfound" path="*" element={<NotFoundPage />} />
         </Routes>
       </motion.div>
     </AnimatePresence>

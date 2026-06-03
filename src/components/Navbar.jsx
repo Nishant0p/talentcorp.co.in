@@ -139,6 +139,8 @@ const Navbar = ({ isGlobal }) => {
               <img
                 src="/tspl main logo.png"
                 alt="TSPL"
+                width="160"
+                height="44"
                 className="h-full w-full object-contain object-center"
               />
             </Link>

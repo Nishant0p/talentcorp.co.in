@@ -155,6 +155,8 @@ export default function Footer() {
             <img
               src={footer.logo || '/tspl main logo.png'}
               alt="TSPL Group"
+              width="168"
+              height="56"
               className="mb-4 h-14 w-auto object-contain max-md:mx-auto"
               style={{ filter: 'brightness(0) invert(1)' }}
             />

@@ -195,6 +195,8 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 				<img
 					src={heroAsset.url}
 					alt={heroAsset.alt}
+					width="1920"
+					height="1080"
 					className="h-full w-full object-cover object-[78%_center] scale-[1.12] opacity-85"
 				/>
 				<div className="absolute left-0 top-0 bottom-0 w-[72%] bg-gradient-to-r from-[#0f2a4d]/90 via-[#0f2a4d]/60 to-transparent" />
@@ -240,6 +242,8 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 									<img
 										src={brand.src}
 										alt={`${brand.name} logo`}
+										width={brand.name === 'MRF' ? "32" : "28"}
+										height={brand.name === 'MRF' ? "32" : "28"}
 										className={`${brand.name === 'MRF' ? 'h-8 w-8' : 'h-7 w-7'} object-contain`}
 										loading="lazy"
 									/>
@@ -300,6 +304,8 @@ function LogoMarquee({ partnerLogos }) {
 						<img
 							src={brand.src}
 							alt={`${brand.name} logo`}
+							width={brand.name === 'MRF' ? "32" : "28"}
+							height={brand.name === 'MRF' ? "32" : "28"}
 							className={`${brand.name === 'MRF' ? 'h-8' : 'h-7'} w-auto object-contain`}
 							loading="lazy"
 						/>
@@ -404,6 +410,8 @@ function Industries({ resolveAsset }) {
 								<img 
 									src={industry.image} 
 									alt={industry.name} 
+									width="600"
+									height="400"
 									className={`h-full w-full ${industry.name === 'NAPS' ? 'bg-white object-contain p-8' : 'object-cover'}`} 
 								/>
 								<div className="absolute inset-0 bg-gradient-to-t from-[#0b1d36]/95 via-[#0f2a4d]/60 to-transparent" />
@@ -484,6 +492,8 @@ function CaseStudies({ resolveAsset }) {
 							<img
 								src={cardAssets[activeCase % cardAssets.length].url}
 								alt={cardAssets[activeCase % cardAssets.length].alt || caseStudies[activeCase].company}
+								width="800"
+								height="600"
 								className={`h-full w-full ${caseStudies[activeCase].industry === 'NAPS' ? 'bg-white object-contain p-4' : 'object-cover'}`}
 							/>
 							<div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
