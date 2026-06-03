@@ -33,7 +33,7 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
   }, [fallbackBackgroundImage]);
 
   return (
-    <section className="relative flex h-screen min-h-[700px] w-full items-center overflow-hidden font-sans">
+    <section className="relative flex h-screen min-h-[700px] w-full items-center overflow-hidden font-sans bg-slate-950">
       <div className="absolute inset-0 z-0">
         <img
           src={hero.backgroundImage}
