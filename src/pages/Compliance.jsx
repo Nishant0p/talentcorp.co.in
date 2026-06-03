@@ -30,6 +30,7 @@ import Footer from '../components/Footer'
 import ServiceEnquirySection from '../components/ServiceEnquirySection'
 import { submitLead, submitToAdminBackend } from '../utils/strapi'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
+import useSEO from '../hooks/useSEO'
 
 const heroStats = [
 	{ value: '100%', label: 'Compliance Rate' },
@@ -819,6 +820,11 @@ function ComplianceCTA() {
 }
 
 export default function CompliancePage() {
+	useSEO({
+		title: "Statutory HR Compliance & Payroll Management - TSPL Group",
+		description: "Secure statutory HR compliance management and payroll processing. Save costs, mitigate audits, and handle PF, ESIC, and labor laws cleanly.",
+		keywords: "Payroll Management Services, HR Outsourcing, Compliance Management, PF ESIC Consultation, Labor Laws India"
+	})
 	return (
 		<div className="min-h-screen bg-white text-slate-800">
 			<Navbar />

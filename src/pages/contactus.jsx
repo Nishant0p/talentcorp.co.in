@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
 import { STRAPI_BASE_URL, submitLead, submitToAdminBackend } from '../utils/strapi';
+import useSEO from '../hooks/useSEO';
 import { submitToGoogleSheet } from '../utils/googleSheets';
 import {
   Phone,
@@ -120,6 +121,11 @@ const officeLocations = [
 ];
 
 const ContactUs = () => {
+  useSEO({
+    title: "Contact TSPL Group - Recruitment & Staffing Offices",
+    description: "Get in touch with TSPL Group for corporate hiring packages or job placement inquiries. Pune, Mumbai, and PAN India locations.",
+    keywords: "Hire Skilled Talent, Staffing Agency Contact, Pune Staffing Office, TSPL Group Office, TalentCorp Contact"
+  });
   const pageAssets = usePageAssets();
   const contactHeroAsset = getPageAsset(
     pageAssets,

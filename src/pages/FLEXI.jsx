@@ -36,6 +36,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ServiceEnquirySection from '../components/ServiceEnquirySection'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
+import useSEO from '../hooks/useSEO'
 
 const benefits = [
 	{
@@ -514,6 +515,11 @@ function FlexiItiEnquiry() {
 }
 
 export default function FlexiItiPage() {
+	useSEO({
+		title: "Flexi ITI Program & Industrial Skill Training - TSPL Group",
+		description: "Certified industrial training and Flexi ITI schemes. Bridge shop floor skill gaps with customized industry training and placements.",
+		keywords: "Flexi ITI Program, Industrial Sourcing, Technical Sourcing, Apprentice Hiring Services, Skill Development"
+	})
 	const pageAssets = usePageAssets()
 	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
 

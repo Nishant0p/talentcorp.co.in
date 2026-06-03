@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import useSEO from '../hooks/useSEO'
 import {
 	Award,
 	ArrowRight,
@@ -713,6 +714,12 @@ function ClientsCTA() {
 }
 
 export default function ClientPage() {
+	useSEO({
+		title: "Apprentice Hiring & Manpower Supply Services - TSPL Group",
+		description: "Partner with TSPL Group for apprentice hiring services, NAPS/NATS consultancy, statutory compliance, and contractual labour outsourcing solutions.",
+		keywords: "Manpower Supply Company, NAPS Consultancy, Apprentice Hiring, Temporary Staffing, Compliance Management"
+	});
+
 	const pageAssets = usePageAssets()
 	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
 	const [partnerLogos, setPartnerLogos] = useState(FALLBACK_PARTNER_LOGOS)

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useSEO from '../hooks/useSEO';
 import {
 	ArrowRight,
 	Banknote,
@@ -1155,6 +1156,12 @@ function ApplyCTA() {
 }
 
 export default function JobsPage() {
+	useSEO({
+		title: "Jobs in Pune, Mumbai & PAN India - Apply Online | TSPL",
+		description: "Search fresher jobs, apprentice opportunities, ITI jobs, and manufacturing roles in Pune, and PAN India. Fast application with TSPL Group.",
+		keywords: "Jobs in Pune, Jobs in Mumbai, Fresher Jobs, Apprentice Jobs, ITI Jobs, Diploma Jobs, Graduate Trainee Jobs"
+	});
+
 	const pageAssets = usePageAssets();
 	const managedPlaceholders = useMemo(
 		() => [

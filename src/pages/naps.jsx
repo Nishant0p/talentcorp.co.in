@@ -30,6 +30,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ServiceEnquirySection from '../components/ServiceEnquirySection'
 import { StaggerContainer, StaggerItem } from '../components/AnimatedContent'
+import useSEO from '../hooks/useSEO'
 
 const heroStats = [{ value: '₹1,500 DBT', label: 'Per Apprentice / Month' }, { value: '2.5% - 25%', label: 'Apprenticeship Quota' }, { value: '₹1.8 Cr', label: 'Annual Savings (1,000)' }]
 
@@ -455,12 +456,11 @@ function NAPSCTA() {
 }
 
 export default function NapsPage() {
-	useEffect(() => {
-		document.title = 'NAPS - National Apprenticeship Promotion Scheme | TSPL India';
-		document.querySelector('meta[name="description"]')?.setAttribute('content', 'NAPS - Government apprenticeship scheme with ₹1,500 DBT per apprentice, 2.5% to 15% quota, and Maharashtra quota up to 25%.');
-		document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'NAPS - National Apprenticeship Promotion Scheme');
-		document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://tsplgroup.in/naps%20tspl.jpg');
-	}, []);
+	useSEO({
+		title: "NAPS Consultancy & Apprentice Hiring Solutions - TSPL Group",
+		description: "Complete NAPS consultancy support. Optimize apprentice hiring quota compliance (2.5% to 25%) with ₹1500 monthly DBT support.",
+		keywords: "NAPS Consultancy, Apprentice Hiring Services, DBT support, Ministry of Skill Development"
+	});
 	return (
 		<div className="min-h-screen bg-slate-50 text-slate-800">
 			<Navbar />

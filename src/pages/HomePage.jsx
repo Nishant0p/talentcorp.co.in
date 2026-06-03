@@ -4,6 +4,7 @@ import { useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import Navbar from '../components/Navbar';
+import useSEO from '../hooks/useSEO';
 
 const loadJobBoard = () => import('../components/JobBoard');
 const loadCompanyMarquee = () => import('../components/CompanyMarquee');
@@ -170,6 +171,11 @@ function DeferredSection({
 }
 
 export default function HomePage() {
+  useSEO({
+    title: "Recruitment Agency & Staffing Company India - TSPL Group",
+    description: "TSPL Group is a premier staffing company and recruitment agency in India, offering bulk hiring, NAPS, NATS, and temporary staffing solutions.",
+    keywords: "Staffing Company India, Recruitment Agency India, Bulk Hiring, NAPS, NATS, Apprenticeships, Manpower Supply"
+  });
   const navigate = useNavigate();
   const prefersReducedMotion = useReducedMotion();
   const [transition, setTransition] = React.useState(null);

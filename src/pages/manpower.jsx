@@ -33,6 +33,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ServiceEnquirySection from '../components/ServiceEnquirySection'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
+import useSEO from '../hooks/useSEO'
 
 function ManpowerHero({ resolveAsset }) {
 	return (
@@ -639,6 +640,11 @@ function Enquiry() {
 }
 
 export default function ManpowerPage() {
+	useSEO({
+		title: "Manpower Supply Company & Contract Staffing - TSPL Group",
+		description: "Professional contract staffing services, temporary hiring, and bulk manpower outsourcing for manufacturing, automotive, and logistics industries.",
+		keywords: "Manpower Supply Company, Contract Staffing Services, Temporary Staffing, Bulk Hiring, General Workers, Semi-Skilled Workers"
+	})
 	const pageAssets = usePageAssets()
 	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
 

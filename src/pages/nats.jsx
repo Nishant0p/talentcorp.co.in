@@ -4,6 +4,7 @@ import { CheckCircle2, GraduationCap, Briefcase, FileText, CheckSquare, Award, B
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ServiceEnquirySection from '../components/ServiceEnquirySection';
+import useSEO from '../hooks/useSEO';
 
 const natsHighlights = [
 	{
@@ -33,12 +34,11 @@ const processSteps = [
 ];
 
 export default function NatsLandingPage() {
-	useEffect(() => {
-		document.title = 'NATS - National Apprenticeship Training Scheme | TSPL India';
-		document.querySelector('meta[name="description"]')?.setAttribute('content', 'NATS - Government of India apprenticeship scheme with ₹4,000 to ₹4,500 DBT, 2.5% to 20% quota, and hands-on industry training.');
-		document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'NATS - National Apprenticeship Training Scheme');
-		document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://tsplgroup.in/natshero.png');
-	}, []);
+	useSEO({
+		title: "NATS Consultancy & Technical Apprenticeship - TSPL Group",
+		description: "Government-authorized NATS consultancy services. Recruit diploma, degree, and graduate trainees with direct DBT benefits for establishments.",
+		keywords: "NATS Consultancy, Technical Apprenticeship, Graduate Trainee Jobs, BOAT training"
+	});
 	return (
 		<div className="min-h-screen bg-slate-50 text-slate-800">
 			<Navbar />
