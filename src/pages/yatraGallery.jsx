@@ -9,7 +9,7 @@ const { slug } = useParams()
 const card = getYatraGalleryCard(slug)
 
 if (!card) {
-return <Navigate to="/yatra" replace />
+return <Navigate to="/rojgaar-yatra" replace />
 }
 
 const images = card.images.map((imagePath) => encodeURI(imagePath))
@@ -30,7 +30,7 @@ return (
 </p>
 </div>
 <Link
-to="/yatra"
+to="/rojgaar-yatra"
 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/10"
 >
 <ArrowLeft className="h-4 w-4" />

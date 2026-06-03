@@ -5,6 +5,7 @@ import { ArrowUp } from 'lucide-react'
 import './App.css'
 import GlobalTextureOverlay from './components/GlobalTextureOverlay'
 import ChatBot from './components/ChatBot'
+import Navbar from './components/Navbar'
 import AchimentPage from './pages/achiment'
 const HomePage = lazy(() => import('./pages/HomePage'))
 const JobDetailPage = lazy(() => import('./pages/JobDetailPage'))
@@ -154,8 +155,10 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="jobs" path="/jobs" element={<JobsPage />} />
           <Route key="news-events" path="/news-events" element={<NewsEventsPage />} />
           <Route key="news-detail" path="/news-events/:newsId" element={<NewsDetailPage />} />
-          <Route key="yatra-gallery" path="/yatra/gallery/:slug" element={<YatraGalleryPage />} />
-          <Route key="yatra" path="/yatra" element={<YatraPage />} />
+          <Route key="yatra-gallery" path="/rojgaar-yatra/gallery/:slug" element={<YatraGalleryPage />} />
+          <Route key="yatra" path="/rojgaar-yatra" element={<YatraPage />} />
+          <Route key="yatra-gallery-legacy" path="/yatra/gallery/:slug" element={<YatraGalleryPage />} />
+          <Route key="yatra-legacy" path="/yatra" element={<YatraPage />} />
           <Route key="medhavi-article" path="/news-events/medhavi-flexi-iti" element={<ArticlePage />} />
           <Route key="terms-and-conditions" path="/terms-and-conditions" element={<TermsPage />} />
           <Route key="terms" path="/terms" element={<TermsPage />} />
@@ -178,7 +181,7 @@ function App() {
 
 function AppContent() {
   const location = useLocation()
-  const skipMainPreloader = location.pathname === '/yatra'
+  const skipMainPreloader = location.pathname === '/rojgaar-yatra' || location.pathname === '/yatra'
   const [isLoading, setIsLoading] = useState(() => !skipMainPreloader)
 
   useEffect(() => {
@@ -200,6 +203,7 @@ function AppContent() {
       <ChatBot />
       <div className="page-shell">
         <GlobalTextureOverlay />
+        <Navbar isGlobal />
         {isLoading && !skipMainPreloader && (
           <div className="preloader" role="status" aria-label="Loading TSPL website">
             <div className="preloader-layer preloader-layer--orange" aria-hidden="true" />

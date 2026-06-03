@@ -345,10 +345,7 @@ function Industries({ resolveAsset }) {
 	const [isVisible, setIsVisible] = useState(false)
 	const [activeIndustry, setActiveIndustry] = useState(0)
 	const ref = useRef(null)
-	const cardAssets = [
-		resolveAsset('client.card.1', '/Gemini_Generated_Image_qskougqskougqsko.png', 'Client showcase image'),
-		resolveAsset('client.card.2', '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp', 'Client showcase image'),
-	]
+
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(([entry]) => {
@@ -381,16 +378,12 @@ function Industries({ resolveAsset }) {
 								}`}
 							>
 								<div className="flex items-center gap-4">
-											<div className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md overflow-hidden ${activeIndustry === index ? 'bg-white/20' : 'bg-blue-100'}`}>
-										{industry.image ? (
-											<img
-												src={industry.image}
-												alt={industry.name}
-															className={`${industry.name === 'NAPS' ? 'h-3 w-3' : 'h-12 w-12'} max-h-full max-w-full object-contain ${activeIndustry === index ? 'opacity-90' : 'opacity-100'}`}
-											/>
-										) : (
-											<industry.icon className={`h-6 w-6 ${activeIndustry === index ? 'text-white' : 'text-blue-600'}`} />
-										)}
+									<div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-colors duration-300 ${
+										activeIndustry === index
+											? 'bg-white/20 text-white'
+											: 'bg-blue-50 text-blue-600 group-hover:bg-blue-100'
+									}`}>
+										<industry.icon className="h-6 w-6" />
 									</div>
 									<div className="flex-1">
 										<h3 className={`text-lg font-semibold ${activeIndustry === index ? 'text-white' : 'text-gray-900'}`}>{industry.name}</h3>
@@ -406,14 +399,15 @@ function Industries({ resolveAsset }) {
 
 					<div className="relative min-h-[400px] overflow-hidden rounded-2xl bg-gray-100 lg:min-h-0">
 						{industries.map((industry, index) => (
-							(() => {
-								const industryAsset = cardAssets[index % cardAssets.length]
-								return (
 							<div key={industry.name} className={`absolute inset-0 transition-all duration-500 ${activeIndustry === index ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}>
-								<img src={industryAsset.url} alt={industryAsset.alt || industry.name} className="h-full w-full object-cover" />
-								<div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent" />
+								<img 
+									src={industry.image} 
+									alt={industry.name} 
+									className={`h-full w-full ${industry.name === 'NAPS' ? 'bg-white object-contain p-8' : 'object-cover'}`} 
+								/>
+								<div className="absolute inset-0 bg-gradient-to-t from-[#0b1d36]/95 via-[#0f2a4d]/60 to-transparent" />
 
-								<div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+								<div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-10">
 									<div className="mb-2 flex items-center gap-2">
 										<industry.icon className="h-5 w-5 text-blue-400" />
 										<span className="font-medium text-blue-400">Industry Focus</span>
@@ -433,8 +427,6 @@ function Industries({ resolveAsset }) {
 									</div>
 								</div>
 							</div>
-								)
-							})()
 						))}
 					</div>
 				</div>

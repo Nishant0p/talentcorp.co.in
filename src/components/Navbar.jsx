@@ -9,7 +9,7 @@ const navLinks = [
   { href: '/client', label: 'Clients' },
   { href: '/achievements', label: 'Achievements' },
   { href: '/news-events', label: 'News & Events' },
-  { href: '/yatra', label: 'Rozgar Yatra' },
+  { href: '/rojgaar-yatra', label: 'Rozgaar Yatra' },
 ];
 
 const serviceLinks = [
@@ -36,13 +36,21 @@ const serviceLinks = [
   { href: '/payroll', label: 'PAYROLL' },
 ];
 
-const Navbar = () => {
+const Navbar = ({ isGlobal }) => {
+  if (!isGlobal) {
+    return null;
+  }
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktopServicesOpen, setIsDesktopServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [isWilpExpanded, setIsWilpExpanded] = useState(false);
   const desktopServicesRef = useRef(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const { pathname, hash } = useLocation();
 
   const isLinkActive = (href) => {
@@ -113,13 +121,12 @@ const Navbar = () => {
   };
 
   return (
-    <motion.nav 
-      className={`fixed top-6 inset-x-0 z-50 px-4 sm:px-6 transition-all duration-300 ${
-        isNavbarVisible ? 'translate-y-0 opacity-100' : '-translate-y-24 opacity-0 pointer-events-none'
+    <nav 
+      className={`fixed top-6 inset-x-0 z-50 px-4 sm:px-6 transition-[transform,opacity] duration-500 ease-out ${
+        mounted ? 'translate-y-0 opacity-100' : '-translate-y-12 opacity-0'
+      } ${
+        isNavbarVisible ? '' : '-translate-y-24 opacity-0 pointer-events-none'
       }`}
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
     >
       <div className="mx-auto max-w-7xl">
         <div className="rounded-full border border-[#d8e7f8] bg-white shadow-lg shadow-black/5 backdrop-blur-md">
@@ -460,7 +467,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </div>
-    </motion.nav>
+    </nav>
   );
 };
 

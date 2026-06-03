@@ -1,11 +1,10 @@
 import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Shield, Users, Lightbulb, HandHeart, Award, BookOpen, Globe, Star, CheckCircle, Briefcase } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import React, { useState, useRef, useEffect } from 'react';
 import ProgressiveImage from '../components/ProgressiveImage';
+import useSEO from '../hooks/useSEO';
 
 const milestones = [
 	{ year: '2014', title: 'Company Founded', description: 'Started with a small team of 5 people' },
@@ -19,7 +18,7 @@ const milestones = [
 
 const achievements = [
 	{ icon: Trophy, number: '40,000+', label: 'Workers Placed' },
-	{ icon: Building2, number: '450+', label: 'Partner Companies' },
+	{ icon: Building2, number: '470+', label: 'Partner Companies' },
 	{ icon: MapPin, number: '20+', label: 'Cities Covered' },
 	{ icon: Calendar, number: '10+', label: 'Years Experience' },
 ]
@@ -80,7 +79,7 @@ const sourcingStrategy = [
 
 const companyOverviewPoints = [
 	'TSPL Group established in 2011; one of India\'s leading human resource companies.',
-	'Workforce solutions delivered to 450+ clients with pan-India presence.',
+	'Workforce solutions delivered to 470+ clients with pan-India presence.',
 	'40,000+ trainees deployed across industries nationwide.',
 	'Sectors served: Manufacturing, Healthcare, Hospitality, IT, Service Industry, Retail, E-Commerce, Construction, and more.',
 	'1st Rank Government-Authorized TPA for NAPS and NATS programs in India.',
@@ -249,7 +248,7 @@ function DetailedProfileSection({ isMobile }) {
 
 								<motion.div {...getCardAnimProps(0.3)} className="md:col-span-1 lg:col-span-1 row-span-1 rounded-[2rem] bg-white p-8 border border-slate-200 shadow-sm transition-all hover:shadow-xl group flex flex-col justify-center">
 									<Building2 className="h-10 w-10 text-emerald-500 mb-4 transition-transform group-hover:scale-110" />
-									<h4 className="text-4xl font-black text-slate-900 mb-1">450+</h4>
+									<h4 className="text-4xl font-black text-slate-900 mb-1">470+</h4>
 									<p className="text-slate-600 font-medium">Clients with Pan-India Presence</p>
 								</motion.div>
 
@@ -671,7 +670,8 @@ function LeadershipSection({ isMobile }) {
 							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
 								<ProgressiveImage
 									src={leader.imageUrl}
-									alt={leader.name}
+									alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
+									title={`${leader.name} - ${leader.role}`}
 									loading="eager"
 									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 								/>
@@ -706,7 +706,8 @@ function LeadershipSection({ isMobile }) {
 							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
 								<ProgressiveImage
 									src={leader.imageUrl}
-									alt={leader.name}
+									alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
+									title={`${leader.name} - ${leader.role}`}
 									loading="eager"
 									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 								/>
@@ -775,7 +776,7 @@ function AboutHero({ resolveAsset, isMobile }) {
 							<p className="mt-1 text-white/60">Workers Placed</p>
 						</div>
 						<div>
-							<p className="text-4xl font-bold text-[#2563EB]">450+</p>
+							<p className="text-4xl font-bold text-[#2563EB]">470+</p>
 							<p className="mt-1 text-white/60">Partner Companies</p>
 						</div>
 						<div>
@@ -913,7 +914,7 @@ function OurStory({ resolveAsset, isMobile }) {
 								<span className="h-2 w-2 rounded-full bg-[#4ADE80] animate-pulse" />
 								<span className="text-xs font-bold tracking-wider text-white uppercase">Active Pan-India</span>
 							</div>
-							<h3 className="text-2xl font-bold text-white sm:text-3xl">450+ Partner <br/>Companies</h3>
+							<h3 className="text-2xl font-bold text-white sm:text-3xl">470+ Partner <br/>Companies</h3>
 						</div>
 					</motion.div>
 
@@ -1016,11 +1017,11 @@ function Achievements({ isMobile }) {
 				</div>
 
 				{/* Middle Section: Interactive Alternating Timeline */}
-				<div className="relative mx-auto w-full max-w-5xl py-12">
+				<div className="relative mx-auto w-full max-w-5xl py-6">
 					{/* Center line for desktop, left line for mobile */}
 					<div className="absolute left-4 md:left-1/2 md:-ml-px top-0 bottom-0 w-[2px] bg-slate-300/50" />
 					
-					<div className="space-y-12 md:space-y-24">
+					<div className="space-y-6 md:space-y-10">
 						{milestones.map((milestone, i) => {
 							const isEven = i % 2 === 0;
 							const getTimelineAnimProps = (isEven) => isMobile ? {} : {
@@ -1074,6 +1075,12 @@ function Achievements({ isMobile }) {
 }
 
 export default function AboutPage() {
+	useSEO({
+		title: 'Dr. Mehboob Sayyad (Chairman) & Board of Directors - TSPL Group',
+		description: 'Meet Dr. Mehboob Sayyad, Chairman and Managing Director of TalentCorp Solutions Private Limited (TSPL Group), alongside our Board of Directors.',
+		keywords: 'Dr. Mehboob Sayyad, Dr. Mehboob Sayyed, Dr. Mahiboob Sayyad, Chairman, Managing Director, Sunil Chavan, Vikas Patil, Prakash Rathod, Deshbhushan Jain, TSPL Group, TalentCorp Solutions'
+	});
+
 	const pageAssets = usePageAssets()
 	const resolveAsset = (key, fallbackUrl, fallbackAlt = '') => getPageAsset(pageAssets, key, fallbackUrl, fallbackAlt)
 	// Initialize mobile-first (true) so Framer Motion never hides content with
@@ -1095,7 +1102,72 @@ export default function AboutPage() {
 
 	return (
 		<div className="min-h-screen bg-white text-slate-800">
-			<Navbar />
+			<script type="application/ld+json">
+				{JSON.stringify({
+					"@context": "https://schema.org",
+					"@type": "AboutPage",
+					"mainEntity": {
+						"@type": "Organization",
+						"name": "TalentCorp Solutions Private Limited",
+						"alternateName": "TSPL Group",
+						"url": "https://tsplgroup.in",
+						"logo": "https://tsplgroup.in/tspl%20main%20logo.png",
+						"founder": [
+							{
+								"@type": "Person",
+								"name": "Dr. Mehboob Sayyad",
+								"jobTitle": "Chairman and Managing Director",
+								"description": "Dr. Mehboob Sayyad (also known as Dr. Mahiboob Sayyad or Dr. Mehboob Sayyed) is the Chairman and Managing Director of TalentCorp Solutions Private Limited (TSPL Group).",
+								"image": "https://tsplgroup.in/visionaries/Dr%20mehboob%20Sayyad.png"
+							},
+							{
+								"@type": "Person",
+								"name": "Sunil Chavan",
+								"jobTitle": "Director",
+								"image": "https://tsplgroup.in/visionaries/Sunil%20Chavan.png"
+							}
+						],
+						"employee": [
+							{
+								"@type": "Person",
+								"name": "Deshbhushan Jain",
+								"jobTitle": "Director",
+								"image": "https://tsplgroup.in/visionaries/Deshbushan%20Jain.png"
+							},
+							{
+								"@type": "Person",
+								"name": "Vikas Patil",
+								"jobTitle": "Director",
+								"image": "https://tsplgroup.in/visionaries/Vikas%20Patil.png"
+							},
+							{
+								"@type": "Person",
+								"name": "Prakash Rathod",
+								"jobTitle": "Director",
+								"image": "https://tsplgroup.in/visionaries/Prakash%20Rathod.png"
+							},
+							{
+								"@type": "Person",
+								"name": "Babasaheb Khilari",
+								"jobTitle": "Director",
+								"image": "https://tsplgroup.in/visionaries/Babasaheb%20Khilari.png"
+							},
+							{
+								"@type": "Person",
+								"name": "Ruma Sayyad",
+								"jobTitle": "Director",
+								"image": "https://tsplgroup.in/visionaries/Ruma%20Sayyad.png"
+							},
+							{
+								"@type": "Person",
+								"name": "Sarang Chavan",
+								"jobTitle": "Director",
+								"image": "https://tsplgroup.in/visionaries/Sarang%20Chavan.png"
+							}
+						]
+					}
+				})}
+			</script>
 			<main>
 				<AboutHero resolveAsset={resolveAsset} isMobile={isMobile} />
 				<OurStory resolveAsset={resolveAsset} isMobile={isMobile} />
