@@ -138,7 +138,8 @@ const JobBoard = () => {
       setLoading(true);
       const data = await fetchJobs();
       if (data.length > 0) {
-        setJobs(data.map(job => ({
+        // Preserve a date field (prefer createdAt then publishedAt) and sort newest-first
+        const mapped = data.map((job) => ({
           id: job.id,
           title: job.title || job.documentId || `Job ${job.id}`,
           company: job.company || '',
@@ -147,7 +148,16 @@ const JobBoard = () => {
           salary: formatSalaryFromJob(job),
           type: job.type || '',
           urgent: job.urgent || false,
-        })));
+          date: job.createdAt || job.publishedAt || job.date || null,
+        }));
+
+        mapped.sort((a, b) => {
+          const da = a.date ? new Date(a.date).getTime() : 0;
+          const db = b.date ? new Date(b.date).getTime() : 0;
+          return db - da; // newest first
+        });
+
+        setJobs(mapped);
       } else {
         setJobs(fallbackJobs);
       }
