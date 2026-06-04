@@ -2,6 +2,7 @@ import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Sh
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
+import { motion, AnimatePresence } from 'framer-motion'
 import React, { useState, useRef, useEffect } from 'react';
 import ProgressiveImage from '../components/ProgressiveImage';
 import useSEO from '../hooks/useSEO';
