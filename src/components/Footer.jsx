@@ -344,9 +344,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-blue-700 pt-6 text-center sm:flex-row sm:text-left">
+        <div className="mt-10 border-t border-blue-700 pt-6 text-center">
           <p className="text-blue-300 text-sm">
-            Copyright {new Date().getFullYear()} TalentCorp Solutions Private Limited. All rights reserved.
+            Copyright 2026 TalentCorp Solutions Private Limited. All rights reserved.
           </p>
         </div>
       </div>
