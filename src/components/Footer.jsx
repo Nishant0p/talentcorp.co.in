@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Eye, Building } from 'lucide-react';
+import { Mail, Phone, MapPin, Building } from 'lucide-react';
 import { fetchFooterSettings, extractMediaUrl } from '../utils/strapi';
 
 const fallbackFooter = {
@@ -348,10 +348,6 @@ export default function Footer() {
           <p className="text-blue-300 text-sm">
             Copyright {new Date().getFullYear()} TalentCorp Solutions Private Limited. All rights reserved.
           </p>
-          <div className="flex items-center gap-2 text-sm text-blue-300">
-            <Eye size={16} className="text-[#f07a1a]" />
-            <span>Views: {viewCount.toLocaleString()}</span>
-          </div>
         </div>
       </div>
     </footer>
