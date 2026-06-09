@@ -869,7 +869,7 @@ function ManagementSection({ isMobile }) {
 function AboutHero({ resolveAsset, isMobile }) {
 	const aboutHeroAsset = resolveAsset(
 		'about.hero',
-		'https://images.pexels.com/photos/35082108/pexels-photo-35082108.jpeg',
+		'/about-hero.jpg',
 		'TSPL Group team'
 	)
 
