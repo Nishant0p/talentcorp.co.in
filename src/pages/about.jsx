@@ -1,4 +1,4 @@
-import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Shield, Users, Lightbulb, HandHeart, Award, BookOpen, Globe, Star, CheckCircle, Briefcase } from 'lucide-react'
+import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Shield, Users, Lightbulb, HandHeart, Award, BookOpen, Globe, Star, CheckCircle, Briefcase, User } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
@@ -737,6 +737,134 @@ function LeadershipSection({ isMobile }) {
 	);
 }
 
+function ManagementSection({ isMobile }) {
+	const keyLeaders = [
+		{
+			id: '1',
+			name: 'Mr. Kishor More',
+			role: 'General Manager - Business Development',
+			imageUrl: '',
+		},
+		{
+			id: '2',
+			name: 'Mr. Mubarak Shaikh',
+			role: 'General Manager Overall Operation',
+			imageUrl: '/leaders/2nd Photo Mr. Mubarak Shaikh (General Manager Overall Operation).jpeg',
+		},
+		{
+			id: '3',
+			name: 'Mr. Gyanendra Mishra',
+			role: 'Sourcing Head Pan India',
+			imageUrl: '/leaders/3rd Mr. Gyanendra Mishra (Sourcing Head Pan India).jpeg',
+		},
+		{
+			id: '4',
+			name: 'Mr. Vishal Ubale',
+			role: 'Sourcing Head & TPO Maharashtra',
+			imageUrl: '/leaders/4th Photo Mr.Vishal Ubale (Sourcing Head & TPO Maharashtra).jpeg',
+		},
+		{
+			id: '5',
+			name: 'Mr. Lokesh Pardeshi',
+			role: 'Finance Head',
+			imageUrl: '/leaders/5th Photo  Mr. Lokesh Pardeshi (Finance Head).jpeg',
+		},
+		{
+			id: '6',
+			name: 'Mr. Shivanand Mane',
+			role: 'Regional Head',
+			imageUrl: '',
+		},
+		{
+			id: '7',
+			name: 'Purushottam Gaikwad',
+			role: 'Assistant General Manager in Operation',
+			imageUrl: '',
+		},
+		{
+			id: '8',
+			name: 'Mr. Namdev Egave',
+			role: 'Payroll & Compliance Head',
+			imageUrl: '',
+		},
+		{
+			id: '9',
+			name: 'Mr. Rahul Borkar',
+			role: 'Recruitment Head',
+			imageUrl: '',
+		},
+	];
+
+	const getLeaderAnimProps = (i) => isMobile ? {} : {
+		initial: { opacity: 0, y: 20 },
+		whileInView: { opacity: 1, y: 0 },
+		viewport: { once: true, amount: 0.15 },
+		transition: { duration: 0.5, delay: i * 0.08 }
+	};
+
+	return (
+		<section className="py-24 bg-white relative overflow-hidden border-t border-b border-slate-100">
+			<div className="absolute top-0 left-0 h-96 w-96 rounded-full bg-blue-50/20 blur-3xl hidden md:block" />
+			<div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-orange-50/20 blur-3xl hidden md:block" />
+			<div className="mx-auto max-w-[96rem] px-4 lg:px-8 relative z-10">
+				{/* Section Heading */}
+				<div className="mb-16 text-center">
+					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2">
+						<span className="text-sm font-bold tracking-widest text-blue-700 uppercase">Management Team</span>
+					</div>
+					<h2 className="text-4xl font-extrabold text-slate-900 mb-4 sm:text-5xl">
+						Core Management Leaders
+					</h2>
+					<p className="text-slate-600 max-w-2xl mx-auto text-lg">
+						Our dedicated team of professionals driving operations, business development, compliance, and recruitment excellence.
+					</p>
+				</div>
+
+				{/* Leaders Flex Container - Wraps into 2 rows (5 on top, 4 centered on bottom) with identical card sizes */}
+				<div className="flex flex-wrap justify-center gap-4 lg:gap-6 w-full max-w-[90rem] mx-auto">
+					{keyLeaders.map((leader, i) => (
+						<motion.div
+							key={leader.id}
+							{...getLeaderAnimProps(i)}
+							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full max-w-[280px] sm:max-w-none sm:w-[calc(50%-8px)] md:w-[calc(33.333%-16px)] lg:w-[calc(20%-20px)]"
+						>
+							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px] flex items-center justify-center">
+								{leader.imageUrl ? (
+									<ProgressiveImage
+										src={leader.imageUrl}
+										alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
+										title={`${leader.name} - ${leader.role}`}
+										loading="lazy"
+										width="300"
+										height="400"
+										className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+									/>
+								) : (
+									<div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col items-center justify-center p-6 transition-colors duration-300 group-hover:from-blue-50/50 group-hover:to-slate-100">
+										<User className="h-16 w-16 text-slate-400/80 mb-2 transition-transform duration-500 group-hover:scale-110 group-hover:text-blue-500" />
+										<span className="text-[10px] font-bold text-slate-400/60 uppercase tracking-widest text-center">Photo Coming Soon</span>
+									</div>
+								)}
+								{/* Gradient Overlay for Text Readability */}
+								<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+								
+								{/* Leadership Info Overlay */}
+								<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
+									<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+										{leader.name}
+									</h3>
+									<p className="text-[10px] font-bold text-orange-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+										{leader.role}
+									</p>
+								</div>
+							</div>
+						</motion.div>
+					))}
+				</div>
+			</div>
+		</section>
+	);
+}
 
 function AboutHero({ resolveAsset, isMobile }) {
 	const aboutHeroAsset = resolveAsset(
@@ -1168,6 +1296,55 @@ export default function AboutPage() {
 								"name": "Sarang Chavan",
 								"jobTitle": "Director",
 								"image": "https://tsplgroup.in/visionaries/Sarang%20Chavan.png"
+							},
+							{
+								"@type": "Person",
+								"name": "Mr. Kishor More",
+								"jobTitle": "General Manager - Business Development"
+							},
+							{
+								"@type": "Person",
+								"name": "Mr. Mubarak Shaikh",
+								"jobTitle": "General Manager Overall Operation",
+								"image": "https://tsplgroup.in/leaders/2nd%20Photo%20Mr.%20Mubarak%20Shaikh%20(General%20Manager%20Overall%20Operation).jpeg"
+							},
+							{
+								"@type": "Person",
+								"name": "Mr. Gyanendra Mishra",
+								"jobTitle": "Sourcing Head Pan India",
+								"image": "https://tsplgroup.in/leaders/3rd%20Mr.%20Gyanendra%20Mishra%20(Sourcing%20Head%20Pan%20India).jpeg"
+							},
+							{
+								"@type": "Person",
+								"name": "Mr. Vishal Ubale",
+								"jobTitle": "Sourcing Head & TPO Maharashtra",
+								"image": "https://tsplgroup.in/leaders/4th%20Photo%20Mr.Vishal%20Ubale%20(Sourcing%20Head%20&%20TPO%20Maharashtra).jpeg"
+							},
+							{
+								"@type": "Person",
+								"name": "Mr. Lokesh Pardeshi",
+								"jobTitle": "Finance Head",
+								"image": "https://tsplgroup.in/leaders/5th%20Photo%20%20Mr.%20Lokesh%20Pardeshi%20(Finance%20Head).jpeg"
+							},
+							{
+								"@type": "Person",
+								"name": "Mr. Shivanand Mane",
+								"jobTitle": "Regional Head"
+							},
+							{
+								"@type": "Person",
+								"name": "Purushottam Gaikwad",
+								"jobTitle": "Assistant General Manager in Operation"
+							},
+							{
+								"@type": "Person",
+								"name": "Mr. Namdev Egave",
+								"jobTitle": "Payroll & Compliance Head"
+							},
+							{
+								"@type": "Person",
+								"name": "Mr. Rahul Borkar",
+								"jobTitle": "Recruitment Head"
 							}
 						]
 					}
@@ -1179,6 +1356,7 @@ export default function AboutPage() {
 				<OurValues isMobile={isMobile} />
 				<Achievements isMobile={isMobile} />
 				<LeadershipSection isMobile={isMobile} />
+				<ManagementSection isMobile={isMobile} />
 				<DetailedProfileSection isMobile={isMobile} />
 			</main>
 			<Footer />
