@@ -743,7 +743,7 @@ function ManagementSection({ isMobile }) {
 			id: '1',
 			name: 'Mr. Kishor More',
 			role: 'General Manager - Business Development',
-			imageUrl: '',
+			imageUrl: '/leaders/1st Photo Mr. Kishor More (General Manager - Business Development).jpeg',
 		},
 		{
 			id: '2',
@@ -771,27 +771,27 @@ function ManagementSection({ isMobile }) {
 		},
 		{
 			id: '6',
-			name: 'Mr. Shivanand Mane',
-			role: 'Regional Head',
-			imageUrl: '',
+			name: 'Purushottam Gaikwad',
+			role: 'Assistant General Manager in Operation',
+			imageUrl: '/leaders/7th Photo Purushottam Gaikwad (Assistant General Manager in Operation).jpeg',
 		},
 		{
 			id: '7',
-			name: 'Purushottam Gaikwad',
-			role: 'Assistant General Manager in Operation',
-			imageUrl: '',
+			name: 'Mr. Shivanand Mane',
+			role: 'Regional Head',
+			imageUrl: '/leaders/6th Photo Mr. Shivanand Mane (Regional Head).jpeg',
 		},
 		{
 			id: '8',
 			name: 'Mr. Namdev Egave',
 			role: 'Payroll & Compliance Head',
-			imageUrl: '',
+			imageUrl: '/leaders/namdev-egave.jpeg',
 		},
 		{
 			id: '9',
 			name: 'Mr. Rahul Borkar',
 			role: 'Recruitment Head',
-			imageUrl: '',
+			imageUrl: '/leaders/9th Photo Mr. Rahul Borkar (Recruitment Head).jpeg',
 		},
 	];
 
