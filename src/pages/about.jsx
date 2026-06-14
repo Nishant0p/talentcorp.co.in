@@ -626,7 +626,6 @@ function LeadershipSection({ isMobile }) {
 		{ id: '3', name: 'Deshbhushan Jain', role: 'Director', imageUrl: '/visionaries/Deshbushan Jain.png' },
 		{ id: '4', name: 'Vikas Patil', role: 'Director', imageUrl: '/visionaries/Vikas Patil.png' },
 		{ id: '5', name: 'Prakash Rathod', role: 'Director', imageUrl: '/visionaries/Prakash Rathod.png' },
-		{ id: '7', name: 'Babasaheb Khilari', role: 'Director', imageUrl: '/visionaries/Babasaheb Khilari.png' },
 		{ id: '8', name: 'Ruma Sayyad', role: 'Director', imageUrl: '/visionaries/Ruma Sayyad.png' },
 		{ id: '6', name: 'Sarang Chavan', role: 'Director', imageUrl: '/visionaries/Sarang Chavan.png' },
 	];
@@ -1279,12 +1278,7 @@ export default function AboutPage() {
 								"jobTitle": "Director",
 								"image": "https://tsplgroup.in/visionaries/Prakash%20Rathod.png"
 							},
-							{
-								"@type": "Person",
-								"name": "Babasaheb Khilari",
-								"jobTitle": "Director",
-								"image": "https://tsplgroup.in/visionaries/Babasaheb%20Khilari.png"
-							},
+
 							{
 								"@type": "Person",
 								"name": "Ruma Sayyad",
