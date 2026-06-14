@@ -655,16 +655,13 @@ function LeadershipSection({ isMobile }) {
 				</div>
 
 				{/* Top Leaders (Chairman & Sunil Chavan) */}
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6 mb-16 justify-center">
-					{/* Spacer columns on desktop / tablet to center them */}
-					<div className="hidden lg:block lg:col-span-2" />
-					<div className="hidden md:block lg:hidden md:col-span-1" />
-
+				{/* Top Leaders – centred flex row */}
+				<div className="flex flex-wrap justify-center gap-4 lg:gap-6 mb-16">
 					{topLeaders.map((leader, i) => (
 						<motion.div
 							key={leader.id}
 							{...getLeaderAnimProps(i)}
-							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200"
+							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full max-w-[280px] sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(16.666%-20px)]"
 						>
 							{/* Uniform Aspect Ratio Container */}
 							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
@@ -692,17 +689,15 @@ function LeadershipSection({ isMobile }) {
 							</div>
 						</motion.div>
 					))}
-
-					<div className="hidden lg:block lg:col-span-2" />
 				</div>
 
-				{/* Other Directors Down */}
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
+				{/* Other Directors – centred flex row */}
+				<div className="flex flex-wrap justify-center gap-4 lg:gap-6">
 					{otherDirectors.map((leader, i) => (
 						<motion.div
 							key={leader.id}
 							{...getLeaderAnimProps(i + 2)}
-							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200"
+							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full max-w-[280px] sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(16.666%-20px)]"
 						>
 							{/* Uniform Aspect Ratio Container */}
 							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
