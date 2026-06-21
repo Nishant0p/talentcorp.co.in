@@ -260,6 +260,7 @@ export default function Footer() {
                 { href: '/client', label: 'Clients' },
                 { href: '/achievements', label: 'Achievements' },
                 { href: '/news-events', label: 'News & Events' },
+                { href: '/blog', label: 'Blog' },
                 { href: '/terms-and-conditions', label: 'Terms & Conditions' },
                 { href: '/privacy-policy', label: 'Privacy Policy' },
               ].map((link) => (

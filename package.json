@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@prismicio/client": "^7.21.8",
+    "@prismicio/react": "^3.4.1",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@use-gesture/react": "^10.3.1",
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@tailwindcss/postcss": "^4.2.2",
+    "@tailwindcss/typography": "^0.5.20",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
