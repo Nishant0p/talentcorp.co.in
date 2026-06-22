@@ -27,13 +27,9 @@ const serviceLinks = [
   { href: '/services/flexi-iti', label: 'FLEXI ITI' },
   { href: '/aedp', label: 'AEDP' },
   { href: '/maps', label: 'MAPS' },
-  { href: '/security', label: 'SECURITY' },
-  { href: '/skilled', label: 'SKILLED JOB' },
-  { href: '/housekeeping', label: 'HOUSEKEEPING' },
-  { href: '/manpower', label: 'MANPOWER' },
-  { href: '/contract', label: 'CONTRACT' },
-  { href: '/compliance', label: 'COMPLIANCE' },
-  { href: '/payroll', label: 'PAYROLL' },
+  { href: '/labour-staffing', label: 'LABOUR STAFFING' },
+  { href: '/compliance', label: 'LEGAL COMPLIANCES' },
+  { href: '/payroll', label: 'PAYROLL PROCESSING' },
 ];
 
 const Navbar = ({ isGlobal }) => {
@@ -59,7 +55,7 @@ const Navbar = ({ isGlobal }) => {
     return currentPath === href || pathname === href;
   };
 
-  const isServiceActive = serviceLinks.some((service) => 
+  const isServiceActive = serviceLinks.some((service) =>
     service.isNested ? service.links.some((sub) => isLinkActive(sub.href)) : isLinkActive(service.href)
   );
 
@@ -121,12 +117,10 @@ const Navbar = ({ isGlobal }) => {
   };
 
   return (
-    <nav 
-      className={`fixed top-6 inset-x-0 z-50 px-4 sm:px-6 transition-[transform,opacity] duration-500 ease-out ${
-        mounted ? 'translate-y-0 opacity-100' : '-translate-y-12 opacity-0'
-      } ${
-        isNavbarVisible ? '' : '-translate-y-24 opacity-0 pointer-events-none'
-      }`}
+    <nav
+      className={`fixed top-6 inset-x-0 z-50 px-4 sm:px-6 transition-[transform,opacity] duration-500 ease-out ${mounted ? 'translate-y-0 opacity-100' : '-translate-y-12 opacity-0'
+        } ${isNavbarVisible ? '' : '-translate-y-24 opacity-0 pointer-events-none'
+        }`}
     >
       <div className="mx-auto max-w-7xl">
         <div className="rounded-full border border-[#d8e7f8] bg-white shadow-lg shadow-black/5 backdrop-blur-md">
@@ -150,9 +144,8 @@ const Navbar = ({ isGlobal }) => {
                 <motion.button
                   type="button"
                   onClick={() => setIsDesktopServicesOpen((prev) => !prev)}
-                  className={`relative inline-flex items-center gap-2 hover:text-[#0f2a4d] transition-colors font-bold ${
-                    isServiceActive ? 'text-[#0f2a4d] after:absolute after:left-0 after:-bottom-[6px] after:h-[2px] after:w-full after:rounded-full after:bg-[#FF8C00]' : ''
-                  }`}
+                  className={`relative inline-flex items-center gap-2 hover:text-[#0f2a4d] transition-colors font-bold ${isServiceActive ? 'text-[#0f2a4d] after:absolute after:left-0 after:-bottom-[6px] after:h-[2px] after:w-full after:rounded-full after:bg-[#FF8C00]' : ''
+                    }`}
                   aria-expanded={isDesktopServicesOpen}
                   aria-haspopup="menu"
                   whileHover={{ scale: 1.05 }}
@@ -168,7 +161,7 @@ const Navbar = ({ isGlobal }) => {
                 </motion.button>
 
                 {isDesktopServicesOpen && (
-                  <motion.div 
+                  <motion.div
                     className="absolute left-0 top-full mt-2 w-44 overflow-hidden rounded-xl border border-[#d8e7f8] bg-white p-1.5 shadow-xl"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -195,7 +188,7 @@ const Navbar = ({ isGlobal }) => {
                               <ChevronDown className={`h-4 w-4 transition-transform ${isWilpExpanded ? 'rotate-180' : ''}`} />
                             </button>
                             {isWilpExpanded && (
-                              <motion.div 
+                              <motion.div
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: 'auto' }}
                                 className="ml-2 mt-1 flex flex-col gap-1 border-l-2 border-[#d8e7f8] pl-2 overflow-hidden"
@@ -356,7 +349,7 @@ const Navbar = ({ isGlobal }) => {
                                 <ChevronDown className={`h-5 w-5 transition-transform ${isWilpExpanded ? 'rotate-180' : ''}`} />
                               </button>
                               {isWilpExpanded && (
-                                <motion.div 
+                                <motion.div
                                   initial={{ opacity: 0, height: 0 }}
                                   animate={{ opacity: 1, height: 'auto' }}
                                   className="mt-1 flex flex-col w-full gap-1 overflow-hidden"

@@ -30,6 +30,7 @@ const SecurityPage = lazy(() => import('./pages/security'))
 const MapsPage = lazy(() => import('./pages/MAPS'))
 const AedpPage = lazy(() => import('./pages/AEDP'))
 const JobsPage = lazy(() => import('./pages/jobs'))
+const LabourPage = lazy(() => import('./pages/Labour'))
 const NewsDetailPage = lazy(() => import('./pages/news/NewsDetailPage'))
 const ArticlePage = lazy(() => import('./pages/ArticlePage'))
 const TermsPage = lazy(() => import('./pages/terms'))
@@ -148,6 +149,8 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="contract" path="/contract" element={<ContractPage />} />
           <Route key="b2b" path="/b2b" element={<B2BPage />} />
           <Route key="security" path="/security" element={<SecurityPage />} />
+          <Route key="labour-staffing" path="/labour-staffing" element={<LabourPage />} />
+          <Route key="labour" path="/labour" element={<LabourPage />} />
           <Route key="maps" path="/maps" element={<MapsPage />} />
           <Route key="aedp" path="/aedp" element={<AedpPage />} />
           <Route key="client" path="/client" element={<ClientPage />} />
