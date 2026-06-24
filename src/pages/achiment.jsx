@@ -175,7 +175,7 @@ function AwardsHero() {
 
 
 	return (
-		<section ref={sectionRef} className="relative min-h-[78vh] overflow-hidden bg-white pt-16 md:min-h-[90vh] md:pt-24">
+		<section ref={sectionRef} className="relative min-h-[105svh] md:min-h-[90vh] overflow-hidden bg-white pt-28 pb-12 md:pt-24">
 			<div className="absolute inset-0">
 				<div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${achievementsHeroAsset.url}')` }} />
 				<div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/60" />
@@ -199,7 +199,7 @@ function AwardsHero() {
 							<span className="text-sm font-semibold text-white">Our Journey of Success</span>
 						</div>
 
-						<h1 className="text-5xl font-bold leading-tight text-gray-900 lg:text-7xl">
+						<h1 className="text-3xl sm:text-5xl font-bold leading-tight text-gray-900 lg:text-7xl">
 							<span className="block">Celebrating</span>
 							<span className="relative mt-2 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-blue-500 to-orange-500">
 								Excellence
@@ -359,7 +359,7 @@ function Milestones() {
 	}, [isVisible])
 
 	return (
-		<section ref={sectionRef} className="relative overflow-hidden bg-slate-50 py-16 md:py-24">
+		<section ref={sectionRef} className="relative overflow-hidden bg-slate-50 py-12 sm:py-16 md:py-24">
 			<div className="absolute inset-0 opacity-[0.02]">
 				<svg className="h-full w-full">
 					<pattern id="milestone-dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -472,7 +472,7 @@ function AchievementsGallery() {
 	]
 
 	return (
-		<section ref={sectionRef} className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50 py-16 md:py-24">
+		<section ref={sectionRef} className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50 py-12 sm:py-16 md:py-24">
 			<div className="absolute inset-0 opacity-[0.02]">
 				<svg className="h-full w-full">
 					<pattern id="achievement-grid-pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
@@ -559,7 +559,7 @@ function AchievementsCta() {
 	const { isVisible, sectionRef } = useSectionReveal(0.1)
 
 	return (
-		<section ref={sectionRef} className="relative flex items-center overflow-hidden bg-[#0A0A0B] px-6 lg:h-[100svh] lg:min-h-[700px] lg:px-8">
+		<section ref={sectionRef} className="relative flex items-center overflow-hidden bg-[#0A0A0B] px-6 pt-28 pb-12 lg:pt-0 lg:pb-0 lg:h-[100svh] lg:min-h-[700px] lg:px-8">
 			{/* Animated Mesh Gradient Background */}
 			<div className="pointer-events-none absolute inset-0">
 				<div className="absolute -left-[15%] -top-[20%] h-[60%] w-[60%] rounded-full bg-[#2563EB] opacity-[0.07] blur-[120px]" style={{ animation: 'pulse 8s ease-in-out infinite' }} />

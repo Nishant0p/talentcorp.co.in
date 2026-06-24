@@ -168,7 +168,7 @@ function PayrollSection() {
   const payrollHeroImage = 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_04_16_at_10_53_22_2_b6307ded10.jpeg';
 
   return (
-    <section id="payroll-benefits" className="relative overflow-hidden bg-[#0A0A0B] pb-20 pt-32 text-white lg:pb-24 lg:pt-36">
+    <section id="payroll-benefits" className="relative overflow-hidden bg-[#0A0A0B] pb-12 pt-32 sm:pb-20 sm:pt-36 text-white lg:pb-24 lg:pt-36">
       <div className="absolute inset-0">
        
         <div className="absolute inset-0 bg-[#0A0A0B]/80" />
@@ -180,7 +180,7 @@ function PayrollSection() {
         <div className="absolute -right-[10%] bottom-0 h-[600px] w-[600px] rounded-full bg-[#F97316]/10 blur-[150px]" />
       </div>
 
-      <div className="relative z-10 mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2 lg:items-center lg:gap-14">
+      <div className="relative z-10 mx-auto grid max-w-7xl gap-6 sm:gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-14">
         <div className="space-y-7">
           <div>
             <h1 className="mb-4 text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl">
@@ -282,8 +282,8 @@ function PayrollHowItWorks() {
   }, []);
 
   return (
-    <section id="payroll-process" className="bg-[#F8FAFC] py-20 lg:py-24">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2 lg:items-center lg:gap-14">
+    <section id="payroll-process" className="bg-[#F8FAFC] py-12 sm:py-20 lg:py-24">
+      <div className="mx-auto grid max-w-7xl gap-6 sm:gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-14">
         
         {/* Animated Circle Container */}
         <div className="relative mx-auto h-[320px] w-[320px] md:h-[400px] md:w-[400px]">
@@ -385,8 +385,8 @@ function PayrollHowItWorks() {
 
 function PayrollServices() {
   return (
-    <section id="payroll-services" className="bg-white py-20 lg:py-24">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="payroll-services" className="bg-white py-12 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mb-14 text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#2563EB]/10 px-4 py-2 text-sm font-bold text-[#2563EB]">
             <Shield className="h-4 w-4" /> Full Spectrum Coverage
@@ -446,8 +446,8 @@ function PayrollFAQ() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="payroll-faq" className="bg-[#F8FAFC] py-20 lg:py-24">
-      <div className="mx-auto max-w-4xl px-6">
+    <section id="payroll-faq" className="bg-[#F8FAFC] py-12 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <div className="mb-12 text-center">
           <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1E40AF] shadow-lg shadow-blue-500/30">
             <MessageCircleQuestion className="h-7 w-7 text-white" />
@@ -497,24 +497,24 @@ function PayrollFAQ() {
 
 function PayrollCTA() {
   return (
-    <section className="relative overflow-hidden bg-[#0A0A0B] py-20 text-white lg:py-24">
+    <section className="relative overflow-hidden bg-[#0A0A0B] py-12 sm:py-20 text-white lg:py-24">
       {/* Dynamic Background */}
       <div className="absolute inset-0">
         <div className="absolute left-1/2 top-1/2 h-[620px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-[#2563EB]/30 via-[#1D4ED8]/20 to-transparent blur-[120px]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 text-center">
         <h2 className="mb-6 text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl">
           Ready to Elevate Your
           <span className="block mt-2 bg-gradient-to-r from-blue-400 to-blue-200 bg-clip-text text-transparent">
             Payroll Experience?
           </span>
         </h2>
-        <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white/70">
+        <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white/77 select-none">
           Join over 500+ forward-thinking companies who rely on TSPL to seamlessly manage their workforce financial operations.
         </p>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
           {/* Company Card */}
           <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-7 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500/30 hover:bg-white/10 md:p-8">
             <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-blue-500/20 blur-3xl transition-all group-hover:bg-blue-500/40" />
@@ -550,7 +550,7 @@ function PayrollCTA() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-6 text-white/80 md:gap-10">
+        <div className="mt-8 flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-10 text-white/80">
           <div className="flex items-center gap-4 transition-transform hover:scale-105">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
               <Clock className="h-5 w-5 text-blue-400" />

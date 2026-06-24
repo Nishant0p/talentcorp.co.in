@@ -224,7 +224,7 @@ export default function YatraPage() {
 
 			<main className="min-h-screen">
 				{/* REDESIGNED HERO SECTION */}
-				<section ref={heroRef} className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden bg-[#1A365D] px-6 py-24 lg:px-12 pt-32">
+				<section ref={heroRef} className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden bg-[#1A365D] px-4 sm:px-12 py-12 sm:py-24 pt-28 sm:pt-32">
 					
 					{/* Parallax Image Background with Left Fade */}
 					<motion.div 
@@ -249,20 +249,20 @@ export default function YatraPage() {
 					<div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-b from-blue-600 to-[#1A365D] transform -skew-x-6 -translate-x-6 opacity-40 z-10 pointer-events-none" />
 					<div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-t from-orange-500 to-[#1A365D] transform skew-x-6 translate-x-6 opacity-50 z-10 pointer-events-none" />
 
-					<div className="relative z-20 mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-8">
+					<div className="relative z-20 mx-auto grid w-full max-w-7xl items-center gap-6 sm:gap-12 lg:grid-cols-2 lg:gap-8">
 						{/* Left Column: Content */}
 						<div className="flex flex-col items-start text-left">
-							<h1 className="text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl md:text-7xl mb-2">
+							<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-2">
 								<span className="text-[#FF8C00] drop-shadow-md">Rojgaar Yatra</span>
 								<br />
-								<span className="text-blue-100 text-3xl sm:text-4xl md:text-5xl font-bold">By TSPL Group</span>
+								<span className="text-blue-100 text-2xl sm:text-4xl md:text-5xl font-bold">By TSPL Group</span>
 							</h1>
 							
-							<h2 className="mt-6 text-2xl md:text-3xl font-bold text-white max-w-xl">
+							<h2 className="mt-6 text-xl md:text-3xl font-bold text-white max-w-xl">
 								Bridging India, One Career at a Time.
 							</h2>
 
-							<p className="mt-4 max-w-xl text-lg text-blue-200 leading-relaxed">
+							<p className="mt-4 max-w-xl text-base text-blue-200 leading-relaxed">
 								Empowering careers across every state. Join the movement as we bridge the gap between talent and opportunity. The <span className="font-bold text-white">Rojgaar Yatra</span> is more than a journey; it’s a nationwide mission by TSPL Group to bring employment opportunities to your doorstep.
 							</p>
 
@@ -526,11 +526,11 @@ export default function YatraPage() {
 					</div>
 				</section>
 
-			<section id="route" className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32">
+			<section id="route" className="relative mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-24">
 					{/* 1. What Is Rojgar Yatra & Philosophy */}
-					<div className="grid gap-6 lg:grid-cols-12 mb-20">
+					<div className="grid gap-4 sm:gap-6 lg:grid-cols-12 mb-12 sm:mb-20">
 						{/* Intro Card */}
-						<div className="rounded-[2.5rem] border border-slate-200 bg-white p-8 sm:p-12 shadow-sm lg:col-span-12 relative overflow-hidden group hover:shadow-xl transition-all duration-300">
+						<div className="rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200 bg-white p-6 sm:p-12 shadow-sm lg:col-span-12 relative overflow-hidden group hover:shadow-xl transition-all duration-300">
 							<div className="absolute right-0 top-0 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
 								<Map className="w-96 h-96 -mt-20 -mr-20" />
 							</div>
@@ -538,7 +538,7 @@ export default function YatraPage() {
 								<p className="text-sm font-bold uppercase tracking-[0.25em] text-orange-600 mb-4 flex items-center gap-2">
 									<Activity className="w-5 h-5" /> Employment Movement
 								</p>
-								<h2 className="text-4xl font-black text-slate-900 sm:text-5xl md:text-6xl tracking-tight mb-6">What Is Rojgar Yatra?</h2>
+								<h2 className="text-3xl sm:text-5xl md:text-6xl tracking-tight font-black text-slate-900 mb-6">What Is Rojgar Yatra?</h2>
 								<p className="text-lg text-slate-600 leading-relaxed mb-4">
 									Rojgar Yatra is an employment and workforce development initiative focused on connecting job seekers with the right career opportunities across India. We bridge the gap between industries and skilled manpower through recruitment drives, job fairs, campus placements, and awareness campaigns.
 								</p>
@@ -549,7 +549,7 @@ export default function YatraPage() {
 						</div>
 
 						{/* Vision */}
-						<div className="rounded-[2rem] bg-gradient-to-br from-blue-600 to-[#1A365D] p-8 sm:p-10 shadow-lg lg:col-span-6 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+						<div className="rounded-[2rem] bg-gradient-to-br from-blue-600 to-[#1A365D] p-6 sm:p-10 shadow-lg lg:col-span-6 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
 							<div className="absolute right-0 bottom-0 opacity-10">
 								<Eye className="w-48 h-48 -mb-10 -mr-10 group-hover:rotate-12 transition-transform duration-500" />
 							</div>
@@ -557,7 +557,7 @@ export default function YatraPage() {
 								<div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-6 backdrop-blur-md">
 									<Eye className="w-7 h-7 text-blue-200" />
 								</div>
-								<h3 className="text-3xl font-black mb-4">Our Vision</h3>
+								<h3 className="text-2xl sm:text-3xl font-black mb-4">Our Vision</h3>
 								<p className="text-blue-100 text-lg leading-relaxed">
 									To become India's most trusted employment movement by empowering youth with job opportunities, skill awareness, and career guidance across every state and district.
 								</p>
@@ -565,7 +565,7 @@ export default function YatraPage() {
 						</div>
 
 						{/* Goal */}
-						<div className="rounded-[2rem] bg-gradient-to-br from-orange-500 to-red-600 p-8 sm:p-10 shadow-lg lg:col-span-6 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+						<div className="rounded-[2rem] bg-gradient-to-br from-orange-500 to-red-600 p-6 sm:p-10 shadow-lg lg:col-span-6 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
 							<div className="absolute right-0 bottom-0 opacity-10">
 								<Target className="w-48 h-48 -mb-10 -mr-10 group-hover:rotate-12 transition-transform duration-500" />
 							</div>
@@ -573,7 +573,7 @@ export default function YatraPage() {
 								<div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-6 backdrop-blur-md">
 									<Target className="w-7 h-7 text-orange-200" />
 								</div>
-								<h3 className="text-3xl font-black mb-4">Our Goal</h3>
+								<h3 className="text-2xl sm:text-3xl font-black mb-4">Our Goal</h3>
 								<p className="text-orange-50 text-lg leading-relaxed">
 									Build a strong employment ecosystem where deserving candidates get better futures and industries receive reliable manpower.
 								</p>
@@ -582,13 +582,13 @@ export default function YatraPage() {
 					</div>
 
 					{/* 2. Mission & What We Do Split */}
-					<div className="grid gap-6 lg:grid-cols-12 mb-20">
+					<div className="grid gap-4 sm:gap-6 lg:grid-cols-12 mb-12 sm:mb-20">
 						<div className="lg:col-span-12">
 							<div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-2 text-sm font-bold tracking-widest text-orange-700 uppercase mb-6">
 								<Briefcase className="h-4 w-4" />
 								<span>Operations</span>
 							</div>
-							<h3 className="text-4xl font-black text-slate-900 mb-8">What We Do</h3>
+							<h3 className="text-3xl sm:text-4xl font-black text-slate-900 mb-8">What We Do</h3>
 							<div className="grid sm:grid-cols-2 gap-4">
 								{[
 									{ icon: Users, text: "Large-scale employment drives across industries." },
@@ -615,13 +615,13 @@ export default function YatraPage() {
 					</div>
 
 					{/* 3. How It Works & Presence */}
-					<div className="rounded-[3rem] bg-[#1A365D] px-6 py-16 sm:px-16 sm:py-20 mb-20 relative overflow-hidden shadow-2xl">
+					<div className="rounded-[2rem] sm:rounded-[3rem] bg-[#1A365D] px-4 py-12 sm:px-16 sm:py-20 mb-12 sm:mb-20 relative overflow-hidden shadow-2xl">
 						{/* Background Map Effect */}
 						<div className="absolute right-0 top-0 opacity-[0.05] pointer-events-none">
 							<Map className="w-[800px] h-[800px] -mt-40 -mr-40" />
 						</div>
 						
-						<div className="grid gap-16 lg:grid-cols-2 relative z-10">
+						<div className="grid gap-8 sm:gap-16 lg:grid-cols-2 relative z-10">
 							{/* How it works */}
 							<div>
 								<h3 className="text-3xl sm:text-4xl font-black text-white mb-6">How Rojgar Yatra Works</h3>
@@ -682,22 +682,22 @@ export default function YatraPage() {
 					</div>
 
 					{/* 4. FAQs & Commitment */}
-						<div className="grid gap-10 lg:grid-cols-12">
+						<div className="grid gap-6 sm:gap-10 lg:grid-cols-12">
 							{/* Commitment */}
 							<div className="lg:col-span-4 flex flex-col justify-center">
-								<div className="rounded-[2.5rem] border border-orange-200 bg-gradient-to-b from-orange-50 to-white p-10 shadow-lg relative overflow-hidden group hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+								<div className="rounded-[2rem] sm:rounded-[2.5rem] border border-orange-200 bg-gradient-to-b from-orange-50 to-white p-6 sm:p-10 shadow-lg relative overflow-hidden group hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
 									<div className="absolute -right-6 -top-6 text-orange-200 opacity-50 group-hover:scale-110 transition-transform duration-500">
 										<Heart className="w-32 h-32" />
 									</div>
 									<h4 className="text-3xl font-black text-orange-600 mb-6 relative z-10">Our Commitment</h4>
-									<p className="text-xl text-slate-800 leading-relaxed font-medium relative z-10">
+									<p className="text-lg text-slate-800 leading-relaxed font-medium relative z-10">
 										"Rojgar Yatra is not just a recruitment campaign. It is an employment movement focused on taking genuine opportunities directly to people through outreach, awareness, and industry collaboration."
 									</p>
 								</div>
 							</div>
 
 							{/* FAQs */}
-							<div className="lg:col-span-8 rounded-[2.5rem] border border-slate-200 bg-white p-8 sm:p-12 shadow-sm">
+							<div className="lg:col-span-8 rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200 bg-white p-6 sm:p-12 shadow-sm">
 								<h3 className="text-3xl font-black text-[#1A365D] mb-8 flex items-center gap-3">
 									<Lightbulb className="h-8 w-8 text-orange-500" />
 									Frequently Asked Questions

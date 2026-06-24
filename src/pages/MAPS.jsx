@@ -19,7 +19,7 @@ const benefits = [
 
 function MapsHero() {
 	return (
-		<section className="relative min-h-[100svh] overflow-hidden bg-[#0F172A] pt-16">
+		<section className="relative min-h-[100svh] overflow-hidden bg-[#0F172A] pt-28 pb-12 sm:pt-36 sm:pb-16">
 			<div className="absolute inset-0 bg-gradient-to-br from-[#0F172A] via-[#172554] to-[#1E3A8A]" />
 			<div className="absolute left-0 top-0 h-80 w-80 rounded-full bg-[#2563EB]/25 blur-3xl" />
 			<div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#F97316]/20 blur-3xl" />
@@ -32,7 +32,7 @@ function MapsHero() {
 							<span className="text-sm font-bold text-[#F97316]">MAHARASHTRA APPRENTICESHIP PROMOTION SCHEME</span>
 						</div>
 
-						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
+						<h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
 							MAPS Scheme
 							<span className="mt-2 block text-[#60A5FA]">Build Skilled Workforce Faster</span>
 						</h1>
@@ -77,7 +77,7 @@ function MapsHero() {
 
 function MapsBenefits() {
 	return (
-		<section className="relative overflow-hidden bg-[#F8FAFC] py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-[#F8FAFC] py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #94A3B8 1px, transparent 0)', backgroundSize: '34px 34px' }} />
 
 			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">

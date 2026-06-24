@@ -45,7 +45,7 @@ export default function NatsLandingPage() {
 
 			<main>
 				<section
-					className="relative flex min-h-screen items-center overflow-hidden pt-20 sm:pt-24"
+					className="relative flex min-h-[100svh] sm:min-h-screen items-center overflow-hidden pt-28 sm:pt-24"
 					style={{ backgroundImage: 'url("/natshero.png")', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}
 				>
 					<div className="absolute inset-0 bg-white/10" />
@@ -81,7 +81,7 @@ export default function NatsLandingPage() {
 					</div>
 				</section>
 
-				<section id="about" className="mx-auto grid max-w-7xl items-center gap-12 px-8 py-20 md:grid-cols-2">
+				<section id="about" className="mx-auto grid max-w-7xl items-center gap-6 sm:gap-12 px-4 sm:px-8 py-12 sm:py-20 md:grid-cols-2">
 					<div>
 						<div className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-xs font-semibold tracking-wide text-blue-700 shadow-sm">
 							<span className="relative inline-flex h-2.5 w-2.5">
@@ -90,11 +90,11 @@ export default function NatsLandingPage() {
 							</span>
 							ABOUT NATS
 						</div>
-						<h2 className="mb-6 text-4xl font-bold">
+						<h2 className="mb-6 text-3xl sm:text-4xl font-bold">
 							What is <span className="text-blue-600">NATS?</span>
 						</h2>
 							<p className="mb-6 text-slate-600">
-The National Apprenticeship Training Scheme in India was started by the Board of Apprenticeship and Training/Practical Training. It is a flagship programme from the Government of India, and undertaken by the Ministry of Human Resource Development. The programme is aimed at enhancing the employability of students by equipping technically qualified youth with practical knowledge and skills required in their respective field (s) of work. As part of this programme, organisations and Training Managers provide year-long or six months relevant training to apprentices using well-developed training modules. The establishments can pay stipend amount greater than or equal to the minimum stipend amount fixed by the Government of India to the apprentices. The establishments are reimbursed with half of the minimum prescribed stipend amount.
+West Bengal, Gujarat, Maharashtra, Karnataka, etc. The National Apprenticeship Training Scheme in India was started by the Board of Apprenticeship and Training/Practical Training. It is a flagship programme from the Government of India, and undertaken by the Ministry of Human Resource Development. The programme is aimed at enhancing the employability of students by equipping technically qualified youth with practical knowledge and skills required in their respective field (s) of work. As part of this programme, organisations and Training Managers provide year-long or six months relevant training to apprentices using well-developed training modules. The establishments can pay stipend amount greater than or equal to the minimum stipend amount fixed by the Government of India to the apprentices. The establishments are reimbursed with half of the minimum prescribed stipend amount.
 The apprentices are trained at Central, State and Private organisations. At the end of the training programme, the apprentices are issued a Certificate of Proficiency by the Government of India.
 This certificate can be registered at all employment exchanges across India as valid employment experience. The apprentices are governed solely by the Apprentices Act, 1961.							</p>
 							<ul className="mb-8 space-y-3">
@@ -122,21 +122,21 @@ This certificate can be registered at all employment exchanges across India as v
 									<div key={item.label} className="rounded-xl border border-slate-100 bg-white p-4 sm:p-5 md:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl">
 										<div className="mb-1 text-lg sm:text-xl md:text-2xl font-bold text-blue-600 whitespace-nowrap">{item.value}</div>
 										<div className="text-xs sm:text-sm text-slate-500">{item.label}</div>
-								</div>
+									</div>
 							))}
 						</div>
 					</div>
 				</section>
 
-				<section id="services" className="bg-white px-8 py-20">
-					<div className="mx-auto mb-16 max-w-7xl text-center">
-						<h2 className="mb-4 text-4xl font-bold">
+				<section id="services" className="bg-white px-4 sm:px-8 py-12 sm:py-20">
+					<div className="mx-auto mb-12 sm:mb-16 max-w-7xl text-center">
+						<h2 className="mb-4 text-3xl sm:text-4xl font-bold">
 							Why Choose <span className="text-blue-600">NATS?</span>
 						</h2>
 							<p className="text-slate-500">Government support, quota compliance, and practical training for both sides.</p>
 					</div>
 
-					<div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
+					<div className="mx-auto grid max-w-7xl gap-6 sm:gap-12 md:grid-cols-2">
 						<div>
 							<div className="mb-6 flex items-center space-x-3">
 								<div className="rounded-lg bg-blue-600 p-2 text-white transition-transform duration-300 hover:rotate-6 hover:scale-105">
@@ -177,10 +177,10 @@ This certificate can be registered at all employment exchanges across India as v
 					</div>
 				</section>
 
-				<section className="bg-white px-6 py-16 font-sans text-slate-800 sm:px-8">
+				<section className="bg-white px-4 sm:px-8 py-12 sm:py-16 font-sans text-slate-800">
 					<div className="mx-auto w-full max-w-5xl">
 						<div className="mb-10 text-center">
-							<h2 className="mb-3 text-4xl font-bold">
+							<h2 className="mb-3 text-3xl sm:text-4xl font-bold">
 							Who Can <span className="text-[#2563EB]">Apply?</span>
 						</h2>
 						<p className="text-lg text-slate-500">Eligibility criteria & documents</p>
@@ -260,21 +260,22 @@ This certificate can be registered at all employment exchanges across India as v
 									))}
 								</div>
 							</div>
+
 						</div>
 					</div>
 				</div>
 			</section>
 
-				<section id="process" className="bg-slate-50 px-8 py-20">
-					<div className="mx-auto mb-16 max-w-5xl text-center">
+				<section id="process" className="bg-slate-50 px-4 sm:px-8 py-12 sm:py-20">
+					<div className="mx-auto mb-12 sm:mb-16 max-w-5xl text-center">
 						<div className="mb-2 font-semibold text-blue-600">OUR PROCESS</div>
-						<h2 className="mb-4 text-4xl font-bold">
+						<h2 className="mb-4 text-3xl sm:text-4xl font-bold">
 							Your Journey to <span className="text-blue-600">Success</span>
 						</h2>
 							<p className="text-slate-500">Follow our streamlined 6-step apprenticeship process.</p>
 					</div>
 
-					<div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
+					<div className="mx-auto grid max-w-6xl gap-4 sm:gap-6 md:grid-cols-3">
 						{processSteps.map((step) => (
 							<div key={step.id} className="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-2xl">
 								<div className="absolute -right-4 -top-4 z-0 text-8xl font-black text-blue-100/50">{step.id}</div>
@@ -288,7 +289,7 @@ This certificate can be registered at all employment exchanges across India as v
 					</div>
 				</section>
 
-                <section className="py-24 bg-[#f8f9fc] flex flex-col items-center justify-center font-sans">
+                <section className="py-12 sm:py-24 bg-[#f8f9fc] flex flex-col items-center justify-center font-sans">
                 
                 {/* Heading Text */}
                 <p className="text-slate-600 text-lg font-medium mb-6">
@@ -302,7 +303,7 @@ This certificate can be registered at all employment exchanges across India as v
 
                 </section>
   
-				<section className="px-8 pb-20 pt-2">
+				<section className="px-4 sm:px-8 pb-12 sm:pb-20 pt-2">
 					<div className="mx-auto w-full max-w-6xl">
 						<div className="flex flex-col items-center justify-between gap-10 rounded-3xl bg-gradient-to-r from-[#2d52b4] to-[#4083ff] p-8 shadow-lg md:flex-row md:p-12">
 							<div className="flex-1">

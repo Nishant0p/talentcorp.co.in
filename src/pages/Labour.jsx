@@ -253,7 +253,7 @@ export default function LabourStaffingPage() {
 			<Navbar isGlobal />
 
 			{/* Hero Section (Dark theme hero like the other service pages) */}
-			<section className="relative flex min-h-[90vh] items-center overflow-hidden pt-28 pb-16">
+			<section className="relative flex min-h-[100svh] lg:min-h-[90vh] items-center overflow-hidden pt-28 pb-16">
 				<div className="absolute inset-0 z-0">
 					<img
 						src={resolveAsset('labour.hero', 'https://images.pexels.com/photos/30223853/pexels-photo-30223853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2').url}
@@ -271,7 +271,7 @@ export default function LabourStaffingPage() {
 							<span className="text-sm font-semibold text-blue-200">ISO 9001:2015 & Govt. Registered Staffing Agency</span>
 						</div>
 
-						<h1 className="mb-6 text-5xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-7xl">
+						<h1 className="mb-6 text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-7xl">
 							End-to-End <br />
 							<span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
 								Labour Staffing
@@ -317,7 +317,7 @@ export default function LabourStaffingPage() {
 			</section>
 
 			{/* Interactive Showcase Section (Light Background) */}
-			<section className="relative bg-slate-50 py-20 lg:py-28">
+			<section className="relative bg-slate-50 py-12 sm:py-20 lg:py-28">
 				<div className="absolute inset-0 pointer-events-none opacity-20">
 					<div
 						className="absolute inset-0"
@@ -450,7 +450,7 @@ export default function LabourStaffingPage() {
 			</section>
 
 			{/* Core Strengths / Compliance Section (White Background) */}
-			<section className="relative bg-white py-20 lg:py-28">
+			<section className="relative bg-white py-12 sm:py-20 lg:py-28">
 				<div className="relative mx-auto max-w-7xl px-6 lg:px-8">
 					<div className="mb-16 text-center">
 						<div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 text-blue-600">
@@ -486,7 +486,7 @@ export default function LabourStaffingPage() {
 			</section>
 
 			{/* Industries We Serve (Slate 50 Background) */}
-			<section className="relative bg-slate-50 py-20 lg:py-28">
+			<section className="relative bg-slate-50 py-12 sm:py-20 lg:py-28">
 				<div className="relative mx-auto max-w-7xl px-6 lg:px-8">
 					<div className="mb-16 text-center">
 						<div className="mb-4 inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-2 text-orange-600">
@@ -522,7 +522,7 @@ export default function LabourStaffingPage() {
 			</section>
 
 			{/* Hiring Process (White Background) */}
-			<section className="relative bg-white py-20 lg:py-28">
+			<section className="relative bg-white py-12 sm:py-20 lg:py-28">
 				<div className="relative mx-auto max-w-7xl px-6 lg:px-8">
 					<div className="mb-16 text-center">
 						<h2 className="text-4xl font-bold tracking-tight text-slate-900 lg:text-5xl">

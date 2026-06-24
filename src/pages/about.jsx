@@ -168,7 +168,7 @@ function DetailedProfileSection({ isMobile }) {
 	};
 
 	return (
-		<section className="bg-slate-50 py-24 lg:py-32 relative overflow-hidden">
+		<section className="bg-slate-50 py-12 sm:py-24 lg:py-32 relative overflow-hidden">
 			{/* Decorative Elements */}
 			<div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-blue-100/40 blur-3xl pointer-events-none hidden md:block" />
 			<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-100/30 blur-3xl pointer-events-none hidden md:block" />
@@ -621,7 +621,7 @@ function LeadershipSection({ isMobile }) {
 	};
 
 	return (
-		<section className="py-24 bg-slate-50 relative overflow-hidden">
+		<section className="py-12 sm:py-24 bg-slate-50 relative overflow-hidden">
 			<div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-blue-100/30 blur-3xl hidden md:block" />
 			<div className="mx-auto max-w-[96rem] px-4 lg:px-8 relative z-10">
 				{/* Section Heading */}
@@ -780,7 +780,7 @@ function ManagementSection({ isMobile }) {
 	};
 
 	return (
-		<section className="py-24 bg-white relative overflow-hidden border-t border-b border-slate-100">
+		<section className="py-12 sm:py-24 bg-white relative overflow-hidden border-t border-b border-slate-100">
 			<div className="absolute top-0 left-0 h-96 w-96 rounded-full bg-blue-50/20 blur-3xl hidden md:block" />
 			<div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-orange-50/20 blur-3xl hidden md:block" />
 			<div className="mx-auto max-w-[96rem] px-4 lg:px-8 relative z-10">
@@ -851,53 +851,33 @@ function AboutHero({ resolveAsset, isMobile }) {
 	)
 
 	return (
-		<section className="relative flex flex-col justify-center min-h-[100svh] overflow-hidden pb-20 pt-40">
+		<section className="relative flex flex-col justify-end sm:justify-center overflow-hidden min-h-[100svh] sm:min-h-[100svh] pt-28 pb-12 sm:pt-40 sm:pb-20">
 			<div className="absolute inset-0">
-				<ProgressiveImage src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} width="1920" height="1080" className="h-full w-full object-cover" />
-				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
+				<ProgressiveImage src={aboutHeroAsset.url} alt={aboutHeroAsset.alt} width="1920" height="1080" className="h-full w-full object-cover object-center" />
+				<div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/95 via-[#0F172A]/75 to-[#0F172A]/40 sm:bg-gradient-to-r sm:from-[#0F172A]/95 sm:via-[#0F172A]/80 sm:to-[#0F172A]/50" />
 			</div>
 
-			<div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-[#2563EB]/10 blur-3xl hidden md:block" />
-			<div className="absolute bottom-0 left-1/4 h-80 w-80 rounded-full bg-[#F97316]/8 blur-3xl hidden md:block" />
+			<div className="absolute right-0 top-20 h-64 w-64 rounded-full bg-[#2563EB]/10 blur-3xl hidden md:block" />
 
-			<div className="relative z-10 w-full px-6 md:px-16 lg:px-24 xl:px-32">
+			<div className="relative z-10 w-full px-5 sm:px-8 md:px-16 lg:px-24 xl:px-32">
 				<div className="max-w-3xl">
-					<div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-md">
-						<span className="text-sm font-semibold text-white">About TSPL Group</span>
+					<div className="mb-4 sm:mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 backdrop-blur-md">
+						<span className="text-xs sm:text-sm font-semibold text-white">About TSPL Group</span>
 					</div>
 
-					<h1 className="mb-6 text-5xl font-bold leading-[1.1] text-white sm:text-6xl lg:text-7xl">
+					<h1 className="mb-4 sm:mb-6 text-[2rem] leading-tight font-bold text-white sm:text-5xl lg:text-6xl xl:text-7xl">
 						Building India&apos;s
-						<span className="mt-2 block text-[#2563EB]">Future Workforce</span>
+						<span className="mt-1 block text-[#2563EB]">Future Workforce</span>
 					</h1>
 
-					<p className="mb-10 max-w-2xl text-xl leading-relaxed text-white/80">
-						We are a government-authorized staffing and skilling company dedicated to empowering workers and transforming businesses across India.
+					<p className="mb-7 sm:mb-10 max-w-xl text-base sm:text-lg leading-relaxed text-white/80">
+						A government-authorized staffing and skilling company empowering workers and transforming businesses across India.
 					</p>
 
-					<Link to="/contact-us" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-[#F97316]/40 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
+					<Link to="/contact-us" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-bold text-white shadow-xl shadow-[#F97316]/30 transition-all duration-300 active:scale-95 hover:bg-[#EA580C]">
 						Our Services
-						<ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+						<ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-1" />
 					</Link>
-
-					<div className="mt-16 grid grid-cols-2 gap-8 sm:grid-cols-4 hidden">
-						<div>
-							<p className="text-4xl font-bold text-white">40K+</p>
-							<p className="mt-1 text-white/60">Workers Placed</p>
-						</div>
-						<div>
-							<p className="text-4xl font-bold text-[#2563EB]">470+</p>
-							<p className="mt-1 text-white/60">Partner Companies</p>
-						</div>
-						<div>
-							<p className="text-4xl font-bold text-white">20+</p>
-							<p className="mt-1 text-white/60">Cities</p>
-						</div>
-						<div>
-							<p className="text-4xl font-bold text-[#F97316]">10+</p>
-							<p className="mt-1 text-white/60">Years Experience</p>
-						</div>
-					</div>
 				</div>
 			</div>
 		</section>
@@ -940,7 +920,7 @@ function OurStory({ resolveAsset, isMobile }) {
 	};
 
 	return (
-		<section className="relative overflow-hidden bg-[#0A0A0B] py-32 text-white">
+		<section className="relative overflow-hidden bg-[#0A0A0B] py-16 sm:py-32 text-white">
 			{/* Mesh Gradient Background — static, no animate-pulse to avoid GPU repaints */}
 			<div className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none hidden md:block">
 				<div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-[#2563EB] blur-[120px]" />
@@ -1060,11 +1040,11 @@ function OurStory({ resolveAsset, isMobile }) {
 
 function OurValues({ isMobile }) {
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl hidden md:block" />
 			<div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-[#F97316]/5 blur-3xl hidden md:block" />
 
-			<div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
+			<div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 				<div className="mb-16 text-center">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#F97316]/20 bg-[#F97316]/10 px-4 py-2">
 						<span className="text-sm font-bold text-[#F97316]">WHAT WE BELIEVE</span>
@@ -1097,13 +1077,13 @@ function OurValues({ isMobile }) {
 
 function Achievements({ isMobile }) {
 	return (
-		<section className="bg-slate-50 py-20 lg:py-28 relative overflow-hidden">
+		<section className="bg-slate-50 py-12 sm:py-20 lg:py-28 relative overflow-hidden">
 			{/* Decorative Background Elements */}
 			<div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #0F172A 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 			<div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-400/20 blur-[120px] pointer-events-none hidden md:block" />
 			<div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-orange-400/20 blur-[120px] pointer-events-none hidden md:block" />
 
-			<div className="relative z-10 mx-auto w-full max-w-[96rem] px-6 lg:px-8 flex flex-col h-full justify-center lg:justify-between gap-6 lg:gap-12">
+			<div className="relative z-10 mx-auto w-full max-w-[96rem] px-4 sm:px-6 lg:px-8 flex flex-col h-full justify-center lg:justify-between gap-6 lg:gap-12">
 				
 				{/* Top Section: Header & Stats */}
 				<div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 lg:gap-10 shrink-0 mb-12">

@@ -37,7 +37,7 @@ import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
 
 function HousekeepingHero({ resolveAsset }) {
 	return (
-		<section className="relative min-h-[700px] overflow-hidden pb-20 pt-32">
+		<section className="relative min-h-[100svh] sm:min-h-[700px] overflow-hidden pt-28 pb-12 sm:pt-32 sm:pb-20">
 			<div className="absolute inset-0">
 				<img src={resolveAsset('housekeeping.hero', '/houskeeping deplyment.jpeg').url} alt={resolveAsset('housekeeping.hero', '/houskeeping deplyment.jpeg', 'Professional housekeeping team').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-[#0F172A]/60" />
@@ -54,7 +54,7 @@ function HousekeepingHero({ resolveAsset }) {
 						<span className="text-sm font-medium text-white">Professional Cleaning Solutions</span>
 					</div>
 
-					<h1 className="mb-6 text-4xl font-bold leading-tight text-white animate-fade-in sm:text-5xl lg:text-6xl">
+					<h1 className="mb-6 text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white animate-fade-in">
 						Keep Your Space
 						<span className="mt-2 block text-[#2563EB]">Clean &amp; Healthy</span>
 					</h1>
@@ -153,7 +153,7 @@ const processSteps = [
 
 function OurProcess() {
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute left-0 top-1/2 h-1 w-full bg-gradient-to-r from-transparent via-[#2563EB]/10 to-transparent" />
 
 			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
@@ -247,7 +247,7 @@ const services = [
 
 function OurServices({ resolveAsset }) {
 	return (
-		<section className="relative overflow-hidden bg-[#0F172A] py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-[#0F172A] py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-10">
 				<div
 					className="absolute inset-0"
@@ -374,7 +374,7 @@ const places = [
 
 function WhatWeClean() {
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute left-0 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-[#2563EB]/5 blur-3xl" />
 			<div className="absolute bottom-0 right-0 h-80 w-80 translate-x-1/2 rounded-full bg-[#F97316]/5 blur-3xl" />
 
@@ -456,7 +456,7 @@ const reasons = [
 
 function WhyChooseUs({ resolveAsset }) {
 	return (
-		<section className="relative overflow-hidden bg-slate-50 py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-slate-50 py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-30">
 				<div
 					className="absolute inset-0"

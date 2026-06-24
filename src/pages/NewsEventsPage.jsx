@@ -258,7 +258,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white px-6 pt-28 font-sans md:px-12 md:pt-32">
+    <div className="min-h-screen bg-white px-4 sm:px-12 pt-28 sm:pt-32 font-sans">
       <Navbar />
 
       <style>{`
@@ -272,7 +272,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
       `}</style>
 
       <motion.h1
-        className="mb-10 text-4xl font-black leading-none tracking-tighter whitespace-nowrap sm:text-5xl md:text-9xl"
+        className="mb-10 text-3xl sm:text-5xl md:text-7xl lg:text-9xl font-black leading-none tracking-tighter whitespace-nowrap"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.35 }}
@@ -282,7 +282,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
         <span className="inline-block text-orange-500"> {content.pageContent.heroTitleRight}</span>
       </motion.h1>
 
-      <motion.div ref={heroParallaxRef} className="mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-4">
+      <motion.div ref={heroParallaxRef} className="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:gap-6 md:grid-cols-4">
         <Link to="/naps" className="group block h-full cursor-pointer md:col-span-2 md:row-span-2">
           <motion.div
             className="relative h-[320px] overflow-hidden rounded-3xl sm:h-[380px] md:h-full"
@@ -319,7 +319,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
         >
           <Sparkles className="h-8 w-8 opacity-50" />
           <div>
-            <div className="text-6xl font-bold">{content.hero.eventCount}</div>
+            <div className="text-5xl sm:text-6xl font-bold">{content.hero.eventCount}</div>
             <div className="text-lg opacity-90">{content.hero.eventCountLabel}</div>
           </div>
         </motion.div>
@@ -416,20 +416,20 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
       <motion.section
         id="announcements"
-        className="mx-auto mt-20 max-w-7xl"
+        className="mx-auto mt-12 sm:mt-20 max-w-7xl px-4 sm:px-0"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
       >
-        <div className="mb-10 flex items-center gap-4">
+        <div className="mb-8 sm:mb-10 flex items-center gap-4">
           <div className="h-10 w-1.5 rounded-full bg-orange-500" />
-          <h2 className="text-4xl font-semibold tracking-tight text-[#006bb8]">Spotlight</h2>
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Spotlight</h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-12">
           <motion.article
-            className="group relative overflow-hidden rounded-[2rem] bg-slate-900 lg:col-span-8 h-[460px]"
+            className="group relative overflow-hidden rounded-[2rem] bg-slate-900 lg:col-span-8 h-[360px] sm:h-[460px]"
             initial={{ opacity: 0, y: 60, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: false, amount: 0.2 }}
@@ -449,7 +449,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
             </div>
             <div className="absolute bottom-8 left-8 right-8">
               <p className="mb-2 text-sm text-slate-300">{content.spotlightFeature.date}</p>
-              <h3 className="mb-4 max-w-2xl text-3xl font-bold leading-tight text-white md:text-4xl">
+              <h3 className="mb-4 max-w-2xl text-2xl sm:text-3xl font-bold leading-tight text-white md:text-4xl">
                 {content.spotlightFeature.title}
               </h3>
               <p className="mb-6 max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
@@ -464,7 +464,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
             </div>
           </motion.article>
 
-          <div className="lg:col-span-4 flex flex-col gap-6">
+          <div className="lg:col-span-4 flex flex-col gap-4 sm:gap-6">
             {content.spotlightCards.map((news, index) => (
               <motion.article
                 key={news.title}
@@ -477,7 +477,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
                 <img
                   src={news.img}
                   alt={news.title}
-                  className="h-24 w-24 rounded-2xl object-cover"
+                  className="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl object-cover"
                 />
                 <div className="flex flex-col justify-center">
                   <span className="mb-1 text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">
@@ -498,18 +498,18 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
       <motion.section
         id="calendar"
-        className="mx-auto mt-24 max-w-7xl"
+        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.18 }}
         transition={{ duration: 0.65, ease: 'easeOut' }}
       >
-        <div className="mb-12 flex items-center gap-4">
+        <div className="mb-8 sm:mb-12 flex items-center gap-4">
           <div className="h-10 w-1.5 rounded-full bg-orange-500" />
-          <h2 className="text-4xl font-semibold tracking-tight text-[#006bb8]">In The News</h2>
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">In The News</h2>
         </div>
 
-        <div className="mb-14 overflow-hidden rounded-[2rem] border border-white/60 bg-white/60 p-5 shadow-sm backdrop-blur-md">
+        <div className="mb-10 sm:mb-14 overflow-hidden rounded-[2rem] border border-white/60 bg-white/60 p-5 shadow-sm backdrop-blur-md">
           <div className="logo-marquee overflow-hidden">
             <div className="logo-marquee-track gap-4 py-2">
               {[...content.inTheNewsLogos, ...content.inTheNewsLogos].map((logo, index) => (
@@ -524,11 +524,11 @@ const NewsEventsPage = ({ prismicData = null }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
           {content.inTheNewsArticles.map((article, index) => (
             <motion.article
               key={article.source}
-              className="group relative overflow-hidden rounded-[2rem] bg-slate-50 p-10 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-b-4 hover:border-orange-500"
+              className="group relative overflow-hidden rounded-[2rem] bg-slate-50 p-6 sm:p-10 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-b-4 hover:border-orange-500"
               initial={{ opacity: 0, y: 36 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.18 }}
@@ -553,18 +553,18 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
       <motion.section
         id="updates-events"
-        className="mx-auto mt-24 max-w-7xl"
+        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.18 }}
         transition={{ duration: 0.65, ease: 'easeOut' }}
       >
-        <div className="mb-12 flex items-center gap-4">
+        <div className="mb-8 sm:mb-12 flex items-center gap-4">
           <div className="h-10 w-1.5 rounded-full bg-orange-500" />
-          <h2 className="text-4xl font-semibold tracking-tight text-[#006bb8]">Updates & Events</h2>
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Updates & Events</h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {latestNews
             .filter((item) => item.tag === 'Events' || item.tag === 'Updates')
             .slice(0, 6)
@@ -602,24 +602,24 @@ const NewsEventsPage = ({ prismicData = null }) => {
       </motion.section>
 
       <motion.section
-        className="mx-auto mt-24 max-w-7xl"
+        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.65, ease: 'easeOut' }}
       >
-        <div className="mb-16 flex items-center gap-3">
+        <div className="mb-10 sm:mb-16 flex items-center gap-3">
           <Calendar className="h-8 w-8 text-orange-500" />
-          <h2 className="text-4xl font-semibold tracking-tight text-[#006bb8]">Upcoming &amp; Past Events</h2>
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Upcoming &amp; Past Events</h2>
         </div>
 
-        <div className="relative grid grid-cols-1 gap-16 lg:grid-cols-2">
+        <div className="relative grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-slate-100" />
 
           <div>
-            <div className="mb-8 flex items-center gap-2">
+            <div className="mb-6 sm:mb-8 flex items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
-              <h3 className="text-xl font-bold uppercase tracking-wide text-slate-900">Upcoming</h3>
+              <h3 className="text-lg sm:text-xl font-bold uppercase tracking-wide text-slate-900">Upcoming</h3>
             </div>
 
             <div className="relative space-y-8">
@@ -651,7 +651,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
           </div>
 
           <div>
-            <h3 className="mb-8 text-xl font-bold uppercase tracking-wide text-slate-400">Past</h3>
+            <h3 className="mb-6 sm:mb-8 text-lg sm:text-xl font-bold uppercase tracking-wide text-slate-400">Past</h3>
 
             <div className="relative space-y-8">
               <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />

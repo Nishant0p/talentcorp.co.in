@@ -190,7 +190,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 	const heroAsset = resolveAsset('client.card.1', '/clients.png', 'Clients Hero Banner')
 
 	return (
-		<section className="relative min-h-screen flex items-center overflow-visible bg-[#0f2a4d]">
+		<section className="relative min-h-[100svh] lg:min-h-screen flex items-center overflow-visible bg-[#0f2a4d]">
 			<div className="absolute inset-0 z-0 overflow-hidden">
 				<img
 					src={heroAsset.url}
@@ -207,7 +207,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 
 			<div className="absolute -top-24 -left-24 z-0 h-96 w-96 rounded-full border border-white/10" />
 
-			<div className="container mx-auto px-6 relative z-10 py-16 pt-24 pb-16 md:pb-24">
+			<div className="container mx-auto px-6 relative z-10 py-16 pt-32 pb-16 md:pb-24">
 				<div className="max-w-3xl md:ml-8 lg:ml-12 text-white">
 					<div className="mb-8">
 						<div className="flex flex-wrap items-center gap-1.5 overflow-visible pb-1 md:flex-nowrap md:gap-2 md:overflow-x-auto">
@@ -222,7 +222,7 @@ function ClientsHero({ resolveAsset, partnerLogos }) {
 						</div>
 					</div>
 
-					<h1 className="mb-6 text-5xl font-bold leading-tight text-white md:text-7xl">
+					<h1 className="mb-6 text-3xl sm:text-5xl font-bold leading-tight text-white md:text-7xl">
 						Building India&apos;s
 						<br />
 						<span className="text-[#FF8C00]">Future Workforce</span>
@@ -364,7 +364,7 @@ function Industries({ resolveAsset }) {
 	}, [])
 
 	return (
-		<section ref={ref} className="bg-white py-20">
+		<section ref={ref} className="bg-white py-12 sm:py-20">
 			<div className="container mx-auto px-4">
 				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
 					<p className="mb-2 font-semibold text-blue-600">INDUSTRIES WE SERVE</p>
@@ -463,7 +463,7 @@ function CaseStudies({ resolveAsset }) {
 	}, [])
 
 	return (
-		<section ref={ref} className="bg-white py-20">
+		<section ref={ref} className="bg-white py-12 sm:py-20">
 			<div className="container mx-auto px-4">
 				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
 					<p className="mb-2 font-semibold text-blue-600">SUCCESS STORIES</p>
@@ -627,7 +627,7 @@ function ClientsCTA() {
 	}
 
 	return (
-		<section ref={ref} className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 py-20">
+		<section ref={ref} className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 py-12 sm:py-20">
 			<div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 			<div className="absolute left-10 top-20 h-40 w-40 rounded-full bg-white/5 blur-3xl" />
 			<div className="absolute bottom-20 right-10 h-60 w-60 rounded-full bg-white/5 blur-3xl" />

@@ -135,7 +135,7 @@ function SecurityHero({ resolveAsset }) {
 	)
 
 	return (
-		<section className="relative flex min-h-[100svh] items-center overflow-hidden">
+		<section className="relative flex min-h-[100svh] items-center overflow-hidden pt-28 sm:pt-24">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-[#0F172A]/70" />
@@ -155,9 +155,9 @@ function SecurityHero({ resolveAsset }) {
 				))}
 			</div>
 
-			<div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-20 lg:px-8">
+			<div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 py-12 sm:py-20 lg:px-8">
 				<div className="max-w-3xl text-left">
-					<h1 className="hero-text-reveal mb-6 text-5xl font-bold leading-[1.1] text-white animate-fade-in sm:text-6xl lg:text-7xl">
+					<h1 className="hero-text-reveal mb-6 text-3xl font-bold leading-[1.1] text-white animate-fade-in sm:text-5xl md:text-6xl lg:text-7xl">
 						Protect What
 						<span className="mt-2 block text-[#2563EB]">Matters Most</span>
 					</h1>
@@ -189,7 +189,7 @@ function SecurityHero({ resolveAsset }) {
 					</div>
 				</div>
 
-				<div className="mt-16 grid max-w-4xl grid-cols-2 gap-4 text-left animate-fade-in-up animation-delay-400 md:grid-cols-4 md:gap-6">
+				<div className="mt-12 sm:mt-16 grid max-w-4xl grid-cols-2 gap-4 text-left animate-fade-in-up animation-delay-400 md:grid-cols-4 md:gap-6">
 					{[
 						{ number: '15,000+', label: 'Guards Deployed' },
 						{ number: '500+', label: 'Happy Clients' },
@@ -215,12 +215,12 @@ function WhatWeProvide({ resolveAsset }) {
 	)
 
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
 			<div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-[#F97316]/5 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="grid items-center gap-16 lg:grid-cols-2">
+			<div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="grid items-center gap-8 sm:gap-16 lg:grid-cols-2">
 					<div className="relative animate-fade-in">
 						<div className="relative overflow-hidden rounded-3xl shadow-2xl">
 							<img src={guardAsset.url} alt={guardAsset.alt} className="h-[360px] w-full object-cover sm:h-[420px] lg:h-[500px]" />
@@ -249,7 +249,7 @@ function WhatWeProvide({ resolveAsset }) {
 							<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-4 py-2">
 								<span className="text-sm font-bold text-[#2563EB]">WHAT WE PROVIDE</span>
 							</div>
-							<h2 className="mb-4 text-4xl font-bold text-[#0F172A] lg:text-5xl">
+							<h2 className="mb-4 text-3xl sm:text-4xl font-bold text-[#0F172A] lg:text-5xl">
 								Complete Security
 								<span className="block text-[#2563EB]">For Your Peace of Mind</span>
 							</h2>
@@ -258,7 +258,7 @@ function WhatWeProvide({ resolveAsset }) {
 							</p>
 						</div>
 
-						<div className="grid gap-6 sm:grid-cols-2">
+						<div className="grid gap-4 sm:gap-6 sm:grid-cols-2">
 							{featureCards.map((feature, i) => (
 								<div key={feature.title} className="group rounded-xl border border-slate-100 bg-slate-50 p-5 transition-all duration-300 hover:border-[#2563EB] hover:bg-[#2563EB] animate-fade-in-up" style={{ animationDelay: `${i * 100}ms` }}>
 									<feature.icon className="mb-3 h-8 w-8 text-[#2563EB] transition-colors group-hover:text-white" />
@@ -276,22 +276,22 @@ function WhatWeProvide({ resolveAsset }) {
 
 function SecurityTypes() {
 	return (
-		<section className="relative overflow-hidden bg-[#0F172A] py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-[#0F172A] py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0">
 				<div className="absolute left-1/4 top-0 h-96 w-96 animate-pulse rounded-full bg-[#2563EB]/10 blur-3xl" />
 				<div className="absolute bottom-0 right-1/4 h-80 w-80 animate-pulse rounded-full bg-[#F97316]/10 blur-3xl" style={{ animationDelay: '1s' }} />
 			</div>
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="mb-16 text-center animate-fade-in">
+			<div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="mb-12 sm:mb-16 text-center animate-fade-in">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2">
 						<span className="text-sm font-bold text-white">WHERE WE WORK</span>
 					</div>
-					<h2 className="mb-4 text-4xl font-bold text-white lg:text-5xl">Security For Every Place</h2>
+					<h2 className="mb-4 text-3xl sm:text-4xl font-bold text-white lg:text-5xl">Security For Every Place</h2>
 					<p className="mx-auto max-w-2xl text-lg text-white/70">We provide guards for all types of places, big or small, with flexible shift coverage.</p>
 				</div>
 
-				<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+				<div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
 					{securityTypes.map((type, i) => (
 						<div
 							key={type.title}
@@ -308,7 +308,7 @@ function SecurityTypes() {
 					))}
 				</div>
 
-				<div className="mt-16 text-center animate-fade-in-up animation-delay-500">
+				<div className="mt-12 sm:mt-16 text-center animate-fade-in-up animation-delay-500">
 					<p className="mb-4 text-white/70">Need security for a different place?</p>
 					<a href="#enquiry" className="inline-flex items-center justify-center rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-105 hover:bg-[#EA580C]">
 						Tell Us Your Need
@@ -321,7 +321,7 @@ function SecurityTypes() {
 
 function OurProcess() {
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div
 				className="absolute inset-0 opacity-50"
 				style={{
@@ -330,18 +330,18 @@ function OurProcess() {
 				}}
 			/>
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="mb-16 text-center animate-fade-in">
+			<div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="mb-12 sm:mb-16 text-center animate-fade-in">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-4 py-2">
 						<span className="text-sm font-bold text-[#2563EB]">SIMPLE PROCESS</span>
 					</div>
-					<h2 className="mb-4 text-4xl font-bold text-[#0F172A] lg:text-5xl">How To Get Security Guards</h2>
+					<h2 className="mb-4 text-3xl sm:text-4xl font-bold text-[#0F172A] lg:text-5xl">How To Get Security Guards</h2>
 					<p className="mx-auto max-w-2xl text-lg text-[#64748B]">Getting security guards from us is simple and transparent in just 4 steps.</p>
 				</div>
 
 				<div className="relative">
 					<div className="absolute left-0 right-0 top-1/2 hidden h-1 -translate-y-1/2 bg-gradient-to-r from-[#2563EB] via-[#F97316] to-[#2563EB] lg:block" />
-					<div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+					<div className="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4">
 						{processSteps.map((step, i) => (
 							<div key={step.number} className="relative animate-fade-in-up" style={{ animationDelay: `${i * 150}ms` }}>
 								<div className="group relative rounded-2xl border border-slate-100 bg-white p-6 shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
@@ -367,7 +367,7 @@ function OurProcess() {
 					</div>
 				</div>
 
-				<div className="mt-16 text-center animate-fade-in-up animation-delay-500">
+				<div className="mt-12 sm:mt-16 text-center animate-fade-in-up animation-delay-500">
 					<div className="inline-flex flex-col items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:flex-row">
 						<p className="text-lg text-[#0F172A]">
 							<span className="font-bold">Ready to get started?</span> Call us now or fill the form below
@@ -392,18 +392,18 @@ function WhyChooseUs({ resolveAsset }) {
 	)
 
 	return (
-		<section className="relative overflow-hidden bg-slate-50 py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-slate-50 py-12 sm:py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="grid items-center gap-16 lg:grid-cols-2">
+			<div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="grid items-center gap-8 sm:gap-16 lg:grid-cols-2">
 					<div className="space-y-8">
 						<div className="animate-fade-in">
 							<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-4 py-2">
 								<Star className="h-4 w-4 text-[#F97316]" />
 								<span className="text-sm font-bold text-[#2563EB]">WHY CHOOSE US</span>
 							</div>
-							<h2 className="mb-4 text-4xl font-bold text-[#0F172A] lg:text-5xl">
+							<h2 className="mb-4 text-3xl sm:text-4xl font-bold text-[#0F172A] lg:text-5xl">
 								Why People Trust
 								<span className="block text-[#2563EB]">TSPL Security</span>
 							</h2>

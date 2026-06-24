@@ -124,7 +124,7 @@ const steps = [
 
 function DvocHero() {
 	return (
-		<section className="relative min-h-[82vh] overflow-hidden bg-[#0F172A] pt-20 lg:min-h-[calc(100vh-72px)] lg:pt-16">
+		<section className="relative min-h-[100svh] lg:min-h-[calc(100vh-72px)] overflow-hidden bg-[#0F172A] pt-28 pb-12 lg:pt-16">
 			<div className="absolute inset-0">
 				<img
 					src="/training%20.jpeg"
@@ -145,7 +145,7 @@ function DvocHero() {
 							<span className="text-sm font-bold text-[#F97316]">NSQF Level-5 | Dual Education Model</span>
 						</div>
 
-						<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
+						<h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-5xl">
 							Diploma in Vocational Studies
 							<span className="mt-2 block text-[#2563EB]">(D. Voc)</span>
 							<span className="mt-2 block">2-Year Industry Integrated Programme</span>
@@ -213,7 +213,7 @@ function DvocHero() {
 
 function DvocBenefits() {
 	return (
-		<section className="relative overflow-hidden py-20 lg:py-28">
+		<section className="relative overflow-hidden py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 bg-gradient-to-b from-white via-[#F8FAFC] to-white" />
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
 			<div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-[#F97316]/5 blur-3xl" />
@@ -282,7 +282,7 @@ function DvocBenefits() {
 
 function DvocProcess() {
 	return (
-		<section className="relative overflow-hidden bg-[#F8FAFC] py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-[#F8FAFC] py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #2563EB 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
 			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
@@ -325,7 +325,7 @@ function DvocProcess() {
 
 function DvocEligibility() {
 	return (
-		<section className="relative overflow-hidden py-20 lg:py-28">
+		<section className="relative overflow-hidden py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 bg-white" />
 			<div className="absolute left-0 top-0 h-full w-full bg-gradient-to-br from-[#2563EB]/5 via-transparent to-[#F97316]/5" />
 

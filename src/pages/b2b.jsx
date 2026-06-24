@@ -387,7 +387,7 @@ function B2BPage() {
 			<Navbar />
 
 			<main className="overflow-hidden">
-				<section ref={heroRef} className="relative min-h-screen overflow-hidden bg-[#07111f] pt-24 text-white">
+				<section ref={heroRef} className="relative min-h-[100svh] lg:min-h-screen overflow-hidden bg-[#07111f] pt-28 pb-12 lg:pt-24 text-white">
 					<div className="absolute inset-0">
 						<img
 							src={b2bHeroAsset.url}
@@ -417,7 +417,7 @@ function B2BPage() {
 								<span className="text-sm font-medium text-white/80">Business to Business Solutions</span>
 							</div>
 
-							<h1 className="hero-text-reveal max-w-3xl text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+							<h1 className="hero-text-reveal max-w-3xl text-3xl sm:text-6xl font-bold leading-[1.05] tracking-tight lg:text-7xl">
 								Scale Your
 								<br />
 								<span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-orange-300 bg-clip-text text-transparent">
@@ -492,7 +492,7 @@ function B2BPage() {
 					</div>
 				</section>
 
-				<section className="border-y border-slate-200 bg-[#fbfdff] py-16">
+				<section className="border-y border-slate-200 bg-[#fbfdff] py-10 sm:py-16">
 					<div className="mx-auto max-w-7xl px-6 lg:px-8">
 						<div className="text-center text-lg text-slate-500">
 							Trusted by{' '}
@@ -562,7 +562,7 @@ function B2BPage() {
 					</div>
 				</section>
 
-				<section ref={servicesRef} id="services" className="relative bg-white py-24 lg:py-32">
+				<section ref={servicesRef} id="services" className="relative bg-white py-12 sm:py-24 lg:py-32">
 					<div className="absolute inset-0 pointer-events-none opacity-60" style={{ backgroundImage: 'repeating-linear-gradient(135deg, rgba(37,99,235,0.04) 0px, rgba(37,99,235,0.04) 1px, transparent 1px, transparent 16px)' }} />
 
 					<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
@@ -623,7 +623,7 @@ function B2BPage() {
 					</div>
 				</section>
 
-				<section ref={processRef} className="relative bg-[#f8fbff] py-24 lg:py-32">
+				<section ref={processRef} className="relative bg-[#f8fbff] py-12 sm:py-24 lg:py-32">
 					<div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'radial-gradient(circle at center, rgba(59,130,246,0.08) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
 					<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
@@ -710,7 +710,7 @@ function B2BPage() {
 					</div>
 				</section>
 
-				<section ref={industriesRef} className="relative bg-white py-24 lg:py-32">
+				<section ref={industriesRef} className="relative bg-white py-12 sm:py-24 lg:py-32">
 					<div className="absolute inset-0 pointer-events-none opacity-50" style={{ backgroundImage: 'repeating-linear-gradient(135deg, rgba(15,23,42,0.035) 0px, rgba(15,23,42,0.035) 1px, transparent 1px, transparent 16px)' }} />
 
 					<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
@@ -756,7 +756,7 @@ function B2BPage() {
 					</div>
 				</section>
 
-				<section ref={statsRef} className="relative overflow-hidden py-24 lg:py-32 text-white">
+				<section ref={statsRef} className="relative overflow-hidden py-12 sm:py-24 lg:py-32 text-white">
 					<div className="absolute inset-0">
 						<img src="/happy-excited-executive-business-team-600nw-2424450635.jpg.webp" alt="Business growth" className="h-full w-full object-cover" />
 						<div className="absolute inset-0 bg-[#08111f]/92" />
@@ -801,7 +801,7 @@ function B2BPage() {
 					</div>
 				</section>
 
-				<section ref={testimonialsRef} className="relative overflow-hidden bg-gradient-to-b from-[#08111f] to-[#111c31] py-24 lg:py-32 text-white">
+				<section ref={testimonialsRef} className="relative overflow-hidden bg-gradient-to-b from-[#08111f] to-[#111c31] py-12 sm:py-24 lg:py-32 text-white">
 					<div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at center, rgba(59,130,246,0.1) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
 
 					<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">

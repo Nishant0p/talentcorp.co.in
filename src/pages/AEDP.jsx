@@ -46,7 +46,7 @@ function AedpHero({ resolveAsset }) {
 	const heroAsset = resolveAsset('aedp.hero', '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp', 'AEDP students in practical learning')
 
 	return (
-		<section className="relative min-h-[100svh] overflow-hidden bg-[#0F172A] pt-16">
+		<section className="relative min-h-[100svh] overflow-hidden bg-[#0F172A] pt-28 pb-12 sm:pt-36 sm:pb-16">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/70" />
@@ -62,7 +62,7 @@ function AedpHero({ resolveAsset }) {
 						<span className="text-sm font-bold text-[#F97316]">APPRENTICESHIP EMBEDDED DEGREE PROGRAM</span>
 					</div>
 
-					<h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+					<h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
 						Earn Your Degree
 						<span className="mt-2 block text-[#2563EB]">With Apprenticeship Experience</span>
 					</h1>
@@ -88,7 +88,7 @@ function AedpHero({ resolveAsset }) {
 
 function AedpOverview() {
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
 			<div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-[#F97316]/5 blur-3xl" />
 
@@ -132,7 +132,7 @@ function AedpOverview() {
 
 function AedpBenefits() {
 	return (
-		<section className="relative overflow-hidden bg-[#F8FAFC] py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-[#F8FAFC] py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #CBD5E1 1px, transparent 0)', backgroundSize: '36px 36px' }} />
 
 			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
@@ -161,7 +161,7 @@ function AedpBenefits() {
 
 function AedpIndustrySection() {
 	return (
-		<section className="relative overflow-hidden bg-[#0F172A] py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-[#0F172A] py-12 sm:py-20 lg:py-28">
 			<div className="absolute left-1/4 top-0 h-80 w-80 rounded-full bg-[#2563EB]/20 blur-3xl" />
 			<div className="absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-[#F97316]/20 blur-3xl" />
 

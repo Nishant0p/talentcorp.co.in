@@ -83,7 +83,7 @@ const processSteps = [
 function NAPSHero() {
 	return (
 		<section
-			className="relative flex min-h-screen items-center overflow-hidden pt-20 sm:pt-24"
+			className="relative flex min-h-[100svh] items-center overflow-hidden pt-28 pb-12 sm:pt-24"
 			style={{ backgroundImage: 'url("/naps.png")', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}
 		>
 			<div className="absolute inset-0 bg-white/10" />
@@ -95,7 +95,7 @@ function NAPSHero() {
 						<span className="text-sm font-semibold tracking-wide text-white">Premium Apprenticeship Program</span>
 					</div>
 
-					<h1 className="mb-6 text-2xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-3xl md:text-[2.75rem] lg:text-4xl">
+					<h1 className="mb-6 text-xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-3xl md:text-[2.75rem] lg:text-4xl">
 						National Apprenticeship
 						<span className="mt-2 block bg-gradient-to-r from-[#2563EB] to-[#F97316] bg-clip-text text-transparent">Programme Scheme</span>
 					</h1>
@@ -125,7 +125,7 @@ function NAPSHero() {
 
 function NAPSAbout() {
 	return (
-		<section className="relative bg-slate-50 py-20 lg:py-28">
+		<section className="relative bg-slate-50 py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-5" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='256' height='256' fill='white'/%3E%3Cpath d='M0 0h256v256H0z' fill='none'/%3E%3C/svg%3E")` }} />
 
 			<div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -194,7 +194,7 @@ Promotion Scheme is to promote apprenticeship training in the country. For the i
 
 function NAPSBenefits() {
 	return (
-		<section className="relative bg-white py-20 lg:py-28">
+		<section className="relative bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
 			<div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-[#F97316]/5 blur-3xl" />
 
@@ -253,7 +253,7 @@ function NAPSBenefits() {
 
 function NAPSEligibility() {
 	return (
-		<section className="relative bg-slate-50 py-16 lg:py-20">
+		<section className="relative bg-slate-50 py-10 sm:py-16 lg:py-20">
 			<div
 				className="absolute inset-0 opacity-5"
 				style={{
@@ -346,7 +346,7 @@ function NAPSEligibility() {
 
 function NAPSProcess() {
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-5" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='256' height='256' fill='white'/%3E%3C/svg%3E")` }} />
 			<div className="pointer-events-none absolute inset-0">
 				<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/10 opacity-40 blur-3xl" />

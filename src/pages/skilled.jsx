@@ -108,7 +108,7 @@ function SkilledJobHero({ resolveAsset }) {
 	const heroAsset = resolveAsset('skilled.hero', 'https://images.pexels.com/photos/32048365/pexels-photo-32048365.jpeg', 'Skilled Workers')
 
 	return (
-		<section className="relative flex h-[100svh] items-center overflow-hidden">
+		<section className="relative flex min-h-[100svh] sm:h-[100svh] items-center overflow-hidden pt-28 sm:pt-24">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/85 to-[#0F172A]/70" />
@@ -117,20 +117,20 @@ function SkilledJobHero({ resolveAsset }) {
 			<div className="absolute right-20 top-20 h-72 w-72 rounded-full bg-[#F97316]/20 blur-3xl" />
 			<div className="absolute bottom-20 left-1/4 h-96 w-96 rounded-full bg-[#2563EB]/15 blur-3xl" />
 
-			<div className="relative z-10 mx-auto flex w-full max-w-7xl justify-start px-6 py-16 lg:px-8 lg:py-12">
+			<div className="relative z-10 mx-auto flex w-full max-w-7xl justify-start px-4 sm:px-6 py-12 sm:py-16 lg:px-8 lg:py-12">
 				<div className="max-w-3xl text-left lg:max-w-4xl">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/20 px-4 py-2 backdrop-blur-sm">
 						<Wrench className="h-4 w-4 text-[#F97316]" />
 						<span className="text-sm font-bold text-white">SKILLED JOB WORK</span>
 					</div>
 
-					<h1 className="mb-5 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+					<h1 className="mb-5 text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
 						We Have
 						<span className="mt-2 block text-[#F97316]">Trained Workers</span>
 						<span className="block text-white">For Your Work</span>
 					</h1>
 
-					<p className="mb-8 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
+					<p className="mb-8 max-w-2xl text-base leading-relaxed text-white/90 sm:text-lg">
 						Need trained workers like welders, electricians, or machine operators?
 						<span className="font-semibold text-[#F97316]"> TSPL provides skilled workers who know their job well.</span>
 						 They come trained and ready to work.
@@ -163,19 +163,19 @@ function SkilledJobHero({ resolveAsset }) {
 
 function WhatIsSkilledJob() {
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute right-0 top-20 h-80 w-80 rounded-full bg-[#F97316]/5 blur-3xl" />
 			<div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="grid items-center gap-16 lg:grid-cols-2">
+			<div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="grid items-center gap-8 sm:gap-16 lg:grid-cols-2">
 					<div>
 						<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#F97316]/20 bg-[#F97316]/10 px-4 py-2">
 							<Lightbulb className="h-4 w-4 text-[#F97316]" />
 							<span className="text-sm font-bold text-[#F97316]">SIMPLE EXPLANATION</span>
 						</div>
 
-						<h2 className="mb-6 text-4xl font-bold leading-tight text-[#0F172A] lg:text-5xl">
+						<h2 className="mb-6 text-3xl sm:text-4xl font-bold leading-tight text-[#0F172A] lg:text-5xl">
 							What is
 							<span className="text-[#F97316]"> Skilled Job Work?</span>
 						</h2>
@@ -243,21 +243,21 @@ function JobTypes({ resolveAsset }) {
 	]
 
 	return (
-		<section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute left-0 top-1/4 h-96 w-96 rounded-full bg-[#F97316]/5 blur-3xl" />
 			<div className="absolute bottom-1/4 right-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="mb-16 text-center">
+			<div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="mb-12 sm:mb-16 text-center">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#F97316]/20 bg-[#F97316]/10 px-4 py-2">
 						<Hammer className="h-4 w-4 text-[#F97316]" />
 						<span className="text-sm font-bold text-[#F97316]">TYPES OF SKILLED WORKERS</span>
 					</div>
-					<h2 className="mb-6 text-4xl font-bold text-[#0F172A] lg:text-5xl">What Kind of Worker Do You Need?</h2>
+					<h2 className="mb-6 text-3xl sm:text-4xl font-bold text-[#0F172A] lg:text-5xl">What Kind of Worker Do You Need?</h2>
 					<p className="mx-auto max-w-3xl text-lg text-[#64748B]">We have all types of trained workers. Just tell us what work you need done - we will send the right person with the right skills.</p>
 				</div>
 
-				<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+				<div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
 					{jobTypes.map((job, index) => {
 						const roleAsset = resolveAsset(roleKeys[index] || roleKeys[0], job.image, job.title)
 
@@ -309,24 +309,24 @@ function JobTypes({ resolveAsset }) {
 
 function Industries() {
 	return (
-		<section className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50 py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50 py-12 sm:py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#F97316]/5 blur-3xl" />
 			<div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="mb-16 text-center">
+			<div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="mb-12 sm:mb-16 text-center">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-4 py-2">
 						<Building2 className="h-4 w-4 text-[#2563EB]" />
 						<span className="text-sm font-bold text-[#2563EB]">INDUSTRIES WE SERVE</span>
 					</div>
-					<h2 className="mb-6 text-4xl font-bold text-[#0F172A] lg:text-5xl">Which Business Are You In?</h2>
+					<h2 className="mb-6 text-3xl sm:text-4xl font-bold text-[#0F172A] lg:text-5xl">Which Business Are You In?</h2>
 					<p className="mx-auto max-w-2xl text-lg text-[#64748B]">
 						We provide skilled workers for all types of industries.
 						<span className="font-semibold text-[#F97316]"> Whatever your industry, we have the right workers.</span>
 					</p>
 				</div>
 
-				<div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6 md:grid-cols-3">
+				<div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6 md:grid-cols-3">
 					{industries.map((industry) => (
 						<div key={industry.name} className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-xl">
 							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: `${industry.color}15` }}>
@@ -358,17 +358,17 @@ function Industries() {
 
 function HowItWorks() {
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute left-0 top-1/4 h-72 w-72 rounded-full bg-[#2563EB]/5 blur-3xl" />
 			<div className="absolute bottom-1/4 right-0 h-72 w-72 rounded-full bg-[#F97316]/5 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="mb-16 text-center">
+			<div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="mb-12 sm:mb-16 text-center">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 px-4 py-2">
 						<Sparkles className="h-4 w-4 text-[#2563EB]" />
 						<span className="text-sm font-bold text-[#2563EB]">SIMPLE PROCESS</span>
 					</div>
-					<h2 className="mb-6 text-4xl font-bold text-[#0F172A] lg:text-5xl">How Does It Work?</h2>
+					<h2 className="mb-6 text-3xl sm:text-4xl font-bold text-[#0F172A] lg:text-5xl">How Does It Work?</h2>
 					<p className="mx-auto max-w-2xl text-xl text-[#64748B]">
 						Getting skilled workers is easy. Just 4 simple steps.
 						<span className="font-semibold text-[#F97316]"> We do all the hard work for you.</span>
@@ -377,7 +377,7 @@ function HowItWorks() {
 
 				<div className="relative">
 					<div className="absolute left-0 right-0 top-1/2 hidden h-1 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#2563EB] via-[#F97316] via-[#8B5CF6] to-[#22C55E] lg:block" />
-					<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+					<div className="grid gap-4 sm:gap-8 md:grid-cols-2 lg:grid-cols-4">
 						{processSteps.map((step, index) => (
 							<div key={step.number} className="group relative">
 								<div className="rounded-3xl border border-slate-100 bg-white p-8 shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
@@ -400,7 +400,7 @@ function HowItWorks() {
 					</div>
 				</div>
 
-				<div className="mt-16 text-center">
+				<div className="mt-12 sm:mt-16 text-center">
 					<div className="rounded-3xl border border-[#F97316]/20 bg-gradient-to-r from-[#F97316]/10 to-[#2563EB]/10 p-8">
 						<h3 className="mb-4 text-2xl font-bold text-[#0F172A]">Ready to Get Started?</h3>
 						<p className="mx-auto mb-6 max-w-xl text-[#64748B]">It is free to enquire. Just tell us what you need - we will call you back with options.</p>
@@ -423,21 +423,21 @@ function HowItWorks() {
 
 function WhyChooseUs() {
 	return (
-		<section className="relative overflow-hidden bg-[#0F172A] py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-[#0F172A] py-12 sm:py-20 lg:py-28">
 			<div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-[#F97316]/10 blur-3xl" />
 			<div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-[#2563EB]/10 blur-3xl" />
 
-			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-				<div className="mb-16 text-center">
+			<div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="mb-12 sm:mb-16 text-center">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2">
 						<Star className="h-4 w-4 text-[#F97316]" />
 						<span className="text-sm font-bold text-white">WHY CHOOSE TSPL</span>
 					</div>
-					<h2 className="mb-6 text-4xl font-bold text-white lg:text-5xl">Why Companies Choose Us?</h2>
+					<h2 className="mb-6 text-3xl sm:text-4xl font-bold text-white lg:text-5xl">Why Companies Choose Us?</h2>
 					<p className="mx-auto max-w-2xl text-xl text-white/70">Many companies trust TSPL for skilled workers. Here is why:</p>
 				</div>
 
-				<div className="mb-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+				<div className="mb-12 sm:mb-16 grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
 					{whyBenefits.map((benefit) => (
 						<div key={benefit.title} className="group relative rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/10">
 							<div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl shadow-lg" style={{ backgroundColor: `${benefit.color}20` }}>
@@ -476,7 +476,7 @@ function WhyChooseUs() {
 
 function Enquiry() {
 	return (
-		<section className="px-8 pb-20 pt-2">
+		<section className="px-4 sm:px-8 pb-12 sm:pb-20 pt-2">
 			<div className="mx-auto w-full max-w-6xl">
 				<div className="flex flex-col items-center justify-between gap-10 rounded-3xl bg-gradient-to-r from-[#2d52b4] to-[#4083ff] p-8 shadow-lg md:flex-row md:p-12">
 					<div className="flex-1">

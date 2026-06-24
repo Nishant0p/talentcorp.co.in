@@ -33,7 +33,7 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
   }, [fallbackBackgroundImage]);
 
   return (
-    <section className="relative flex h-screen min-h-[700px] w-full items-center overflow-hidden font-sans bg-slate-950">
+    <section className="relative flex min-h-[100svh] sm:h-screen sm:min-h-[700px] w-full items-center overflow-hidden font-sans bg-slate-950 pt-28 pb-10 sm:pt-0 sm:pb-0">
       <div className="absolute inset-0 z-0">
         <img
           src={hero.backgroundImage}
@@ -48,8 +48,8 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
         <div className="absolute inset-0 bg-black/40 lg:bg-gradient-to-r lg:from-black/60 lg:via-black/40 lg:to-transparent" />
       </div>
 
-      <div className="relative z-10 mx-auto h-full w-full">
-        <div className="absolute bottom-8 left-0 right-0 max-w-4xl px-4 sm:px-6 md:bottom-12 md:px-12">
+      <div className="relative z-10 mx-auto h-full w-full flex flex-col justify-end sm:block">
+        <div className="relative bottom-0 left-0 right-0 max-w-4xl px-4 sm:px-6 md:absolute md:bottom-12 md:px-12 mt-auto pb-8 md:pb-0">
           <div className="relative space-y-6 text-center sm:text-left">
             <div className="pointer-events-none absolute -left-10 -bottom-10 h-56 w-56 rounded-full bg-orange-500/25 blur-3xl md:h-72 md:w-72" />
             <div className="pointer-events-none absolute left-40 -bottom-16 h-40 w-40 rounded-full bg-orange-400/15 blur-3xl md:left-56 md:h-52 md:w-52" />
@@ -66,7 +66,7 @@ const HeroSection = ({ onFindJobs, onHireTalent }) => {
                 {hero.eyebrow}
               </div>
 
-              <h1 className="text-5xl font-bold leading-[0.9] tracking-tighter text-white sm:text-6xl md:text-8xl lg:text-[110px]">
+              <h1 className="text-4xl font-bold leading-[0.9] tracking-tighter text-white sm:text-6xl md:text-8xl lg:text-[110px]">
                 {hero.titleTop}
                 <br />
                 {hero.titleBottom}

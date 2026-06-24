@@ -278,7 +278,7 @@ function ComplianceHero() {
 	}, [])
 
 	return (
-		<section className="relative min-h-screen overflow-hidden bg-white pt-16 sm:pt-24">
+		<section className="relative min-h-[100svh] overflow-hidden bg-white pt-28 pb-12 sm:pt-36 sm:pb-16">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/70" />
@@ -307,7 +307,7 @@ function ComplianceHero() {
 							<span className="text-xs sm:text-sm font-medium text-white">Legal Protection Partner</span>
 						</div>
 
-						<h1 className="text-4xl sm:text-5xl font-bold leading-tight lg:text-7xl">
+						<h1 className="text-3xl sm:text-5xl font-bold leading-tight lg:text-7xl">
 							<span className="text-gray-900">Stay</span>
 							<br />
 							<span className="relative">
@@ -403,7 +403,7 @@ function WhyCompliance() {
 	}, [])
 
 	return (
-		<section ref={sectionRef} className="bg-gradient-to-b from-[#0a0a0a] to-[#111111] py-24">
+		<section ref={sectionRef} className="bg-gradient-to-b from-[#0a0a0a] to-[#111111] py-12 sm:py-24">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-2">
@@ -465,7 +465,7 @@ function ComplianceServices() {
 	const colors = serviceColorMap[currentService.color]
 
 	return (
-		<section ref={sectionRef} className="bg-[#0a0a0a] py-24">
+		<section ref={sectionRef} className="bg-[#0a0a0a] py-12 sm:py-24">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
 					<p className="mb-4 font-medium text-blue-400">Our Services</p>
@@ -551,7 +551,7 @@ function LawsCovered() {
 	}, [])
 
 	return (
-		<section ref={sectionRef} className="bg-gradient-to-b from-gray-50 to-white py-24">
+		<section ref={sectionRef} className="bg-gradient-to-b from-gray-50 to-white py-12 sm:py-24">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
 					<p className="mb-4 font-medium text-blue-600">Comprehensive Coverage</p>
@@ -603,7 +603,7 @@ function ComplianceProcess() {
 	}, [])
 
 	return (
-		<section ref={sectionRef} className="bg-white py-24">
+		<section ref={sectionRef} className="bg-white py-12 sm:py-24">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
 					<p className="mb-4 font-medium text-blue-600">How It Works</p>
@@ -711,7 +711,7 @@ function ComplianceCTA() {
 	}
 
 	return (
-		<section ref={sectionRef} className="relative overflow-hidden bg-[#0a0a0a] py-24">
+		<section ref={sectionRef} className="relative overflow-hidden bg-[#0a0a0a] py-12 sm:py-24">
 			<div className="absolute inset-0">
 				<div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
 				<div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />

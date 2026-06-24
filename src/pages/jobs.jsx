@@ -987,7 +987,7 @@ function ApplyCTA() {
 	const quickRoles = ['Welder', 'Electrician', 'Helper', 'Supervisor', 'Technician', 'Fitter', 'Driver', 'Other'];
 
 	return (
-		<section ref={sectionRef} className="relative overflow-hidden bg-white py-20">
+		<section ref={sectionRef} className="relative overflow-hidden bg-white py-12 sm:py-20">
 			<div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(37,99,235,0.5) 1px, transparent 0)', backgroundSize: '28px 28px' }} />
 
 			<div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">

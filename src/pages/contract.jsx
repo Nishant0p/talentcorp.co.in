@@ -191,7 +191,7 @@ function ContractHero({ resolveAsset }) {
 	}, [])
 
 	return (
-		<section className="relative min-h-screen overflow-hidden bg-white pt-24">
+		<section className="relative min-h-[100svh] lg:min-h-screen overflow-hidden bg-white pt-28 pb-12">
 			<div className="absolute inset-0">
 					<img src={resolveAsset('contract.hero', '/WhatsApp Image 2026-04-16 at 10.53.25 (1).jpeg').url} alt={resolveAsset('contract.hero', '/WhatsApp Image 2026-04-16 at 10.53.25 (1).jpeg', 'Contract Staffing').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/70 to-white/55" />
@@ -205,7 +205,7 @@ function ContractHero({ resolveAsset }) {
 						<span className="text-sm font-semibold text-blue-700">Flexible Workforce Solutions</span>
 					</div>
 
-					<h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+					<h1 className="text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
 						<span className="text-gray-900">Contract Staffing</span>
 						<br />
 						<span className="text-gray-900">That&apos;s </span>
@@ -265,7 +265,7 @@ function ContractHero({ resolveAsset }) {
 
 function WhatIsContract({ resolveAsset }) {
 	return (
-		<section className="bg-slate-50 py-20 lg:py-28">
+		<section className="bg-slate-50 py-12 sm:py-20 lg:py-28">
 			<div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
 				<div className="relative mx-auto flex justify-center">
 					<div className="relative aspect-[4/3] w-full max-w-xl overflow-hidden rounded-3xl shadow-2xl">
@@ -314,7 +314,7 @@ function StaffingTypes({ staffingData }) {
 	const [activeType, setActiveType] = useState(0)
 
 	return (
-		<section className="bg-white py-20 lg:py-28">
+		<section className="bg-white py-12 sm:py-20 lg:py-28">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className="mb-16 max-w-3xl text-center mx-auto">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-orange-700">
@@ -388,7 +388,7 @@ function ContractProcess() {
 	}, [])
 
 	return (
-		<section className="overflow-hidden bg-gradient-to-b from-slate-50 to-white py-20 lg:py-28">
+		<section className="overflow-hidden bg-gradient-to-b from-slate-50 to-white py-12 sm:py-20 lg:py-28">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className="mb-16 max-w-3xl text-center mx-auto">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-blue-700">
@@ -429,7 +429,7 @@ function ContractIndustries() {
 	const [hoveredIndex, setHoveredIndex] = useState(null)
 
 	return (
-		<section className="overflow-hidden bg-white py-20 lg:py-28">
+		<section className="overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className="mx-auto mb-16 max-w-3xl text-center">
 					<div className="mb-6 inline-flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-orange-700">
@@ -465,7 +465,7 @@ function ContractIndustries() {
 
 function ContractBenefits({ resolveAsset }) {
 	return (
-		<section className="relative overflow-hidden bg-slate-50 py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-slate-50 py-12 sm:py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-full w-1/2">
 				<div className="absolute right-1/4 top-1/4 h-64 w-64 rounded-full bg-blue-100 opacity-50 blur-3xl" />
 				<div className="absolute bottom-1/4 right-1/3 h-48 w-48 rounded-full bg-orange-100 opacity-50 blur-3xl" />
@@ -598,7 +598,7 @@ function ContractCTA({ resolveAsset }) {
 	const durationOptions = ['1-3 Months', '3-6 Months', '6-12 Months', '1+ Year', 'Project Based']
 
 	return (
-		<section id="contract-cta" className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section id="contract-cta" className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0">
 				<img src={resolveAsset('contract.contactBackground', '/images/contract-hero.jpg').url} alt={resolveAsset('contract.contactBackground', '/images/contract-hero.jpg', 'Contact Background').alt} className="h-full w-full object-cover opacity-5" />
 			</div>

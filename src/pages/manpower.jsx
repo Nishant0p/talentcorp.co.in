@@ -37,7 +37,7 @@ import useSEO from '../hooks/useSEO'
 
 function ManpowerHero({ resolveAsset }) {
 	return (
-		<section className="relative flex h-[100svh] items-center overflow-hidden">
+		<section className="relative flex min-h-[100svh] items-center overflow-hidden pt-28 pb-12 sm:pt-0 sm:pb-0">
 			<div className="absolute inset-0">
 				<img src={resolveAsset('manpower.hero', '/skilled training tspl.jpeg').url} alt={resolveAsset('manpower.hero', '/skilled training tspl.jpeg', 'Manpower Supply').alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/80 to-[#0F172A]/60" />
@@ -48,7 +48,7 @@ function ManpowerHero({ resolveAsset }) {
 
 			<div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-14 lg:px-8 lg:py-16">
 				<div className="max-w-2xl text-left">
-					<h1 className="hero-text-reveal mb-5 text-4xl font-bold leading-tight text-white animate-fade-in sm:text-5xl lg:text-6xl">
+					<h1 className="hero-text-reveal mb-5 text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white animate-fade-in">
 						We Provide
 						<span className="mt-2 block text-[#2563EB]">Right Workers</span>
 						<span className="block text-white">For Your Business</span>
@@ -112,7 +112,7 @@ function WhatIsManpower({ resolveAsset }) {
 	]
 
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
 			<div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-[#F97316]/5 blur-3xl" />
 
@@ -238,7 +238,7 @@ const workerCategories = [
 
 function WorkerTypes() {
 	return (
-		<section className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50 py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50 py-12 sm:py-20 lg:py-28">
 			<div className="absolute left-0 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-[#2563EB]/5 blur-3xl" />
 			<div className="absolute right-0 top-1/3 h-80 w-80 rounded-full bg-[#F97316]/5 blur-3xl" />
 
@@ -317,7 +317,7 @@ const industryCards = [
 
 function Industries() {
 	return (
-		<section className="relative overflow-hidden bg-[#0F172A] py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-[#0F172A] py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-10">
 				<div
 					className="absolute inset-0"
@@ -406,7 +406,7 @@ const processSteps = [
 
 function HowItWorks() {
 	return (
-		<section className="relative overflow-hidden bg-slate-50 py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-slate-50 py-12 sm:py-20 lg:py-28">
 			<div
 				className="absolute inset-0 opacity-50"
 				style={{
@@ -512,7 +512,7 @@ const reasons = [
 
 function ManpowerWhyChooseUs({ resolveAsset }) {
 	return (
-		<section className="relative overflow-hidden bg-white py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-28">
 			<div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-[#2563EB]/5 blur-3xl" />
 
 			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">

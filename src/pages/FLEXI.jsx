@@ -131,7 +131,7 @@ function FlexiItiHero({ resolveAsset }) {
 	const heroAsset = resolveAsset('flexi.hero', '/training%20tspl.jpeg', 'FLEXI ITI training')
 
 	return (
-		<section className="relative min-h-screen overflow-hidden bg-[#0F172A] pt-20 lg:min-h-screen lg:pt-16">
+		<section className="relative min-h-[100svh] lg:min-h-screen overflow-hidden bg-[#0F172A] pt-28 pb-12 lg:pt-16">
 			<div className="absolute inset-0">
 				<img src={heroAsset.url} alt={heroAsset.alt} className="h-full w-full object-cover" />
 				<div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/85 to-[#0F172A]/70" />
@@ -241,7 +241,7 @@ function FlexiItiBenefits({ resolveAsset }) {
 	const successAsset = resolveAsset('flexi.success', '/Gemini_Generated_Image_qskougqskougqsko.png', 'Students celebrating success')
 
 	return (
-		<section className="relative overflow-hidden py-20 lg:py-28">
+		<section className="relative overflow-hidden py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 bg-gradient-to-b from-white via-[#F8FAFC] to-white" />
 			<div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[#2563EB]/5 blur-3xl" />
 			<div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-[#F97316]/5 blur-3xl" />
@@ -315,7 +315,7 @@ function FlexiItiBenefits({ resolveAsset }) {
 
 function FlexiItiEligibility() {
 	return (
-		<section className="relative overflow-hidden py-20 lg:py-28">
+		<section className="relative overflow-hidden py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 bg-white" />
 			<div className="absolute left-0 top-0 h-full w-full bg-gradient-to-br from-[#2563EB]/5 via-transparent to-[#F97316]/5" />
 
@@ -402,7 +402,7 @@ function FlexiItiEligibility() {
 
 function FlexiItiProcess() {
 	return (
-		<section className="relative overflow-hidden bg-[#F8FAFC] py-20 lg:py-28">
+		<section className="relative overflow-hidden bg-[#F8FAFC] py-12 sm:py-20 lg:py-28">
 			<div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #2563EB 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
 			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">

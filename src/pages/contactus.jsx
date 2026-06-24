@@ -239,16 +239,16 @@ const ContactUs = () => {
       `}</style>
 
       {/* === HERO === */}
-      <header className="relative bg-gray-900 min-h-[72vh] md:min-h-[86vh] flex flex-col">
+      <header className="relative bg-gray-900 min-h-[100svh] md:min-h-[86vh] flex flex-col">
         <div className="absolute inset-0 z-0">
           <img src={contactHeroAsset.url} alt={contactHeroAsset.alt || 'Office Meeting'} className="w-full h-full object-cover object-center opacity-55" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/40 to-black/65" />
         </div>
         <Navbar />
-        <div className="relative z-10 flex flex-grow items-center max-w-7xl mx-auto w-full px-8 pt-8 pb-16 md:pt-10 md:pb-20">
+        <div className="relative z-10 flex flex-grow items-center max-w-7xl mx-auto w-full px-6 pt-28 pb-12 md:pt-10 md:pb-20">
           <div className="grid w-full items-end gap-10 lg:grid-cols-2">
             <div className="max-w-2xl pt-6 md:pt-10 lg:pt-14">
-              <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
+              <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
                 Let's Connect<br />&amp; <span className="text-blue-500">Build the Future</span><br />Workforce
               </h1>
               <p className="text-gray-300 text-lg max-w-lg">Scale your business towards your highest potential. Our experts are ready to catalyze your growth.</p>
@@ -268,7 +268,7 @@ const ContactUs = () => {
       </header>
 
       {/* === CONTACT FORM + INFO === */}
-      <section className="max-w-7xl mx-auto py-20 px-8 relative -mt-16 z-20">
+      <section className="max-w-7xl mx-auto py-12 px-6 relative -mt-16 z-20 sm:py-20 sm:px-8">
         <div className="grid md:grid-cols-2 gap-12">
 
           {/* Contact Form */}
@@ -398,7 +398,7 @@ const ContactUs = () => {
       </section>
 
       {/* === INTERACTIVE MAP SECTION === */}
-      <section className="bg-gradient-to-b from-white to-blue-50 py-24 px-4 sm:px-8">
+      <section className="bg-gradient-to-b from-white to-blue-50 py-12 px-4 sm:py-24 sm:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-blue-600 font-bold text-sm tracking-widest uppercase mb-2">Our Presence</p>
