@@ -40,6 +40,7 @@ const YatraGalleryPage = lazy(() => import('./pages/yatraGallery'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const BlogList = lazy(() => import('./pages/blog/BlogList'))
 const BlogPost = lazy(() => import('./pages/blog/BlogPost'))
+const LeaderProfilePage = lazy(() => import('./pages/LeaderProfilePage'))
 
 const PRELOADER_DURATION_MS = 2800
 
@@ -173,6 +174,7 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="contact-us" path="/contact-us" element={<ContactUs />} />
           <Route key="blog" path="/blog" element={<BlogList />} />
           <Route key="blog-post" path="/blog/:slug" element={<BlogPost />} />
+          <Route key="leader-profile" path="/leader/:slug" element={<LeaderProfilePage />} />
           <Route key="notfound" path="*" element={<NotFoundPage />} />
         </Routes>
       </motion.div>

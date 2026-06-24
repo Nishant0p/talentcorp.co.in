@@ -601,16 +601,16 @@ function DetailedProfileSection({ isMobile }) {
 
 function LeadershipSection({ isMobile }) {
 	const topLeaders = [
-		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png' },
-		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/Sunil Chavan.png' },
+		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png', slug: 'dr-mehboob-sayyad' },
+		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/Sunil Chavan.png', slug: 'sunil-chavan' },
 	];
 
 	const otherDirectors = [
-		{ id: '3', name: 'Deshbhushan Jain', role: 'Director', imageUrl: '/visionaries/Deshbushan Jain.png' },
-		{ id: '4', name: 'Vikas Patil', role: 'Director', imageUrl: '/visionaries/Vikas Patil.png' },
-		{ id: '5', name: 'Prakash Rathod', role: 'Director', imageUrl: '/visionaries/Prakash Rathod.png' },
-		{ id: '8', name: 'Ruma Sayyad', role: 'Director', imageUrl: '/visionaries/Ruma Sayyad.png' },
-		{ id: '6', name: 'Sarang Chavan', role: 'Director', imageUrl: '/visionaries/Sarang Chavan.png' },
+		{ id: '3', name: 'Deshbhushan Jain', role: 'Director', imageUrl: '/visionaries/Deshbushan Jain.png', slug: 'deshbhushan-jain' },
+		{ id: '4', name: 'Vikas Patil', role: 'Director', imageUrl: '/visionaries/Vikas Patil.png', slug: 'vikas-patil' },
+		{ id: '5', name: 'Prakash Rathod', role: 'Director', imageUrl: '/visionaries/Prakash Rathod.png', slug: 'prakash-rathod' },
+		{ id: '8', name: 'Ruma Sayyad', role: 'Director', imageUrl: '/visionaries/Ruma Sayyad.png', slug: 'ruma-sayyad' },
+		{ id: '6', name: 'Sarang Chavan', role: 'Director', imageUrl: '/visionaries/Sarang Chavan.png', slug: 'sarang-chavan' },
 	];
 
 	const getLeaderAnimProps = (i) => isMobile ? {} : {
@@ -641,72 +641,82 @@ function LeadershipSection({ isMobile }) {
 				{/* Top Leaders – centred flex row */}
 				<div className="flex flex-wrap justify-center gap-4 lg:gap-6 mb-16">
 					{topLeaders.map((leader, i) => (
-						<motion.div
+						<Link
 							key={leader.id}
-							{...getLeaderAnimProps(i)}
-							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full max-w-[280px] sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(16.666%-20px)]"
+							to={`/leader/${leader.slug}`}
+							className="w-full max-w-[280px] sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(16.666%-20px)] block transition-transform duration-300 hover:scale-102"
 						>
-							{/* Uniform Aspect Ratio Container */}
-							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
-								<ProgressiveImage
-									src={leader.imageUrl}
-									alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
-									title={`${leader.name} - ${leader.role}`}
-									loading="eager"
-									width="300"
-									height="400"
-									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-								/>
-								{/* Gradient Overlay for Text Readability */}
-								<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-								
-								{/* Leadership Info Overlay */}
-								<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
-									<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
-										{leader.name}
-									</h3>
-									<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
-										{leader.role}
-									</p>
+							<motion.div
+								{...getLeaderAnimProps(i)}
+								className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full"
+							>
+								{/* Uniform Aspect Ratio Container */}
+								<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
+									<ProgressiveImage
+										src={leader.imageUrl}
+										alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
+										title={`${leader.name} - ${leader.role}`}
+										loading="eager"
+										width="300"
+										height="400"
+										className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+									/>
+									{/* Gradient Overlay for Text Readability */}
+									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+									
+									{/* Leadership Info Overlay */}
+									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
+										<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+											{leader.name}
+										</h3>
+										<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+											{leader.role}
+										</p>
+									</div>
 								</div>
-							</div>
-						</motion.div>
+							</motion.div>
+						</Link>
 					))}
 				</div>
 
 				{/* Other Directors – centred flex row */}
 				<div className="flex flex-wrap justify-center gap-4 lg:gap-6">
 					{otherDirectors.map((leader, i) => (
-						<motion.div
+						<Link
 							key={leader.id}
-							{...getLeaderAnimProps(i + 2)}
-							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full max-w-[280px] sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(16.666%-20px)]"
+							to={`/leader/${leader.slug}`}
+							className="w-full max-w-[280px] sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(16.666%-20px)] block transition-transform duration-300 hover:scale-102"
 						>
-							{/* Uniform Aspect Ratio Container */}
-							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
-								<ProgressiveImage
-									src={leader.imageUrl}
-									alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
-									title={`${leader.name} - ${leader.role}`}
-									loading="eager"
-									width="300"
-									height="400"
-									className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-								/>
-								{/* Gradient Overlay for Text Readability */}
-								<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-								
-								{/* Leadership Info Overlay */}
-								<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
-									<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
-										{leader.name}
-									</h3>
-									<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
-										{leader.role}
-									</p>
+							<motion.div
+								{...getLeaderAnimProps(i + 2)}
+								className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full"
+							>
+								{/* Uniform Aspect Ratio Container */}
+								<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
+									<ProgressiveImage
+										src={leader.imageUrl}
+										alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
+										title={`${leader.name} - ${leader.role}`}
+										loading="eager"
+										width="300"
+										height="400"
+										className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+									/>
+									{/* Gradient Overlay for Text Readability */}
+									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+									
+									{/* Leadership Info Overlay */}
+									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
+										<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+											{leader.name}
+										</h3>
+										<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+											{leader.role}
+										</p>
+									</div>
 								</div>
-							</div>
-						</motion.div>
+							</motion.div>
+						</Link>
 					))}
 				</div>
 			</div>
@@ -721,54 +731,63 @@ function ManagementSection({ isMobile }) {
 			name: 'Mr. Kishor More',
 			role: 'General Manager - Business Development',
 			imageUrl: '/leaders/1 mr kishore more.jpg',
+			slug: 'kishor-more'
 		},
 		{
 			id: '2',
 			name: 'Mr. Mubarak Shaikh',
 			role: 'General Manager Overall Operation',
 			imageUrl: '/leaders/2 Mr. Mubarak Shaikh.jpg',
+			slug: 'mubarak-shaikh'
 		},
 		{
 			id: '3',
 			name: 'Mr. Gyanendra Mishra',
 			role: 'Sourcing Head Pan India',
 			imageUrl: '/leaders/3 mr gyanendra mishra.jpg',
+			slug: 'gyanendra-mishra'
 		},
 		{
 			id: '4',
 			name: 'Mr. Vishal Ubale',
 			role: 'Sourcing Head & TPO Maharashtra',
 			imageUrl: '/leaders/4 mr vishal ubale.jpg',
+			slug: 'vishal-ubale'
 		},
 		{
 			id: '5',
 			name: 'Mr. Lokesh Pardeshi',
 			role: 'Finance Head',
 			imageUrl: '/leaders/5 lokesh.jpg',
+			slug: 'lokesh-pardeshi'
 		},
 		{
 			id: '6',
 			name: 'Purushottam Gaikwad',
 			role: 'Assistant General Manager in Operation',
 			imageUrl: '/leaders/6 mr purshotam gaikwad.jpg',
+			slug: 'purushottam-gaikwad'
 		},
 		{
 			id: '7',
 			name: 'Mr. Shivanand Mane',
 			role: 'Regional Head',
 			imageUrl: '/leaders/7 mr shivanand mane .jpg',
+			slug: 'shivanand-mane'
 		},
 		{
 			id: '8',
 			name: 'Mr. Namdev Egave',
 			role: 'Payroll & Compliance Head',
 			imageUrl: '/leaders/ 8 Mr Namdev Egave.jpg',
+			slug: 'namdev-egave'
 		},
 		{
 			id: '9',
 			name: 'Mr. Rahul Borkar',
 			role: 'Recruitment Head',
 			imageUrl: '/leaders/9 mr rahul borkar.jpg',
+			slug: 'rahul-borkar'
 		},
 	];
 
@@ -800,42 +819,47 @@ function ManagementSection({ isMobile }) {
 				{/* Leaders Flex Container - Wraps into 2 rows (5 on top, 4 centered on bottom) with identical card sizes */}
 				<div className="flex flex-wrap justify-center gap-4 lg:gap-6 w-full max-w-[90rem] mx-auto">
 					{keyLeaders.map((leader, i) => (
-						<motion.div
+						<Link
 							key={leader.id}
-							{...getLeaderAnimProps(i)}
-							className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full max-w-[280px] sm:max-w-none sm:w-[calc(50%-8px)] md:w-[calc(33.333%-16px)] lg:w-[calc(20%-20px)]"
+							to={`/leader/${leader.slug}`}
+							className="w-full max-w-[280px] sm:max-w-none sm:w-[calc(50%-8px)] md:w-[calc(33.333%-16px)] lg:w-[calc(20%-20px)] block transition-transform duration-300 hover:scale-102"
 						>
-							<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px] flex items-center justify-center">
-								{leader.imageUrl ? (
-									<ProgressiveImage
-										src={leader.imageUrl}
-										alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
-										title={`${leader.name} - ${leader.role}`}
-										loading="lazy"
-										width="300"
-										height="400"
-										className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-									/>
-								) : (
-									<div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col items-center justify-center p-6 transition-colors duration-300 group-hover:from-blue-50/50 group-hover:to-slate-100">
-										<User className="h-16 w-16 text-slate-400/80 mb-2 transition-transform duration-500 group-hover:scale-110 group-hover:text-blue-500" />
-										<span className="text-[10px] font-bold text-slate-400/60 uppercase tracking-widest text-center">Photo Coming Soon</span>
+							<motion.div
+								{...getLeaderAnimProps(i)}
+								className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full"
+							>
+								<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px] flex items-center justify-center">
+									{leader.imageUrl ? (
+										<ProgressiveImage
+											src={leader.imageUrl}
+											alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
+											title={`${leader.name} - ${leader.role}`}
+											loading="lazy"
+											width="300"
+											height="400"
+											className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+										/>
+									) : (
+										<div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col items-center justify-center p-6 transition-colors duration-300 group-hover:from-blue-50/50 group-hover:to-slate-100">
+											<User className="h-16 w-16 text-slate-400/80 mb-2 transition-transform duration-500 group-hover:scale-110 group-hover:text-blue-500" />
+											<span className="text-[10px] font-bold text-slate-400/60 uppercase tracking-widest text-center">Photo Coming Soon</span>
+										</div>
+									)}
+									{/* Gradient Overlay for Text Readability */}
+									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+									
+									{/* Leadership Info Overlay */}
+									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
+										<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+											{leader.name}
+										</h3>
+										<p className="text-[10px] font-bold text-orange-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+											{leader.role}
+										</p>
 									</div>
-								)}
-								{/* Gradient Overlay for Text Readability */}
-								<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-								
-								{/* Leadership Info Overlay */}
-								<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
-									<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
-										{leader.name}
-									</h3>
-									<p className="text-[10px] font-bold text-orange-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
-										{leader.role}
-									</p>
 								</div>
-							</div>
-						</motion.div>
+							</motion.div>
+						</Link>
 					))}
 				</div>
 			</div>
