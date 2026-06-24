@@ -210,9 +210,11 @@ function AppContent() {
       <ScrollToTop />
       <ScrollToTopButton />
       <ChatBot />
+      {/* Navbar is OUTSIDE page-shell to avoid being trapped inside
+          AnimatePresence motion.div transforms, which break position:fixed */}
+      <Navbar isGlobal />
       <div className="page-shell">
         <GlobalTextureOverlay />
-        <Navbar isGlobal />
         {isLoading && !skipMainPreloader && (
           <div className="preloader" role="status" aria-label="Loading TSPL website">
             <div className="preloader-layer preloader-layer--orange" aria-hidden="true" />
