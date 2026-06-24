@@ -2,7 +2,7 @@ import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Sh
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import React, { useState, useRef, useEffect } from 'react';
 import ProgressiveImage from '../components/ProgressiveImage';
 import useSEO from '../hooks/useSEO';
@@ -154,28 +154,17 @@ function DetailedProfileSection({ isMobile }) {
 	];
 
 	const cardAnimProps = isMobile ? {} : {
-		initial: { opacity: 0, y: 20 },
+		initial: { opacity: 0, y: 16 },
 		whileInView: { opacity: 1, y: 0 },
-		viewport: { once: true }
+		viewport: { once: true, amount: 0.1 },
+		transition: { duration: 0.35, ease: 'easeOut' }
 	};
 
 	const getCardAnimProps = (delay) => isMobile ? {} : {
-		initial: { opacity: 0, y: 20 },
+		initial: { opacity: 0, y: 16 },
 		whileInView: { opacity: 1, y: 0 },
-		viewport: { once: true },
-		transition: { delay }
-	};
-
-	const tabAnimProps = isMobile ? {
-		initial: { opacity: 1 },
-		animate: { opacity: 1 },
-		exit: { opacity: 1 },
-		transition: { duration: 0 }
-	} : {
-		initial: { opacity: 0, y: 20 },
-		animate: { opacity: 1, y: 0 },
-		exit: { opacity: 0, y: -20 },
-		transition: { duration: 0.3 }
+		viewport: { once: true, amount: 0.1 },
+		transition: { duration: 0.35, ease: 'easeOut', delay: delay * 0.6 }
 	};
 
 	return (
@@ -208,13 +197,8 @@ function DetailedProfileSection({ isMobile }) {
 					</div>
 				</div>
 
-				{/* Content Container */}
-				<AnimatePresence mode="wait">
-					<motion.div
-						key={activeTab}
-						{...tabAnimProps}
-						className="min-h-[500px]"
-					>
+				{/* Content Container — no unmount/remount, just opacity fade for speed */}
+				<div className="min-h-[500px] transition-opacity duration-200">
 						{/* Tab 0: Company Overview */}
 						{activeTab === 0 && (
 							<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -609,8 +593,7 @@ function DetailedProfileSection({ isMobile }) {
 								</div>
 							</div>
 						)}
-					</motion.div>
-				</AnimatePresence>
+					</div>
 			</div>
 		</section>
 	);
@@ -631,10 +614,10 @@ function LeadershipSection({ isMobile }) {
 	];
 
 	const getLeaderAnimProps = (i) => isMobile ? {} : {
-		initial: { opacity: 0, y: 20 },
+		initial: { opacity: 0, y: 16 },
 		whileInView: { opacity: 1, y: 0 },
-		viewport: { once: true, amount: 0.2 },
-		transition: { duration: 0.5, delay: i * 0.1 }
+		viewport: { once: true, amount: 0.1 },
+		transition: { duration: 0.3, delay: i * 0.05, ease: 'easeOut' }
 	};
 
 	return (
@@ -790,10 +773,10 @@ function ManagementSection({ isMobile }) {
 	];
 
 	const getLeaderAnimProps = (i) => isMobile ? {} : {
-		initial: { opacity: 0, y: 20 },
+		initial: { opacity: 0, y: 16 },
 		whileInView: { opacity: 1, y: 0 },
-		viewport: { once: true, amount: 0.15 },
-		transition: { duration: 0.5, delay: i * 0.08 }
+		viewport: { once: true, amount: 0.1 },
+		transition: { duration: 0.3, delay: Math.min(i * 0.04, 0.2), ease: 'easeOut' }
 	};
 
 	return (
@@ -931,28 +914,29 @@ function OurStory({ resolveAsset, isMobile }) {
 	const getOurStoryTextAnimProps = () => isMobile ? {} : {
 		initial: { opacity: 0, y: 10 },
 		whileInView: { opacity: 1, y: 0 },
-		viewport: { once: true }
+		viewport: { once: true, amount: 0.2 },
+		transition: { duration: 0.3, ease: 'easeOut' }
 	};
 
 	const getOurStoryH2AnimProps = () => isMobile ? {} : {
-		initial: { opacity: 0, y: 20 },
+		initial: { opacity: 0, y: 16 },
 		whileInView: { opacity: 1, y: 0 },
-		viewport: { once: true },
-		transition: { delay: 0.1 }
+		viewport: { once: true, amount: 0.2 },
+		transition: { delay: 0.08, duration: 0.35, ease: 'easeOut' }
 	};
 
 	const getOurStoryLogoAnimProps = () => isMobile ? {} : {
-		initial: { opacity: 0, scale: 0.9 },
+		initial: { opacity: 0, scale: 0.92 },
 		whileInView: { opacity: 1, scale: 1 },
-		viewport: { once: true },
-		transition: { delay: 0.2 }
+		viewport: { once: true, amount: 0.2 },
+		transition: { delay: 0.1, duration: 0.35, ease: 'easeOut' }
 	};
 
 	const getOurStoryGridAnimProps = (delay) => isMobile ? {} : {
-		initial: { opacity: 0, y: 20 },
+		initial: { opacity: 0, y: 16 },
 		whileInView: { opacity: 1, y: 0 },
-		viewport: { once: true },
-		transition: { delay }
+		viewport: { once: true, amount: 0.1 },
+		transition: { delay: delay * 0.7, duration: 0.35, ease: 'easeOut' }
 	};
 
 	return (
@@ -1152,10 +1136,10 @@ function Achievements({ isMobile }) {
 						{milestones.map((milestone, i) => {
 							const isEven = i % 2 === 0;
 							const getTimelineAnimProps = (isEven) => isMobile ? {} : {
-								initial: { opacity: 0, x: isEven ? 50 : -50, y: 20 },
-								whileInView: { opacity: 1, x: 0, y: 0 },
-								viewport: { once: true, margin: "-50px" },
-								transition: { duration: 0.6, type: "spring", bounce: 0.4 }
+								initial: { opacity: 0, x: isEven ? 30 : -30 },
+								whileInView: { opacity: 1, x: 0 },
+								viewport: { once: true, amount: 0.2 },
+								transition: { duration: 0.35, ease: 'easeOut' }
 							};
 							return (
 								<div key={i} className={`relative flex flex-col md:flex-row items-stretch md:items-center ${isEven ? 'md:flex-row-reverse' : ''} group`}>
