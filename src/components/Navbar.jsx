@@ -39,49 +39,45 @@ const Navbar = ({ isGlobal }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktopServicesOpen, setIsDesktopServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  // Always start visible — no flicker on mount
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [isWilpExpanded, setIsWilpExpanded] = useState(false);
   const desktopServicesRef = useRef(null);
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  const { pathname, hash } = useLocation();
+  const { pathname } = useLocation();
 
+  // Exact active-link match — Home only matches '/', others match exactly
   const isLinkActive = (href) => {
-    const currentPath = pathname + hash;
-    if (href === '/') return currentPath === '/' || currentPath === '';
-    return currentPath === href || pathname === href;
+    if (href === '/') return pathname === '/';
+    return pathname === href || pathname.startsWith(href + '/');
   };
 
   const isServiceActive = serviceLinks.some((service) =>
     service.isNested ? service.links.some((sub) => isLinkActive(sub.href)) : isLinkActive(service.href)
   );
 
+  // Close desktop dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (desktopServicesRef.current && !desktopServicesRef.current.contains(event.target)) {
         setIsDesktopServicesOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Scroll-hide behaviour — only on mobile homepage
+  // Reset to visible on every route change first
   useEffect(() => {
-    if (pathname !== '/') {
-      setIsNavbarVisible(true);
-      return undefined;
-    }
+    // Always show navbar immediately on any route change
+    setIsNavbarVisible(true);
+    setIsMobileMenuOpen(false);
+    setIsDesktopServicesOpen(false);
 
+    // Only hide-on-scroll for homepage on mobile
     const isMobile = window.matchMedia('(max-width: 1023px)').matches;
-
-    if (!isMobile) {
-      setIsNavbarVisible(true);
-      return undefined;
-    }
+    if (pathname !== '/' || !isMobile) return;
 
     let previousScrollY = window.scrollY;
 
@@ -100,9 +96,7 @@ const Navbar = ({ isGlobal }) => {
       previousScrollY = currentScrollY;
     };
 
-    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
@@ -118,9 +112,9 @@ const Navbar = ({ isGlobal }) => {
 
   return (
     <nav
-      className={`fixed top-6 inset-x-0 z-50 px-4 sm:px-6 transition-[transform,opacity] duration-500 ease-out ${mounted ? 'translate-y-0 opacity-100' : '-translate-y-12 opacity-0'
-        } ${isNavbarVisible ? '' : '-translate-y-24 opacity-0 pointer-events-none'
-        }`}
+      className={`fixed top-6 inset-x-0 z-50 px-4 sm:px-6 transition-[transform,opacity] duration-300 ease-out ${
+        isNavbarVisible ? 'translate-y-0 opacity-100' : '-translate-y-24 opacity-0 pointer-events-none'
+      }`}
     >
       <div className="mx-auto max-w-7xl">
         <div className="rounded-full border border-[#d8e7f8] bg-white shadow-lg shadow-black/5 backdrop-blur-md">
