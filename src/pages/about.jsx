@@ -607,7 +607,6 @@ function LeadershipSection({ isMobile }) {
 
 	const otherDirectors = [
 		{ id: '3', name: 'Deshbhushan Jain', role: 'Director', imageUrl: '/visionaries/Deshbushan Jain.png', slug: 'deshbhushan-jain' },
-		{ id: '4', name: 'Vikas Patil', role: 'Director', imageUrl: '/visionaries/Vikas Patil.png', slug: 'vikas-patil' },
 		{ id: '5', name: 'Prakash Rathod', role: 'Director', imageUrl: '/visionaries/Prakash Rathod.png', slug: 'prakash-rathod' },
 		{ id: '8', name: 'Ruma Sayyad', role: 'Director', imageUrl: '/visionaries/Ruma Sayyad.png', slug: 'ruma-sayyad' },
 		{ id: '6', name: 'Sarang Chavan', role: 'Director', imageUrl: '/visionaries/Sarang Chavan.png', slug: 'sarang-chavan' },
@@ -1193,7 +1192,7 @@ export default function AboutPage() {
 	useSEO({
 		title: 'Dr. Mehboob Sayyad (Chairman) & Board of Directors - TSPL Group',
 		description: 'Meet Dr. Mehboob Sayyad, Chairman and Managing Director of TalentCorp Solutions Private Limited (TSPL Group), alongside our Board of Directors.',
-		keywords: 'Dr. Mehboob Sayyad, Dr. Mehboob Sayyed, Dr. Mahiboob Sayyad, Chairman, Managing Director, Sunil Chavan, Vikas Patil, Prakash Rathod, Deshbhushan Jain, TSPL Group, TalentCorp Solutions'
+		keywords: 'Dr. Mehboob Sayyad, Dr. Mehboob Sayyed, Dr. Mahiboob Sayyad, Chairman, Managing Director, Sunil Chavan, Prakash Rathod, Deshbhushan Jain, TSPL Group, TalentCorp Solutions'
 	});
 
 	const pageAssets = usePageAssets()
@@ -1248,12 +1247,6 @@ export default function AboutPage() {
 								"name": "Deshbhushan Jain",
 								"jobTitle": "Director",
 								"image": "https://tsplgroup.in/visionaries/Deshbushan%20Jain.png"
-							},
-							{
-								"@type": "Person",
-								"name": "Vikas Patil",
-								"jobTitle": "Director",
-								"image": "https://tsplgroup.in/visionaries/Vikas%20Patil.png"
 							},
 							{
 								"@type": "Person",

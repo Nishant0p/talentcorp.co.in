@@ -57,22 +57,6 @@ const leaderProfiles = {
 		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
-	'vikas-patil': {
-		name: 'Vikas Patil',
-		role: 'Director',
-		category: 'Director',
-		imageUrl: '/visionaries/Vikas Patil.png',
-		bio: 'Vikas Patil is an executive Director at TSPL Group, overseeing partner integrations, educational alliances, and community-level candidate mobilization.',
-		longBio: 'Mr. Patil focuses on strengthening alliances with educational institutes, ITIs, and polytechnics to streamline candidate discovery. His outreach initiatives bridge local talent with industrial centers.',
-		expertise: ['Community Mobilization', 'Institute Relations', 'Outreach Operations', 'Skill Alliances'],
-		achievements: [
-			'Established sourcing networks with over 150+ colleges and training institutes.',
-			'Pioneered community recruitment campaigns in tier-2 and tier-3 cities.'
-		],
-		email: 'info@tsplgroup.in',
-		phone: '+91 95615 04911',
-		location: 'Pune, India'
-	},
 	'prakash-rathod': {
 		name: 'Prakash Rathod',
 		role: 'Director',
