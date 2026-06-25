@@ -611,7 +611,7 @@ function JobsFilters({ filters, setFilters, categoryOptions, locationOptions }) 
 	);
 }
 
-function JobCard({ job }) {
+function JobCard({ job, index }) {
 	const [liked, setLiked] = useState(false);
 	const navigate = useNavigate();
 
@@ -621,8 +621,12 @@ function JobCard({ job }) {
 		'part-time': 'bg-orange-100 text-orange-700',
 	};
 
+	const isOrange = index % 2 !== 0;
+
 	return (
-		<div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-100/50">
+		<div className={`group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl ${
+			isOrange ? 'hover:shadow-orange-100/50 hover:border-orange-200' : 'hover:shadow-blue-100/50 hover:border-blue-200'
+		}`}>
 			{(job.urgent || job.featured) && (
 				<div className="absolute left-3 top-3 z-10 flex gap-2">
 					{job.urgent && <span className="rounded-full bg-red-500 px-2.5 py-1 text-xs font-bold text-white">URGENT</span>}
@@ -634,12 +638,22 @@ function JobCard({ job }) {
 				<button onClick={() => setLiked((prev) => !prev)} className={`rounded-full p-2 shadow-md ${liked ? 'bg-red-500 text-white' : 'bg-white text-slate-600'}`}>
 					<Heart className={`h-4 w-4 ${liked ? 'fill-current' : ''}`} />
 				</button>
-				<button className="rounded-full bg-white p-2 text-slate-600 shadow-md">
+				<button 
+					onClick={() => {
+						const jobUrl = `${window.location.origin}/job/${job.id}`;
+						const text = `*Job Opening at TSPL Group*\n\n*Role:* ${job.title}\n*Company:* ${job.company}\n*Location:* ${job.location}\n*Description:* ${job.description || ''}\n\nApply here: ${jobUrl}`;
+						window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+					}}
+					className="rounded-full bg-white p-2 text-slate-600 hover:text-slate-800 shadow-md transition-colors"
+					title="Share on WhatsApp"
+				>
 					<Share2 className="h-4 w-4" />
 				</button>
 			</div>
 
-			<div className={`relative h-40 overflow-hidden p-4 text-white ${getJobColor(job.category)}`}>
+			<div className={`relative h-40 overflow-hidden p-4 text-white ${
+				isOrange ? 'bg-gradient-to-r from-orange-500 to-amber-500' : 'bg-gradient-to-r from-blue-600 to-cyan-600'
+			}`}>
 				<div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent" />
 				<div className="relative z-[1]">
 					<p className="text-xs font-semibold uppercase tracking-wide text-white/90">{job.company}</p>
@@ -745,12 +759,30 @@ function JobsListing({ filters, searchQuery, jobs, loading }) {
 		}
 
 		if (normalizedSearch) {
-			filtered = filtered.filter((job) => {
-				const searchTarget = [job.title, job.company, job.category, job.location, job.jobType, job.description, ...(job.skills || [])]
-					.map(normalizeText)
-					.join(' ');
-				return searchTarget.includes(normalizedSearch);
-			});
+			const searchWords = normalizedSearch.split(/\s+/).filter(Boolean);
+			filtered = filtered
+				.map((job) => {
+					let score = 0;
+					const title = normalizeText(job.title || '');
+					const category = normalizeText(job.category || '');
+					const company = normalizeText(job.company || '');
+					const description = normalizeText(job.description || '');
+					const location = normalizeText(job.location || '');
+					const skills = (job.skills || []).map(normalizeText).join(' ');
+
+					searchWords.forEach((word) => {
+						if (title.includes(word)) score += 10;
+						if (category.includes(word)) score += 5;
+						if (skills.includes(word)) score += 5;
+						if (company.includes(word)) score += 3;
+						if (description.includes(word)) score += 1;
+						if (location.includes(word)) score += 1;
+					});
+
+					return { ...job, score };
+				})
+				.filter((job) => job.score > 0)
+				.sort((a, b) => b.score - a.score);
 		}
 
 		return filtered;
@@ -795,8 +827,8 @@ function JobsListing({ filters, searchQuery, jobs, loading }) {
 					</div>
 				) : filteredJobs.length > 0 ? (
 					<div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
-						{currentJobs.map((job) => (
-							<JobCard key={job.id} job={job} />
+						{currentJobs.map((job, index) => (
+							<JobCard key={job.id} job={job} index={index} />
 						))}
 					</div>
 				) : (

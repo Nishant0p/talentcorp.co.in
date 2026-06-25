@@ -78,6 +78,16 @@ const officeLocations = [
     mapQuery: 'Mahalaxmi+Complex+Collector+Office+Osmanabad+Maharashtra+413501',
   },
   {
+    city: 'Talegaon Dabhade',
+    short: 'Talegaon',
+    company: 'TalentCorp Solutions Private Limited',
+    address: 'office no G -1/2, City plaza, next to Bank of Maharashtra, near Railway station, Talegaon Dabhade, Talegaon Dabhade R, Maharashtra 410507',
+    calls: ['+91 7397971322'],
+    emails: ['info@tsplgroup.in'],
+    lat: 18.7289, lng: 73.6789, zoom: 16,
+    mapQuery: 'City+plaza+Bank+of+Maharashtra+Railway+station+Talegaon+Dabhade+Maharashtra+410507',
+  },
+  {
     city: 'Chennai',
     short: 'Chennai',
     company: 'TalentCorp Solutions Private Limited',

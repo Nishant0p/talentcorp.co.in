@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, IndianRupee, Clock, ArrowRight, Filter, Briefcase, Car, Cpu, Factory } from 'lucide-react';
+import { Search, MapPin, IndianRupee, Clock, ArrowRight, Filter, Briefcase, Car, Cpu, Factory, Share2 } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { buildJobCategoryOptions, fetchJobs, getJobCategoryFilterValue, toJobFilterSlug } from '../utils/strapi';
 
@@ -41,29 +41,50 @@ const formatSalaryFromJob = (job) => {
   return 'Salary on request';
 };
 
-const JobCard = ({ job, navigate }) => {
+const JobCard = ({ job, navigate, index }) => {
+  const isOrange = index % 2 !== 0;
   return (
     <div className="h-full flex flex-col justify-between gap-5">
       <div>
         {/* Header Block: Logo & Title */}
-        <div className="flex items-start gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white font-black text-lg shadow-md transition-transform duration-300 group-hover:scale-105">
-            {String(job.company || job.title || 'J').charAt(0)}
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-bold text-slate-900 text-base sm:text-lg tracking-tight group-hover:text-blue-600 transition-colors truncate">
-                {job.title}
-              </h3>
-              {job.urgent && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-50 border border-orange-200 text-orange-600 animate-pulse">
-                  <span className="h-1.5 w-1.5 rounded-full bg-orange-600 animate-ping" />
-                  Urgent
-                </span>
-              )}
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex items-start gap-4 min-w-0 flex-1">
+            <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${
+              isOrange ? 'from-orange-500 to-amber-500' : 'from-blue-600 to-cyan-500'
+            } text-white font-black text-lg shadow-md transition-transform duration-300 group-hover:scale-105`}>
+              {String(job.company || job.title || 'J').charAt(0)}
             </div>
-            <p className="text-slate-600 text-xs font-semibold mt-1">{job.company}</p>
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className={`font-bold text-slate-900 text-base sm:text-lg tracking-tight transition-colors truncate ${
+                  isOrange ? 'group-hover:text-orange-500' : 'group-hover:text-blue-600'
+                }`}>
+                  {job.title}
+                </h3>
+                {job.urgent && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-50 border border-orange-200 text-orange-600 animate-pulse">
+                    <span className="h-1.5 w-1.5 rounded-full bg-orange-600 animate-ping" />
+                    Urgent
+                  </span>
+                )}
+              </div>
+              <p className="text-slate-600 text-xs font-semibold mt-1">{job.company}</p>
+            </div>
           </div>
+
+          {/* Share Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const jobUrl = `${window.location.origin}/job/${job.id}`;
+              const text = `*Job Opening at TSPL Group*\n\n*Role:* ${job.title}\n*Company:* ${job.company}\n*Location:* ${job.location}\n*Description:* ${job.description || ''}\n\nApply here: ${jobUrl}`;
+              window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+            }}
+            className="rounded-full p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all duration-300 shrink-0"
+            title="Share on WhatsApp"
+          >
+            <Share2 size={16} />
+          </button>
         </div>
 
         {/* Info Tags Row */}
@@ -90,7 +111,11 @@ const JobCard = ({ job, navigate }) => {
         </span>
         <button
           onClick={() => navigate(`/job/${job.id}`)}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white px-4 py-2 text-xs font-bold transition-all duration-300 active:scale-[0.98] group-hover:bg-blue-600 group-hover:text-white shrink-0 shadow-sm"
+          className={`inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all duration-300 active:scale-[0.98] shrink-0 shadow-sm ${
+            isOrange 
+              ? 'bg-orange-50 hover:bg-orange-600 text-orange-600 hover:text-white group-hover:bg-orange-600 group-hover:text-white' 
+              : 'bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white group-hover:bg-blue-600 group-hover:text-white'
+          }`}
         >
           Apply Now <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
         </button>
@@ -289,7 +314,11 @@ const JobBoard = () => {
                 {filteredJobs.map((job, index) => (
                   <motion.article
                     key={job.id}
-                    className="group h-full overflow-hidden rounded-2xl border border-white bg-white/70 p-5 shadow-[0_8px_30px_rgb(0,0,0,0.03)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-[0_20px_50px_rgba(59,130,246,0.1)]"
+                    className={`group h-full overflow-hidden rounded-2xl border border-white bg-white/70 p-5 shadow-[0_8px_30px_rgb(0,0,0,0.03)] transition-all duration-300 hover:-translate-y-1 hover:bg-white ${
+                      index % 2 !== 0 
+                        ? 'hover:border-orange-200 hover:shadow-[0_20px_50px_rgba(249,115,22,0.08)]' 
+                        : 'hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(59,130,246,0.08)]'
+                    }`}
                     initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
                     whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
@@ -300,7 +329,7 @@ const JobBoard = () => {
                       ease: [0.215, 0.61, 0.355, 1]
                     }}
                   >
-                    <JobCard job={job} navigate={navigate} />
+                    <JobCard job={job} navigate={navigate} index={index} />
                   </motion.article>
                 ))}
               </motion.div>

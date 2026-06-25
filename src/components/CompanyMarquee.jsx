@@ -39,6 +39,22 @@ function withCacheBuster(url, version) {
 }
 
 function renderCustomLogo(logo, name) {
+  // If has custom image from database
+  if (logo.logoType === 'image' && logo.src) {
+    return (
+      <img
+        src={logo.src}
+        alt={name}
+        className="block max-h-8 max-w-[6.5rem] object-contain sm:max-h-10 sm:max-w-[8.5rem] filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
+        loading="eager"
+        decoding="async"
+        width="110"
+        height="35"
+        draggable={false}
+      />
+    );
+  }
+
   const key = (name || '').trim().toUpperCase();
 
   // If logo has a custom pre-styled render
@@ -259,22 +275,6 @@ function renderCustomLogo(logo, name) {
       break;
   }
 
-  // If has custom image fallback
-  if (logo.logoType === 'image' && logo.src) {
-    return (
-      <img
-        src={logo.src}
-        alt={name}
-        className="block max-h-8 max-w-[6.5rem] object-contain sm:max-h-10 sm:max-w-[8.5rem] filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
-        loading="eager"
-        decoding="async"
-        width="110"
-        height="35"
-        draggable={false}
-      />
-    );
-  }
-
   return (
     <span className="text-slate-800 font-extrabold text-sm tracking-wide uppercase select-none">
       {name}
@@ -349,7 +349,7 @@ function getHoverClasses(name) {
 }
 
 export default function CompanyMarquee() {
-  const [logos, setLogos] = React.useState(FALLBACK_LOGOS);
+  const [logos, setLogos] = React.useState([]);
 
   React.useEffect(() => {
     if (!STRAPI_BASE_URL) return;

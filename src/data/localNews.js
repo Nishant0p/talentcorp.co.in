@@ -1,5 +1,30 @@
 const localNews = [
   {
+    id: 999998,
+    documentId: 'outstanding-performance-awards-2026',
+    title: 'Half-Year Outstanding Performance Awards 2026',
+    description: `
+      <p>TSPL GROUP is delighted to invite you to the Half-Year Outstanding Performance Awards 2026 🎉</p>
+      <p>🏅 <strong>Award Categories Include:</strong></p>
+      <ul>
+        <li>🔹 Compliance Team</li>
+        <li>🔹 Accounts Team</li>
+        <li>🔹 Operations Team</li>
+        <li>🔹 HR Team</li>
+        <li>🔹 Recruitment Team</li>
+        <li>🔹 Digital Marketing Team</li>
+      </ul>
+      <p>🏆 Plus other special awards for outstanding achievements and contributions.</p>
+      <p>📅 <strong>Date:</strong> 21 June 2026 (Sunday)</p>
+      <p>🕒 <strong>Time:</strong> 11:00 AM to 2:00 PM</p>
+      <p>📍 <strong>Venue:</strong> TSPL GROUP Head Office, Chakan</p>
+      <p>✨ Your presence will make this occasion even more special.</p>
+    `,
+    date: '2026-06-21',
+    tag: 'Events',
+    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=600',
+  },
+  {
     id: 999999,
     documentId: 'poster-trailer-2026',
     title: "Poster Trailer of Dr. Mahiboob Sayyad's Third Book 'Apprenticeship Act 1961' Launched in Goa",

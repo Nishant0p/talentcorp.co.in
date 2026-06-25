@@ -125,6 +125,12 @@ const defaultNewsEventsContent = {
   ],
   pastEvents: [
   {
+    date: '21',
+    month: 'JUN',
+    title: 'Half-Year Outstanding Performance Awards 2026',
+    loc: 'TSPL GROUP Head Office, Chakan',
+  },
+  {
     date: '10',
     month: 'MAR',
     title: 'Industry-Academia Conclave 2026',

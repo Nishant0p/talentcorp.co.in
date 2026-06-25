@@ -43,6 +43,13 @@ const officesByState = {
       address: 'Office No- 2, Mahalaxmi Complex, Opposite Collector Office, Osmanabad, Maharashtra - 413501, India',
       phone: '+91 7397971322',
       email: 'osmanabad@tsplgroup.in'
+    },
+    {
+      city: 'Talegaon Dabhade',
+      company: 'TalentCorp Solutions Private Limited',
+      address: 'office no G -1/2, City plaza, next to Bank of Maharashtra, near Railway station, Talegaon Dabhade, Talegaon Dabhade R, Maharashtra 410507',
+      phone: '+91 7397971322',
+      email: 'info@tsplgroup.in'
     }
   ],
   'Tamil Nadu': [

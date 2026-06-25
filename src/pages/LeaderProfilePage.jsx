@@ -313,7 +313,7 @@ export default function LeaderProfilePage() {
 					</Link>
 
 					{/* Profile Header Grid */}
-					<div className="grid gap-8 md:grid-cols-12 items-start bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-xl relative overflow-hidden">
+					<div className="grid gap-8 md:grid-cols-12 items-center bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-xl relative overflow-hidden">
 						
 						{/* Background decorative glows */}
 						<div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-blue-100/30 blur-3xl pointer-events-none" />
@@ -326,13 +326,8 @@ export default function LeaderProfilePage() {
 									src={profile.imageUrl} 
 									alt={`${profile.name} - ${profile.role} of TSPL Group`}
 									title={`${profile.name} - ${profile.role}`}
-									className="h-full w-full object-cover object-top"
+									className={`h-full w-full object-cover object-top transition-transform duration-500 ${slug === 'ruma-sayyad' ? 'scale-110 origin-top' : ''}`}
 								/>
-							</div>
-							
-							{/* Category Tag */}
-							<div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 border border-blue-200">
-								<Sparkles className="h-3 w-3" /> {profile.category}
 							</div>
 						</div>
 
@@ -346,65 +341,6 @@ export default function LeaderProfilePage() {
 									{profile.role}
 								</p>
 							</div>
-
-							<p className="text-slate-700 leading-relaxed text-lg font-medium">
-								{profile.bio}
-							</p>
-
-							<p className="text-slate-600 leading-relaxed">
-								{profile.longBio}
-							</p>
-
-							{/* Contact Cards */}
-							<div className="grid gap-4 sm:grid-cols-2 pt-4">
-								<div className="flex items-center gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-blue-200 transition-colors">
-									<Mail className="h-5 w-5 text-blue-600 shrink-0" />
-									<div className="min-w-0">
-										<p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Email Address</p>
-										<a href={`mailto:${profile.email}`} className="text-sm font-bold text-slate-800 hover:text-blue-600 transition-colors block truncate">{profile.email}</a>
-									</div>
-								</div>
-								<div className="flex items-center gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-blue-200 transition-colors">
-									<MapPin className="h-5 w-5 text-orange-500 shrink-0" />
-									<div>
-										<p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Location</p>
-										<p className="text-sm font-bold text-slate-800">{profile.location}</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					{/* Expertise & Achievements Section */}
-					<div className="grid gap-8 md:grid-cols-2 mt-8">
-						
-						{/* Expertise Card */}
-						<div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-lg text-left">
-							<h2 className="text-2xl font-black text-slate-950 mb-6 flex items-center gap-2">
-								<Briefcase className="h-6 w-6 text-blue-600" /> Key Areas of Expertise
-							</h2>
-							<div className="flex flex-wrap gap-2.5">
-								{profile.expertise.map((item) => (
-									<span key={item} className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-bold text-slate-700 shadow-sm transition-all hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200">
-										{item}
-									</span>
-								))}
-							</div>
-						</div>
-
-						{/* Achievements Card */}
-						<div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-lg text-left">
-							<h2 className="text-2xl font-black text-slate-950 mb-6 flex items-center gap-2">
-								<Trophy className="h-6 w-6 text-orange-500" /> Career Milestones
-							</h2>
-							<ul className="space-y-4">
-								{profile.achievements.map((item, idx) => (
-									<li key={idx} className="flex gap-3 items-start text-slate-600">
-										<CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0 mt-0.5" />
-										<span className="text-sm font-medium leading-relaxed">{item}</span>
-									</li>
-								))}
-							</ul>
 						</div>
 					</div>
 

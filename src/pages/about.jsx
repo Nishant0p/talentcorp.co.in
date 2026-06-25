@@ -699,7 +699,7 @@ function LeadershipSection({ isMobile }) {
 										loading="eager"
 										width="300"
 										height="400"
-										className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+										className={`h-full w-full object-cover object-top transition-transform duration-700 ${leader.slug === 'ruma-sayyad' ? 'scale-110 origin-top group-hover:scale-115' : 'group-hover:scale-105'}`}
 									/>
 									{/* Gradient Overlay for Text Readability */}
 									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
