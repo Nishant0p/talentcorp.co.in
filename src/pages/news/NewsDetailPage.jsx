@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Calendar, ArrowLeft, Tag, Share2, Copy, MessageCircle, Linkedin, Facebook, CheckCircle } from 'lucide-react';
+import { Calendar, ArrowLeft, Tag, Share2, Copy, MessageCircle, CheckCircle } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { extractMediaUrl, fetchNews } from '../../utils/strapi';
@@ -147,14 +147,20 @@ const NewsDetailPage = () => {
                   title="Share on Facebook"
                   className="rounded-full bg-blue-50 p-2 text-blue-600 hover:bg-blue-100 transition-colors cursor-pointer"
                 >
-                  <Facebook size={16} />
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                  </svg>
                 </button>
                 <button
                   onClick={handleShareLinkedIn}
                   title="Share on LinkedIn"
                   className="rounded-full bg-indigo-50 p-2 text-indigo-600 hover:bg-indigo-100 transition-colors cursor-pointer"
                 >
-                  <Linkedin size={16} />
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
                 </button>
                 <button
                   onClick={handleCopyLink}
