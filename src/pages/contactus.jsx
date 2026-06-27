@@ -206,14 +206,9 @@ const ContactUs = () => {
       const sheetOk = sheetResult.status === 'fulfilled' && (sheetResult.value.status === 'success' || sheetResult.value.status === 'skipped');
       const adminOk = adminBackendResult.status === 'fulfilled' && adminBackendResult.value.ok !== false;
 
-      if (crmOk && sheetOk && adminOk) setSubmitStatusNote('Response sent successfully. Saved to CRM, Google Sheet, and Admin Panel.');
-      else if (crmOk && sheetOk) setSubmitStatusNote('Response sent successfully. Saved to CRM and Google Sheet.');
-      else if (crmOk && adminOk) setSubmitStatusNote('Response sent successfully. Saved to CRM and Admin Panel.');
-      else if (sheetOk && adminOk) setSubmitStatusNote('Response sent successfully. Saved to Google Sheet and Admin Panel.');
-      else if (crmOk) setSubmitStatusNote('Response sent successfully. Saved to CRM.');
-      else if (sheetOk) setSubmitStatusNote('Response sent successfully. Saved to Google Sheet.');
-      else if (adminOk) setSubmitStatusNote('Response sent successfully. Saved to Admin Panel.');
-      else {
+      if (crmOk || sheetOk || adminOk) {
+        setSubmitStatusNote('Response sent successfully.');
+      } else {
         const crmError = strapiResult.status === 'rejected' ? strapiResult.reason?.message || 'CRM submission failed.' : null;
         const sheetError = sheetResult.status === 'rejected' ? sheetResult.reason?.message || 'Google Sheet submission failed.' : sheetResult.value?.message || 'Google Sheet submission failed.';
         throw new Error(`${crmError || 'CRM submission failed.'} ${sheetError || ''}`.trim());
@@ -237,9 +232,10 @@ const ContactUs = () => {
     }
   };
 
-  // Use lat,lng for embed so a red pin always appears on the exact location
-  const googleMapsEmbedUrl = `https://maps.google.com/maps?q=${selectedOffice.lat},${selectedOffice.lng}&output=embed&z=${selectedOffice.zoom}`;
-  const googleMapsDirectionsUrl = `https://www.google.com/maps/search/?api=1&query=${selectedOffice.mapQuery}`;
+  // Lock maps specifically to Pune Head Office
+  const headOffice = officeLocations[0];
+  const googleMapsEmbedUrl = `https://maps.google.com/maps?q=${headOffice.lat},${headOffice.lng}&output=embed&z=${headOffice.zoom}`;
+  const googleMapsDirectionsUrl = `https://www.google.com/maps/search/?api=1&query=${headOffice.mapQuery}`;
 
   return (
     <div className="font-sans text-gray-800 bg-white antialiased">
@@ -422,31 +418,17 @@ const ContactUs = () => {
 
             {/* LEFT — Google Map embed (updates on office select) */}
             <div className="rounded-3xl overflow-hidden shadow-2xl border border-blue-100 bg-white">
-              {/* Office pill strip above map */}
-              <div className="flex flex-wrap gap-2 p-4 border-b border-gray-100 bg-white">
-                {officeLocations.map((office) => {
-                  const active = selectedOffice.city === office.city;
-                  return (
-                    <button
-                      key={office.city}
-                      onClick={() => setSelectedOffice(office)}
-                      className={`px-3 py-1 rounded-full text-xs font-semibold transition-all border ${
-                        active
-                          ? 'bg-blue-600 text-white border-blue-600 shadow-md'
-                          : 'bg-white text-gray-600 border-gray-200 hover:border-blue-400 hover:text-blue-600'
-                      }`}
-                    >
-                      {office.isBangladesh ? '🌍 ' : '📍 '}
-                      {office.short}
-                    </button>
-                  );
-                })}
+              {/* Static Office Map Header */}
+              <div className="flex flex-wrap gap-2 p-4 border-b border-gray-100 bg-white items-center">
+                <span className="px-3 py-1 bg-blue-50 text-blue-600 border border-blue-200 rounded-full text-xs font-semibold shadow-sm inline-flex items-center gap-1.5">
+                  📍 Head Office (Pune HQ) Map
+                </span>
               </div>
 
-              {/* Google Maps iframe — key forces reload on office change */}
+              {/* Google Maps iframe */}
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={selectedOffice.city}
+                  key="headoffice-map"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -469,7 +451,7 @@ const ContactUs = () => {
               {/* Footer bar with directions link */}
               <div className="flex items-center justify-between px-5 py-3 bg-gray-50 border-t border-gray-100">
                 <p className="text-sm font-semibold text-gray-700 truncate max-w-[60%]">
-                  📌 {selectedOffice.city}
+                  📌 Head Office (Pune)
                 </p>
                 <a
                   href={googleMapsDirectionsUrl}
@@ -544,14 +526,16 @@ const ContactUs = () => {
                         ))}
                       </div>
                     </div>
-                    <a
-                      href={googleMapsDirectionsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-full transition-colors"
-                    >
-                      <ExternalLink size={13} /> Open in Google Maps
-                    </a>
+                    {selectedOffice.city.includes('Head Office') && (
+                      <a
+                        href={googleMapsDirectionsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-full transition-colors w-fit"
+                      >
+                        <ExternalLink size={13} /> Open in Google Maps
+                      </a>
+                    )}
                   </div>
                 </motion.div>
               </AnimatePresence>

@@ -19,15 +19,15 @@ const awardsData = [
     description: 'Compliant with all norms',
     tag: 'Verified & Recognized',
     glow: 'rgba(249,115,22,0.2)',
-    colorClass: 'text-orange-600 group-hover:text-white',
-    titleClass: 'text-[#0f2a4d] group-hover:text-white',
-    descClass: 'text-slate-500 group-hover:text-orange-100',
-    bulletClass: 'text-slate-600 group-hover:text-white',
-    checkClass: 'text-orange-500 group-hover:text-orange-200',
-    pillClass: 'bg-orange-50 border-orange-100/50 text-[#FF8C00] group-hover:bg-white/10 group-hover:border-white/20 group-hover:text-white',
-    bgGradient: 'from-orange-50/40 via-white to-white group-hover:from-orange-500 group-hover:to-orange-600',
+    colorClass: 'text-orange-600',
+    titleClass: 'text-[#0f2a4d]',
+    descClass: 'text-slate-500',
+    bulletClass: 'text-slate-600',
+    checkClass: 'text-orange-500',
+    pillClass: 'bg-orange-50 border-orange-100/50 text-[#FF8C00]',
+    bgGradient: 'from-orange-50/40 via-white to-white group-hover:from-orange-50 group-hover:via-white group-hover:to-orange-50',
     borderColor: 'border-slate-200/60 group-hover:border-orange-500',
-    iconBg: 'bg-orange-500/10 text-orange-600 group-hover:bg-white/20 group-hover:text-white',
+    iconBg: 'bg-orange-500/10 text-orange-600',
     bulletPoints: [
       'Official Ministry of Skill Dev TPA partner',
       'Comprehensive PF & ESIC statutory audits',
@@ -44,15 +44,15 @@ const awardsData = [
     description: 'Recognized globally',
     tag: 'Verified & Recognized',
     glow: 'rgba(37,99,235,0.2)',
-    colorClass: 'text-blue-600 group-hover:text-white',
-    titleClass: 'text-[#0f2a4d] group-hover:text-white',
-    descClass: 'text-slate-500 group-hover:text-blue-100',
-    bulletClass: 'text-slate-600 group-hover:text-white',
-    checkClass: 'text-blue-500 group-hover:text-blue-200',
-    pillClass: 'bg-blue-50 border-blue-100/50 text-[#2563EB] group-hover:bg-white/10 group-hover:border-white/20 group-hover:text-white',
-    bgGradient: 'from-blue-50/40 via-white to-white group-hover:from-blue-600 group-hover:to-blue-700',
+    colorClass: 'text-blue-600',
+    titleClass: 'text-[#0f2a4d]',
+    descClass: 'text-slate-500',
+    bulletClass: 'text-slate-600',
+    checkClass: 'text-blue-500',
+    pillClass: 'bg-blue-50 border-blue-100/50 text-[#2563EB]',
+    bgGradient: 'from-blue-50/40 via-white to-white group-hover:from-blue-50 group-hover:via-white group-hover:to-blue-50',
     borderColor: 'border-slate-200/60 group-hover:border-blue-500',
-    iconBg: 'bg-blue-500/10 text-blue-600 group-hover:bg-white/20 group-hover:text-white',
+    iconBg: 'bg-blue-500/10 text-blue-600',
     bulletPoints: [
       'Honored in Delhi World Book of Records',
       'Top Ranking Third Party Aggregator',
@@ -69,15 +69,15 @@ const awardsData = [
     description: 'Awards for contribution',
     tag: 'Verified & Recognized',
     glow: 'rgba(249,115,22,0.2)',
-    colorClass: 'text-orange-600 group-hover:text-white',
-    titleClass: 'text-[#0f2a4d] group-hover:text-white',
-    descClass: 'text-slate-500 group-hover:text-orange-100',
-    bulletClass: 'text-slate-600 group-hover:text-white',
-    checkClass: 'text-orange-500 group-hover:text-orange-200',
-    pillClass: 'bg-orange-50 border-orange-100/50 text-[#FF8C00] group-hover:bg-white/10 group-hover:border-white/20 group-hover:text-white',
-    bgGradient: 'from-orange-50/40 via-white to-white group-hover:from-orange-500 group-hover:to-orange-600',
+    colorClass: 'text-orange-600',
+    titleClass: 'text-[#0f2a4d]',
+    descClass: 'text-slate-500',
+    bulletClass: 'text-slate-600',
+    checkClass: 'text-orange-500',
+    pillClass: 'bg-orange-50 border-orange-100/50 text-[#FF8C00]',
+    bgGradient: 'from-orange-50/40 via-white to-white group-hover:from-orange-50 group-hover:via-white group-hover:to-orange-50',
     borderColor: 'border-slate-200/60 group-hover:border-orange-500',
-    iconBg: 'bg-orange-500/10 text-orange-600 group-hover:bg-white/20 group-hover:text-white',
+    iconBg: 'bg-orange-500/10 text-orange-600',
     bulletPoints: [
       'Excellence in skilling mission award 2024',
       'State Human Resource Federation honors',
@@ -94,15 +94,15 @@ const awardsData = [
     description: 'Satisfaction rate',
     tag: 'Verified & Recognized',
     glow: 'rgba(37,99,235,0.2)',
-    colorClass: 'text-blue-600 group-hover:text-white',
-    titleClass: 'text-[#0f2a4d] group-hover:text-white',
-    descClass: 'text-slate-500 group-hover:text-blue-100',
-    bulletClass: 'text-slate-600 group-hover:text-white',
-    checkClass: 'text-blue-500 group-hover:text-blue-200',
-    pillClass: 'bg-blue-50 border-blue-100/50 text-[#2563EB] group-hover:bg-white/10 group-hover:border-white/20 group-hover:text-white',
-    bgGradient: 'from-blue-50/40 via-white to-white group-hover:from-blue-600 group-hover:to-blue-700',
+    colorClass: 'text-blue-600',
+    titleClass: 'text-[#0f2a4d]',
+    descClass: 'text-slate-500',
+    bulletClass: 'text-slate-600',
+    checkClass: 'text-blue-500',
+    pillClass: 'bg-blue-50 border-blue-100/50 text-[#2563EB]',
+    bgGradient: 'from-blue-50/40 via-white to-white group-hover:from-blue-50 group-hover:via-white group-hover:to-blue-50',
     borderColor: 'border-slate-200/60 group-hover:border-blue-500',
-    iconBg: 'bg-blue-500/10 text-blue-600 group-hover:bg-white/20 group-hover:text-white',
+    iconBg: 'bg-blue-500/10 text-blue-600',
     bulletPoints: [
       'ISO 9001:2015 premium quality standard',
       'Dedicated client resolution within 24 hours',
@@ -177,7 +177,7 @@ const AwardsSection = () => {
                       <div className={`text-5xl font-black tracking-tighter transition-colors duration-500 ${award.colorClass}`}>
                         {award.highlight}
                       </div>
-                      <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1.5 group-hover:text-white/80 transition-colors duration-500">
+                      <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1.5 transition-colors duration-500">
                         {award.subtext}
                       </div>
                     </div>
@@ -188,7 +188,7 @@ const AwardsSection = () => {
                     <span className={`rounded-md border px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider transition-all duration-500 ${award.pillClass}`}>
                       {award.pill}
                     </span>
-                    <span className="rounded-md bg-slate-900 border border-slate-900 px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white group-hover:bg-white group-hover:text-slate-900 group-hover:border-white transition-all duration-500">
+                    <span className="rounded-md bg-slate-900 border border-slate-900 px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white transition-all duration-500">
                       {award.title}
                     </span>
                   </div>
@@ -199,7 +199,7 @@ const AwardsSection = () => {
                   </h3>
 
                   {/* Bullet points */}
-                  <div className="space-y-3.5 mb-6 border-t border-slate-100/80 group-hover:border-white/10 pt-5 transition-all duration-500">
+                  <div className="space-y-3.5 mb-6 border-t border-slate-100/80 group-hover:border-slate-200 pt-5 transition-all duration-500">
                     {award.bulletPoints.map((point, idx) => (
                       <div key={idx} className="flex items-start gap-2.5">
                         <CheckCircle2 className={`h-4.5 w-4.5 shrink-0 mt-0.5 transition-colors duration-500 ${award.checkClass}`} />
@@ -212,12 +212,12 @@ const AwardsSection = () => {
                 </div>
 
                 {/* Bottom Verification Footer */}
-                <div className="border-t border-slate-100/80 group-hover:border-white/10 pt-4 flex items-center justify-between relative z-10 transition-all duration-500">
-                  <span className="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-[#0f2a4d] group-hover:text-white transition-colors duration-500">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500 group-hover:bg-white transition-colors duration-500" />
+                <div className="border-t border-slate-100/80 group-hover:border-slate-200 pt-4 flex items-center justify-between relative z-10 transition-all duration-500">
+                  <span className="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-[#0f2a4d] transition-colors duration-500">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 transition-colors duration-500" />
                     {award.tag}
                   </span>
-                  <Sparkles size={12} className="text-orange-500 group-hover:text-white animate-pulse transition-colors duration-500" />
+                  <Sparkles size={12} className="text-orange-500 animate-pulse transition-colors duration-500" />
                 </div>
               </div>
             );

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Calendar, ArrowLeft, Tag } from 'lucide-react';
+import { Calendar, ArrowLeft, Tag, Share2, Copy, MessageCircle, Linkedin, Facebook, CheckCircle } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { extractMediaUrl, fetchNews } from '../../utils/strapi';
@@ -15,6 +15,7 @@ const stripHtml = (value) => {
 const NewsDetailPage = () => {
   const { newsId } = useParams();
   const [items, setItems] = useState([]);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -29,6 +30,52 @@ const NewsDetailPage = () => {
     () => items.find((item) => String(item.documentId || item.id) === String(newsId)),
     [items, newsId]
   );
+
+  const shareText = useMemo(() => {
+    if (!newsItem) return '';
+    const cleanDesc = stripHtml(newsItem.description)
+      .replace(/\s+/g, ' ')
+      .trim();
+    const truncatedDesc = cleanDesc.length > 250 ? cleanDesc.slice(0, 250) + '...' : cleanDesc;
+    return `${newsItem.title}\n\n${truncatedDesc}\n\nRead more here:`;
+  }, [newsItem]);
+
+  const shareUrl = window.location.href;
+
+  const handleShareWhatsApp = () => {
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+    window.open(url, '_blank');
+  };
+
+  const handleShareFacebook = () => {
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+    window.open(url, '_blank');
+  };
+
+  const handleShareLinkedIn = () => {
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+    window.open(url, '_blank');
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: newsItem.title,
+          text: stripHtml(newsItem.description),
+          url: shareUrl,
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    }
+  };
 
   const related = useMemo(() => {
     if (!newsItem) return [];
@@ -73,15 +120,59 @@ const NewsDetailPage = () => {
           />
 
           <div className="p-6 md:p-10">
-            <div className="mb-4 flex flex-wrap items-center gap-4 text-sm text-slate-500">
-              <span className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 font-semibold text-orange-600">
-                <Tag size={14} />
-                {newsItem.tag || 'News'}
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <Calendar size={14} />
-                {newsItem.date || '-'}
-              </span>
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-6 text-sm text-slate-500">
+              <div className="flex flex-wrap items-center gap-4">
+                <span className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 font-semibold text-orange-600">
+                  <Tag size={14} />
+                  {newsItem.tag || 'News'}
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <Calendar size={14} />
+                  {newsItem.date || '-'}
+                </span>
+              </div>
+
+              {/* Share Toolbar */}
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 mr-1">Share:</span>
+                <button
+                  onClick={handleShareWhatsApp}
+                  title="Share on WhatsApp"
+                  className="rounded-full bg-green-50 p-2 text-green-600 hover:bg-green-100 transition-colors cursor-pointer"
+                >
+                  <MessageCircle size={16} />
+                </button>
+                <button
+                  onClick={handleShareFacebook}
+                  title="Share on Facebook"
+                  className="rounded-full bg-blue-50 p-2 text-blue-600 hover:bg-blue-100 transition-colors cursor-pointer"
+                >
+                  <Facebook size={16} />
+                </button>
+                <button
+                  onClick={handleShareLinkedIn}
+                  title="Share on LinkedIn"
+                  className="rounded-full bg-indigo-50 p-2 text-indigo-600 hover:bg-indigo-100 transition-colors cursor-pointer"
+                >
+                  <Linkedin size={16} />
+                </button>
+                <button
+                  onClick={handleCopyLink}
+                  title={copied ? "Link Copied!" : "Copy Link"}
+                  className={`rounded-full p-2 transition-colors cursor-pointer ${copied ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                >
+                  {copied ? <CheckCircle size={16} /> : <Copy size={16} />}
+                </button>
+                {typeof navigator !== 'undefined' && navigator.share && (
+                  <button
+                    onClick={handleNativeShare}
+                    title="Share via Device"
+                    className="rounded-full bg-orange-50 p-2 text-orange-600 hover:bg-orange-100 transition-colors cursor-pointer"
+                  >
+                    <Share2 size={16} />
+                  </button>
+                )}
+              </div>
             </div>
 
             <h1 className="text-3xl font-bold leading-tight text-slate-900 md:text-4xl">{newsItem.title}</h1>

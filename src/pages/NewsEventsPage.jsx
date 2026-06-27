@@ -577,25 +577,26 @@ const NewsEventsPage = ({ prismicData = null }) => {
             .map((item) => {
               const itemId = item.documentId || item.id;
               return (
-                <motion.article
-                  key={itemId}
-                  className="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.55, ease: 'easeOut' }}
-                >
-                  <img
-                    src={item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400'}
-                    alt={item.title || 'Update image'}
-                    className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="p-5">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'Update'}</p>
-                    <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900">{item.title}</h3>
-                    <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
-                  </div>
-                </motion.article>
+                <Link key={itemId} to={`/news-events/${itemId}`} className="group block">
+                  <motion.article
+                    className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md h-full"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.55, ease: 'easeOut' }}
+                  >
+                    <img
+                      src={item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400'}
+                      alt={item.title || 'Update image'}
+                      className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="p-5">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'Update'}</p>
+                      <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900">{item.title}</h3>
+                      <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
+                    </div>
+                  </motion.article>
+                </Link>
               );
             })}
         </div>

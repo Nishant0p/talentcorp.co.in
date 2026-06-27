@@ -22,7 +22,7 @@ const localNews = [
     `,
     date: '2026-06-21',
     tag: 'Events',
-    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=600',
+    image: 'https://images.prismic.io/alphas/aj9_6VbRV8_Qf7oY_IMG_0905.HEIC?auto=format,compress',
   },
   {
     id: 999999,
