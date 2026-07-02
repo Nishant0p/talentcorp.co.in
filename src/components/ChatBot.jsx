@@ -117,11 +117,18 @@ export default function ChatBot() {
   const [scrollHidden, setScrollHidden] = useState(false)
   const scrollTimerRef = useRef(null)
   useEffect(() => {
+    let ticking = false
     const onScroll = () => {
       if (open) return // don't hide when chat is open
-      setScrollHidden(true)
-      clearTimeout(scrollTimerRef.current)
-      scrollTimerRef.current = setTimeout(() => setScrollHidden(false), 1000)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrollHidden(true)
+          clearTimeout(scrollTimerRef.current)
+          scrollTimerRef.current = setTimeout(() => setScrollHidden(false), 1000)
+          ticking = false
+        })
+        ticking = true
+      }
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => {

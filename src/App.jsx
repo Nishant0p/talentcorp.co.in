@@ -59,16 +59,23 @@ function ScrollToTopButton() {
 
   useEffect(() => {
     let hideTimer = null
+    let ticking = false
 
     const onScroll = () => {
-      if (window.scrollY > 100) {
-        setIsVisible(true)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (window.scrollY > 100) {
+            setIsVisible(true)
+          }
+          // Reset the 2-second hide timer
+          clearTimeout(hideTimer)
+          hideTimer = setTimeout(() => {
+            setIsVisible(false)
+          }, 2000)
+          ticking = false
+        })
+        ticking = true
       }
-      // Reset the 2-second hide timer on every scroll event
-      clearTimeout(hideTimer)
-      hideTimer = setTimeout(() => {
-        setIsVisible(false)
-      }, 2000)
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })

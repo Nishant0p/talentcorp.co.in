@@ -84,16 +84,23 @@ const Navbar = ({ isGlobal }) => {
     if (pathname !== '/' || !isMobile) return;
 
     let previousScrollY = window.scrollY;
+    let ticking = false;
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY < 48) {
-        setIsNavbarVisible(true);
-      } else if (currentScrollY > previousScrollY + 4) {
-        setIsNavbarVisible(false);
-      } else if (currentScrollY < previousScrollY - 4) {
-        setIsNavbarVisible(true);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          if (currentScrollY < 48) {
+            setIsNavbarVisible(true);
+          } else if (currentScrollY > previousScrollY + 4) {
+            setIsNavbarVisible(false);
+          } else if (currentScrollY < previousScrollY - 4) {
+            setIsNavbarVisible(true);
+          }
+          previousScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
       }
-      previousScrollY = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
