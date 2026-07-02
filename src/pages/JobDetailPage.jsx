@@ -5,6 +5,7 @@ import {
   CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2
 } from 'lucide-react';
 import { fetchJobs, submitApplicant, submitToAdminBackend, parseMarkdown } from '../utils/strapi';
+import useSEO from '../hooks/useSEO';
 import './JobDetailPage.css';
 
 // ─── Static constants ────────────────────────────────────────────────────────
@@ -158,6 +159,44 @@ const JobDetailPage = () => {
   const [submitError, setSubmitError] = useState('');
   const [form, setForm] = useState(EMPTY_FORM);
 
+  useSEO({
+    title: job ? `${job.title} | ${job.company} | TSPL Group` : 'Job Details',
+    description: job ? `Apply for ${job.title} at ${job.company} in ${job.location}. Salary: ${job.salary || 'Competitive'}. Submit your application online.` : 'Apply for open positions at TSPL Group.',
+    keywords: job ? `${job.title}, ${job.company}, job in ${job.location}, TSPL Group jobs, careers` : 'TSPL Group jobs, hiring, open positions'
+  });
+
+  const jsonLd = job ? {
+    "@context": "https://schema.org/",
+    "@type": "JobPosting",
+    "title": job.title,
+    "description": parseMarkdown(job.description || `Join ${job.company} as a ${job.title} in ${job.location}.`),
+    "datePosted": new Date().toISOString().split('T')[0],
+    "employmentType": job.type === 'Full-time' ? 'FULL_TIME' : job.type === 'Apprenticeship' ? 'OTHER' : 'CONTRACTOR',
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": job.company,
+      "sameAs": "https://tsplgroup.in"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": job.location.split(',')[0]?.trim() || job.location,
+        "addressRegion": job.location.split(',')[1]?.trim() || '',
+        "addressCountry": "IN"
+      }
+    },
+    "baseSalary": job.salary && job.salary !== 'Competitive' ? {
+      "@type": "MonetaryAmount",
+      "currency": "INR",
+      "value": {
+        "@type": "QuantitativeValue",
+        "value": job.salary,
+        "unitText": "MONTH"
+      }
+    } : undefined
+  } : null;
+
   // Fetch from Strapi (No changes here as requested)
   useEffect(() => {
     let cancelled = false;
@@ -287,6 +326,12 @@ const JobDetailPage = () => {
 
   return (
     <div className="pro-container">
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
       {/* ── Top Navigation ── */}
       <nav className="pro-nav">
         <button className="pro-back-btn" onClick={goBack}>
