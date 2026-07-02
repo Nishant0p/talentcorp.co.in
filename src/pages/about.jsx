@@ -650,7 +650,7 @@ function LeadershipSection({ isMobile }) {
 								className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full"
 							>
 								{/* Uniform Aspect Ratio Container */}
-								<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
+								<figure className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px] m-0">
 									<ProgressiveImage
 										src={leader.imageUrl}
 										alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
@@ -660,6 +660,9 @@ function LeadershipSection({ isMobile }) {
 										height="400"
 										className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 									/>
+									<figcaption className="sr-only">
+										{leader.name} - {leader.role} of TalentCorp Solutions Private Limited (TSPL Group)
+									</figcaption>
 									{/* Gradient Overlay for Text Readability */}
 									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
 									
@@ -672,7 +675,7 @@ function LeadershipSection({ isMobile }) {
 											{leader.role}
 										</p>
 									</div>
-								</div>
+								</figure>
 							</motion.div>
 						</Link>
 					))}
@@ -691,7 +694,7 @@ function LeadershipSection({ isMobile }) {
 								className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full"
 							>
 								{/* Uniform Aspect Ratio Container */}
-								<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
+								<figure className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px] m-0">
 									<ProgressiveImage
 										src={leader.imageUrl}
 										alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
@@ -701,6 +704,9 @@ function LeadershipSection({ isMobile }) {
 										height="400"
 										className={`h-full w-full object-cover object-top transition-transform duration-700 ${leader.slug === 'ruma-sayyad' ? 'scale-110 origin-top group-hover:scale-115' : 'group-hover:scale-105'}`}
 									/>
+									<figcaption className="sr-only">
+										{leader.name} - {leader.role} of TalentCorp Solutions Private Limited (TSPL Group)
+									</figcaption>
 									{/* Gradient Overlay for Text Readability */}
 									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
 									
@@ -713,7 +719,7 @@ function LeadershipSection({ isMobile }) {
 											{leader.role}
 										</p>
 									</div>
-								</div>
+								</figure>
 							</motion.div>
 						</Link>
 					))}

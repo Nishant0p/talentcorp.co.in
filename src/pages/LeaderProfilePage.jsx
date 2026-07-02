@@ -281,10 +281,10 @@ export default function LeaderProfilePage() {
 		'worksFor': {
 			'@type': 'Organization',
 			'name': 'TalentCorp Solutions Private Limited (TSPL Group)',
-			'url': 'https://talentcorp.co.in'
+			'url': 'https://tsplgroup.in'
 		},
 		'description': profile.bio,
-		'image': `https://talentcorp.co.in${profile.imageUrl}`,
+		'image': `https://tsplgroup.in${profile.imageUrl}`,
 		'telephone': profile.phone,
 		'email': profile.email,
 		'address': {
@@ -321,14 +321,17 @@ export default function LeaderProfilePage() {
 
 						{/* Photo Column */}
 						<div className="md:col-span-4 flex flex-col items-center">
-							<div className="relative aspect-[3/4] w-full max-w-[280px] overflow-hidden rounded-2xl bg-slate-100 border border-slate-200 shadow-md">
+							<figure className="relative aspect-[3/4] w-full max-w-[280px] overflow-hidden rounded-2xl bg-slate-100 border border-slate-200 shadow-md m-0">
 								<img 
 									src={profile.imageUrl} 
 									alt={`${profile.name} - ${profile.role} of TSPL Group`}
 									title={`${profile.name} - ${profile.role}`}
 									className={`h-full w-full object-cover object-top transition-transform duration-500 ${slug === 'ruma-sayyad' ? 'scale-110 origin-top' : ''}`}
 								/>
-							</div>
+								<figcaption className="sr-only">
+									{profile.name} - {profile.role} of TSPL Group
+								</figcaption>
+							</figure>
 						</div>
 
 						{/* Identity Info Column */}
