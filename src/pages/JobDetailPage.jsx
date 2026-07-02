@@ -4,7 +4,7 @@ import {
   ArrowLeft, MapPin, IndianRupee, Clock, Briefcase, Calendar,
   CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2
 } from 'lucide-react';
-import { fetchJobs, submitApplicant, submitToAdminBackend } from '../utils/strapi';
+import { fetchJobs, submitApplicant, submitToAdminBackend, parseMarkdown } from '../utils/strapi';
 import './JobDetailPage.css';
 
 // ─── Static constants ────────────────────────────────────────────────────────
@@ -95,7 +95,7 @@ const JobDescription = React.memo(({ job }) => {
         <div
           className="pro-description-text"
           dangerouslySetInnerHTML={{
-            __html: description.replace(/\n/g, '<br />')
+            __html: parseMarkdown(description)
           }}
         />
       </div>

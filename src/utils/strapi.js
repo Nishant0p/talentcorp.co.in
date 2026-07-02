@@ -452,3 +452,65 @@ export const getApplicantsExportUrl = (jobId, clearAfterDownload = false) => {
   return `${STRAPI_BASE_URL}/api/applicants/export${query ? `?${query}` : ''}`;
 };
 
+export const parseMarkdown = (text) => {
+  if (!text) return '';
+  if (typeof text !== 'string') return '';
+
+  // 1. Headers: # Header, ## Header, etc.
+  let html = text
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+  // 2. Bold: **text**
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // 3. Italic: *text* or _text_
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+
+  // 4. Bullet lists
+  const lines = html.split('\n');
+  let inList = false;
+  const processedLines = [];
+
+  for (let line of lines) {
+    const trimmed = line.trim();
+    // Match line starting with -, *, • followed by space
+    const listMatch = trimmed.match(/^[-•*]\s+(.*)/);
+
+    if (listMatch) {
+      if (!inList) {
+        processedLines.push('<ul class="markdown-list" style="list-style-type: disc; padding-left: 20px; margin-bottom: 15px; margin-top: 5px;">');
+        inList = true;
+      }
+      processedLines.push(`<li style="margin-bottom: 5px;">${listMatch[1]}</li>`);
+    } else {
+      if (inList) {
+        processedLines.push('</ul>');
+        inList = false;
+      }
+      processedLines.push(line);
+    }
+  }
+
+  if (inList) {
+    processedLines.push('</ul>');
+  }
+
+  html = processedLines.join('\n');
+
+  // 5. Line breaks: replace \n with <br /> except when it's immediately after/before block tags
+  html = html.replace(/\n/g, '<br />');
+
+  // Clean up duplicate <br /> tags around block elements
+  html = html
+    .replace(/<\/ul><br \/>/g, '</ul>')
+    .replace(/<ul(.*?)><br \/>/g, '<ul$1>')
+    .replace(/<\/li><br \/>/g, '</li>')
+    .replace(/<\/h[1-6]><br \/>/g, (match) => match.replace('<br />', ''));
+
+  return html;
+};
+
+

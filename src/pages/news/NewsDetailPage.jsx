@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Calendar, ArrowLeft, Tag, Share2, Copy, MessageCircle, CheckCircle } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { extractMediaUrl, fetchNews } from '../../utils/strapi';
+import { extractMediaUrl, fetchNews, parseMarkdown } from '../../utils/strapi';
 import { useEffect, useState } from 'react';
 import localNews from '../../data/localNews';
 
@@ -185,7 +185,7 @@ const NewsDetailPage = () => {
 
             <div className="prose prose-slate mt-6 max-w-none text-slate-700">
               {newsItem.description ? (
-                <div dangerouslySetInnerHTML={{ __html: newsItem.description }} />
+                <div dangerouslySetInnerHTML={{ __html: parseMarkdown(newsItem.description) }} />
               ) : (
                 <p>No description available.</p>
               )}
