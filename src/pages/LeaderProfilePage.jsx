@@ -1,6 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { Award, Briefcase, Calendar, CheckCircle2, ChevronLeft, Mail, MapPin, Phone, Shield, Sparkles, Star, Trophy, Users } from 'lucide-react'
+import {
+	ChevronLeft,
+	ChevronRight,
+	Mail,
+	Phone,
+	Users
+} from 'lucide-react'
+
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import useSEO from '../hooks/useSEO'
@@ -221,7 +228,7 @@ const leaderProfiles = {
 		name: 'Mr. Namdev Egave',
 		role: 'Payroll & Compliance Head',
 		category: 'Leader',
-		imageUrl: '/leaders/ 8 Mr Namdev Egave.jpg',
+		imageUrl: '/leaders/8 Mr Namdev Egave.jpg',
 		bio: 'Mr. Namdev Egave leads payroll operations and regulatory compliance, ensuring correct statutory deductions.',
 		longBio: 'Mr. Egave monitors PF, ESI, and other labor-related filings. Under his oversight, TSPL maintains a clean record with government compliance departments.',
 		expertise: ['Labor Laws', 'Payroll Compliance', 'Statutory Filings', 'PF & ESI Management'],
@@ -248,6 +255,22 @@ const leaderProfiles = {
 		email: 'recruitment@tsplgroup.in',
 		phone: '+91 95615 04911',
 		location: 'Pune, India'
+	},
+	'samruddhi-chavan': {
+		name: 'Miss. Samruddhi Chavan',
+		role: 'OverAll Head',
+		category: 'Leader',
+		imageUrl: '/leaders/samruddhi.jpeg',
+		bio: 'Miss. Samruddhi Chavan leads recruitment initiatives and candidate coordination at TSPL Group.',
+		longBio: 'Miss. Samruddhi Chavan manages talent acquisition, applicant screening, and candidate relationship pipelines to fulfill corporate manpower requirements efficiently.',
+		expertise: ['Recruitment Operations', 'Talent Sourcing', 'Candidate Coordination', 'Placement Management'],
+		achievements: [
+			'Spearheaded recruitment drives across multiple regional operational zones.',
+			'Enhanced candidate placement efficiency for client partners.'
+		],
+		email: 'samruddhi@tsplgroup.in',
+		phone: '+91 95615 04911',
+		location: 'Pune, India'
 	}
 }
 
@@ -256,126 +279,387 @@ export default function LeaderProfilePage() {
 	const navigate = useNavigate()
 	const profile = leaderProfiles[slug]
 
+	const leadersContainerRef = useRef(null)
+
+	const [scrollProgress, setScrollProgress] = useState({
+		left: 0,
+		width: 25
+	})
+
 	useEffect(() => {
 		if (!profile) {
-			navigate('/about')
+			navigate('/about', { replace: true })
 		}
 	}, [profile, navigate])
 
 	useSEO({
-		title: profile ? `${profile.name} - ${profile.role} | TSPL Group` : 'Leader Profile | TSPL Group',
-		description: profile ? `${profile.name} serves as ${profile.role} at TSPL Group. Read their professional biography, career milestones, and expertise.` : 'TSPL Group leadership profiles.',
-		keywords: profile ? `${profile.name}, ${profile.role}, TSPL Group Leader, Biography, HR Industry Expert` : 'TSPL Group, Leadership, Director Biography'
+		title: profile
+			? `${profile.name} - ${profile.role} | TSPL Group`
+			: 'Leader Profile | TSPL Group',
+
+		description: profile
+			? `${profile.name} serves as ${profile.role} at TSPL Group. Read their professional biography, career milestones, and expertise.`
+			: 'TSPL Group leadership profiles.',
+
+		keywords: profile
+			? `${profile.name}, ${profile.role}, TSPL Group Leader, Biography, HR Industry Expert`
+			: 'TSPL Group, Leadership, Director Biography'
 	})
+
+	const updateScrollProgress = useCallback(() => {
+		const container = leadersContainerRef.current
+
+		if (!container) return
+
+		const maximumScroll =
+			container.scrollWidth - container.clientWidth
+
+		const visiblePercentage =
+			container.scrollWidth > 0
+				? (container.clientWidth / container.scrollWidth) * 100
+				: 100
+
+		const indicatorWidth = Math.max(
+			Math.min(visiblePercentage, 100),
+			20
+		)
+
+		const currentProgress =
+			maximumScroll > 0
+				? container.scrollLeft / maximumScroll
+				: 0
+
+		const indicatorLeft =
+			currentProgress * (100 - indicatorWidth)
+
+		setScrollProgress({
+			left: indicatorLeft,
+			width: indicatorWidth
+		})
+	}, [])
+
+	useEffect(() => {
+		const frame = requestAnimationFrame(updateScrollProgress)
+
+		window.addEventListener('resize', updateScrollProgress)
+
+		return () => {
+			cancelAnimationFrame(frame)
+			window.removeEventListener(
+				'resize',
+				updateScrollProgress
+			)
+		}
+	}, [updateScrollProgress, slug])
 
 	if (!profile) {
 		return null
 	}
 
-	// Schema.org Person Structured Data
+	const otherLeaders = Object.entries(leaderProfiles).filter(
+		([key]) => key !== slug
+	)
+
+	const scrollLeaders = direction => {
+		const container = leadersContainerRef.current
+
+		if (!container) return
+
+		container.scrollBy({
+			left:
+				direction *
+				Math.max(container.clientWidth * 0.75, 300),
+			behavior: 'smooth'
+		})
+	}
+
 	const schemaData = {
 		'@context': 'https://schema.org',
 		'@type': 'Person',
-		'name': profile.name,
-		'jobTitle': profile.role,
-		'worksFor': {
+		name: profile.name,
+		jobTitle: profile.role,
+		worksFor: {
 			'@type': 'Organization',
-			'name': 'TalentCorp Solutions Private Limited (TSPL Group)',
-			'url': 'https://tsplgroup.in'
+			name: 'TalentCorp Solutions Private Limited (TSPL Group)',
+			url: 'https://tsplgroup.in'
 		},
-		'description': profile.bio,
-		'image': `https://tsplgroup.in${profile.imageUrl}`,
-		'telephone': profile.phone,
-		'email': profile.email,
-		'address': {
+		description: profile.bio,
+		image: `https://tsplgroup.in${profile.imageUrl}`,
+		telephone: profile.phone,
+		email: profile.email,
+		address: {
 			'@type': 'PostalAddress',
-			'addressLocality': 'Pune',
-			'addressRegion': 'Maharashtra',
-			'addressCountry': 'India'
+			addressLocality: 'Pune',
+			addressRegion: 'Maharashtra',
+			addressCountry: 'India'
 		}
 	}
 
 	return (
-		<div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
+		<div className="min-h-screen bg-[#f8f9fc] font-sans text-[#12213f]">
 			<Navbar />
 
-			{/* SEO Structured Data */}
-			<script type="application/ld+json">
-				{JSON.stringify(schemaData)}
-			</script>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify(schemaData)
+				}}
+			/>
 
-			<main className="pt-28 pb-16 px-4 sm:px-6 lg:px-8">
-				<div className="mx-auto max-w-5xl">
-					
-					{/* Back Link */}
-					<Link to="/about" className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 mb-8 transition-colors">
-						<ChevronLeft className="h-4 w-4" /> Back to About Us
+			<main className="px-4 pb-16 pt-24 sm:px-6 lg:px-8 lg:pt-28">
+				<div className="mx-auto w-full max-w-[1440px]">
+					{/* Back button */}
+					<Link
+						to="/about"
+						className="mb-7 inline-flex items-center gap-2 text-base font-bold text-[#075dcb] transition-colors hover:text-[#ff6717] sm:text-lg"
+					>
+						<ChevronLeft
+							className="h-6 w-6"
+							strokeWidth={2.8}
+						/>
+
+						<span>Back to About Us</span>
 					</Link>
 
-					{/* Profile Header Grid */}
-					<div className="grid gap-8 md:grid-cols-12 items-center bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-xl relative overflow-hidden">
-						
-						{/* Background decorative glows */}
-						<div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-blue-100/30 blur-3xl pointer-events-none" />
-						<div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-orange-100/20 blur-3xl pointer-events-none" />
+					{/* Main profile card */}
+					<section className="relative isolate overflow-hidden rounded-[24px] bg-white shadow-[0_18px_55px_rgba(18,42,84,0.14)]">
+						{/* Orange diagonal border */}
+						<div
+							className="pointer-events-none absolute inset-y-0 left-0 hidden w-[44.7%] bg-[#ff6a18] lg:block"
+							style={{
+								clipPath:
+									'polygon(0 0, 100% 0, 87% 100%, 0 100%)'
+							}}
+						/>
 
-						{/* Photo Column */}
-						<div className="md:col-span-4 flex flex-col items-center">
-							<figure className="relative aspect-[3/4] w-full max-w-[280px] overflow-hidden rounded-2xl bg-slate-100 border border-slate-200 shadow-md m-0">
-								<img 
-									src={profile.imageUrl} 
-									alt={`${profile.name} - ${profile.role} of TSPL Group`}
-									title={`${profile.name} - ${profile.role}`}
-									className={`h-full w-full object-cover object-top transition-transform duration-500 ${slug === 'ruma-sayyad' ? 'scale-110 origin-top' : ''}`}
-								/>
-								<figcaption className="sr-only">
-									{profile.name} - {profile.role} of TSPL Group
-								</figcaption>
-							</figure>
+						{/* Blue diagonal panel */}
+						<div
+							className="pointer-events-none absolute inset-y-0 left-0 hidden w-[43.5%] bg-gradient-to-br from-[#0753bc] via-[#0969dc] to-[#0055bd] lg:block"
+							style={{
+								clipPath:
+									'polygon(0 0, 100% 0, 87% 100%, 0 100%)'
+							}}
+						/>
+
+						{/* Mobile blue background */}
+						<div className="pointer-events-none absolute inset-x-0 top-0 h-[430px] bg-gradient-to-br from-[#0753bc] via-[#0969dc] to-[#0055bd] lg:hidden" />
+
+						{/* Left decorative dots */}
+						<div className="pointer-events-none absolute left-7 top-[160px] hidden grid-cols-3 gap-5 opacity-45 lg:grid">
+							{Array.from({ length: 12 }).map(
+								(_, index) => (
+									<span
+										key={index}
+										className="h-1.5 w-1.5 rounded-full bg-[#83bdff]"
+									/>
+								)
+							)}
 						</div>
 
-						{/* Identity Info Column */}
-						<div className="md:col-span-8 space-y-6 text-left relative z-10">
-							<div>
-								<h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
-									{profile.name}
-								</h1>
-								<p className="text-lg font-bold text-blue-600 mt-1 uppercase tracking-wider">
-									{profile.role}
-								</p>
+						{/* Top-right decorative dots */}
+						<div className="pointer-events-none absolute right-10 top-12 hidden grid-cols-7 gap-4 opacity-60 sm:grid">
+							{Array.from({ length: 35 }).map(
+								(_, index) => (
+									<span
+										key={index}
+										className="h-1.5 w-1.5 rounded-full bg-[#ffc09d]"
+									/>
+								)
+							)}
+						</div>
+
+						{/* Right curved decoration */}
+						<div className="pointer-events-none absolute -bottom-[290px] -right-[210px] hidden h-[620px] w-[620px] rounded-full border-[64px] border-[#fff0e9] lg:block" />
+
+						<div className="pointer-events-none absolute -bottom-[320px] -right-[265px] hidden h-[620px] w-[620px] rounded-full border-[84px] border-[#fbe0d4]/60 lg:block" />
+
+						<div className="pointer-events-none absolute -bottom-[238px] -right-[230px] hidden h-[410px] w-[410px] rounded-full bg-gradient-to-br from-[#1675ef] to-[#0052bd] lg:block" />
+
+						<div className="relative grid min-h-[540px] lg:grid-cols-[43%_57%]">
+							{/* Profile image */}
+							<div className="flex items-center justify-center px-6 pb-8 pt-10 sm:px-10 lg:px-12 lg:py-12 xl:px-20">
+								<figure className="relative m-0 aspect-[4/5] w-full max-w-[360px] overflow-hidden rounded-[23px] border-2 border-white bg-[#1972e8]/30 shadow-[0_22px_42px_rgba(0,36,105,0.28)]">
+									<div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-white/5 to-[#002d87]/5" />
+
+									<img
+										src={profile.imageUrl}
+										alt={`${profile.name} - ${profile.role} at TSPL Group`}
+										title={`${profile.name} - ${profile.role}`}
+										className={`h-full w-full object-cover object-top ${slug === 'ruma-sayyad'
+											? 'scale-110 origin-top'
+											: ''
+											}`}
+									/>
+
+									<figcaption className="sr-only">
+										{profile.name} - {profile.role} at
+										TSPL Group
+									</figcaption>
+								</figure>
+							</div>
+
+							{/* Profile information */}
+							<div className="relative z-20 flex items-center bg-white px-7 py-11 sm:px-12 lg:bg-transparent lg:px-16 lg:py-14 xl:px-24">
+								<div className="w-full max-w-[680px]">
+									<div className="mb-6 flex h-[62px] w-[62px] items-center justify-center rounded-full bg-gradient-to-br from-[#ff8a26] to-[#ff5b0b] shadow-[0_10px_24px_rgba(255,104,19,0.28)]">
+										<Users
+											className="h-8 w-8 text-white"
+											strokeWidth={2.4}
+										/>
+									</div>
+
+									<h1 className="text-[34px] font-black leading-[1.08] tracking-[-0.035em] text-[#09245d] sm:text-[42px] lg:text-[46px] xl:text-[50px]">
+										{profile.name}
+									</h1>
+
+									<p className="mt-3 text-lg font-extrabold uppercase tracking-[0.04em] text-[#ff6817] sm:text-[22px]">
+										{profile.role}
+									</p>
+
+									<div className="mt-5 h-1 w-16 rounded-full bg-[#ff6817]" />
+
+									<p className="mt-7 max-w-[650px] text-base leading-7 text-[#263752] sm:text-[18px] sm:leading-8">
+										{profile.bio}
+									</p>
+
+									<div className="mt-8 flex flex-col gap-4 text-sm font-medium text-[#273752] sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 sm:text-base">
+										<a
+											href={`mailto:${profile.email}`}
+											className="inline-flex min-w-0 items-center gap-3 transition-colors hover:text-[#075dcb]"
+										>
+											<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1764ce] text-white shadow-md">
+												<Mail
+													className="h-[18px] w-[18px]"
+													strokeWidth={2.4}
+												/>
+											</span>
+
+											<span className="break-all sm:break-normal">
+												{profile.email}
+											</span>
+										</a>
+
+										<span className="hidden h-7 w-px bg-[#ff6b18] sm:block" />
+
+										<a
+											href={`tel:${profile.phone.replace(
+												/[^\d+]/g,
+												''
+											)}`}
+											className="inline-flex items-center gap-3 transition-colors hover:text-[#075dcb]"
+										>
+											<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1764ce] text-white shadow-md">
+												<Phone
+													className="h-[18px] w-[18px]"
+													strokeWidth={2.4}
+												/>
+											</span>
+
+											<span>{profile.phone}</span>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
+					</section>
 
-					{/* Navigation / Other Leaders carousel-style list */}
-					<div className="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl mt-8 text-left">
-						<h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-							<Users className="h-5 w-5 text-orange-500" /> Other Team Leaders
-						</h2>
-						<div className="flex overflow-x-auto pb-4 gap-4 hide-scrollbar">
-							{Object.entries(leaderProfiles)
-								.filter(([key]) => key !== slug)
-								.map(([key, item]) => (
-									<Link 
-										key={key} 
+					{/* Other team leaders */}
+					<section className="mt-8 overflow-hidden rounded-[24px] bg-gradient-to-r from-[#06357f] via-[#0749a3] to-[#0756c8] px-4 py-6 shadow-[0_18px_55px_rgba(8,50,122,0.24)] sm:px-7 sm:py-7 lg:px-12">
+						<div className="mb-6 flex items-center gap-4">
+							<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#ff8a26] to-[#ff5b0b] shadow-lg">
+								<Users
+									className="h-7 w-7 text-white"
+									strokeWidth={2.4}
+								/>
+							</div>
+
+							<div>
+								<h2 className="text-[23px] font-black text-white sm:text-[28px]">
+									Other Team Leaders
+								</h2>
+
+								<div className="mt-2 h-1 w-12 rounded-full bg-[#ff6817]" />
+							</div>
+						</div>
+
+						<div className="relative">
+							{/* Left arrow */}
+							<button
+								type="button"
+								onClick={() => scrollLeaders(-1)}
+								aria-label="Show previous team leaders"
+								className="absolute -left-1 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[#ff6b18] text-white shadow-lg transition-all hover:scale-105 hover:bg-[#ff7b2d] sm:-left-5"
+							>
+								<ChevronLeft
+									className="h-7 w-7"
+									strokeWidth={2.8}
+								/>
+							</button>
+
+							{/* Leaders carousel */}
+							<div
+								ref={leadersContainerRef}
+								onScroll={updateScrollProgress}
+								className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-12 pb-4 sm:px-14 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+							>
+								{otherLeaders.map(([key, item]) => (
+									<Link
+										key={key}
 										to={`/leader/${key}`}
-										className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-3 shrink-0 w-64 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
+										className="group flex min-h-[136px] w-[285px] shrink-0 snap-start items-center gap-4 rounded-[20px] border border-white/15 bg-white/[0.07] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:bg-white/[0.12] sm:w-[325px]"
 									>
-										<div className="h-12 w-12 rounded-lg overflow-hidden bg-slate-800 shrink-0">
-											<img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105" />
+										<div className="h-[82px] w-[82px] shrink-0 overflow-hidden rounded-[14px] bg-white p-1 shadow-lg">
+											<img
+												src={item.imageUrl}
+												alt={`${item.name} - ${item.role}`}
+												className="h-full w-full rounded-[10px] object-cover object-top transition-transform duration-500 group-hover:scale-105"
+											/>
 										</div>
+
 										<div className="min-w-0">
-											<h3 className="text-sm font-bold text-white truncate">{item.name}</h3>
-											<p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider truncate">{item.role}</p>
+											<h3 className="line-clamp-2 text-[17px] font-extrabold leading-6 text-white">
+												{item.name}
+											</h3>
+
+											<p className="mt-1 line-clamp-2 text-[13px] font-bold uppercase leading-5 tracking-[0.02em] text-[#ff751f]">
+												{item.role}
+											</p>
+
+											<div className="mt-2 h-[3px] w-9 rounded-full bg-[#ff6817]" />
 										</div>
 									</Link>
 								))}
-						</div>
-					</div>
+							</div>
 
+							{/* Right arrow */}
+							<button
+								type="button"
+								onClick={() => scrollLeaders(1)}
+								aria-label="Show next team leaders"
+								className="absolute -right-1 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[#ff6b18] text-white shadow-lg transition-all hover:scale-105 hover:bg-[#ff7b2d] sm:-right-5"
+							>
+								<ChevronRight
+									className="h-7 w-7"
+									strokeWidth={2.8}
+								/>
+							</button>
+						</div>
+
+						{/* Scroll progress bar */}
+						<div className="mx-12 mt-2 h-3 overflow-hidden rounded-full border-2 border-white/80 bg-white/90 sm:mx-14">
+							<div
+								className="h-full rounded-full bg-[#ff6817] transition-[width,left] duration-200"
+								style={{
+									position: 'relative',
+									left: `${scrollProgress.left}%`,
+									width: `${scrollProgress.width}%`
+								}}
+							/>
+						</div>
+					</section>
 				</div>
 			</main>
-			
+
 			<Footer />
 		</div>
 	)
