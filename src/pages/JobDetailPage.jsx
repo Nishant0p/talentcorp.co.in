@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft, MapPin, IndianRupee, Clock, Briefcase, Calendar,
-  CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2
+  CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2, Phone
 } from 'lucide-react';
 import { fetchJobs, submitApplicant, submitToAdminBackend, parseMarkdown } from '../utils/strapi';
 import useSEO from '../hooks/useSEO';
@@ -38,13 +38,41 @@ const REQS = [
 
 const EMPTY_FORM = { name: '', mobile: '', email: '', cv: null, pageName: '' };
 
-const getStats = (job) => [
-  { icon: Briefcase, label: 'Category', value: job.category || 'General' },
-  { icon: MapPin, label: 'Location', value: job.location },
-  { icon: IndianRupee, label: 'Salary', value: job.salary },
-  { icon: Clock, label: 'Type', value: job.type },
-  { icon: Calendar, label: 'Posted', value: 'Recently' },
-];
+const formatDateString = (dateStr) => {
+  if (!dateStr) return null;
+  const parsed = Date.parse(dateStr);
+  if (!isNaN(parsed)) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  return dateStr;
+};
+
+const getStats = (job) => {
+  const stats = [
+    { icon: Briefcase, label: 'Category', value: job.category || 'General' },
+    { icon: MapPin, label: 'Location', value: job.location },
+    { icon: IndianRupee, label: 'Salary', value: job.salary },
+    { icon: Clock, label: 'Type', value: job.type },
+  ];
+
+  const postedDate = job.publishedDate || job.publishedAt;
+  stats.push({
+    icon: Calendar,
+    label: 'Posted',
+    value: formatDateString(postedDate) || 'Recently',
+  });
+
+  if (job.applyBy) {
+    stats.push({
+      icon: Calendar,
+      label: 'Apply Before',
+      value: formatDateString(job.applyBy),
+    });
+  }
+
+  return stats;
+};
 
 const formatSalary = (job) => {
   if (job?.salary) return job.salary;
@@ -148,6 +176,30 @@ const BenefitsCard = React.memo(() => (
 
 // ─── Main Page Component ──────────────────────────────────────────────────────
 
+const defaultContacts = [{ name: 'HR Recruiting', phone: '+91 95615 04911' }];
+
+const getWhatsAppLink = (phone, title, company) => {
+  let cleaned = String(phone || '').replace(/[^0-9]/g, '');
+  if (cleaned.length === 10) {
+    cleaned = '91' + cleaned;
+  }
+  const text = `Hi, I am interested in the ${title} position at ${company || 'TSPL Group'}.`;
+  return `https://wa.me/${cleaned}?text=${encodeURIComponent(text)}`;
+};
+
+const WhatsAppIcon = ({ size = 14, className = '' }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    className={className}
+    fill="currentColor"
+  >
+    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.858-4.385 9.861-9.779.002-2.611-1.014-5.068-2.86-6.918a9.66 9.66 0 0 0-6.945-2.76c-5.438 0-9.861 4.386-9.864 9.782-.001 1.778.472 3.513 1.37 5.022L1.823 21.8l4.824-1.258zm12.354-7.043c-.33-.165-1.951-.963-2.253-1.074-.302-.11-.522-.165-.742.165-.22.33-.852 1.074-1.044 1.294-.192.22-.385.247-.715.083-1.81-.913-3.003-1.748-4.2-3.808-.316-.54.316-.5.904-1.68.1-.198.05-.371-.025-.536-.075-.165-.66-1.59-.905-2.18-.239-.575-.482-.497-.66-.506-.17-.008-.367-.01-.564-.01-.198 0-.523.074-.798.372-.275.298-1.05 1.026-1.05 2.502s1.075 2.903 1.225 3.101c.15.198 2.115 3.227 5.125 4.527.715.31 1.273.495 1.708.634.718.228 1.37.195 1.887.118.577-.087 1.951-.798 2.226-1.57.275-.772.275-1.434.192-1.571-.082-.138-.302-.22-.632-.385z" />
+  </svg>
+);
+
 const JobDetailPage = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
@@ -217,6 +269,10 @@ const JobDetailPage = () => {
             urgent: Boolean(found.urgent),
             description: found.description || '',
             requirements: found.requirements || [],
+            publishedDate: found.publishedDate || null,
+            publishedAt: found.publishedAt || null,
+            applyBy: found.applyBy || null,
+            hrContacts: found.hrContacts || [],
           };
           setJob(jobData);
           setForm(prev => ({ ...prev, pageName: found.pageName || found.title || '' }));
@@ -457,6 +513,42 @@ const JobDetailPage = () => {
 
             <div className="pro-trust-badge">
               <Shield size={14} /> <span>Your information is 100% secure</span>
+            </div>
+          </div>
+
+          <div className="pro-apply-card mt-6">
+            <div className="pro-apply-header">
+              <h3>Recruitment Contacts</h3>
+              <p>For enquiries related to this role</p>
+            </div>
+            <div className="pro-contacts-list">
+              {(job.hrContacts && job.hrContacts.length ? job.hrContacts : defaultContacts).map((contact, i) => (
+                <div key={i} className="pro-contact-item">
+                  <div className="pro-contact-header">
+                    <span className="pro-contact-name">{contact.name || 'HR Recruitment Team'}</span>
+                    <span className="pro-contact-badge">HR</span>
+                  </div>
+                  <p className="pro-contact-phone">{contact.phone}</p>
+                  <div className="pro-contact-actions">
+                    <a
+                      href={`tel:${contact.phone}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="pro-contact-btn pro-contact-btn-call"
+                    >
+                      <Phone size={13} className="shrink-0" /> Call
+                    </a>
+                    <a
+                      href={getWhatsAppLink(contact.phone, job.title, job.company)}
+                      onClick={(e) => e.stopPropagation()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pro-contact-btn pro-contact-btn-whatsapp"
+                    >
+                      <WhatsAppIcon size={13} className="shrink-0" /> WhatsApp
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </aside>

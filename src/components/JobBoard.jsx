@@ -1,16 +1,130 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, IndianRupee, Clock, ArrowRight, Filter, Briefcase, Car, Cpu, Factory, Share2 } from 'lucide-react';
+import { Search, MapPin, IndianRupee, Clock, ArrowRight, Filter, Briefcase, Car, Cpu, Factory, Share2, Calendar, Phone } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { buildJobCategoryOptions, fetchJobs, getJobCategoryFilterValue, toJobFilterSlug } from '../utils/strapi';
 
+const defaultContacts = [{ name: 'HR Recruiting', phone: '+91 95615 04911' }];
+
+const getWhatsAppLink = (phone, title, company) => {
+  let cleaned = String(phone || '').replace(/[^0-9]/g, '');
+  if (cleaned.length === 10) {
+    cleaned = '91' + cleaned;
+  }
+  const text = `Hi, I am interested in the ${title} position at ${company || 'TSPL Group'}.`;
+  return `https://wa.me/${cleaned}?text=${encodeURIComponent(text)}`;
+};
+
+const WhatsAppIcon = ({ size = 14, className = '' }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    className={className}
+    fill="currentColor"
+  >
+    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.858-4.385 9.861-9.779.002-2.611-1.014-5.068-2.86-6.918a9.66 9.66 0 0 0-6.945-2.76c-5.438 0-9.861 4.386-9.864 9.782-.001 1.778.472 3.513 1.37 5.022L1.823 21.8l4.824-1.258zm12.354-7.043c-.33-.165-1.951-.963-2.253-1.074-.302-.11-.522-.165-.742.165-.22.33-.852 1.074-1.044 1.294-.192.22-.385.247-.715.083-1.81-.913-3.003-1.748-4.2-3.808-.316-.54.316-.5.904-1.68.1-.198.05-.371-.025-.536-.075-.165-.66-1.59-.905-2.18-.239-.575-.482-.497-.66-.506-.17-.008-.367-.01-.564-.01-.198 0-.523.074-.798.372-.275.298-1.05 1.026-1.05 2.502s1.075 2.903 1.225 3.101c.15.198 2.115 3.227 5.125 4.527.715.31 1.273.495 1.708.634.718.228 1.37.195 1.887.118.577-.087 1.951-.798 2.226-1.57.275-.772.275-1.434.192-1.571-.082-.138-.302-.22-.632-.385z" />
+  </svg>
+);
+
+const formatDateString = (dateStr) => {
+  if (!dateStr) return 'Open until filled';
+  const parsed = Date.parse(dateStr);
+  if (!isNaN(parsed) && String(dateStr).includes('-')) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  return dateStr;
+};
+
 const fallbackJobs = [
-  { id: 1, title: 'Production Operator', company: 'Tata Motors', location: 'Pune, Maharashtra', salary: '₹18,000 - ₹25,000', type: 'Full-time', urgent: true },
-  { id: 2, title: 'ITI Technician', company: 'Maruti Suzuki', location: 'Gurugram, Haryana', salary: '₹15,000 - ₹22,000', type: 'Apprenticeship', urgent: false },
-  { id: 3, title: 'Quality Inspector', company: 'Bajaj Auto', location: 'Aurangabad, Maharashtra', salary: '₹20,000 - ₹28,000', type: 'Full-time', urgent: true },
-  { id: 4, title: 'Electrical Trainee', company: 'L&T Construction', location: 'Chennai, Tamil Nadu', salary: '₹12,000 - ₹18,000', type: 'Apprenticeship', urgent: false },
-  { id: 5, title: 'CNC Operator', company: 'Mahindra & Mahindra', location: 'Nashik, Maharashtra', salary: '₹22,000 - ₹30,000', type: 'Full-time', urgent: false },
-  { id: 6, title: 'Assembly Line Worker', company: 'Hero MotoCorp', location: 'Haridwar, Uttarakhand', salary: '₹16,000 - ₹20,000', type: 'Contract', urgent: true },
+  {
+    id: 1,
+    title: 'Production Operator',
+    company: 'Tata Motors',
+    location: 'Pune, Maharashtra',
+    salary: '₹18,000 - ₹25,000',
+    type: 'Full-time',
+    urgent: true,
+    postedDate: 'March 15, 2026',
+    applyBy: 'April 30, 2026',
+    hrContacts: [
+      { name: 'Anjali Sharma', phone: '+91 95615 04911' },
+      { name: 'Anil Kumar', phone: '+91 73979 71322' }
+    ]
+  },
+  {
+    id: 2,
+    title: 'ITI Technician',
+    company: 'Maruti Suzuki',
+    location: 'Gurugram, Haryana',
+    salary: '₹15,000 - ₹22,000',
+    type: 'Apprenticeship',
+    urgent: false,
+    postedDate: 'March 18, 2026',
+    applyBy: 'April 25, 2026',
+    hrContacts: [
+      { name: 'Amit Kumar', phone: '+91 95615 04911' }
+    ]
+  },
+  {
+    id: 3,
+    title: 'Quality Inspector',
+    company: 'Bajaj Auto',
+    location: 'Aurangabad, Maharashtra',
+    salary: '₹20,000 - ₹28,000',
+    type: 'Full-time',
+    urgent: true,
+    postedDate: 'March 20, 2026',
+    applyBy: 'May 10, 2026',
+    hrContacts: [
+      { name: 'Anjali Sharma', phone: '+91 95615 04911' }
+    ]
+  },
+  {
+    id: 4,
+    title: 'Electrical Trainee',
+    company: 'L&T Construction',
+    location: 'Chennai, Tamil Nadu',
+    salary: '₹12,000 - ₹18,000',
+    type: 'Apprenticeship',
+    urgent: false,
+    postedDate: 'March 22, 2026',
+    applyBy: 'May 15, 2026',
+    hrContacts: [
+      { name: 'Amit Kumar', phone: '+91 95615 04911' }
+    ]
+  },
+  {
+    id: 5,
+    title: 'CNC Operator',
+    company: 'Mahindra & Mahindra',
+    location: 'Nashik, Maharashtra',
+    salary: '₹22,000 - ₹30,000',
+    type: 'Full-time',
+    urgent: false,
+    postedDate: 'March 25, 2026',
+    applyBy: 'April 28, 2026',
+    hrContacts: [
+      { name: 'Anjali Sharma', phone: '+91 95615 04911' },
+      { name: 'HR Recruiting', phone: '+91 73979 71322' }
+    ]
+  },
+  {
+    id: 6,
+    title: 'Assembly Line Worker',
+    company: 'Hero MotoCorp',
+    location: 'Haridwar, Uttarakhand',
+    salary: '₹16,000 - ₹20,000',
+    type: 'Contract',
+    urgent: true,
+    postedDate: 'March 28, 2026',
+    applyBy: 'May 5, 2026',
+    hrContacts: [
+      { name: 'Amit Kumar', phone: '+91 95615 04911' }
+    ]
+  },
 ];
 
 const normalizeType = (value) => String(value || '').trim().toLowerCase();
@@ -102,6 +216,48 @@ const JobCard = ({ job, navigate, index }) => {
             <span className="truncate max-w-[130px]">{job.type}</span>
           </span>
         </div>
+
+        {/* HR Contact Section */}
+        <div className="mt-4 bg-slate-50/80 rounded-xl p-3 border border-slate-100">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">HR Contacts</p>
+          <div className="flex flex-col gap-2">
+            {(job.hrContacts && job.hrContacts.length ? job.hrContacts : defaultContacts).map((contact, i) => (
+              <div key={i} className="flex items-center justify-between text-xs">
+                <span className="font-semibold text-slate-700 truncate max-w-[120px]">{contact.name || 'HR Team'}</span>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={`tel:${contact.phone}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-bold transition-colors"
+                  >
+                    <Phone size={13} className="shrink-0" /> Call
+                  </a>
+                  <a
+                    href={getWhatsAppLink(contact.phone, job.title, job.company)}
+                    onClick={(e) => e.stopPropagation()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-emerald-600 hover:text-emerald-800 font-bold transition-colors"
+                  >
+                    <WhatsAppIcon size={13} className="shrink-0" /> WhatsApp
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Dates Row */}
+        <div className="mt-4 pt-3 border-t border-slate-100/80 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
+          <div className="flex items-center gap-1">
+            <Calendar size={13} className="text-slate-400 shrink-0" />
+            <span>Posted: <span className="font-semibold text-slate-700">{formatDateString(job.postedDate || job.date) || 'Recently'}</span></span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Calendar size={13} className="text-slate-400 shrink-0" />
+            <span>Apply by: <span className="font-semibold text-slate-700">{formatDateString(job.applyBy) || 'Open until filled'}</span></span>
+          </div>
+        </div>
       </div>
 
       {/* Action Block */}
@@ -174,6 +330,9 @@ const JobBoard = () => {
           type: job.type || '',
           urgent: job.urgent || false,
           date: job.createdAt || job.publishedAt || job.date || null,
+          postedDate: job.publishedDate || job.publishedAt || job.createdAt || null,
+          applyBy: job.applyBy || null,
+          hrContacts: job.hrContacts || [],
         }));
 
         mapped.sort((a, b) => {

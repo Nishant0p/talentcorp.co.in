@@ -160,6 +160,16 @@ const defaultNewsEventsContent = {
     message: 'Wishing you a year as wonderful as your impact at TSPL!',
     image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=900',
   },
+  welcomeUpcoming: [
+    { name: 'Amit Patel', dept: 'Engineering', date: 'Oct 01', initial: 'AP' },
+    { name: 'Sanjana Rao', dept: 'Marketing', date: 'Oct 05', initial: 'SR' },
+  ],
+  welcomeSpotlight: {
+    name: 'Vikram Malhotra',
+    role: 'Operations Director',
+    message: 'Welcome to the TSPL family! We are thrilled to have you lead our operations.',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=900',
+  },
   inTheNewsLogos: [
     'Times of India',
     'Economic Times',
@@ -223,6 +233,11 @@ const resolveNewsEventsContent = (prismicData) => {
       ...defaultNewsEventsContent.birthdaySpotlight,
       ...(data.birthdaySpotlight || {}),
     },
+    welcomeUpcoming: data.welcomeUpcoming?.length ? data.welcomeUpcoming : defaultNewsEventsContent.welcomeUpcoming,
+    welcomeSpotlight: {
+      ...defaultNewsEventsContent.welcomeSpotlight,
+      ...(data.welcomeSpotlight || {}),
+    },
     inTheNewsLogos: data.inTheNewsLogos?.length ? data.inTheNewsLogos : defaultNewsEventsContent.inTheNewsLogos,
     inTheNewsArticles: data.inTheNewsArticles?.length ? data.inTheNewsArticles : defaultNewsEventsContent.inTheNewsArticles,
   };
@@ -233,6 +248,8 @@ const NewsEventsPage = ({ prismicData = null }) => {
   const [pageData, setPageData] = useState(null);
   const content = useMemo(() => resolveNewsEventsContent(pageData || prismicData), [pageData, prismicData]);
   const [latestNews, setLatestNews] = useState([]);
+  const newsAndUpdatesItems = useMemo(() => latestNews.filter((item) => item.tag === 'News' || item.tag === 'Updates'), [latestNews]);
+  const eventItems = useMemo(() => latestNews.filter((item) => item.tag === 'Event'), [latestNews]);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroParallaxRef,
@@ -256,7 +273,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
   useEffect(() => {
     const loadPageContent = async () => {
-      const data = await fetchSingleType('/api/news-events-page?populate[birthdayUpcoming]=*&populate[birthdaySpotlight][populate]=image');
+      const data = await fetchSingleType('/api/news-events-page?populate[birthdayUpcoming]=*&populate[birthdaySpotlight][populate]=image&populate[welcomeUpcoming]=*&populate[welcomeSpotlight][populate]=image');
       setPageData(data);
     };
 
@@ -389,7 +406,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
         </motion.div>
       </motion.div>
 
-      {latestNews.length > 0 && (
+      {newsAndUpdatesItems.length > 0 && (
         <section className="mx-auto mt-14 max-w-7xl">
           <div className="mb-8 flex items-center justify-between gap-4">
             <h2 className="text-3xl font-bold text-[#006bb8]">Latest News</h2>
@@ -399,7 +416,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {latestNews.filter((item) => item.tag === 'News').map((item) => {
+            {newsAndUpdatesItems.map((item) => {
               const itemId = item.documentId || item.id;
               return (
                 <Link key={itemId} to={`/news-events/${itemId}`} className="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
@@ -557,8 +574,11 @@ const NewsEventsPage = ({ prismicData = null }) => {
         </div>
       </motion.section>
 
+
+
+      {/* ── Latest Events Section ── */}
       <motion.section
-        id="updates-events"
+        id="events"
         className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -567,45 +587,139 @@ const NewsEventsPage = ({ prismicData = null }) => {
       >
         <div className="mb-8 sm:mb-12 flex items-center gap-4">
           <div className="h-10 w-1.5 rounded-full bg-orange-500" />
-          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Updates & Events</h2>
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Latest Events</h2>
         </div>
 
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {latestNews
-            .filter((item) => item.tag === 'Events' || item.tag === 'Updates')
-            .slice(0, 6)
-            .map((item) => {
-              const itemId = item.documentId || item.id;
-              return (
-                <Link key={itemId} to={`/news-events/${itemId}`} className="group block">
-                  <motion.article
-                    className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md h-full"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.55, ease: 'easeOut' }}
-                  >
-                    <img
-                      src={item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400'}
-                      alt={item.title || 'Update image'}
-                      className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="p-5">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'Update'}</p>
-                      <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900">{item.title}</h3>
-                      <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
-                    </div>
-                  </motion.article>
-                </Link>
-              );
-            })}
+          {eventItems.slice(0, 6).map((item) => {
+            const itemId = item.documentId || item.id;
+            return (
+              <Link key={itemId} to={`/news-events/${itemId}`} className="group block">
+                <motion.article
+                  className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md h-full"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.55, ease: 'easeOut' }}
+                >
+                  <img
+                    src={item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=400'}
+                    alt={item.title || 'Event image'}
+                    className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="p-5">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'Event'}</p>
+                    <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900">{item.title}</h3>
+                    <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
+                  </div>
+                </motion.article>
+              </Link>
+            );
+          })}
         </div>
 
-        {latestNews.filter((item) => item.tag === 'Events' || item.tag === 'Updates').length === 0 && (
+        {eventItems.length === 0 && (
           <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-12 text-center">
-            <p className="text-slate-500">No updates or events available yet.</p>
+            <p className="text-slate-500">No events available yet.</p>
           </div>
         )}
+      </motion.section>
+
+      {/* ── Team Celebrations & Welcomes Section ── */}
+      <motion.section
+        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.65, ease: 'easeOut' }}
+      >
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* Welcome to TSPL Column */}
+          <div className="flex flex-col">
+            <div className="mb-8 flex items-center gap-3">
+              <Sparkles className="h-7 w-7 text-orange-500" />
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#006bb8]">Welcome to TSPL</h2>
+            </div>
+            
+            {content.welcomeSpotlight && (
+              <div className="flex flex-col sm:flex-row gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 shadow-sm items-center sm:items-stretch mb-6">
+                <div className="w-28 h-28 sm:w-36 sm:h-36 shrink-0 rounded-2xl overflow-hidden border-2 border-orange-500/20 shadow-md">
+                  <img
+                    src={content.welcomeSpotlight.image ? extractMediaUrl(content.welcomeSpotlight.image) : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300'}
+                    alt={content.welcomeSpotlight.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex flex-col justify-center text-center sm:text-left">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-orange-500">New Joiner Spotlight</span>
+                  <h3 className="text-xl font-bold text-[#006bb8] mt-1">{content.welcomeSpotlight.name}</h3>
+                  <p className="text-xs text-slate-500 font-semibold mt-0.5">{content.welcomeSpotlight.role}</p>
+                  <p className="text-sm text-slate-600 italic mt-3 leading-relaxed">"{content.welcomeSpotlight.message}"</p>
+                </div>
+              </div>
+            )}
+
+            <div className="flex flex-col gap-3">
+              {content.welcomeUpcoming && content.welcomeUpcoming.map((person, idx) => (
+                <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
+                  <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center font-bold text-sm shrink-0">
+                    {person.initial || String(person.name || 'W').substring(0, 2).toUpperCase()}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
+                    <p className="text-xs text-slate-500 truncate">{person.dept}</p>
+                  </div>
+                  <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
+                    Joined: {person.date}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* TSPL Birthdays Column */}
+          <div className="flex flex-col">
+            <div className="mb-8 flex items-center gap-3">
+              <Cake className="h-7 w-7 text-orange-500" />
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#006bb8]">TSPL Birthdays</h2>
+            </div>
+
+            {content.birthdaySpotlight && (
+              <div className="flex flex-col sm:flex-row gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 shadow-sm items-center sm:items-stretch mb-6">
+                <div className="w-28 h-28 sm:w-36 sm:h-36 shrink-0 rounded-2xl overflow-hidden border-2 border-orange-500/20 shadow-md">
+                  <img
+                    src={content.birthdaySpotlight.image ? extractMediaUrl(content.birthdaySpotlight.image) : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300'}
+                    alt={content.birthdaySpotlight.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex flex-col justify-center text-center sm:text-left">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-orange-500">Birthday Spotlight</span>
+                  <h3 className="text-xl font-bold text-[#006bb8] mt-1">{content.birthdaySpotlight.name}</h3>
+                  <p className="text-xs text-slate-500 font-semibold mt-0.5">{content.birthdaySpotlight.role}</p>
+                  <p className="text-sm text-slate-600 italic mt-3 leading-relaxed">"{content.birthdaySpotlight.message}"</p>
+                </div>
+              </div>
+            )}
+
+            <div className="flex flex-col gap-3">
+              {content.birthdayUpcoming && content.birthdayUpcoming.map((person, idx) => (
+                <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">
+                    {person.initial || String(person.name || 'B').substring(0, 2).toUpperCase()}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
+                    <p className="text-xs text-slate-500 truncate">{person.dept}</p>
+                  </div>
+                  <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
+                    Birthday: {person.date}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </motion.section>
 
       <motion.section
