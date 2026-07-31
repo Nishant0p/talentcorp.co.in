@@ -50,6 +50,13 @@ const officesByState = {
       address: 'office no G -1/2, City plaza, next to Bank of Maharashtra, near Railway station, Talegaon Dabhade, Talegaon Dabhade R, Maharashtra 410507',
       phone: '+91 7397971322',
       email: 'info@tsplgroup.in'
+    },
+    {
+      city: 'Nashik',
+      company: 'TalentCorp Solutions Private Limited',
+      address: '2nd Floor, Tadake building, near Vijay Nagar Bus Stop , Vijay Nagar, CIDCO , Nashik, Maharashtra 422009.',
+      phone: '+91 8208752994',
+      email: 'vikas.patil@tsplgroup.in'
     }
   ],
   'Tamil Nadu': [

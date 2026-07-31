@@ -88,6 +88,16 @@ const officeLocations = [
     mapQuery: 'City+plaza+Bank+of+Maharashtra+Railway+station+Talegaon+Dabhade+Maharashtra+410507',
   },
   {
+    city: 'Nashik',
+    short: 'Nashik',
+    company: 'TalentCorp Solutions Private Limited',
+    address: '2nd Floor, Tadake building, near Vijay Nagar Bus Stop , Vijay Nagar, CIDCO , Nashik, Maharashtra 422009.',
+    calls: ['+91 8208752994'],
+    emails: ['vikas.patil@tsplgroup.in'],
+    lat: 19.9678, lng: 73.7667, zoom: 15,
+    mapQuery: 'Tadake+building+Vijay+Nagar+Bus+Stop+CIDCO+Nashik+Maharashtra+422009',
+  },
+  {
     city: 'Chennai',
     short: 'Chennai',
     company: 'TalentCorp Solutions Private Limited',
