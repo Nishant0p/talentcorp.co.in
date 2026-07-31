@@ -735,7 +735,7 @@ function ManagementSection({ isMobile }) {
 			id: '1',
 			name: 'Miss. Samruddhi Chavan',
 			role: 'OverAll Head',
-			imageUrl: '/leaders/samruddhi.jpeg',
+			imageUrl: '/leaders/samruddhi.jpg',
 			slug: 'samruddhi-chavan'
 		},
 		{
@@ -791,7 +791,7 @@ function ManagementSection({ isMobile }) {
 			id: '9',
 			name: 'Mr. Namdev Egave',
 			role: 'Payroll & Compliance Head',
-			imageUrl: '/leaders/8 Mr Namdev Egave.jpg',
+			imageUrl: '/leaders/8th Photo  Mr. Namdev Egave ( Payroll & Compliance Head).jpg',
 			slug: 'namdev-egave'
 		},
 		{
