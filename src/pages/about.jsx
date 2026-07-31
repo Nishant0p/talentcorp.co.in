@@ -791,7 +791,7 @@ function ManagementSection({ isMobile }) {
 			id: '9',
 			name: 'Mr. Namdev Egave',
 			role: 'Payroll & Compliance Head',
-			imageUrl: '/leaders/8th Photo  Mr. Namdev Egave ( Payroll & Compliance Head).jpg',
+			imageUrl: '/leaders/namdev-egave.jpg',
 			slug: 'namdev-egave'
 		},
 		{

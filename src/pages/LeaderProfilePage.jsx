@@ -228,7 +228,7 @@ const leaderProfiles = {
 		name: 'Mr. Namdev Egave',
 		role: 'Payroll & Compliance Head',
 		category: 'Leader',
-		imageUrl: '/leaders/8th Photo  Mr. Namdev Egave ( Payroll & Compliance Head).jpg',
+		imageUrl: '/leaders/namdev-egave.jpg',
 		bio: 'Mr. Namdev Egave leads payroll operations and regulatory compliance, ensuring correct statutory deductions.',
 		longBio: 'Mr. Egave monitors PF, ESI, and other labor-related filings. Under his oversight, TSPL maintains a clean record with government compliance departments.',
 		expertise: ['Labor Laws', 'Payroll Compliance', 'Statutory Filings', 'PF & ESI Management'],
