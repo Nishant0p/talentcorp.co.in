@@ -3,8 +3,6 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import {
 	ChevronLeft,
 	ChevronRight,
-	Mail,
-	Phone,
 	Users
 } from 'lucide-react'
 
@@ -27,8 +25,6 @@ const leaderProfiles = {
 			'Honorary Doctorates for international leadership and social development.',
 			'Executed strategic MoUs with state ministries to boost regional youth placements.'
 		],
-		email: 'chairman@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'sunil-chavan': {
@@ -44,8 +40,6 @@ const leaderProfiles = {
 			'Secured long-term partnerships with Fortune 500 electronics & automotive brands.',
 			'Spearheaded regional expansion programs covering 20+ cities in India.'
 		],
-		email: 'sunil.chavan@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'deshbhushan-jain': {
@@ -60,8 +54,6 @@ const leaderProfiles = {
 			'Over 10+ years of advisory experience in regulatory corporate compliance.',
 			'Structured corporate governance strategies for scale-up operations.'
 		],
-		email: 'info@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'prakash-rathod': {
@@ -76,8 +68,6 @@ const leaderProfiles = {
 			'Managed field logistics for high-volume recruitment drives covering 5,000+ candidates.',
 			'Enhanced operational resource distribution across western regions.'
 		],
-		email: 'info@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'ruma-sayyad': {
@@ -92,8 +82,6 @@ const leaderProfiles = {
 			'Launched dedicated skill training batches for women candidates.',
 			'Managed CSR partnerships with national brands for community skilling.'
 		],
-		email: 'info@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'sarang-chavan': {
@@ -108,8 +96,6 @@ const leaderProfiles = {
 			'Digitized the candidate verification and deployment pipeline.',
 			'Headed the deployment of CRM integrations for partner corporate portals.'
 		],
-		email: 'info@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'kishor-more': {
@@ -124,8 +110,6 @@ const leaderProfiles = {
 			'Acquired over 80+ new corporate clients for apprenticeship structures.',
 			'Expanded regional market presence into emerging manufacturing hubs.'
 		],
-		email: 'kishor.more@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'mubarak-shaikh': {
@@ -140,8 +124,6 @@ const leaderProfiles = {
 			'Achieved a 95% placement retention rate across major operations.',
 			'Supervised the deployment of candidate operations in multi-state locations.'
 		],
-		email: 'mubarak@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'gyanendra-mishra': {
@@ -156,8 +138,6 @@ const leaderProfiles = {
 			'Managed the sourcing of over 10,000+ candidates in a single year.',
 			'Established active recruitment networks across 15+ states.'
 		],
-		email: 'sourcing@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'vishal-ubale': {
@@ -172,8 +152,6 @@ const leaderProfiles = {
 			'Placed over 4,500+ trainees across Maharashtra.',
 			'Coordinated large-scale job fairs in partnership with local authorities.'
 		],
-		email: 'vishal.u@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Maharashtra, India'
 	},
 	'lokesh-pardeshi': {
@@ -188,8 +166,6 @@ const leaderProfiles = {
 			'Optimized financial workflows to guarantee on-time monthly salary disbursals.',
 			'Spearheaded audits with zero reporting errors.'
 		],
-		email: 'finance@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'purushottam-gaikwad': {
@@ -204,8 +180,6 @@ const leaderProfiles = {
 			'Successfully launched 12+ large site deployment projects.',
 			'Reduced regional onboarding cycle times by 20%.'
 		],
-		email: 'purushottam@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'shivanand-mane': {
@@ -220,8 +194,6 @@ const leaderProfiles = {
 			'Supervised the opening of 3 new regional branch offices.',
 			'Expanded local trainee recruitment in eastern sectors.'
 		],
-		email: 'mane.s@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'namdev-egave': {
@@ -236,8 +208,6 @@ const leaderProfiles = {
 			'Managed monthly payroll compliance for 25,000+ active candidates.',
 			'Achieved audit approvals with zero compliance penalties.'
 		],
-		email: 'compliance@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'rahul-borkar': {
@@ -252,15 +222,13 @@ const leaderProfiles = {
 			'Shortened placement cycle times to support 48-hour hiring goals.',
 			'Integrated digital ATS systems to track candidate applications.'
 		],
-		email: 'recruitment@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	},
 	'samruddhi-chavan': {
 		name: 'Miss. Samruddhi Chavan',
 		role: 'OverAll Head',
 		category: 'Leader',
-		imageUrl: '/leaders/samruddhi.jpg',
+		imageUrl: '/leaders/mam.png',
 		bio: 'Miss. Samruddhi Chavan leads recruitment initiatives and candidate coordination at TSPL Group.',
 		longBio: 'Miss. Samruddhi Chavan manages talent acquisition, applicant screening, and candidate relationship pipelines to fulfill corporate manpower requirements efficiently.',
 		expertise: ['Recruitment Operations', 'Talent Sourcing', 'Candidate Coordination', 'Placement Management'],
@@ -268,8 +236,6 @@ const leaderProfiles = {
 			'Spearheaded recruitment drives across multiple regional operational zones.',
 			'Enhanced candidate placement efficiency for client partners.'
 		],
-		email: 'samruddhi@tsplgroup.in',
-		phone: '+91 95615 04911',
 		location: 'Pune, India'
 	}
 }
@@ -385,8 +351,6 @@ export default function LeaderProfilePage() {
 		},
 		description: profile.bio,
 		image: `https://tsplgroup.in${profile.imageUrl}`,
-		telephone: profile.phone,
-		email: profile.email,
 		address: {
 			'@type': 'PostalAddress',
 			addressLocality: 'Pune',
@@ -521,43 +485,6 @@ export default function LeaderProfilePage() {
 									<p className="mt-7 max-w-[650px] text-base leading-7 text-[#263752] sm:text-[18px] sm:leading-8">
 										{profile.bio}
 									</p>
-
-									<div className="mt-8 flex flex-col gap-4 text-sm font-medium text-[#273752] sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 sm:text-base">
-										<a
-											href={`mailto:${profile.email}`}
-											className="inline-flex min-w-0 items-center gap-3 transition-colors hover:text-[#075dcb]"
-										>
-											<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1764ce] text-white shadow-md">
-												<Mail
-													className="h-[18px] w-[18px]"
-													strokeWidth={2.4}
-												/>
-											</span>
-
-											<span className="break-all sm:break-normal">
-												{profile.email}
-											</span>
-										</a>
-
-										<span className="hidden h-7 w-px bg-[#ff6b18] sm:block" />
-
-										<a
-											href={`tel:${profile.phone.replace(
-												/[^\d+]/g,
-												''
-											)}`}
-											className="inline-flex items-center gap-3 transition-colors hover:text-[#075dcb]"
-										>
-											<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1764ce] text-white shadow-md">
-												<Phone
-													className="h-[18px] w-[18px]"
-													strokeWidth={2.4}
-												/>
-											</span>
-
-											<span>{profile.phone}</span>
-										</a>
-									</div>
 								</div>
 							</div>
 						</div>

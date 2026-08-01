@@ -625,102 +625,104 @@ const NewsEventsPage = ({ prismicData = null }) => {
         )}
       </motion.section>
 
-      {/* ── Team Celebrations & Welcomes Section ── */}
-      <motion.section
-        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.65, ease: 'easeOut' }}
-      >
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Welcome to TSPL Column */}
-          <div className="flex flex-col">
-            <div className="mb-8 flex items-center gap-3">
-              <Sparkles className="h-7 w-7 text-orange-500" />
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#006bb8]">Welcome to TSPL</h2>
-            </div>
-            
-            {content.welcomeSpotlight && (
-              <div className="flex flex-col sm:flex-row gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 shadow-sm items-center sm:items-stretch mb-6">
-                <div className="w-28 h-28 sm:w-36 sm:h-36 shrink-0 rounded-2xl overflow-hidden border-2 border-orange-500/20 shadow-md">
-                  <img
-                    src={content.welcomeSpotlight.image ? extractMediaUrl(content.welcomeSpotlight.image) : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300'}
-                    alt={content.welcomeSpotlight.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flex flex-col justify-center text-center sm:text-left">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-orange-500">New Joiner Spotlight</span>
-                  <h3 className="text-xl font-bold text-[#006bb8] mt-1">{content.welcomeSpotlight.name}</h3>
-                  <p className="text-xs text-slate-500 font-semibold mt-0.5">{content.welcomeSpotlight.role}</p>
-                  <p className="text-sm text-slate-600 italic mt-3 leading-relaxed">"{content.welcomeSpotlight.message}"</p>
-                </div>
+      {/* ── Team Celebrations & Welcomes Section (Disabled) ── */}
+      {false && (
+        <motion.section
+          className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.65, ease: 'easeOut' }}
+        >
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+            {/* Welcome to TSPL Column */}
+            <div className="flex flex-col">
+              <div className="mb-8 flex items-center gap-3">
+                <Sparkles className="h-7 w-7 text-orange-500" />
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#006bb8]">Welcome to TSPL</h2>
               </div>
-            )}
-
-            <div className="flex flex-col gap-3">
-              {content.welcomeUpcoming && content.welcomeUpcoming.map((person, idx) => (
-                <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
-                  <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center font-bold text-sm shrink-0">
-                    {person.initial || String(person.name || 'W').substring(0, 2).toUpperCase()}
+              
+              {content.welcomeSpotlight && (
+                <div className="flex flex-col sm:flex-row gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 shadow-sm items-center sm:items-stretch mb-6">
+                  <div className="w-28 h-28 sm:w-36 sm:h-36 shrink-0 rounded-2xl overflow-hidden border-2 border-orange-500/20 shadow-md">
+                    <img
+                      src={content.welcomeSpotlight.image ? extractMediaUrl(content.welcomeSpotlight.image) : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300'}
+                      alt={content.welcomeSpotlight.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
-                    <p className="text-xs text-slate-500 truncate">{person.dept}</p>
-                  </div>
-                  <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
-                    Joined: {person.date}
+                  <div className="flex flex-col justify-center text-center sm:text-left">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-orange-500">New Joiner Spotlight</span>
+                    <h3 className="text-xl font-bold text-[#006bb8] mt-1">{content.welcomeSpotlight.name}</h3>
+                    <p className="text-xs text-slate-500 font-semibold mt-0.5">{content.welcomeSpotlight.role}</p>
+                    <p className="text-sm text-slate-600 italic mt-3 leading-relaxed">"{content.welcomeSpotlight.message}"</p>
                   </div>
                 </div>
-              ))}
+              )}
+
+              <div className="flex flex-col gap-3">
+                {content.welcomeUpcoming && content.welcomeUpcoming.map((person, idx) => (
+                  <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
+                    <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center font-bold text-sm shrink-0">
+                      {person.initial || String(person.name || 'W').substring(0, 2).toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
+                      <p className="text-xs text-slate-500 truncate">{person.dept}</p>
+                    </div>
+                    <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
+                      Joined: {person.date}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* TSPL Birthdays Column */}
+            <div className="flex flex-col">
+              <div className="mb-8 flex items-center gap-3">
+                <Cake className="h-7 w-7 text-orange-500" />
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#006bb8]">TSPL Birthdays</h2>
+              </div>
+
+              {content.birthdaySpotlight && (
+                <div className="flex flex-col sm:flex-row gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 shadow-sm items-center sm:items-stretch mb-6">
+                  <div className="w-28 h-28 sm:w-36 sm:h-36 shrink-0 rounded-2xl overflow-hidden border-2 border-orange-500/20 shadow-md">
+                    <img
+                      src={content.birthdaySpotlight.image ? extractMediaUrl(content.birthdaySpotlight.image) : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300'}
+                      alt={content.birthdaySpotlight.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-center text-center sm:text-left">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-orange-500">Birthday Spotlight</span>
+                    <h3 className="text-xl font-bold text-[#006bb8] mt-1">{content.birthdaySpotlight.name}</h3>
+                    <p className="text-xs text-slate-500 font-semibold mt-0.5">{content.birthdaySpotlight.role}</p>
+                    <p className="text-sm text-slate-600 italic mt-3 leading-relaxed">"{content.birthdaySpotlight.message}"</p>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex flex-col gap-3">
+                {content.birthdayUpcoming && content.birthdayUpcoming.map((person, idx) => (
+                  <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
+                    <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">
+                      {person.initial || String(person.name || 'B').substring(0, 2).toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
+                      <p className="text-xs text-slate-500 truncate">{person.dept}</p>
+                    </div>
+                    <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
+                      Birthday: {person.date}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-
-          {/* TSPL Birthdays Column */}
-          <div className="flex flex-col">
-            <div className="mb-8 flex items-center gap-3">
-              <Cake className="h-7 w-7 text-orange-500" />
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#006bb8]">TSPL Birthdays</h2>
-            </div>
-
-            {content.birthdaySpotlight && (
-              <div className="flex flex-col sm:flex-row gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 shadow-sm items-center sm:items-stretch mb-6">
-                <div className="w-28 h-28 sm:w-36 sm:h-36 shrink-0 rounded-2xl overflow-hidden border-2 border-orange-500/20 shadow-md">
-                  <img
-                    src={content.birthdaySpotlight.image ? extractMediaUrl(content.birthdaySpotlight.image) : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300'}
-                    alt={content.birthdaySpotlight.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flex flex-col justify-center text-center sm:text-left">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-orange-500">Birthday Spotlight</span>
-                  <h3 className="text-xl font-bold text-[#006bb8] mt-1">{content.birthdaySpotlight.name}</h3>
-                  <p className="text-xs text-slate-500 font-semibold mt-0.5">{content.birthdaySpotlight.role}</p>
-                  <p className="text-sm text-slate-600 italic mt-3 leading-relaxed">"{content.birthdaySpotlight.message}"</p>
-                </div>
-              </div>
-            )}
-
-            <div className="flex flex-col gap-3">
-              {content.birthdayUpcoming && content.birthdayUpcoming.map((person, idx) => (
-                <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
-                  <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">
-                    {person.initial || String(person.name || 'B').substring(0, 2).toUpperCase()}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
-                    <p className="text-xs text-slate-500 truncate">{person.dept}</p>
-                  </div>
-                  <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
-                    Birthday: {person.date}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </motion.section>
+        </motion.section>
+      )}
 
       <motion.section
         className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"

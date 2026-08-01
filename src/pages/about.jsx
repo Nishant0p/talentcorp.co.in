@@ -735,7 +735,7 @@ function ManagementSection({ isMobile }) {
 			id: '1',
 			name: 'Miss. Samruddhi Chavan',
 			role: 'OverAll Head',
-			imageUrl: '/leaders/samruddhi.jpg',
+			imageUrl: '/leaders/mam.png',
 			slug: 'samruddhi-chavan'
 		},
 		{
