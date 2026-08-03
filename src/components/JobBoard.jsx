@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, IndianRupee, Clock, ArrowRight, Filter, Briefcase, Car, Cpu, Factory, Share2, Calendar, Phone } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { buildJobCategoryOptions, fetchJobs, getJobCategoryFilterValue, toJobFilterSlug } from '../utils/strapi';
+import { buildJobCategoryOptions, fetchJobs, getJobCategoryFilterValue, toJobFilterSlug, cleanMarkdown } from '../utils/strapi';
 
 const defaultContacts = [{ name: 'HR Recruiting', phone: '+91 95615 04911' }];
 
@@ -11,7 +11,9 @@ const getWhatsAppLink = (phone, title, company) => {
   if (cleaned.length === 10) {
     cleaned = '91' + cleaned;
   }
-  const text = `Hi, I am interested in the ${title} position at ${company || 'TSPL Group'}.`;
+  const cleanTitle = cleanMarkdown(title || '');
+  const cleanCompany = cleanMarkdown(company || 'TSPL Group');
+  const text = `Hi, I am interested in the ${cleanTitle} position at ${cleanCompany}.`;
   return `https://wa.me/${cleaned}?text=${encodeURIComponent(text)}`;
 };
 
@@ -173,7 +175,7 @@ const JobCard = ({ job, navigate, index }) => {
                 <h3 className={`font-bold text-slate-900 text-base sm:text-lg tracking-tight transition-colors truncate ${
                   isOrange ? 'group-hover:text-orange-500' : 'group-hover:text-blue-600'
                 }`}>
-                  {job.title}
+                  {cleanMarkdown(job.title)}
                 </h3>
                 {job.urgent && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-50 border border-orange-200 text-orange-600 animate-pulse">
@@ -182,7 +184,7 @@ const JobCard = ({ job, navigate, index }) => {
                   </span>
                 )}
               </div>
-              <p className="text-slate-600 text-xs font-semibold mt-1">{job.company}</p>
+              <p className="text-slate-600 text-xs font-semibold mt-1">{cleanMarkdown(job.company)}</p>
             </div>
           </div>
 
@@ -191,7 +193,7 @@ const JobCard = ({ job, navigate, index }) => {
             onClick={(e) => {
               e.stopPropagation();
               const jobUrl = `${window.location.origin}/job/${job.id}`;
-              const text = `*Job Opening at TSPL Group*\n\n*Role:* ${job.title}\n*Company:* ${job.company}\n*Location:* ${job.location}\n*Description:* ${job.description || ''}\n\nApply here: ${jobUrl}`;
+              const text = `*Job Opening at TSPL Group*\n\n*Role:* ${cleanMarkdown(job.title)}\n*Company:* ${cleanMarkdown(job.company)}\n*Location:* ${job.location}\n*Description:* ${cleanMarkdown(job.description || '')}\n\nApply here: ${jobUrl}`;
               window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
             }}
             className="rounded-full p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all duration-300 shrink-0"

@@ -30,7 +30,7 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProgressiveImage from '../components/ProgressiveImage';
-import { extractMediaUrl, fetchJobs, submitLead, submitToAdminBackend } from '../utils/strapi';
+import { extractMediaUrl, fetchJobs, submitLead, submitToAdminBackend, cleanMarkdown, cleanJobTitle, cleanCompany } from '../utils/strapi';
 import { uploadResumeToGoogleDrive } from '../utils/googleSheets';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
 import { buildJobCategoryOptions } from '../utils/strapi';
@@ -188,7 +188,9 @@ const formatDateString = (dateStr) => {
 const mapApiJobToListing = (job, index, placeholderImages, fallbackImage) => {
 	const { salaryMin, salaryMax } = parseSalaryText(job.salary);
 	const normalizedType = String(job.type || 'full-time').toLowerCase();
-	const category = String(job.category || job.jobCategory || job.type || job.title || 'General').trim();
+	const cleanTitleStr = cleanJobTitle(job.title || `Job ${job.id}`);
+	const cleanCompanyStr = cleanCompany(job.company);
+	const category = cleanMarkdown(String(job.category || job.jobCategory || job.type || cleanTitleStr || 'General')).trim();
 	const location = String(job.location || 'India').trim();
 	const skills = Array.isArray(job.skills) && job.skills.length ? job.skills : ['Teamwork', 'Communication'];
 	const uploadedPhotoUrl = extractMediaUrl(job.photo || job.image);
@@ -196,8 +198,8 @@ const mapApiJobToListing = (job, index, placeholderImages, fallbackImage) => {
 
 	return {
 		id: String(job.id),
-		title: job.title || `Job ${job.id}`,
-		company: job.company || 'TSPL Group',
+		title: cleanTitleStr,
+		company: cleanCompanyStr,
 		image: uploadedPhotoUrl || placeholderImages[index % placeholderImages.length] || fallbackImage,
 		imageMedia,
 		category,
@@ -207,7 +209,7 @@ const mapApiJobToListing = (job, index, placeholderImages, fallbackImage) => {
 		jobType: normalizedType,
 		experience: job.experience || '1-2',
 		skills,
-		description: job.description || 'Apply now to join TSPL Group.',
+		description: cleanMarkdown(job.description || 'Apply now to join TSPL Group.'),
 		applyBy: formatDateString(job.applyBy),
 		postedDate: formatDateString(job.publishedDate || job.publishedAt || job.createdAt) || 'Recently',
 		urgent: Boolean(job.urgent),
@@ -718,8 +720,8 @@ function JobCard({ job, index }) {
 			}`}>
 				<div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent" />
 				<div className="relative z-[1]">
-					<p className="text-xs font-semibold uppercase tracking-wide text-white/90">{job.company}</p>
-					<h3 className="mt-2 text-xl font-bold leading-tight text-white">{job.title}</h3>
+					<p className="text-xs font-semibold uppercase tracking-wide text-white/90">{cleanCompany(job.company)}</p>
+					<h3 className="mt-2 text-xl font-bold leading-tight text-white">{cleanJobTitle(job.title)}</h3>
 					<div className="mt-3 inline-flex items-center gap-1.5 text-sm text-white/90">
 						<MapPin className="h-4 w-4" />
 						{job.location}
@@ -750,7 +752,7 @@ function JobCard({ job, index }) {
 					</span>
 				</div>
 
-				<p className="mb-4 line-clamp-2 text-sm text-slate-600">{job.description}</p>
+				<p className="mb-4 line-clamp-2 text-sm text-slate-600">{cleanMarkdown(job.description)}</p>
 
 				<div className="mb-4 flex flex-wrap gap-1.5">
 					{job.skills.slice(0, 4).map((skill) => (

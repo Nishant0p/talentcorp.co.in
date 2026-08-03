@@ -4,7 +4,7 @@ import {
   ArrowLeft, MapPin, IndianRupee, Clock, Briefcase, Calendar,
   CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2, Phone
 } from 'lucide-react';
-import { fetchJobs, submitApplicant, submitToAdminBackend, parseMarkdown } from '../utils/strapi';
+import { fetchJobs, submitApplicant, submitToAdminBackend, parseMarkdown, cleanMarkdown } from '../utils/strapi';
 import useSEO from '../hooks/useSEO';
 import './JobDetailPage.css';
 
@@ -183,7 +183,9 @@ const getWhatsAppLink = (phone, title, company) => {
   if (cleaned.length === 10) {
     cleaned = '91' + cleaned;
   }
-  const text = `Hi, I am interested in the ${title} position at ${company || 'TSPL Group'}.`;
+  const cleanTitle = cleanMarkdown(title || '');
+  const cleanCompany = cleanMarkdown(company || 'TSPL Group');
+  const text = `Hi, I am interested in the ${cleanTitle} position at ${cleanCompany}.`;
   return `https://wa.me/${cleaned}?text=${encodeURIComponent(text)}`;
 };
 
@@ -275,7 +277,7 @@ const JobDetailPage = () => {
             hrContacts: found.hrContacts || [],
           };
           setJob(jobData);
-          setForm(prev => ({ ...prev, pageName: found.pageName || found.title || '' }));
+          setForm(prev => ({ ...prev, pageName: cleanMarkdown(found.pageName || found.title || '') }));
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -409,10 +411,10 @@ const JobDetailPage = () => {
               </div>
             )}
             <div className="pro-hero-details">
-              <h1 className="pro-title">{job.title}</h1>
+              <h1 className="pro-title">{cleanMarkdown(job.title)}</h1>
               <div className="pro-subtitle">
                 <Building2 size={16} />
-                <span>{job.company}</span>
+                <span>{cleanMarkdown(job.company)}</span>
               </div>
               <div className="pro-badges">
                 {job.urgent && (
@@ -481,11 +483,11 @@ const JobDetailPage = () => {
                   />
                 </div>
                 <div className="pro-form-group">
-                  <label>Page Name</label>
+                  <label>Position / Page Name</label>
                   <input
                     type="text"
                     disabled
-                    value={form.pageName}
+                    value={cleanMarkdown(form.pageName || job.title || '')}
                     className="pro-form-input-disabled"
                   />
                 </div>

@@ -19,7 +19,7 @@ import {
   ShieldAlert
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import { fetchJobs, fetchNews, extractMediaUrl } from '../utils/strapi'
+import { fetchJobs, fetchNews, extractMediaUrl, cleanJobTitle, cleanCompany } from '../utils/strapi'
 
 const KB_KEY = 'tspl_chatbot_kb_v4'
 
@@ -427,8 +427,8 @@ export default function ChatBot() {
       fetchJobs().then((jobs) => {
         const short = (jobs || []).slice(0, 4).map((j) => ({ 
           id: j.documentId || j.id, 
-          title: j.title || j.documentId || `Job ${j.id}`, 
-          company: j.company || j.employer || 'TSPL Client Partner', 
+          title: cleanJobTitle(j.title || j.documentId || `Job ${j.id}`), 
+          company: cleanCompany(j.company || j.employer), 
           location: j.location || 'India' 
         }));
 

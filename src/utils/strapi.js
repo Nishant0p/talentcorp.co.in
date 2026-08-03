@@ -452,6 +452,35 @@ export const getApplicantsExportUrl = (jobId, clearAfterDownload = false) => {
   return `${STRAPI_BASE_URL}/api/applicants/export${query ? `?${query}` : ''}`;
 };
 
+export const cleanMarkdown = (text) => {
+  if (!text) return '';
+  if (typeof text !== 'string') return '';
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/__(.*?)__/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/_(.*?)_/g, '$1')
+    .replace(/#+\s*/g, '')
+    .replace(/`{1,3}.*?`{1,3}/g, '')
+    .replace(/\*/g, '')
+    .trim();
+};
+
+export const cleanJobTitle = (title) => {
+  if (!title) return '';
+  let str = cleanMarkdown(title);
+  str = str.replace(/^Job description\s*/i, '');
+  str = str.replace(/\s*Company:\s*.*$/i, '');
+  return str.trim() || cleanMarkdown(title);
+};
+
+export const cleanCompany = (company) => {
+  if (!company) return 'TSPL Group';
+  let str = cleanMarkdown(company);
+  str = str.replace(/^Company:\s*/i, '');
+  return str.trim() || 'TSPL Group';
+};
+
 export const parseMarkdown = (text) => {
   if (!text) return '';
   if (typeof text !== 'string') return '';
@@ -462,12 +491,13 @@ export const parseMarkdown = (text) => {
     .replace(/^## (.*$)/gim, '<h2>$1</h2>')
     .replace(/^# (.*$)/gim, '<h1>$1</h1>');
 
-  // 2. Bold: **text**
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  // 2. Bold: **text** or __text__
+  html = html.replace(/\*\*([\s\S]*?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/__([\s\S]*?)__/g, '<strong>$1</strong>');
 
   // 3. Italic: *text* or _text_
-  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-  html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+  html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
 
   // 4. Bullet lists
   const lines = html.split('\n');
@@ -512,5 +542,6 @@ export const parseMarkdown = (text) => {
 
   return html;
 };
+
 
 
