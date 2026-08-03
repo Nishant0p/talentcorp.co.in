@@ -30,7 +30,7 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProgressiveImage from '../components/ProgressiveImage';
-import { extractMediaUrl, fetchJobs, submitLead, submitToAdminBackend, cleanMarkdown, cleanJobTitle, cleanCompany } from '../utils/strapi';
+import { extractMediaUrl, fetchJobs, submitLead, submitToAdminBackend, cleanMarkdown, cleanJobTitle, cleanCompany, isJobExpired } from '../utils/strapi';
 import { uploadResumeToGoogleDrive } from '../utils/googleSheets';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
 import { buildJobCategoryOptions } from '../utils/strapi';
@@ -210,7 +210,9 @@ const mapApiJobToListing = (job, index, placeholderImages, fallbackImage) => {
 		experience: job.experience || '1-2',
 		skills,
 		description: cleanMarkdown(job.description || 'Apply now to join TSPL Group.'),
+		rawApplyBy: job.applyBy,
 		applyBy: formatDateString(job.applyBy),
+		isExpired: isJobExpired(job.applyBy),
 		postedDate: formatDateString(job.publishedDate || job.publishedAt || job.createdAt) || 'Recently',
 		urgent: Boolean(job.urgent),
 		featured: Boolean(job.featured),
@@ -822,7 +824,7 @@ function JobsListing({ filters, searchQuery, jobs, loading }) {
 	const jobsPerPage = 6;
 
 	const filteredJobs = useMemo(() => {
-		let filtered = [...jobs];
+		let filtered = jobs.filter((job) => !job.isExpired && !isJobExpired(job.rawApplyBy));
 		const normalizedSearch = normalizeText(searchQuery);
 
 		if (filters.jobType.length > 0) {

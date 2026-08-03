@@ -4,7 +4,7 @@ import {
   ArrowLeft, MapPin, IndianRupee, Clock, Briefcase, Calendar,
   CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2, Phone
 } from 'lucide-react';
-import { fetchJobs, submitApplicant, submitToAdminBackend, parseMarkdown, cleanMarkdown } from '../utils/strapi';
+import { fetchJobs, submitApplicant, submitToAdminBackend, parseMarkdown, cleanMarkdown, isJobExpired } from '../utils/strapi';
 import useSEO from '../hooks/useSEO';
 import './JobDetailPage.css';
 
@@ -64,10 +64,11 @@ const getStats = (job) => {
   });
 
   if (job.applyBy) {
+    const expired = isJobExpired(job.applyBy);
     stats.push({
       icon: Calendar,
-      label: 'Apply Before',
-      value: formatDateString(job.applyBy),
+      label: expired ? 'Status' : 'Apply Before',
+      value: expired ? 'Applications Closed' : formatDateString(job.applyBy),
     });
   }
 
@@ -445,7 +446,24 @@ const JobDetailPage = () => {
               <p>Takes less than a minute</p>
             </div>
 
-            {submitted ? (
+            {isJobExpired(job?.applyBy) ? (
+              <div className="pro-closed-state flex flex-col items-center justify-center p-6 text-center">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+                  <Clock size={24} />
+                </div>
+                <h4 className="text-lg font-bold text-slate-800">Applications Closed</h4>
+                <p className="mt-1 text-xs text-slate-600 leading-relaxed">
+                  The application deadline ({formatDateString(job?.applyBy)}) for this position has passed.
+                </p>
+                <button
+                  type="button"
+                  onClick={goBack}
+                  className="mt-5 w-full rounded-xl bg-slate-900 py-3 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-slate-800"
+                >
+                  View Active Positions
+                </button>
+              </div>
+            ) : submitted ? (
               <div className="pro-success-state">
                 <div className="pro-success-icon"><CheckCircle size={48} /></div>
                 <h4>Application Sent!</h4>

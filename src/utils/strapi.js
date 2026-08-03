@@ -481,6 +481,60 @@ export const cleanCompany = (company) => {
   return str.trim() || 'TSPL Group';
 };
 
+export const getISTNow = () => {
+  const now = new Date();
+  const istString = now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  return new Date(istString);
+};
+
+export const parseApplyByDate = (applyByStr) => {
+  if (!applyByStr) return null;
+  const str = String(applyByStr).trim();
+  if (!str) return null;
+
+  let d = new Date(str);
+
+  if (isNaN(d.getTime())) {
+    const textMatch = str.match(/^(\d{1,2})[\s\-\.\/]+([A-Za-z]+)[\s\-\.\/]+(\d{4})/);
+    if (textMatch) {
+      const day = parseInt(textMatch[1], 10);
+      const monthStr = textMatch[2].toLowerCase();
+      const year = parseInt(textMatch[3], 10);
+      const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+      const monthIndex = months.findIndex(m => monthStr.startsWith(m));
+      if (monthIndex !== -1) {
+        d = new Date(year, monthIndex, day, 23, 59, 59, 999);
+      }
+    } else {
+      const numMatch = str.match(/^(\d{1,2})[\s\-\.\/]+(\d{1,2})[\s\-\.\/]+(\d{4})/);
+      if (numMatch) {
+        const first = parseInt(numMatch[1], 10);
+        const second = parseInt(numMatch[2], 10);
+        const year = parseInt(numMatch[3], 10);
+        const monthIndex = (second <= 12 ? second : first) - 1;
+        const day = second <= 12 ? first : second;
+        d = new Date(year, monthIndex, day, 23, 59, 59, 999);
+      }
+    }
+  }
+
+  if (isNaN(d.getTime())) return null;
+
+  if (!str.includes(':') && !str.includes('T')) {
+    d.setHours(23, 59, 59, 999);
+  }
+
+  return d;
+};
+
+export const isJobExpired = (applyByStr) => {
+  if (!applyByStr) return false;
+  const deadline = parseApplyByDate(applyByStr);
+  if (!deadline) return false;
+  const istNow = getISTNow();
+  return istNow.getTime() > deadline.getTime();
+};
+
 export const parseMarkdown = (text) => {
   if (!text) return '';
   if (typeof text !== 'string') return '';

@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, IndianRupee, Clock, ArrowRight, Filter, Briefcase, Car, Cpu, Factory, Share2, Calendar, Phone } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { buildJobCategoryOptions, fetchJobs, getJobCategoryFilterValue, toJobFilterSlug, cleanMarkdown } from '../utils/strapi';
+import { buildJobCategoryOptions, fetchJobs, getJobCategoryFilterValue, toJobFilterSlug, cleanMarkdown, isJobExpired } from '../utils/strapi';
 
 const defaultContacts = [{ name: 'HR Recruiting', phone: '+91 95615 04911' }];
 
@@ -322,20 +322,22 @@ const JobBoard = () => {
       const data = await fetchJobs();
       if (data.length > 0) {
         // Preserve a date field (prefer createdAt then publishedAt) and sort newest-first
-        const mapped = data.map((job) => ({
-          id: job.id,
-          title: job.title || job.documentId || `Job ${job.id}`,
-          company: job.company || '',
-          category: job.category || job.type || '',
-          location: job.location || '',
-          salary: formatSalaryFromJob(job),
-          type: job.type || '',
-          urgent: job.urgent || false,
-          date: job.createdAt || job.publishedAt || job.date || null,
-          postedDate: job.publishedDate || job.publishedAt || job.createdAt || null,
-          applyBy: job.applyBy || null,
-          hrContacts: job.hrContacts || [],
-        }));
+        const mapped = data
+          .filter((job) => !isJobExpired(job.applyBy))
+          .map((job) => ({
+            id: job.id,
+            title: job.title || job.documentId || `Job ${job.id}`,
+            company: job.company || '',
+            category: job.category || job.type || '',
+            location: job.location || '',
+            salary: formatSalaryFromJob(job),
+            type: job.type || '',
+            urgent: job.urgent || false,
+            date: job.createdAt || job.publishedAt || job.date || null,
+            postedDate: job.publishedDate || job.publishedAt || job.createdAt || null,
+            applyBy: job.applyBy || null,
+            hrContacts: job.hrContacts || [],
+          }));
 
         mapped.sort((a, b) => {
           const da = a.date ? new Date(a.date).getTime() : 0;
@@ -345,7 +347,7 @@ const JobBoard = () => {
 
         setJobs(mapped);
       } else {
-        setJobs(fallbackJobs);
+        setJobs(fallbackJobs.filter((job) => !isJobExpired(job.applyBy)));
       }
       setLoading(false);
     };
@@ -354,6 +356,9 @@ const JobBoard = () => {
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
+      if (isJobExpired(job.applyBy)) {
+        return false;
+      }
       const categoryFilterValue = toJobFilterSlug(getJobCategoryFilterValue(job));
       if (categoryFilterValue === 'overseas') {
         return false;
