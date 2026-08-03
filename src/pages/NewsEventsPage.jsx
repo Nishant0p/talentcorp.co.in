@@ -315,19 +315,19 @@ const ConfettiEffect = ({ active, onClose }) => {
 };
 
 // ShareModal Component
-const ShareModal = ({ isOpen, onClose, birthdayName, imageUrl }) => {
+const ShareModal = ({ isOpen, onClose, birthdayName, birthdayRole, birthdayMessage, imageUrl }) => {
   const [copied, setCopied] = useState(false);
   const [sharing, setSharing] = useState(false);
   const [shareError, setShareError] = useState('');
 
   if (!isOpen) return null;
 
-  const pageUrl = window.location.origin + window.location.pathname;
+  const cardUrl = `${window.location.origin}/birthday-card?name=${encodeURIComponent(birthdayName)}&role=${encodeURIComponent(birthdayRole)}&image=${encodeURIComponent(imageUrl)}&msg=${encodeURIComponent(birthdayMessage)}`;
   const shareText = `Wishing a very Happy Birthday to our amazing colleague, ${birthdayName}! 🎂🎉 Check out the celebrations at TSPL:`;
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(`${pageUrl}#birthday-spotlight`);
+      await navigator.clipboard.writeText(cardUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -353,7 +353,7 @@ const ShareModal = ({ isOpen, onClose, birthdayName, imageUrl }) => {
         await navigator.share({
           title: `Happy Birthday ${birthdayName}!`,
           text: shareText,
-          url: pageUrl,
+          url: cardUrl,
         });
       }
     } catch (err) {
@@ -367,7 +367,7 @@ const ShareModal = ({ isOpen, onClose, birthdayName, imageUrl }) => {
   };
 
   const handleWhatsAppShare = () => {
-    const text = encodeURIComponent(`${shareText}\n${pageUrl}`);
+    const text = encodeURIComponent(`${shareText}\n${cardUrl}`);
     window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
   };
 
@@ -1119,6 +1119,8 @@ const NewsEventsPage = ({ prismicData = null }) => {
           isOpen={shareModalOpen}
           onClose={() => setShareModalOpen(false)}
           birthdayName={content.birthdaySpotlight.name}
+          birthdayRole={content.birthdaySpotlight.role}
+          birthdayMessage={content.birthdaySpotlight.message || `Join us in wishing a very Happy Birthday to our ${content.birthdaySpotlight.role}, ${content.birthdaySpotlight.name}! We wish you continued growth, great success, and lasting happiness.`}
           imageUrl={content.birthdaySpotlight.image ? extractMediaUrl(content.birthdaySpotlight.image) : 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg'}
         />
       )}
