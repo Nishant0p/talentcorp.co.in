@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Sparkles, Award, Calendar, MapPin, ChevronRight, Cake, Star } from 'lucide-react';
+import { ArrowRight, Sparkles, Award, Calendar, MapPin, ChevronRight, Cake, Star, Share2, Copy, Check, Download, X } from 'lucide-react';
 import { extractMediaUrl, fetchNews, fetchSingleType } from '../utils/strapi';
 import localNews from '../data/localNews';
 
@@ -155,10 +155,10 @@ const defaultNewsEventsContent = {
     { name: 'Anita Desai', dept: 'HR', date: 'Oct 18', initial: 'AD' },
   ],
   birthdaySpotlight: {
-    name: 'Meera Krishnan',
-    role: 'Human Resources',
-    message: 'Wishing you a year as wonderful as your impact at TSPL!',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=900',
+    name: 'Pooja Ingle',
+    role: 'HR Recruiter',
+    message: 'Join us in wishing a very Happy Birthday to our HR Recruiter, Pooja Ingle! We wish you continued growth, great success, and lasting happiness.',
+    image: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg',
   },
   welcomeUpcoming: [
     { name: 'Amit Patel', dept: 'Engineering', date: 'Oct 01', initial: 'AP' },
@@ -205,6 +205,271 @@ const quickAccessTargets = {
   Gallery: 'gallery',
 };
 
+// Confetti Effect (Party Popper) Component
+const ConfettiEffect = ({ active, onClose }) => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    if (!active) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const colors = ['#f7d54b', '#ff6b6b', '#4dadf7', '#33d9b2', '#ff9f43', '#a55eea'];
+    const particles = [];
+    const particleCount = 160;
+
+    // Spawn particles shooting up from the bottom-left and bottom-right corners
+    for (let i = 0; i < particleCount; i++) {
+      const isLeft = i < particleCount / 2;
+      // Angle: shooting inwards and upwards (35 to 75 deg on left, 105 to 145 deg on right)
+      const angle = isLeft 
+        ? (Math.random() * 40 + 35) * Math.PI / 180 
+        : (Math.random() * 40 + 105) * Math.PI / 180;
+      
+      const speed = Math.random() * 22 + 13;
+
+      particles.push({
+        x: isLeft ? 0 : canvas.width,
+        y: canvas.height,
+        vx: Math.cos(angle) * speed * (isLeft ? 1 : -1),
+        vy: -Math.sin(angle) * speed,
+        r: Math.random() * 6 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        tilt: Math.random() * 10 - 5,
+        tiltAngleIncremental: Math.random() * 0.1 + 0.05,
+        tiltAngle: 0,
+        opacity: 1,
+      });
+    }
+
+    let framesElapsed = 0;
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let activeParticles = 0;
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.45; // gravity
+        p.vx *= 0.98; // air resistance
+        p.vy *= 0.98;
+
+        p.tiltAngle += p.tiltAngleIncremental;
+        p.tilt = Math.sin(p.tiltAngle) * 12;
+
+        // Fade out as they fall down past the middle of the screen
+        if (p.vy > 0 && p.y > canvas.height * 0.5) {
+          p.opacity -= 0.015;
+        }
+
+        if (p.opacity > 0 && p.y <= canvas.height && p.x >= 0 && p.x <= canvas.width) {
+          activeParticles++;
+          ctx.save();
+          ctx.globalAlpha = p.opacity;
+          ctx.beginPath();
+          ctx.lineWidth = p.r;
+          ctx.strokeStyle = p.color;
+          ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+          ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+      });
+
+      framesElapsed++;
+      if (activeParticles === 0 || framesElapsed > 250) {
+        cancelAnimationFrame(animationFrameId);
+        onClose();
+      } else {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, [active, onClose]);
+
+  if (!active) return null;
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-50 w-full h-full"
+    />
+  );
+};
+
+// ShareModal Component
+const ShareModal = ({ isOpen, onClose, birthdayName, imageUrl }) => {
+  const [copied, setCopied] = useState(false);
+  const [sharing, setSharing] = useState(false);
+  const [shareError, setShareError] = useState('');
+
+  if (!isOpen) return null;
+
+  const pageUrl = window.location.origin + window.location.pathname;
+  const shareText = `Wishing a very Happy Birthday to our amazing colleague, ${birthdayName}! 🎂🎉 Check out the celebrations at TSPL:`;
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(`${pageUrl}#birthday-spotlight`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy link', err);
+    }
+  };
+
+  const handleNativeShare = async () => {
+    setSharing(true);
+    setShareError('');
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const file = new File([blob], `${birthdayName.toLowerCase().replace(/\s+/g, '-')}-birthday.jpg`, { type: blob.type });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: `Happy Birthday ${birthdayName}!`,
+          text: shareText,
+        });
+      } else {
+        await navigator.share({
+          title: `Happy Birthday ${birthdayName}!`,
+          text: shareText,
+          url: pageUrl,
+        });
+      }
+    } catch (err) {
+      console.warn('Native share failed or cancelled', err);
+      if (err.name !== 'AbortError') {
+        setShareError('Native sharing is not supported on this browser. Try WhatsApp Share or download the card.');
+      }
+    } finally {
+      setSharing(false);
+    }
+  };
+
+  const handleWhatsAppShare = () => {
+    const text = encodeURIComponent(`${shareText}\n${pageUrl}`);
+    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+  };
+
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${birthdayName.replace(/\s+/g, '_')}_Birthday_Card.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.warn('Direct download failed, opening in new tab instead:', err);
+      window.open(imageUrl, '_blank');
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+      <div className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-100 text-slate-800 animate-in fade-in zoom-in-95 duration-200">
+        
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-slate-100">
+          <h3 className="text-xl font-bold text-[#0d1236]">Share Birthday Card</h3>
+          <button onClick={onClose} className="p-1 rounded-full hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600">
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 space-y-6">
+          <p className="text-sm text-slate-500">
+            Share this celebration card with your friends or upload it directly to your WhatsApp status / Instagram stories!
+          </p>
+
+          {/* Quick share buttons */}
+          <div className="grid grid-cols-2 gap-4">
+            <button
+              onClick={handleWhatsAppShare}
+              className="flex flex-col items-center justify-center p-4 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors gap-2 cursor-pointer"
+            >
+              <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.022-.08-.5-1.161-1.026-1.424-.526-.263-1.09-.343-1.36-.08l-.44.44a.48.48 0 0 1-.59.08c-.76-.36-1.72-1.2-2.18-2.18a.48.48 0 0 1 .08-.59l.44-.44c.263-.27.183-.834-.08-1.36-.263-.526-1.344-1.004-1.424-1.026-.24-.066-.46-.022-.62.08-.22.14-.32.44-.32.76a2.43 2.43 0 0 0 .52 1.48c.52.76 1.4 1.84 2.47 2.47a3.02 3.02 0 0 0 1.47.52c.32 0 .62-.1.76-.32.102-.16.146-.38.08-.62zM12 2a10 10 0 0 0-7.07 17.07l-1.37 4.09 4.2-.13A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.19-1.19l-.3-.17-2.48.08.76-2.27-.19-.3A8 8 0 1 1 12 20z" />
+                </svg>
+              </div>
+              <span className="text-xs font-bold">WhatsApp Status</span>
+            </button>
+
+            <button
+              onClick={handleDownload}
+              className="flex flex-col items-center justify-center p-4 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors gap-2 cursor-pointer"
+            >
+              <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                <Download size={24} />
+              </div>
+              <span className="text-xs font-bold">Download Card</span>
+            </button>
+          </div>
+
+          {/* Native Share & Copy Link */}
+          <div className="space-y-3">
+            {navigator.share && (
+              <button
+                onClick={handleNativeShare}
+                disabled={sharing}
+                className="w-full flex items-center justify-center gap-2 bg-[#0d1236] text-white py-3.5 px-6 rounded-xl font-bold hover:bg-[#1a2360] transition-colors cursor-pointer"
+              >
+                <Share2 size={18} />
+                {sharing ? 'Preparing Share...' : 'Share to Instagram / Others'}
+              </button>
+            )}
+
+            <button
+              onClick={handleCopyLink}
+              className="w-full flex items-center justify-center gap-2 border border-slate-200 py-3.5 px-6 rounded-xl font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer"
+            >
+              {copied ? <Check size={18} className="text-emerald-500" /> : <Copy size={18} />}
+              {copied ? 'Link Copied!' : 'Copy Invitation Link'}
+            </button>
+          </div>
+
+          {shareError && (
+            <p className="text-xs text-red-500 text-center font-medium mt-2">{shareError}</p>
+          )}
+
+          {/* Instagram Tip */}
+          <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-100 text-amber-900 text-xs leading-relaxed">
+            <strong>Tip for Instagram Status:</strong> Click <strong>Download Card</strong>, then open Instagram, swipe left to create a Story, choose the downloaded card from your gallery, and share!
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
 const resolveNewsEventsContent = (prismicData) => {
   if (!prismicData) return defaultNewsEventsContent;
 
@@ -245,9 +510,39 @@ const resolveNewsEventsContent = (prismicData) => {
 
 const NewsEventsPage = ({ prismicData = null }) => {
   const heroParallaxRef = useRef(null);
+  const birthdaySectionRef = useRef(null);
   const [pageData, setPageData] = useState(null);
   const content = useMemo(() => resolveNewsEventsContent(pageData || prismicData), [pageData, prismicData]);
   const [latestNews, setLatestNews] = useState([]);
+  const [confettiActive, setConfettiActive] = useState(false);
+  const [hasTriggeredConfetti, setHasTriggeredConfetti] = useState(false);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (hasTriggeredConfetti || !content.birthdaySpotlight) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setConfettiActive(true);
+          setHasTriggeredConfetti(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    const timer = setTimeout(() => {
+      if (birthdaySectionRef.current) {
+        observer.observe(birthdaySectionRef.current);
+      }
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [hasTriggeredConfetti, content.birthdaySpotlight]);
   const newsAndUpdatesItems = useMemo(() => latestNews.filter((item) => item.tag === 'News' || item.tag === 'Updates'), [latestNews]);
   const eventItems = useMemo(() => latestNews.filter((item) => item.tag === 'Event'), [latestNews]);
   const reduceMotion = useReducedMotion();
@@ -625,102 +920,116 @@ const NewsEventsPage = ({ prismicData = null }) => {
         )}
       </motion.section>
 
-      {/* ── Team Celebrations & Welcomes Section (Disabled) ── */}
-      {false && (
+      {/* ── Team Celebrations & Welcomes Section ── */}
+      {content.birthdaySpotlight && (
         <motion.section
+          ref={birthdaySectionRef}
           className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.65, ease: 'easeOut' }}
         >
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
-            {/* Welcome to TSPL Column */}
-            <div className="flex flex-col">
-              <div className="mb-8 flex items-center gap-3">
-                <Sparkles className="h-7 w-7 text-orange-500" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#006bb8]">Welcome to TSPL</h2>
-              </div>
-              
-              {content.welcomeSpotlight && (
-                <div className="flex flex-col sm:flex-row gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 shadow-sm items-center sm:items-stretch mb-6">
-                  <div className="w-28 h-28 sm:w-36 sm:h-36 shrink-0 rounded-2xl overflow-hidden border-2 border-orange-500/20 shadow-md">
-                    <img
-                      src={content.welcomeSpotlight.image ? extractMediaUrl(content.welcomeSpotlight.image) : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300'}
-                      alt={content.welcomeSpotlight.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex flex-col justify-center text-center sm:text-left">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-orange-500">New Joiner Spotlight</span>
-                    <h3 className="text-xl font-bold text-[#006bb8] mt-1">{content.welcomeSpotlight.name}</h3>
-                    <p className="text-xs text-slate-500 font-semibold mt-0.5">{content.welcomeSpotlight.role}</p>
-                    <p className="text-sm text-slate-600 italic mt-3 leading-relaxed">"{content.welcomeSpotlight.message}"</p>
-                  </div>
-                </div>
-              )}
-
-              <div className="flex flex-col gap-3">
-                {content.welcomeUpcoming && content.welcomeUpcoming.map((person, idx) => (
-                  <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
-                    <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center font-bold text-sm shrink-0">
-                      {person.initial || String(person.name || 'W').substring(0, 2).toUpperCase()}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
-                      <p className="text-xs text-slate-500 truncate">{person.dept}</p>
-                    </div>
-                    <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
-                      Joined: {person.date}
-                    </div>
-                  </div>
-                ))}
+          {/* Main Birthday Spotlight Banner */}
+          <div className="overflow-hidden rounded-[2rem] bg-[#0d1236] text-white p-8 sm:p-12 lg:p-16 min-h-[50vh] lg:min-h-[60vh] flex flex-col lg:flex-row items-center justify-between gap-12 shadow-[0_20px_50px_rgba(13,18,54,0.3)]">
+            
+            {/* Left Side: Text/Content Area */}
+            <div className="flex-1 max-w-xl text-center lg:text-left">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f7d54b]/15 text-[#f7d54b] text-xs font-bold uppercase tracking-wider mb-6">
+                <Cake size={14} /> Team Celebrations
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-6">
+                Birthday Spotlight
+              </h2>
+              <p className="text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed mb-8">
+                {content.birthdaySpotlight.message || `Join us in wishing a very Happy Birthday to our ${content.birthdaySpotlight.role}, ${content.birthdaySpotlight.name}! We wish you continued growth, great success, and lasting happiness.`}
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 w-full">
+                <a
+                  href={`mailto:?subject=Happy Birthday ${content.birthdaySpotlight.name}!&body=Dear ${content.birthdaySpotlight.name}, wishing you a very Happy Birthday!`}
+                  className="w-full sm:w-auto text-center bg-[#f7d54b] text-[#0d1236] font-bold py-3 px-8 rounded-xl transition-all duration-300 hover:bg-white hover:text-[#0d1236] shadow-lg shadow-[#f7d54b]/10 cursor-pointer"
+                >
+                  Send Wishes
+                </a>
+                <button
+                  onClick={() => setShareModalOpen(true)}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-transparent text-white border border-white/20 hover:border-white font-bold py-3 px-8 rounded-xl transition-all duration-300 hover:bg-white/10 shadow-lg cursor-pointer"
+                >
+                  <Share2 size={18} /> Share Card
+                </button>
               </div>
             </div>
 
-            {/* TSPL Birthdays Column */}
-            <div className="flex flex-col">
-              <div className="mb-8 flex items-center gap-3">
-                <Cake className="h-7 w-7 text-orange-500" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#006bb8]">TSPL Birthdays</h2>
-              </div>
-
-              {content.birthdaySpotlight && (
-                <div className="flex flex-col sm:flex-row gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 shadow-sm items-center sm:items-stretch mb-6">
-                  <div className="w-28 h-28 sm:w-36 sm:h-36 shrink-0 rounded-2xl overflow-hidden border-2 border-orange-500/20 shadow-md">
-                    <img
-                      src={content.birthdaySpotlight.image ? extractMediaUrl(content.birthdaySpotlight.image) : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300'}
-                      alt={content.birthdaySpotlight.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex flex-col justify-center text-center sm:text-left">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-orange-500">Birthday Spotlight</span>
-                    <h3 className="text-xl font-bold text-[#006bb8] mt-1">{content.birthdaySpotlight.name}</h3>
-                    <p className="text-xs text-slate-500 font-semibold mt-0.5">{content.birthdaySpotlight.role}</p>
-                    <p className="text-sm text-slate-600 italic mt-3 leading-relaxed">"{content.birthdaySpotlight.message}"</p>
-                  </div>
-                </div>
-              )}
-
-              <div className="flex flex-col gap-3">
-                {content.birthdayUpcoming && content.birthdayUpcoming.map((person, idx) => (
-                  <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
-                    <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">
-                      {person.initial || String(person.name || 'B').substring(0, 2).toUpperCase()}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
-                      <p className="text-xs text-slate-500 truncate">{person.dept}</p>
-                    </div>
-                    <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
-                      Birthday: {person.date}
-                    </div>
-                  </div>
-                ))}
-              </div>
+            {/* Right Side: The Image */}
+            <div className="flex-1 w-full flex justify-center lg:justify-end">
+              <img
+                src={content.birthdaySpotlight.image ? extractMediaUrl(content.birthdaySpotlight.image) : 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg'}
+                alt={`Happy Birthday ${content.birthdaySpotlight.name}`}
+                className="w-full max-w-[450px] sm:max-w-[500px] h-auto rounded-2xl shadow-[0_15px_35px_rgba(0,0,0,0.5)] object-contain border border-white/10"
+                loading="lazy"
+              />
             </div>
+
           </div>
+
+          {/* Upcoming Welcomes & Birthdays Grid */}
+          {((content.welcomeUpcoming && content.welcomeUpcoming.length > 0) || (content.birthdayUpcoming && content.birthdayUpcoming.length > 0)) && (
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Welcome to TSPL Column */}
+              {content.welcomeUpcoming && content.welcomeUpcoming.length > 0 && (
+                <div className="flex flex-col bg-slate-50/50 border border-slate-100/80 rounded-3xl p-6 sm:p-8">
+                  <div className="mb-6 flex items-center gap-3">
+                    <Sparkles className="h-6 w-6 text-orange-500" />
+                    <h3 className="text-xl font-bold text-[#006bb8]">Welcome to TSPL</h3>
+                  </div>
+
+                  <div className="flex flex-col gap-3">
+                    {content.welcomeUpcoming.map((person, idx) => (
+                      <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
+                        <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center font-bold text-sm shrink-0">
+                          {person.initial || String(person.name || 'W').substring(0, 2).toUpperCase()}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
+                          <p className="text-xs text-slate-500 truncate">{person.dept}</p>
+                        </div>
+                        <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
+                          Joined: {person.date}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* TSPL Birthdays Column */}
+              {content.birthdayUpcoming && content.birthdayUpcoming.length > 0 && (
+                <div className="flex flex-col bg-slate-50/50 border border-slate-100/80 rounded-3xl p-6 sm:p-8">
+                  <div className="mb-6 flex items-center gap-3">
+                    <Cake className="h-6 w-6 text-orange-500" />
+                    <h3 className="text-xl font-bold text-[#006bb8]">Upcoming Birthdays</h3>
+                  </div>
+
+                  <div className="flex flex-col gap-3">
+                    {content.birthdayUpcoming.map((person, idx) => (
+                      <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
+                        <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">
+                          {person.initial || String(person.name || 'B').substring(0, 2).toUpperCase()}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
+                          <p className="text-xs text-slate-500 truncate">{person.dept}</p>
+                        </div>
+                        <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
+                          Birthday: {person.date}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </motion.section>
       )}
 
@@ -802,6 +1111,17 @@ const NewsEventsPage = ({ prismicData = null }) => {
           </div>
         </div>
       </motion.section>
+
+      <ConfettiEffect active={confettiActive} onClose={() => setConfettiActive(false)} />
+
+      {content.birthdaySpotlight && (
+        <ShareModal
+          isOpen={shareModalOpen}
+          onClose={() => setShareModalOpen(false)}
+          birthdayName={content.birthdaySpotlight.name}
+          imageUrl={content.birthdaySpotlight.image ? extractMediaUrl(content.birthdaySpotlight.image) : 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg'}
+        />
+      )}
 
       <div className="mt-20 md:mt-24">
         <Footer />
