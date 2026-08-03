@@ -517,6 +517,14 @@ const NewsEventsPage = ({ prismicData = null }) => {
   const [confettiActive, setConfettiActive] = useState(false);
   const [hasTriggeredConfetti, setHasTriggeredConfetti] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     if (hasTriggeredConfetti || !content.birthdaySpotlight) return;
@@ -551,11 +559,11 @@ const NewsEventsPage = ({ prismicData = null }) => {
     offset: ['start end', 'end start'],
   });
 
-  const heroFeatureY = useTransform(heroProgress, [0, 1], reduceMotion ? [0, 0] : [-30, 30]);
-  const heroOrangeX = useTransform(heroProgress, [0, 1], reduceMotion ? [0, 0] : [-28, 22]);
-  const heroQuickX = useTransform(heroProgress, [0, 1], reduceMotion ? [0, 0] : [24, -20]);
-  const heroMilestonesX = useTransform(heroProgress, [0, 1], reduceMotion ? [0, 0] : [-18, 16]);
-  const heroAwardY = useTransform(heroProgress, [0, 1], reduceMotion ? [0, 0] : [22, -18]);
+  const heroFeatureY = useTransform(heroProgress, [0, 1], (reduceMotion || isMobile) ? [0, 0] : [-30, 30]);
+  const heroOrangeX = useTransform(heroProgress, [0, 1], (reduceMotion || isMobile) ? [0, 0] : [-28, 22]);
+  const heroQuickX = useTransform(heroProgress, [0, 1], (reduceMotion || isMobile) ? [0, 0] : [24, -20]);
+  const heroMilestonesX = useTransform(heroProgress, [0, 1], (reduceMotion || isMobile) ? [0, 0] : [-18, 16]);
+  const heroAwardY = useTransform(heroProgress, [0, 1], (reduceMotion || isMobile) ? [0, 0] : [22, -18]);
 
   useEffect(() => {
     const loadLatestNews = async () => {
@@ -590,7 +598,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
       `}</style>
 
       <motion.h1
-        className="mb-10 text-3xl sm:text-5xl md:text-7xl lg:text-9xl font-black leading-none tracking-tighter whitespace-nowrap"
+        className="mb-10 text-3xl sm:text-5xl md:text-7xl lg:text-9xl font-black leading-none tracking-tighter whitespace-normal sm:whitespace-nowrap"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.35 }}
@@ -734,7 +742,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
       <motion.section
         id="announcements"
-        className="mx-auto mt-12 sm:mt-20 max-w-7xl px-4 sm:px-0"
+        className="mx-auto mt-12 sm:mt-20 max-w-7xl px-0"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -747,7 +755,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
         <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-12">
           <motion.article
-            className="group relative overflow-hidden rounded-[2rem] bg-slate-900 lg:col-span-8 h-[360px] sm:h-[460px]"
+            className="group relative overflow-hidden rounded-[2rem] bg-slate-900 lg:col-span-8 min-h-[420px] sm:min-h-[460px] flex flex-col justify-end p-6 sm:p-10"
             initial={{ opacity: 0, y: 60, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: false, amount: 0.2 }}
@@ -756,26 +764,26 @@ const NewsEventsPage = ({ prismicData = null }) => {
           >
             <img
               src={content.spotlightFeature.image}
-              alt="Vintage cars"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              alt="Spotlight feature image"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/20 to-transparent" />
-            <div className="absolute top-8 left-8">
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent" />
+            <div className="absolute top-6 left-6 sm:top-8 sm:left-8">
               <span className="rounded-full bg-orange-500 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white">
                 {content.spotlightFeature.tag}
               </span>
             </div>
-            <div className="absolute bottom-8 left-8 right-8">
-              <p className="mb-2 text-sm text-slate-300">{content.spotlightFeature.date}</p>
-              <h3 className="mb-4 max-w-2xl text-2xl sm:text-3xl font-bold leading-tight text-white md:text-4xl">
+            <div className="relative z-10">
+              <p className="mb-2 text-xs sm:text-sm text-slate-300">{content.spotlightFeature.date}</p>
+              <h3 className="mb-3 text-xl sm:text-2xl md:text-3xl font-bold leading-tight text-white">
                 {content.spotlightFeature.title}
               </h3>
-              <p className="mb-6 max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
+              <p className="mb-4 text-xs sm:text-sm leading-relaxed text-slate-300 line-clamp-3 sm:line-clamp-none">
                 {content.spotlightFeature.description}
               </p>
               <Link
                 to={content.spotlightFeature.readMoreUrl || '/news-events'}
-                className="flex items-center gap-2 font-semibold text-orange-500 transition-colors hover:text-orange-400"
+                className="inline-flex items-center gap-2 font-semibold text-orange-500 transition-colors hover:text-orange-400 text-sm sm:text-base"
               >
                 Read More <ArrowRight size={18} />
               </Link>
@@ -795,13 +803,13 @@ const NewsEventsPage = ({ prismicData = null }) => {
                 <img
                   src={news.img}
                   alt={news.title}
-                  className="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl object-cover"
+                  className="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl object-cover shrink-0"
                 />
                 <div className="flex flex-col justify-center">
                   <span className="mb-1 text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">
                     {news.category}
                   </span>
-                  <h4 className="mb-2 text-sm font-semibold leading-snug text-[#006bb8] transition-colors group-hover:text-orange-500">
+                  <h4 className="mb-2 text-sm font-semibold leading-snug text-[#006bb8] transition-colors group-hover:text-orange-500 font-sans">
                     {news.title}
                   </h4>
                   <p className="text-xs text-slate-400">{news.date}</p>
@@ -816,7 +824,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
       <motion.section
         id="calendar"
-        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
+        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-0"
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.18 }}
@@ -874,7 +882,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
       {/* ── Latest Events Section ── */}
       <motion.section
         id="events"
-        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
+        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-0"
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.18 }}
@@ -924,14 +932,14 @@ const NewsEventsPage = ({ prismicData = null }) => {
       {content.birthdaySpotlight && (
         <motion.section
           ref={birthdaySectionRef}
-          className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
+          className="mx-auto mt-12 sm:mt-24 max-w-7xl px-0"
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.65, ease: 'easeOut' }}
         >
           {/* Main Birthday Spotlight Banner */}
-          <div className="overflow-hidden rounded-[2rem] bg-[#0d1236] text-white p-8 sm:p-12 lg:p-16 min-h-[50vh] lg:min-h-[60vh] flex flex-col lg:flex-row items-center justify-between gap-12 shadow-[0_20px_50px_rgba(13,18,54,0.3)]">
+          <div className="overflow-hidden rounded-[2rem] bg-[#0d1236] text-white p-6 sm:p-12 lg:p-16 min-h-[50vh] lg:min-h-[60vh] flex flex-col lg:flex-row items-center justify-between gap-12 shadow-[0_20px_50px_rgba(13,18,54,0.3)]">
             
             {/* Left Side: Text/Content Area */}
             <div className="flex-1 max-w-xl text-center lg:text-left">
@@ -1034,7 +1042,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
       )}
 
       <motion.section
-        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-0"
+        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-0"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
