@@ -314,6 +314,48 @@ const ConfettiEffect = ({ active, onClose }) => {
   );
 };
 
+// Helper to convert an image URL (even cross-origin) to a File object for native sharing
+const fetchImageAsFile = async (url, fileName = 'birthday-poster.jpg') => {
+  try {
+    const response = await fetch(url, { mode: 'cors' });
+    if (response.ok) {
+      const blob = await response.blob();
+      return new File([blob], fileName, { type: blob.type || 'image/jpeg' });
+    }
+  } catch (err) {
+    console.warn('Direct fetch failed for image share, attempting canvas fallback:', err);
+  }
+
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth || img.width || 800;
+        canvas.height = img.naturalHeight || img.height || 1000;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(new File([blob], fileName, { type: 'image/jpeg' }));
+            } else {
+              reject(new Error('Canvas blob creation failed'));
+            }
+          },
+          'image/jpeg',
+          0.95
+        );
+      } catch (canvasErr) {
+        reject(canvasErr);
+      }
+    };
+    img.onerror = (imgErr) => reject(imgErr);
+    img.src = url;
+  });
+};
+
 // ShareModal Component
 const ShareModal = ({ isOpen, onClose, birthdayName, birthdayRole, birthdayMessage, imageUrl }) => {
   const [copied, setCopied] = useState(false);
@@ -335,42 +377,6 @@ const ShareModal = ({ isOpen, onClose, birthdayName, birthdayRole, birthdayMessa
     }
   };
 
-  const handleNativeShare = async () => {
-    setSharing(true);
-    setShareError('');
-    try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const file = new File([blob], `${birthdayName.toLowerCase().replace(/\s+/g, '-')}-birthday.jpg`, { type: blob.type });
-
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: `Happy Birthday ${birthdayName}!`,
-          text: shareText,
-        });
-      } else {
-        await navigator.share({
-          title: `Happy Birthday ${birthdayName}!`,
-          text: shareText,
-          url: cardUrl,
-        });
-      }
-    } catch (err) {
-      console.warn('Native share failed or cancelled', err);
-      if (err.name !== 'AbortError') {
-        setShareError('Native sharing is not supported on this browser. Try WhatsApp Share or download the card.');
-      }
-    } finally {
-      setSharing(false);
-    }
-  };
-
-  const handleWhatsAppShare = () => {
-    const text = encodeURIComponent(`${shareText}\n${cardUrl}`);
-    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
-  };
-
   const handleDownload = async () => {
     try {
       const response = await fetch(imageUrl);
@@ -378,7 +384,7 @@ const ShareModal = ({ isOpen, onClose, birthdayName, birthdayRole, birthdayMessa
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${birthdayName.replace(/\s+/g, '_')}_Birthday_Card.jpg`;
+      a.download = `${birthdayName.replace(/\s+/g, '_')}_Birthday_Poster.jpg`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -389,13 +395,78 @@ const ShareModal = ({ isOpen, onClose, birthdayName, birthdayRole, birthdayMessa
     }
   };
 
+  const handleShareImageFile = async () => {
+    setSharing(true);
+    setShareError('');
+    try {
+      const fileName = `${birthdayName.toLowerCase().replace(/\s+/g, '-')}-birthday-poster.jpg`;
+      const file = await fetchImageAsFile(imageUrl, fileName);
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: `Happy Birthday ${birthdayName}!`,
+          text: `Wishing a very Happy Birthday to ${birthdayName}! 🎂🎉`,
+        });
+      } else {
+        // Fallback for desktop browsers without file share API: Download image file directly
+        const url = window.URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        setShareError('Poster image downloaded! Attach the image file in your chat or status update.');
+      }
+    } catch (err) {
+      console.warn('Share image failed:', err);
+      if (err.name !== 'AbortError') {
+        handleDownload();
+        setShareError('Poster image downloaded to your device!');
+      }
+    } finally {
+      setSharing(false);
+    }
+  };
+
+  const handleWhatsAppShare = async () => {
+    setSharing(true);
+    setShareError('');
+    try {
+      const fileName = `${birthdayName.toLowerCase().replace(/\s+/g, '-')}-birthday-poster.jpg`;
+      const file = await fetchImageAsFile(imageUrl, fileName);
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: `Happy Birthday ${birthdayName}!`,
+          text: `Wishing a very Happy Birthday to ${birthdayName}! 🎂🎉`,
+        });
+        setSharing(false);
+        return;
+      }
+    } catch (err) {
+      console.warn('Native WhatsApp file share unavailable:', err);
+    }
+
+    // On Desktop browsers where navigator.canShare with files is unsupported:
+    // Download the poster image directly so user has the image, and open WhatsApp Web with caption!
+    handleDownload();
+    const text = encodeURIComponent(`Wishing a very Happy Birthday to our amazing colleague, ${birthdayName}! 🎂🎉`);
+    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    setShareError('Poster image downloaded! Attach the downloaded poster image in WhatsApp chat.');
+    setSharing(false);
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
       <div className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-100 text-slate-800 animate-in fade-in zoom-in-95 duration-200">
         
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-slate-100">
-          <h3 className="text-xl font-bold text-[#0d1236]">Share Birthday Card</h3>
+          <h3 className="text-xl font-bold text-[#0d1236]">Share Birthday Poster</h3>
           <button onClick={onClose} className="p-1 rounded-full hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600">
             <X size={20} />
           </button>
@@ -404,10 +475,20 @@ const ShareModal = ({ isOpen, onClose, birthdayName, birthdayRole, birthdayMessa
         {/* Content */}
         <div className="p-6 space-y-6">
           <p className="text-sm text-slate-500">
-            Share this celebration card with your friends or upload it directly to your WhatsApp status / Instagram stories!
+            Share this birthday poster image directly with your friends or post it to your WhatsApp status &amp; Instagram stories!
           </p>
 
-          {/* Quick share buttons */}
+          {/* Main Share Poster Button */}
+          <button
+            onClick={handleShareImageFile}
+            disabled={sharing}
+            className="w-full flex items-center justify-center gap-2 bg-orange-500 text-white py-3.5 px-6 rounded-xl font-bold hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/20 cursor-pointer text-base"
+          >
+            <Share2 size={18} />
+            {sharing ? 'Preparing Poster Image...' : 'Share Poster Image'}
+          </button>
+
+          {/* Quick share options */}
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={handleWhatsAppShare}
@@ -418,7 +499,7 @@ const ShareModal = ({ isOpen, onClose, birthdayName, birthdayRole, birthdayMessa
                   <path d="M17.472 14.382c-.022-.08-.5-1.161-1.026-1.424-.526-.263-1.09-.343-1.36-.08l-.44.44a.48.48 0 0 1-.59.08c-.76-.36-1.72-1.2-2.18-2.18a.48.48 0 0 1 .08-.59l.44-.44c.263-.27.183-.834-.08-1.36-.263-.526-1.344-1.004-1.424-1.026-.24-.066-.46-.022-.62.08-.22.14-.32.44-.32.76a2.43 2.43 0 0 0 .52 1.48c.52.76 1.4 1.84 2.47 2.47a3.02 3.02 0 0 0 1.47.52c.32 0 .62-.1.76-.32.102-.16.146-.38.08-.62zM12 2a10 10 0 0 0-7.07 17.07l-1.37 4.09 4.2-.13A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.19-1.19l-.3-.17-2.48.08.76-2.27-.19-.3A8 8 0 1 1 12 20z" />
                 </svg>
               </div>
-              <span className="text-xs font-bold">WhatsApp Status</span>
+              <span className="text-xs font-bold text-slate-700">WhatsApp Image</span>
             </button>
 
             <button
@@ -428,39 +509,26 @@ const ShareModal = ({ isOpen, onClose, birthdayName, birthdayRole, birthdayMessa
               <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
                 <Download size={24} />
               </div>
-              <span className="text-xs font-bold">Download Card</span>
+              <span className="text-xs font-bold text-slate-700">Download Poster</span>
             </button>
           </div>
 
-          {/* Native Share & Copy Link */}
-          <div className="space-y-3">
-            {navigator.share && (
-              <button
-                onClick={handleNativeShare}
-                disabled={sharing}
-                className="w-full flex items-center justify-center gap-2 bg-[#0d1236] text-white py-3.5 px-6 rounded-xl font-bold hover:bg-[#1a2360] transition-colors cursor-pointer"
-              >
-                <Share2 size={18} />
-                {sharing ? 'Preparing Share...' : 'Share to Instagram / Others'}
-              </button>
-            )}
-
-            <button
-              onClick={handleCopyLink}
-              className="w-full flex items-center justify-center gap-2 border border-slate-200 py-3.5 px-6 rounded-xl font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer"
-            >
-              {copied ? <Check size={18} className="text-emerald-500" /> : <Copy size={18} />}
-              {copied ? 'Link Copied!' : 'Copy Invitation Link'}
-            </button>
-          </div>
+          {/* Copy Page Link */}
+          <button
+            onClick={handleCopyLink}
+            className="w-full flex items-center justify-center gap-2 border border-slate-200 py-3 px-6 rounded-xl font-semibold hover:bg-slate-50 transition-colors text-slate-600 text-sm cursor-pointer"
+          >
+            {copied ? <Check size={18} className="text-emerald-500" /> : <Copy size={18} />}
+            {copied ? 'Card Web Link Copied!' : 'Copy Card Web Link'}
+          </button>
 
           {shareError && (
-            <p className="text-xs text-red-500 text-center font-medium mt-2">{shareError}</p>
+            <p className="text-xs text-orange-600 bg-orange-50 p-3 rounded-xl text-center font-medium">{shareError}</p>
           )}
 
-          {/* Instagram Tip */}
+          {/* Instagram / Social Tip */}
           <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-100 text-amber-900 text-xs leading-relaxed">
-            <strong>Tip for Instagram Status:</strong> Click <strong>Download Card</strong>, then open Instagram, swipe left to create a Story, choose the downloaded card from your gallery, and share!
+            <strong>Tip:</strong> Click <strong>Share Poster Image</strong> to post the picture directly to WhatsApp, Instagram Stories, or Telegram!
           </div>
 
         </div>

@@ -108,6 +108,31 @@ const awardsData = [
       'Dedicated client resolution within 24 hours',
       '99.4% annual client retention quotient'
     ]
+  },
+  {
+    id: 'half-year-awards',
+    icon: Award,
+    highlight: '2026',
+    subtext: 'Half-Year',
+    pill: 'Annual Honor',
+    title: 'Performance Awards',
+    description: 'Outstanding Team Awards',
+    tag: 'Verified & Recognized',
+    glow: 'rgba(249,115,22,0.2)',
+    colorClass: 'text-orange-600',
+    titleClass: 'text-[#0f2a4d]',
+    descClass: 'text-slate-500',
+    bulletClass: 'text-slate-600',
+    checkClass: 'text-orange-500',
+    pillClass: 'bg-orange-50 border-orange-100/50 text-[#FF8C00]',
+    bgGradient: 'from-orange-50/40 via-white to-white group-hover:from-orange-50 group-hover:via-white group-hover:to-orange-50',
+    borderColor: 'border-slate-200/60 group-hover:border-orange-500',
+    iconBg: 'bg-orange-500/10 text-orange-600',
+    bulletPoints: [
+      'Honoring Compliance, HR & Operations teams',
+      'Recognizing top regional leadership',
+      'Celebrating excellence across TSPL Group'
+    ]
   }
 ];
 
@@ -145,7 +170,7 @@ const AwardsSection = () => {
         </div>
 
         {/* Redesigned Card Layout */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {awardsData.map((award, index) => {
             const IconComponent = award.icon;
             return (

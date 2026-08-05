@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fetchNews, extractMediaUrl } from '../utils/strapi';
+import localNews from '../data/localNews';
 
 const MotionLink = motion(Link);
 
@@ -44,15 +45,16 @@ const NewsSection = () => {
   useEffect(() => {
     const loadNews = async () => {
       const data = await fetchNews();
-      if (data.length > 0) {
-        setNewsItems(data.map(item => ({
+      const combined = [...localNews, ...data];
+      if (combined.length > 0) {
+        setNewsItems(combined.map(item => ({
           id: item.documentId || item.id,
           date: item.date || new Date().toLocaleDateString(),
           tag: item.tag || 'News',
           title: item.title || '',
-          desc: item.description || '',
-          img: item.image ? extractMediaUrl(item.image) : fallbackNewsItems[0].img,
-        })));
+          desc: (item.description || item.desc || '').replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim(),
+          img: item.image ? extractMediaUrl(item.image) : (item.img || fallbackNewsItems[0].img),
+        })).slice(0, 6));
       }
     };
     loadNews();

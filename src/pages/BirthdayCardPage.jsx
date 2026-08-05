@@ -1,9 +1,52 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Cake, ArrowLeft, Sparkles } from 'lucide-react';
+import { Cake, ArrowLeft, Sparkles, Share2, PartyPopper, Heart, Send, Check, Copy } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { fetchSingleType, extractMediaUrl } from '../utils/strapi';
 
-// Upgraded Canvas Confetti Popper
+// Helper to convert an image URL (even cross-origin) to a File object for native sharing
+const fetchImageAsFile = async (url, fileName = 'birthday-poster.jpg') => {
+  try {
+    const response = await fetch(url, { mode: 'cors' });
+    if (response.ok) {
+      const blob = await response.blob();
+      return new File([blob], fileName, { type: blob.type || 'image/jpeg' });
+    }
+  } catch (err) {
+    console.warn('Direct fetch failed for image share, attempting canvas fallback:', err);
+  }
+
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth || img.width || 800;
+        canvas.height = img.naturalHeight || img.height || 1000;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(new File([blob], fileName, { type: 'image/jpeg' }));
+            } else {
+              reject(new Error('Canvas blob creation failed'));
+            }
+          },
+          'image/jpeg',
+          0.95
+        );
+      } catch (canvasErr) {
+        reject(canvasErr);
+      }
+    };
+    img.onerror = (imgErr) => reject(imgErr);
+    img.src = url;
+  });
+};
+
+// Canvas Confetti Popper
 const FullPageConfetti = ({ active, onClose }) => {
   const canvasRef = useRef(null);
 
@@ -23,28 +66,27 @@ const FullPageConfetti = ({ active, onClose }) => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    const colors = ['#f7d54b', '#ff6b6b', '#4dadf7', '#33d9b2', '#ff9f43', '#a55eea'];
+    const colors = ['#f7d54b', '#ff6b6b', '#4dadf7', '#33d9b2', '#ff9f43', '#a55eea', '#ff7675', '#fd79a8'];
     const particles = [];
-    const particleCount = 200;
+    const particleCount = 220;
 
-    // Spawn from bottom corners shooting up and inwards
     for (let i = 0; i < particleCount; i++) {
       const isLeft = i < particleCount / 2;
       const angle = isLeft 
-        ? (Math.random() * 45 + 30) * Math.PI / 180 
-        : (Math.random() * 45 + 105) * Math.PI / 180;
+        ? (Math.random() * 50 + 25) * Math.PI / 180 
+        : (Math.random() * 50 + 105) * Math.PI / 180;
       
-      const speed = Math.random() * 28 + 15;
+      const speed = Math.random() * 30 + 16;
 
       particles.push({
         x: isLeft ? 0 : canvas.width,
         y: canvas.height,
         vx: Math.cos(angle) * speed * (isLeft ? 1 : -1),
         vy: -Math.sin(angle) * speed,
-        r: Math.random() * 6 + 4,
+        r: Math.random() * 7 + 4,
         color: colors[Math.floor(Math.random() * colors.length)],
-        tilt: Math.random() * 12 - 6,
-        tiltAngleIncremental: Math.random() * 0.1 + 0.05,
+        tilt: Math.random() * 14 - 7,
+        tiltAngleIncremental: Math.random() * 0.12 + 0.05,
         tiltAngle: 0,
         opacity: 1,
       });
@@ -58,15 +100,15 @@ const FullPageConfetti = ({ active, onClose }) => {
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.45; // gravity
-        p.vx *= 0.98; // air resistance
+        p.vy += 0.42;
+        p.vx *= 0.98;
         p.vy *= 0.98;
 
         p.tiltAngle += p.tiltAngleIncremental;
-        p.tilt = Math.sin(p.tiltAngle) * 12;
+        p.tilt = Math.sin(p.tiltAngle) * 14;
 
-        if (p.vy > 0 && p.y > canvas.height * 0.4) {
-          p.opacity -= 0.012;
+        if (p.vy > 0 && p.y > canvas.height * 0.35) {
+          p.opacity -= 0.01;
         }
 
         if (p.opacity > 0 && p.y <= canvas.height && p.x >= 0 && p.x <= canvas.width) {
@@ -84,7 +126,7 @@ const FullPageConfetti = ({ active, onClose }) => {
       });
 
       framesElapsed++;
-      if (activeParticles === 0 || framesElapsed > 300) {
+      if (activeParticles === 0 || framesElapsed > 320) {
         cancelAnimationFrame(animationFrameId);
         onClose();
       } else {
@@ -110,7 +152,52 @@ const FullPageConfetti = ({ active, onClose }) => {
   );
 };
 
-// CSS Balloons Component
+// Floating Sparkles Particle Background
+const SparkleParticles = () => {
+  const [stars, setStars] = useState([]);
+
+  useEffect(() => {
+    const list = [];
+    for (let i = 0; i < 30; i++) {
+      list.push({
+        id: i,
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        size: Math.random() * 4 + 2,
+        duration: Math.random() * 3 + 2,
+        delay: Math.random() * 5,
+      });
+    }
+    setStars(list);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      {stars.map((s) => (
+        <motion.div
+          key={s.id}
+          initial={{ opacity: 0.1, scale: 0.8 }}
+          animate={{ opacity: [0.2, 0.9, 0.2], scale: [0.8, 1.4, 0.8] }}
+          transition={{
+            duration: s.duration,
+            repeat: Infinity,
+            delay: s.delay,
+            ease: 'easeInOut',
+          }}
+          className="absolute rounded-full bg-amber-300 shadow-[0_0_8px_#f7d54b]"
+          style={{
+            top: `${s.top}%`,
+            left: `${s.left}%`,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+// Floating Balloons Component
 const FloatingBalloons = () => {
   const [balloons, setBalloons] = useState([]);
 
@@ -120,11 +207,11 @@ const FloatingBalloons = () => {
     for (let i = 0; i < 22; i++) {
       list.push({
         id: i,
-        left: Math.random() * 95, // horizontal percentage position
+        left: Math.random() * 95,
         color: balloonColors[Math.floor(Math.random() * balloonColors.length)],
-        delay: Math.random() * 8, // staggered animation starts
-        speed: Math.random() * 6 + 10, // speed variations
-        size: Math.random() * 20 + 40, // width size
+        delay: Math.random() * 8,
+        speed: Math.random() * 6 + 10,
+        size: Math.random() * 20 + 40,
       });
     }
     setBalloons(list);
@@ -139,13 +226,13 @@ const FloatingBalloons = () => {
             opacity: 0;
           }
           10% {
-            opacity: 0.8;
+            opacity: 0.85;
           }
           90% {
-            opacity: 0.8;
+            opacity: 0.85;
           }
           100% {
-            transform: translateY(-15vh) translateX(15px) rotate(15deg);
+            transform: translateY(-15vh) translateX(20px) rotate(18deg);
             opacity: 0;
           }
         }
@@ -209,16 +296,54 @@ const BirthdayCardPage = () => {
 
   const [confettiActive, setConfettiActive] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isSharing, setIsSharing] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
 
-  // Trigger confetti popper
   const triggerPopper = () => {
     setConfettiActive(false);
     setTimeout(() => setConfettiActive(true), 50);
   };
 
+  // Share Poster Image directly
+  const handleSharePosterImage = async () => {
+    try {
+      setIsSharing(true);
+      const fileName = `${name.toLowerCase().replace(/\s+/g, '-')}-birthday-poster.jpg`;
+      const file = await fetchImageAsFile(image, fileName);
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: `Happy Birthday ${name}!`,
+          text: `Wishing a very Happy Birthday to ${name}! 🎂🎉`,
+        });
+      } else {
+        // Download image file as fallback
+        const url = window.URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.warn('Share poster failed:', err);
+      window.open(image, '_blank');
+    } finally {
+      setIsSharing(false);
+    }
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2200);
+  };
+
   useEffect(() => {
     const initData = async () => {
-      // 1. Try to read from query params
       const qName = searchParams.get('name');
       const qRole = searchParams.get('role');
       const qMsg = searchParams.get('msg');
@@ -232,7 +357,6 @@ const BirthdayCardPage = () => {
         setLoading(false);
         triggerPopper();
       } else {
-        // 2. Query Strapi active spotlight if no params
         try {
           const data = await fetchSingleType(
             '/api/news-events-page?populate[birthdaySpotlight][populate]=image'
@@ -261,100 +385,175 @@ const BirthdayCardPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0d1236] flex items-center justify-center text-white font-sans">
+      <div className="min-h-screen bg-[#070a24] flex items-center justify-center text-white font-sans">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-[#f7d54b] border-t-transparent rounded-full animate-spin" />
-          <p className="text-lg tracking-widest font-bold text-slate-300">Unwrapping Birthday Wishes...</p>
+          <div className="w-14 h-14 border-4 border-[#f7d54b] border-t-transparent rounded-full animate-spin shadow-[0_0_20px_#f7d54b]" />
+          <p className="text-xl tracking-wider font-bold text-amber-200 animate-pulse">Unwrapping Birthday Celebration...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-[#060920] flex items-center justify-center py-16 px-4 overflow-hidden font-sans select-none">
-      {/* Background visual texture overlays */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-blue-900/40 via-slate-950 to-black z-0 pointer-events-none" />
-      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-[#f7d54b]/5 rounded-full blur-[120px] pointer-events-none" />
+    <div className="relative min-h-screen bg-[#06081e] flex items-center justify-center py-12 px-4 overflow-hidden font-sans select-none">
+      {/* Dynamic Background Glows & Particles */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-indigo-950/60 via-[#070a24] to-black z-0 pointer-events-none" />
+      <div className="absolute top-[-10%] right-[-10%] w-[550px] h-[550px] bg-amber-500/15 rounded-full blur-[140px] pointer-events-none animate-pulse" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[550px] h-[550px] bg-indigo-600/20 rounded-full blur-[140px] pointer-events-none" />
 
-      {/* Floating Balloons overlay */}
+      {/* Floating Sparkles & Balloons */}
+      <SparkleParticles />
       <FloatingBalloons />
 
       {/* Canvas Popper */}
       <FullPageConfetti active={confettiActive} onClose={() => setConfettiActive(false)} />
 
       {/* Back Button */}
-      <button
+      <motion.button
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4 }}
         onClick={() => navigate('/news-events')}
-        className="absolute top-6 left-6 z-30 flex items-center gap-2 text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 py-2.5 px-5 rounded-xl transition-all cursor-pointer font-semibold shadow-md"
+        className="absolute top-6 left-6 z-30 flex items-center gap-2 text-slate-300 hover:text-white bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/15 py-2.5 px-5 rounded-2xl transition-all cursor-pointer font-semibold shadow-lg"
       >
         <ArrowLeft size={18} />
-        Back to TSPL
-      </button>
+        Back to News & Events
+      </motion.button>
 
-      {/* Main card wrapper */}
-      <div className="relative z-20 w-full max-w-5xl bg-slate-900/50 backdrop-blur-md rounded-3xl border border-white/10 shadow-[0_30px_70px_rgba(0,0,0,0.6)] overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-500">
-        
-        {/* Split Screen Grid */}
+      {/* Main Card Container */}
+      <motion.div
+        initial={{ opacity: 0, y: 40, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-20 w-full max-w-5xl bg-slate-900/60 backdrop-blur-xl rounded-3xl border border-amber-500/20 shadow-[0_30px_90px_rgba(0,0,0,0.8)] overflow-hidden"
+      >
+        {/* Top Celebration Ribbon Accent */}
+        <div className="h-1.5 w-full bg-gradient-to-r from-amber-400 via-rose-500 to-indigo-500" />
+
         <div className="flex flex-col lg:flex-row items-center justify-between">
           
           {/* Left Side: Greeting Details */}
-          <div className="flex-1 p-8 sm:p-12 lg:p-16 text-center lg:text-left flex flex-col items-center lg:items-start">
+          <div className="flex-1 p-8 sm:p-12 lg:p-14 text-center lg:text-left flex flex-col items-center lg:items-start">
             
-            {/* Animated Birthday badge */}
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f7d54b]/15 text-[#f7d54b] text-xs sm:text-sm font-bold uppercase tracking-wider mb-6 animate-pulse">
-              <Cake size={16} /> Happy Birthday
-            </span>
+            {/* Animated Birthday Pill Badge */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-extrabold uppercase tracking-widest mb-6 shadow-[0_0_15px_rgba(247,213,75,0.2)]"
+            >
+              <Cake size={16} className="text-amber-400 animate-bounce" />
+              TSPL Spotlight Celebration
+            </motion.div>
 
-            {/* Glowing Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-2 leading-none">
-              HAPPY
-            </h1>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#f7d54b] mb-6 leading-none drop-shadow-[0_2px_15px_rgba(247,213,75,0.2)]">
-              BIRTHDAY!
-            </h1>
+            {/* Glowing Main Titles */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-none">
+                HAPPY
+              </h1>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-orange-400 mb-4 leading-none drop-shadow-[0_4px_25px_rgba(247,213,75,0.3)]">
+                BIRTHDAY!
+              </h1>
+            </motion.div>
+
+            {/* Employee Name & Role Highlight Box */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="my-3 px-5 py-2.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md inline-block"
+            >
+              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-wide">{name}</h2>
+              <p className="text-xs sm:text-sm font-semibold text-amber-400 tracking-wider uppercase">{role}</p>
+            </motion.div>
 
             {/* Wishes Description */}
-            <p className="text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed mb-8">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="text-base sm:text-lg text-slate-300 leading-relaxed my-4 max-w-lg"
+            >
               {message}
-            </p>
+            </motion.p>
 
-            {/* Interaction Row */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 w-full">
+            {/* Interactive Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 w-full mt-4"
+            >
               <a
                 href={`mailto:?subject=Happy Birthday ${name}!&body=Dear ${name}, wishing you a very Happy Birthday!`}
-                className="w-full sm:w-auto text-center bg-[#f7d54b] text-[#0d1236] font-bold py-3.5 px-8 rounded-xl transition-all duration-300 hover:bg-white hover:text-[#0d1236] shadow-lg hover:shadow-[#f7d54b]/10 cursor-pointer text-sm sm:text-base text-black"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-[#0d1236] font-extrabold py-3.5 px-7 rounded-2xl transition-all duration-300 shadow-[0_4px_20px_rgba(247,213,75,0.3)] hover:scale-105 active:scale-95 cursor-pointer text-sm sm:text-base"
               >
-                Celebrate & Wish
+                <Send size={16} />
+                Send Wishes
               </a>
+
+              <button
+                onClick={handleSharePosterImage}
+                disabled={isSharing}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-bold py-3.5 px-7 rounded-2xl transition-all duration-300 shadow-lg hover:scale-105 active:scale-95 cursor-pointer text-sm sm:text-base disabled:opacity-70"
+              >
+                <Share2 size={16} />
+                {isSharing ? 'Preparing Image...' : 'Share Poster Image'}
+              </button>
+
               <button
                 onClick={triggerPopper}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/20 hover:border-white font-bold py-3.5 px-8 rounded-xl transition-all duration-300 cursor-pointer text-sm sm:text-base"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-amber-400/50 font-bold py-3.5 px-6 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer text-sm sm:text-base shadow-md"
               >
-                <Sparkles size={16} className="text-[#f7d54b] animate-bounce" />
-                Pop Confetti Again
+                <PartyPopper size={18} className="text-amber-300" />
+                Pop Confetti
               </button>
-            </div>
+
+              <button
+                onClick={handleCopyLink}
+                title={copiedLink ? "Link Copied!" : "Copy Page Link"}
+                className={`p-3.5 rounded-2xl border transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer text-sm ${
+                  copiedLink
+                    ? 'bg-emerald-500/20 border-emerald-400 text-emerald-300'
+                    : 'bg-white/5 border-white/15 text-slate-300 hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                {copiedLink ? <Check size={18} /> : <Copy size={18} />}
+              </button>
+            </motion.div>
 
           </div>
 
-          {/* Right Side: High Quality poster wrapper */}
-          <div className="flex-1 w-full p-8 lg:p-12 flex justify-center items-center bg-slate-950/20 lg:border-l border-white/5">
-            <div className="relative group max-w-[420px] sm:max-w-[460px] w-full">
-              {/* Outer soft glowing halo border */}
-              <div className="absolute -inset-1.5 bg-gradient-to-r from-[#f7d54b] to-indigo-500 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-500 pointer-events-none" />
+          {/* Right Side: Glowing Poster Display */}
+          <div className="flex-1 w-full p-6 sm:p-10 lg:p-12 flex justify-center items-center bg-slate-950/40 lg:border-l border-white/10">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, rotate: -1 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="relative group max-w-[420px] sm:max-w-[450px] w-full"
+            >
+              {/* Outer Glowing Halos */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-amber-400 via-rose-500 to-indigo-500 rounded-3xl blur-xl opacity-40 group-hover:opacity-80 transition duration-700 animate-pulse pointer-events-none" />
               
-              <img
-                src={image}
-                alt={`Birthday Card for ${name}`}
-                className="relative w-full h-auto rounded-xl shadow-2xl object-contain border border-white/10 hover:scale-[1.01] transition-transform duration-300"
-              />
-            </div>
+              <div className="relative overflow-hidden rounded-2xl border border-white/20 bg-slate-900 shadow-2xl">
+                <img
+                  src={image}
+                  alt={`Birthday Poster for ${name}`}
+                  className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+
+                {/* Subtle sheen highlight effect */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              </div>
+            </motion.div>
           </div>
 
         </div>
-
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -10,6 +10,7 @@ const loadJobBoard = () => import('../components/JobBoard');
 const loadCompanyMarquee = () => import('../components/CompanyMarquee');
 const loadStrengthsAccordion = () => import('../components/StrengthsAccordion');
 const loadWorkforceSection = () => import('../components/WorkforceSection');
+const loadAwardsSection = () => import('../components/AwardsSection');
 const loadNewsSection = () => import('../components/NewsSection');
 const loadFAQSection = () => import('../components/FAQSection');
 const loadFooter = () => import('../components/Footer');
@@ -19,6 +20,7 @@ const JobBoard = lazy(loadJobBoard);
 const CompanyMarquee = lazy(loadCompanyMarquee);
 const StrengthsAccordion = lazy(loadStrengthsAccordion);
 const WorkforceSection = lazy(loadWorkforceSection);
+const AwardsSection = lazy(loadAwardsSection);
 const NewsSection = lazy(loadNewsSection);
 const FAQSection = lazy(loadFAQSection);
 const Footer = lazy(loadFooter);
@@ -193,6 +195,7 @@ export default function HomePage() {
       }, 500);
 
       setTimeout(() => {
+        loadAwardsSection();
         loadNewsSection();
         loadTestimonials();
         loadFAQSection();
@@ -300,6 +303,12 @@ export default function HomePage() {
             </Suspense>
           </div>
         </div>
+      </DeferredSection>
+
+      <DeferredSection minHeight={420} tone="blue" placeholder={<SectionSkeleton rows={3} />}>
+        <Suspense fallback={<SectionSkeleton rows={3} />}>
+          <AwardsSection />
+        </Suspense>
       </DeferredSection>
 
       <DeferredSection minHeight={420} tone="orange" placeholder={<SectionSkeleton rows={3} />}>

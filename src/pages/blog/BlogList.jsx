@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar, Tag } from 'lucide-react';
+import { ArrowRight, Calendar, Tag, Share2, CheckCircle, Copy } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { client } from '../../utils/prismic';
@@ -8,6 +8,7 @@ import { client } from '../../utils/prismic';
 const BlogList = () => {
   const [documents, setDocuments] = useState(null);
   const [state, setState] = useState('loading');
+  const [copiedUid, setCopiedUid] = useState(null);
 
   useEffect(() => {
     const fetchDocs = async () => {
@@ -22,6 +23,31 @@ const BlogList = () => {
     };
     fetchDocs();
   }, []);
+
+  const handleShareCard = async (e, blogUid, blogTitle) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const blogUrl = `${window.location.origin}/blog/${blogUid}`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: blogTitle || 'TSPL Group Blog',
+          text: `Check out this article: ${blogTitle}`,
+          url: blogUrl,
+        });
+        return;
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+      }
+    }
+
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(blogUrl);
+      setCopiedUid(blogUid);
+      setTimeout(() => setCopiedUid(null), 2000);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
@@ -64,7 +90,8 @@ const BlogList = () => {
               {documents.map((blog) => {
                 const { title, excerpt, date, tag, image } = blog.data;
                 const dateStr = date ? new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown Date';
-                
+                const isCopied = copiedUid === blog.uid;
+
                 return (
                   <article key={blog.id} className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-sm transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-blue-900/5">
                     <Link to={`/blog/${blog.uid}`} className="relative h-60 overflow-hidden bg-slate-100">
@@ -82,9 +109,11 @@ const BlogList = () => {
                       )}
                     </Link>
                     <div className="flex flex-1 flex-col p-8">
-                      <div className="mb-4 flex items-center gap-2 text-sm text-slate-500">
-                        <Calendar size={14} className="text-[#006bb8]" />
-                        <span>{dateStr}</span>
+                      <div className="mb-4 flex items-center justify-between gap-2 text-sm text-slate-500">
+                        <div className="flex items-center gap-2">
+                          <Calendar size={14} className="text-[#006bb8]" />
+                          <span>{dateStr}</span>
+                        </div>
                       </div>
                       <h2 className="mb-3 text-xl font-bold leading-tight text-slate-900 transition-colors group-hover:text-[#006bb8]">
                         <Link to={`/blog/${blog.uid}`}>
@@ -94,9 +123,25 @@ const BlogList = () => {
                       <p className="mb-6 flex-1 text-slate-600 line-clamp-3">
                         {excerpt}
                       </p>
-                      <Link to={`/blog/${blog.uid}`} className="inline-flex w-fit items-center gap-2 font-bold text-[#006bb8] transition-colors hover:text-orange-500">
-                        Read Article <ArrowRight size={16} />
-                      </Link>
+                      
+                      <div className="mt-auto flex items-center justify-between pt-4 border-t border-slate-100">
+                        <Link to={`/blog/${blog.uid}`} className="inline-flex items-center gap-2 font-bold text-[#006bb8] transition-colors hover:text-orange-500">
+                          Read Article <ArrowRight size={16} />
+                        </Link>
+
+                        <button
+                          onClick={(e) => handleShareCard(e, blog.uid, title)}
+                          title={isCopied ? "Link Copied!" : "Share Article"}
+                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+                            isCopied
+                              ? 'bg-emerald-500 text-white shadow-sm'
+                              : 'bg-slate-100 text-slate-600 hover:bg-[#006bb8] hover:text-white'
+                          }`}
+                        >
+                          {isCopied ? <CheckCircle size={14} /> : <Share2 size={14} />}
+                          <span>{isCopied ? 'Copied!' : 'Share'}</span>
+                        </button>
+                      </div>
                     </div>
                   </article>
                 );
