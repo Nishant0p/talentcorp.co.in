@@ -968,64 +968,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
           </div>
 
-          {/* Upcoming Welcomes & Birthdays Grid */}
-          {((content.welcomeUpcoming && content.welcomeUpcoming.length > 0) || (content.birthdayUpcoming && content.birthdayUpcoming.length > 0)) && (
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Welcome to TSPL Column */}
-              {content.welcomeUpcoming && content.welcomeUpcoming.length > 0 && (
-                <div className="flex flex-col bg-slate-50/50 border border-slate-100/80 rounded-3xl p-6 sm:p-8">
-                  <div className="mb-6 flex items-center gap-3">
-                    <Sparkles className="h-6 w-6 text-orange-500" />
-                    <h3 className="text-xl font-bold text-[#006bb8]">Welcome to TSPL</h3>
-                  </div>
 
-                  <div className="flex flex-col gap-3">
-                    {content.welcomeUpcoming.map((person, idx) => (
-                      <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
-                        <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center font-bold text-sm shrink-0">
-                          {person.initial || String(person.name || 'W').substring(0, 2).toUpperCase()}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
-                          <p className="text-xs text-slate-500 truncate">{person.dept}</p>
-                        </div>
-                        <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
-                          Joined: {person.date}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* TSPL Birthdays Column */}
-              {content.birthdayUpcoming && content.birthdayUpcoming.length > 0 && (
-                <div className="flex flex-col bg-slate-50/50 border border-slate-100/80 rounded-3xl p-6 sm:p-8">
-                  <div className="mb-6 flex items-center gap-3">
-                    <Cake className="h-6 w-6 text-orange-500" />
-                    <h3 className="text-xl font-bold text-[#006bb8]">Upcoming Birthdays</h3>
-                  </div>
-
-                  <div className="flex flex-col gap-3">
-                    {content.birthdayUpcoming.map((person, idx) => (
-                      <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:scale-[1.01] transition-transform duration-200">
-                        <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">
-                          {person.initial || String(person.name || 'B').substring(0, 2).toUpperCase()}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-bold text-slate-900 text-sm truncate">{person.name}</h4>
-                          <p className="text-xs text-slate-500 truncate">{person.dept}</p>
-                        </div>
-                        <div className="text-right text-xs font-semibold text-slate-400 shrink-0">
-                          Birthday: {person.date}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
         </motion.section>
       )}
 
