@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, Sparkles, Tag, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { fetchNews, extractMediaUrl } from '../utils/strapi';
 import localNews from '../data/localNews';
+
+const MotionLink = motion(Link);
 
 export default function NewsSection() {
   const [newsItems, setNewsItems] = useState([]);
@@ -15,21 +18,40 @@ export default function NewsSection() {
     const loadNewsData = async () => {
       try {
         const fetched = await fetchNews();
-        const data = fetched && fetched.length > 0 ? fetched : localNews;
-        
+        const rawData = fetched && fetched.length > 0 ? fetched : localNews;
+
         if (!isMounted) return;
 
-        // Filter news and events separately (up to 3 items each)
-        const news = data.filter((item) => !item.tag || item.tag === 'News' || item.tag === 'Updates' || item.tag === 'Partnerships');
-        const events = data.filter((item) => item.tag === 'Events' || item.tag === 'Event');
+        const formatted = rawData.map((item) => ({
+          id: item.documentId || item.id,
+          documentId: item.documentId || item.id,
+          date: item.date ? (isNaN(new Date(item.date).getTime()) ? item.date : new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })) : 'Latest',
+          tag: item.tag || 'News',
+          title: item.title || '',
+          desc: item.description ? item.description.replace(/<[^>]+>/g, '').trim() : item.desc || '',
+          img: item.image ? extractMediaUrl(item.image) : (item.img || 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80'),
+        }));
 
-        setNewsItems(news.slice(0, 3));
-        setEventItems(events.slice(0, 3));
+        const news = formatted.filter((item) => !item.tag || item.tag === 'News' || item.tag === 'Updates' || item.tag === 'Partnerships');
+        const events = formatted.filter((item) => item.tag === 'Events' || item.tag === 'Event');
+
+        setNewsItems(news.length > 0 ? news.slice(0, 3) : formatted.slice(0, 3));
+        setEventItems(events.length > 0 ? events.slice(0, 3) : formatted.slice(0, 3));
       } catch (err) {
         console.warn('Failed to load news for home page section, using fallback:', err);
         if (isMounted) {
-          const news = localNews.filter((item) => !item.tag || item.tag === 'News' || item.tag === 'Updates');
-          const events = localNews.filter((item) => item.tag === 'Events' || item.tag === 'Event');
+          const formatted = localNews.map((item) => ({
+            id: item.documentId || item.id,
+            documentId: item.documentId || item.id,
+            date: item.date ? new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Latest',
+            tag: item.tag || 'News',
+            title: item.title || '',
+            desc: item.description ? item.description.replace(/<[^>]+>/g, '').trim() : '',
+            img: item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+          }));
+
+          const news = formatted.filter((item) => !item.tag || item.tag === 'News' || item.tag === 'Updates');
+          const events = formatted.filter((item) => item.tag === 'Events' || item.tag === 'Event');
           setNewsItems(news.slice(0, 3));
           setEventItems(events.slice(0, 3));
         }
@@ -48,129 +70,176 @@ export default function NewsSection() {
   const displayedItems = activeTab === 'news' ? newsItems : eventItems;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-xs font-bold uppercase tracking-wider mb-3">
-            <Sparkles size={14} /> Highlights &amp; Updates
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
-            Latest <span className="text-[#006bb8]">News &amp; Events</span>
-          </h2>
-          <p className="mt-2 text-base text-slate-600 max-w-xl">
-            Stay informed with our latest corporate announcements, industry partnerships, and upcoming events.
-          </p>
-        </div>
-
-        {/* Tab Switcher & View All Controls */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="bg-slate-100 p-1 rounded-2xl flex items-center border border-slate-200">
-            <button
-              onClick={() => setActiveTab('news')}
-              className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer ${
-                activeTab === 'news'
-                  ? 'bg-white text-[#006bb8] shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              Latest News ({newsItems.length})
-            </button>
-            <button
-              onClick={() => setActiveTab('events')}
-              className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer ${
-                activeTab === 'events'
-                  ? 'bg-white text-[#006bb8] shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              Upcoming Events ({eventItems.length})
-            </button>
-          </div>
-
-          <Link
-            to={activeTab === 'news' ? '/all-news' : '/all-events'}
-            className="inline-flex items-center gap-2 bg-[#006bb8] hover:bg-[#005596] text-white font-bold px-5 py-3 rounded-xl transition-all shadow-md text-sm hover:translate-x-0.5 cursor-pointer"
-          >
-            {activeTab === 'news' ? 'View All News' : 'View All Events'}
-            <ArrowRight size={16} />
-          </Link>
-        </div>
+    <section id="news-events" className="relative overflow-hidden bg-white py-12 md:py-20">
+      {/* Background Ornaments */}
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-40">
+        <div className="absolute -left-20 top-20 h-72 w-72 rounded-full bg-orange-200/40 blur-3xl" />
+        <div className="absolute -right-16 bottom-12 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl" />
       </div>
 
-      {/* Cards Grid */}
-      {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="h-96 rounded-3xl bg-slate-100 animate-pulse" />
-          ))}
-        </div>
-      ) : displayedItems.length === 0 ? (
-        <div className="rounded-3xl border border-slate-200 bg-white p-12 text-center">
-          <p className="text-slate-500 font-medium">No items available currently.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {displayedItems.map((item, idx) => {
-            const mediaUrl = item.image ? extractMediaUrl(item.image) : '';
-            const detailId = item.documentId || item.id;
+      <div
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          backgroundImage:
+            'linear-gradient(135deg, rgba(255,140,0,0.05) 0%, rgba(47,128,255,0.06) 100%), repeating-linear-gradient(90deg, rgba(255,140,0,0.015) 0px, rgba(255,140,0,0.015) 1px, transparent 1px, transparent 24px)',
+        }}
+      />
 
-            return (
-              <article
-                key={item.id || item.documentId || idx}
-                className="group flex flex-col bg-white rounded-3xl border border-slate-100 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden hover:-translate-y-1"
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <motion.div
+          className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          <div className="max-w-2xl">
+            <motion.span
+              className="inline-flex items-center gap-2 rounded-full bg-orange-50 border border-orange-200/60 px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest text-orange-600 shadow-sm"
+              initial={{ scale: 0.85, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <Sparkles size={14} className="text-orange-500 animate-pulse" />
+              Highlights &amp; Corporate Updates
+            </motion.span>
+            <motion.h2
+              className="mt-4 text-3xl font-black text-slate-900 sm:text-4xl lg:text-5xl tracking-tight"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              Latest <span className="text-orange-500">News &amp; Events</span>
+            </motion.h2>
+            <motion.p
+              className="mt-3 text-base md:text-lg text-slate-600 max-w-xl"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+            >
+              Stay informed with our latest corporate announcements, industry partnerships, and placement milestones.
+            </motion.p>
+          </div>
+
+          {/* Controls: Tab Switcher & View All Link */}
+          <motion.div
+            className="flex flex-wrap items-center gap-3"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <div className="bg-slate-100/90 p-1.5 rounded-2xl flex items-center border border-slate-200 shadow-inner">
+              <button
+                type="button"
+                onClick={() => setActiveTab('news')}
+                className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer ${activeTab === 'news'
+                  ? 'bg-white text-orange-600 shadow-md ring-1 ring-orange-200/50'
+                  : 'text-slate-600 hover:text-slate-900'
+                  }`}
               >
-                {/* Image Container */}
-                <div className="relative h-52 overflow-hidden bg-slate-100">
-                  {mediaUrl ? (
+                Latest News ({newsItems.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('events')}
+                className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer ${activeTab === 'events'
+                  ? 'bg-white text-orange-600 shadow-md ring-1 ring-orange-200/50'
+                  : 'text-slate-600 hover:text-slate-900'
+                  }`}
+              >
+                Upcoming Events ({eventItems.length})
+              </button>
+            </div>
+
+            <MotionLink
+              to="/news-events"
+              className="group inline-flex items-center gap-2 rounded-xl border border-orange-300 bg-white px-5 py-3 font-bold text-orange-500 shadow-sm transition-all hover:border-orange-500 hover:bg-orange-500 hover:text-white whitespace-nowrap"
+              whileHover={{ x: 3 }}
+            >
+              View All <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+            </MotionLink>
+          </motion.div>
+        </motion.div>
+
+        {/* Content Cards Grid */}
+        {loading ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-96 rounded-3xl bg-slate-100 animate-pulse border border-slate-200/60" />
+            ))}
+          </div>
+        ) : displayedItems.length === 0 ? (
+          <div className="rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+            <p className="text-slate-500 font-medium">No updates available in this section currently.</p>
+          </div>
+        ) : (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35 }}
+              className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {displayedItems.map((item, i) => (
+                <MotionLink
+                  to={item.documentId ? `/news-events/${item.documentId}` : '/news-events'}
+                  key={item.documentId || item.id || i}
+                  initial={{ opacity: 0, y: 25, scale: 0.96 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: i * 0.08, ease: 'easeOut' }}
+                  whileHover={{ y: -6 }}
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-200"
+                >
+                  {/* Card Image */}
+                  <div className="relative h-48 md:h-56 overflow-hidden bg-slate-100">
                     <img
-                      src={mediaUrl}
+                      src={item.img}
                       alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"
                     />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-blue-900 to-indigo-950 flex items-center justify-center p-6 text-white text-center font-bold">
-                      TSPL {item.tag || 'News'}
+                    <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-[11px] font-extrabold text-slate-800 backdrop-blur-md shadow-sm">
+                      <Tag size={12} className="text-orange-500" />
+                      {item.tag}
                     </div>
-                  )}
+                  </div>
 
-                  {/* Tag Pill */}
-                  <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-slate-800 text-xs font-extrabold shadow-sm">
-                    <Tag size={12} className="text-orange-500" />
-                    {item.tag || (activeTab === 'news' ? 'News' : 'Event')}
-                  </span>
-                </div>
-
-                {/* Content */}
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    {item.date && (
-                      <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 mb-3">
-                        <Calendar size={14} className="text-orange-500" />
+                  {/* Card Content Body */}
+                  <div className="flex flex-1 flex-col p-6 md:p-7 justify-between">
+                    <div>
+                      <div className="mb-3 flex items-center gap-2 text-xs font-bold text-orange-500">
+                        <Calendar size={15} />
                         <span>{item.date}</span>
                       </div>
-                    )}
-                    <h3 className="text-lg font-bold text-slate-900 line-clamp-2 leading-snug group-hover:text-[#006bb8] transition-colors">
-                      {item.title}
-                    </h3>
-                  </div>
+                      <h3 className="mb-3 text-lg md:text-xl font-bold text-slate-900 transition-colors group-hover:text-orange-600 line-clamp-2 leading-snug">
+                        {item.title}
+                      </h3>
+                      <p className="leading-relaxed text-slate-500 text-sm line-clamp-3">
+                        {item.desc}
+                      </p>
+                    </div>
 
-                  <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                    <Link
-                      to={`/news-events/${detailId}`}
-                      className="inline-flex items-center gap-1 text-sm font-bold text-[#006bb8] hover:text-orange-500 transition-colors"
-                    >
-                      Read Full Story
-                      <ChevronRight size={16} />
-                    </Link>
+                    <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1 text-sm font-bold text-orange-500 group-hover:text-orange-600 transition-colors">
+                        Read Full Story
+                        <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      )}
-    </div>
+                </MotionLink>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        )}
+      </div>
+    </section>
   );
 }
