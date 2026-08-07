@@ -483,6 +483,17 @@ const NewsEventsPage = ({ prismicData = null }) => {
       };
     });
   }, [latestNews]);
+
+  const realSpotlightCards = useMemo(() => {
+    const list = latestNews && latestNews.length > 0 ? latestNews : localNews;
+    return list.slice(0, 3).map((item) => ({
+      category: item.tag || item.category || 'News',
+      title: item.title,
+      date: item.date || 'Recent',
+      img: item.image ? extractMediaUrl(item.image) : 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_05_17_at_21_29_50_a23ccb68f7.jpeg',
+      readMoreUrl: `/news-events/${item.documentId || item.id}`,
+    }));
+  }, [latestNews]);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroParallaxRef,
@@ -743,30 +754,35 @@ const NewsEventsPage = ({ prismicData = null }) => {
           </motion.article>
 
           <div className="lg:col-span-4 flex flex-col gap-4 sm:gap-6">
-            {content.spotlightCards.map((news, index) => (
-              <motion.article
-                key={news.title}
-                className="group flex gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.55, ease: 'easeOut', delay: index * 0.08 }}
+            {(realSpotlightCards.length > 0 ? realSpotlightCards : content.spotlightCards).map((news, index) => (
+              <Link
+                key={news.title || index}
+                to={news.readMoreUrl || '/news-events'}
+                className="block group"
               >
-                <img
-                  src={news.img}
-                  alt={news.title}
-                  className="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl object-cover shrink-0"
-                />
-                <div className="flex flex-col justify-center">
-                  <span className="mb-1 text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">
-                    {news.category}
-                  </span>
-                  <h4 className="mb-2 text-sm font-semibold leading-snug text-[#006bb8] transition-colors group-hover:text-orange-500 font-sans">
-                    {news.title}
-                  </h4>
-                  <p className="text-xs text-slate-400">{news.date}</p>
-                </div>
-              </motion.article>
+                <motion.article
+                  className="flex gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md cursor-pointer"
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.55, ease: 'easeOut', delay: index * 0.08 }}
+                >
+                  <img
+                    src={news.img}
+                    alt={news.title}
+                    className="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl object-cover shrink-0"
+                  />
+                  <div className="flex flex-col justify-center min-w-0">
+                    <span className="mb-1 text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">
+                      {news.category}
+                    </span>
+                    <h4 className="mb-2 text-sm font-semibold leading-snug text-[#006bb8] transition-colors group-hover:text-orange-500 font-sans line-clamp-2">
+                      {news.title}
+                    </h4>
+                    <p className="text-xs text-slate-400">{news.date}</p>
+                  </div>
+                </motion.article>
+              </Link>
             ))}
           </div>
         </div>
