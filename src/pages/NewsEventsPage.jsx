@@ -57,97 +57,97 @@ const defaultNewsEventsContent = {
     },
   ],
   allUpdates: [
-  {
-    type: 'news',
-    category: 'News',
-    title: "Poster Trailer of Dr. Mahiboob Sayyad's Third Book 'Apprenticeship Act 1961' Launched in Goa",
-    date: 'April 5, 2026',
-    image: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_05_17_at_21_29_50_a23ccb68f7.jpeg',
-  },
-  {
-    type: 'news',
-    category: 'Events',
-    title: 'Annual Skill Summit 2026 Draws 5000+ Participants in Pune',
-    date: 'February 28, 2026',
-    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400',
-  },
-  {
-    type: 'quote',
-    text: '“Empowering 1 Million Youth by 2027 — Our Mission Continues”',
-    bgColor: 'bg-[#006bb8]',
-  },
-  {
-    type: 'news',
-    category: 'Partnerships',
-    title: 'TSPL Partners with Leading IT Companies for Campus Placements',
-    date: 'February 20, 2026',
-    image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=400',
-  },
-  {
-    type: 'news',
-    category: 'Nature',
-    title: 'Expanding our green initiative footprint across rural sectors',
-    date: 'February 15, 2026',
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=400',
-  },
-  {
-    type: 'quote',
-    text: '“World Book of Records holder with 40,000+ trainees and 450+ clients served”',
-    bgColor: 'bg-orange-500',
-  },
-  {
-    type: 'news',
-    category: 'Milestones',
-    title: 'Strategic growth vision for the upcoming fiscal year',
-    date: 'February 10, 2026',
-    image: 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&q=80&w=400',
-  },
+    {
+      type: 'news',
+      category: 'News',
+      title: "Poster Trailer of Dr. Mahiboob Sayyad's Third Book 'Apprenticeship Act 1961' Launched in Goa",
+      date: 'April 5, 2026',
+      image: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_05_17_at_21_29_50_a23ccb68f7.jpeg',
+    },
+    {
+      type: 'news',
+      category: 'Events',
+      title: 'Annual Skill Summit 2026 Draws 5000+ Participants in Pune',
+      date: 'February 28, 2026',
+      image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400',
+    },
+    {
+      type: 'quote',
+      text: '“Empowering 1 Million Youth by 2027 — Our Mission Continues”',
+      bgColor: 'bg-[#006bb8]',
+    },
+    {
+      type: 'news',
+      category: 'Partnerships',
+      title: 'TSPL Partners with Leading IT Companies for Campus Placements',
+      date: 'February 20, 2026',
+      image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=400',
+    },
+    {
+      type: 'news',
+      category: 'Nature',
+      title: 'Expanding our green initiative footprint across rural sectors',
+      date: 'February 15, 2026',
+      image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=400',
+    },
+    {
+      type: 'quote',
+      text: '“World Book of Records holder with 40,000+ trainees and 450+ clients served”',
+      bgColor: 'bg-orange-500',
+    },
+    {
+      type: 'news',
+      category: 'Milestones',
+      title: 'Strategic growth vision for the upcoming fiscal year',
+      date: 'February 10, 2026',
+      image: 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&q=80&w=400',
+    },
   ],
   upcomingEvents: [
-  {
-    date: '15',
-    month: 'APR',
-    title: 'National Skill Development Conference 2026',
-    loc: 'Pune Convention Center',
-  },
-  {
-    date: '22',
-    month: 'APR',
-    title: 'Campus Recruitment Drive - Engineering College',
-    loc: 'Multiple Locations, Maharashtra',
-  },
-  {
-    date: '01',
-    month: 'MAY',
-    title: 'Women Empowerment Workshop Series',
-    loc: 'Mumbai Training Center',
-  },
+    {
+      date: '15',
+      month: 'APR',
+      title: 'National Skill Development Conference 2026',
+      loc: 'Pune Convention Center',
+    },
+    {
+      date: '22',
+      month: 'APR',
+      title: 'Campus Recruitment Drive - Engineering College',
+      loc: 'Multiple Locations, Maharashtra',
+    },
+    {
+      date: '01',
+      month: 'MAY',
+      title: 'Women Empowerment Workshop Series',
+      loc: 'Mumbai Training Center',
+    },
   ],
   pastEvents: [
-  {
-    date: '21',
-    month: 'JUN',
-    title: 'Half-Year Outstanding Performance Awards 2026',
-    loc: 'TSPL GROUP Head Office, Chakan',
-  },
-  {
-    date: '10',
-    month: 'MAR',
-    title: 'Industry-Academia Conclave 2026',
-    loc: 'Hyderabad',
-  },
-  {
-    date: '25',
-    month: 'FEB',
-    title: 'Skill India Mission Partnership Summit',
-    loc: 'New Delhi',
-  },
-  {
-    date: '14',
-    month: 'FEB',
-    title: 'Annual Employee Awards Ceremony',
-    loc: 'Pune Headquarters',
-  },
+    {
+      date: '21',
+      month: 'JUN',
+      title: 'Half-Year Outstanding Performance Awards 2026',
+      loc: 'TSPL GROUP Head Office, Chakan',
+    },
+    {
+      date: '10',
+      month: 'MAR',
+      title: 'Industry-Academia Conclave 2026',
+      loc: 'Hyderabad',
+    },
+    {
+      date: '25',
+      month: 'FEB',
+      title: 'Skill India Mission Partnership Summit',
+      loc: 'New Delhi',
+    },
+    {
+      date: '14',
+      month: 'FEB',
+      title: 'Annual Employee Awards Ceremony',
+      loc: 'Pune Headquarters',
+    },
   ],
   birthdayUpcoming: [
     { name: 'Priya Sharma', dept: 'Operations', date: 'Oct 12', initial: 'PS' },
@@ -179,24 +179,24 @@ const defaultNewsEventsContent = {
     'NDTV',
   ],
   inTheNewsArticles: [
-  {
-    quote:
-      "TSPL Group has emerged as a game-changer in India's skilling ecosystem, bridging the gap between education and employment.",
-    source: 'Economic Times',
-    date: 'March 2026',
-  },
-  {
-    quote:
-      'With innovative training methodologies and industry partnerships, TSPL is setting new benchmarks in workforce development.',
-    source: 'Business Standard',
-    date: 'February 2026',
-  },
-  {
-    quote:
-      "The company's commitment to rural skilling initiatives is transforming lives across India's heartland.",
-    source: 'India Today',
-    date: 'January 2026',
-  },
+    {
+      quote:
+        "TSPL Group has emerged as a game-changer in India's skilling ecosystem, bridging the gap between education and employment.",
+      source: 'Economic Times',
+      date: 'March 2026',
+    },
+    {
+      quote:
+        'With innovative training methodologies and industry partnerships, TSPL is setting new benchmarks in workforce development.',
+      source: 'Business Standard',
+      date: 'February 2026',
+    },
+    {
+      quote:
+        "The company's commitment to rural skilling initiatives is transforming lives across India's heartland.",
+      source: 'India Today',
+      date: 'January 2026',
+    },
   ],
 };
 const quickAccessTargets = {
@@ -233,10 +233,10 @@ const ConfettiEffect = ({ active, onClose }) => {
     for (let i = 0; i < particleCount; i++) {
       const isLeft = i < particleCount / 2;
       // Angle: shooting inwards and upwards (35 to 75 deg on left, 105 to 145 deg on right)
-      const angle = isLeft 
-        ? (Math.random() * 40 + 35) * Math.PI / 180 
+      const angle = isLeft
+        ? (Math.random() * 40 + 35) * Math.PI / 180
         : (Math.random() * 40 + 105) * Math.PI / 180;
-      
+
       const speed = Math.random() * 22 + 13;
 
       particles.push({
@@ -356,187 +356,7 @@ const fetchImageAsFile = async (url, fileName = 'birthday-poster.jpg') => {
   });
 };
 
-// ShareModal Component
-const ShareModal = ({ isOpen, onClose, birthdayName, birthdayRole, birthdayMessage, imageUrl }) => {
-  const [copied, setCopied] = useState(false);
-  const [sharing, setSharing] = useState(false);
-  const [shareError, setShareError] = useState('');
 
-  if (!isOpen) return null;
-
-  const cardUrl = `${window.location.origin}/birthday-card?name=${encodeURIComponent(birthdayName)}&role=${encodeURIComponent(birthdayRole)}&image=${encodeURIComponent(imageUrl)}&msg=${encodeURIComponent(birthdayMessage)}`;
-  const shareText = `Wishing a very Happy Birthday to our amazing colleague, ${birthdayName}! 🎂🎉 Check out the celebrations at TSPL:`;
-
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(cardUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy link', err);
-    }
-  };
-
-  const handleDownload = async () => {
-    try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${birthdayName.replace(/\s+/g, '_')}_Birthday_Poster.jpg`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.warn('Direct download failed, opening in new tab instead:', err);
-      window.open(imageUrl, '_blank');
-    }
-  };
-
-  const handleShareImageFile = async () => {
-    setSharing(true);
-    setShareError('');
-    try {
-      const fileName = `${birthdayName.toLowerCase().replace(/\s+/g, '-')}-birthday-poster.jpg`;
-      const file = await fetchImageAsFile(imageUrl, fileName);
-
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: `Happy Birthday ${birthdayName}!`,
-          text: `Wishing a very Happy Birthday to ${birthdayName}! 🎂🎉`,
-        });
-      } else {
-        // Fallback for desktop browsers without file share API: Download image file directly
-        const url = window.URL.createObjectURL(file);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-        setShareError('Poster image downloaded! Attach the image file in your chat or status update.');
-      }
-    } catch (err) {
-      console.warn('Share image failed:', err);
-      if (err.name !== 'AbortError') {
-        handleDownload();
-        setShareError('Poster image downloaded to your device!');
-      }
-    } finally {
-      setSharing(false);
-    }
-  };
-
-  const handleWhatsAppShare = async () => {
-    setSharing(true);
-    setShareError('');
-    try {
-      const fileName = `${birthdayName.toLowerCase().replace(/\s+/g, '-')}-birthday-poster.jpg`;
-      const file = await fetchImageAsFile(imageUrl, fileName);
-
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: `Happy Birthday ${birthdayName}!`,
-          text: `Wishing a very Happy Birthday to ${birthdayName}! 🎂🎉`,
-        });
-        setSharing(false);
-        return;
-      }
-    } catch (err) {
-      console.warn('Native WhatsApp file share unavailable:', err);
-    }
-
-    // On Desktop browsers where navigator.canShare with files is unsupported:
-    // Download the poster image directly so user has the image, and open WhatsApp Web with caption!
-    handleDownload();
-    const text = encodeURIComponent(`Wishing a very Happy Birthday to our amazing colleague, ${birthdayName}! 🎂🎉`);
-    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
-    setShareError('Poster image downloaded! Attach the downloaded poster image in WhatsApp chat.');
-    setSharing(false);
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-100 text-slate-800 animate-in fade-in zoom-in-95 duration-200">
-        
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-slate-100">
-          <h3 className="text-xl font-bold text-[#0d1236]">Share Birthday Poster</h3>
-          <button onClick={onClose} className="p-1 rounded-full hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600">
-            <X size={20} />
-          </button>
-        </div>
-
-        {/* Content */}
-        <div className="p-6 space-y-6">
-          <p className="text-sm text-slate-500">
-            Share this birthday poster image directly with your friends or post it to your WhatsApp status &amp; Instagram stories!
-          </p>
-
-          {/* Main Share Poster Button */}
-          <button
-            onClick={handleShareImageFile}
-            disabled={sharing}
-            className="w-full flex items-center justify-center gap-2 bg-orange-500 text-white py-3.5 px-6 rounded-xl font-bold hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/20 cursor-pointer text-base"
-          >
-            <Share2 size={18} />
-            {sharing ? 'Preparing Poster Image...' : 'Share Poster Image'}
-          </button>
-
-          {/* Quick share options */}
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              onClick={handleWhatsAppShare}
-              className="flex flex-col items-center justify-center p-4 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors gap-2 cursor-pointer"
-            >
-              <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                  <path d="M17.472 14.382c-.022-.08-.5-1.161-1.026-1.424-.526-.263-1.09-.343-1.36-.08l-.44.44a.48.48 0 0 1-.59.08c-.76-.36-1.72-1.2-2.18-2.18a.48.48 0 0 1 .08-.59l.44-.44c.263-.27.183-.834-.08-1.36-.263-.526-1.344-1.004-1.424-1.026-.24-.066-.46-.022-.62.08-.22.14-.32.44-.32.76a2.43 2.43 0 0 0 .52 1.48c.52.76 1.4 1.84 2.47 2.47a3.02 3.02 0 0 0 1.47.52c.32 0 .62-.1.76-.32.102-.16.146-.38.08-.62zM12 2a10 10 0 0 0-7.07 17.07l-1.37 4.09 4.2-.13A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.19-1.19l-.3-.17-2.48.08.76-2.27-.19-.3A8 8 0 1 1 12 20z" />
-                </svg>
-              </div>
-              <span className="text-xs font-bold text-slate-700">WhatsApp Image</span>
-            </button>
-
-            <button
-              onClick={handleDownload}
-              className="flex flex-col items-center justify-center p-4 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors gap-2 cursor-pointer"
-            >
-              <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                <Download size={24} />
-              </div>
-              <span className="text-xs font-bold text-slate-700">Download Poster</span>
-            </button>
-          </div>
-
-          {/* Copy Page Link */}
-          <button
-            onClick={handleCopyLink}
-            className="w-full flex items-center justify-center gap-2 border border-slate-200 py-3 px-6 rounded-xl font-semibold hover:bg-slate-50 transition-colors text-slate-600 text-sm cursor-pointer"
-          >
-            {copied ? <Check size={18} className="text-emerald-500" /> : <Copy size={18} />}
-            {copied ? 'Card Web Link Copied!' : 'Copy Card Web Link'}
-          </button>
-
-          {shareError && (
-            <p className="text-xs text-orange-600 bg-orange-50 p-3 rounded-xl text-center font-medium">{shareError}</p>
-          )}
-
-          {/* Instagram / Social Tip */}
-          <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-100 text-amber-900 text-xs leading-relaxed">
-            <strong>Tip:</strong> Click <strong>Share Poster Image</strong> to post the picture directly to WhatsApp, Instagram Stories, or Telegram!
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  );
-};
 
 const resolveNewsEventsContent = (prismicData) => {
   if (!prismicData) return defaultNewsEventsContent;
@@ -582,6 +402,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
   const [pageData, setPageData] = useState(null);
   const content = useMemo(() => resolveNewsEventsContent(pageData || prismicData), [pageData, prismicData]);
   const [latestNews, setLatestNews] = useState([]);
+  const [showAllNews, setShowAllNews] = useState(false);
   const [confettiActive, setConfettiActive] = useState(false);
   const [hasTriggeredConfetti, setHasTriggeredConfetti] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
@@ -619,8 +440,16 @@ const NewsEventsPage = ({ prismicData = null }) => {
       observer.disconnect();
     };
   }, [hasTriggeredConfetti, content.birthdaySpotlight]);
-  const newsAndUpdatesItems = useMemo(() => latestNews.filter((item) => item.tag === 'News' || item.tag === 'Updates'), [latestNews]);
-  const eventItems = useMemo(() => latestNews.filter((item) => item.tag === 'Event'), [latestNews]);
+
+  const newsAndUpdatesItems = useMemo(
+    () => latestNews.filter((item) => !item.tag || item.tag === 'News' || item.tag === 'Updates'),
+    [latestNews]
+  );
+  const displayedNewsItems = useMemo(
+    () => (showAllNews ? newsAndUpdatesItems : newsAndUpdatesItems.slice(0, 3)),
+    [newsAndUpdatesItems, showAllNews]
+  );
+  const eventItems = useMemo(() => latestNews.filter((item) => item.tag === 'Events' || item.tag === 'Event'), [latestNews]);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroParallaxRef,
@@ -636,7 +465,17 @@ const NewsEventsPage = ({ prismicData = null }) => {
   useEffect(() => {
     const loadLatestNews = async () => {
       const items = await fetchNews();
-      setLatestNews([...localNews, ...items].slice(0, 6));
+      const combined = items && items.length > 0 ? items : localNews;
+      const uniqueNews = [];
+      const seenTitles = new Set();
+      combined.forEach((item) => {
+        const itemTitle = (item.title || '').trim().toLowerCase();
+        if (itemTitle && !seenTitles.has(itemTitle)) {
+          seenTitles.add(itemTitle);
+          uniqueNews.push(item);
+        }
+      });
+      setLatestNews(uniqueNews);
     };
 
     loadLatestNews();
@@ -780,26 +619,38 @@ const NewsEventsPage = ({ prismicData = null }) => {
       {newsAndUpdatesItems.length > 0 && (
         <section className="mx-auto mt-14 max-w-7xl">
           <div className="mb-8 flex items-center justify-between gap-4">
-            <h2 className="text-3xl font-bold text-[#006bb8]">Latest News</h2>
-            <Link to="/news-events" className="text-sm font-semibold text-orange-500 hover:text-orange-600">
-              View all
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-1.5 rounded-full bg-orange-500" />
+              <h2 className="text-3xl font-bold text-[#006bb8]">Latest News</h2>
+            </div>
+            <Link
+              to="/all-news"
+              className="group inline-flex items-center gap-2 rounded-xl border border-orange-500 bg-orange-50 px-4 py-2 text-sm font-bold text-orange-600 transition-all hover:bg-orange-500 hover:text-white shadow-sm cursor-pointer"
+            >
+              View More News <ArrowRight size={16} />
             </Link>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {newsAndUpdatesItems.map((item) => {
+            {newsAndUpdatesItems.slice(0, 3).map((item) => {
               const itemId = item.documentId || item.id;
               return (
-                <Link key={itemId} to={`/news-events/${itemId}`} className="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
-                  <img
-                    src={item.image ? extractMediaUrl(item.image) : content.hero.featureImage}
-                    alt={item.title || 'News image'}
-                    className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="p-5">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'News'}</p>
-                    <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900">{item.title}</h3>
-                    <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
+                <Link
+                  key={itemId || item.title}
+                  to={`/news-events/${itemId}`}
+                  className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+                >
+                  <div>
+                    <img
+                      src={item.image ? extractMediaUrl(item.image) : content.hero.featureImage}
+                      alt={item.title || 'News image'}
+                      className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="p-5">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'News'}</p>
+                      <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900 group-hover:text-orange-500 transition-colors">{item.title}</h3>
+                      <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
+                    </div>
                   </div>
                 </Link>
               );
@@ -956,13 +807,21 @@ const NewsEventsPage = ({ prismicData = null }) => {
         viewport={{ once: true, amount: 0.18 }}
         transition={{ duration: 0.65, ease: 'easeOut' }}
       >
-        <div className="mb-8 sm:mb-12 flex items-center gap-4">
-          <div className="h-10 w-1.5 rounded-full bg-orange-500" />
-          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Latest Events</h2>
+        <div className="mb-8 sm:mb-12 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="h-10 w-1.5 rounded-full bg-orange-500" />
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Latest Events</h2>
+          </div>
+          <Link
+            to="/all-events"
+            className="group inline-flex items-center gap-2 rounded-xl border border-orange-500 bg-orange-50 px-4 py-2 text-sm font-bold text-orange-600 transition-all hover:bg-orange-500 hover:text-white shadow-sm cursor-pointer"
+          >
+            View More Events <ArrowRight size={16} />
+          </Link>
         </div>
 
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {eventItems.slice(0, 6).map((item) => {
+          {eventItems.slice(0, 3).map((item) => {
             const itemId = item.documentId || item.id;
             return (
               <Link key={itemId} to={`/news-events/${itemId}`} className="group block">
@@ -1008,7 +867,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
         >
           {/* Main Birthday Spotlight Banner */}
           <div className="overflow-hidden rounded-[2rem] bg-[#0d1236] text-white p-6 sm:p-12 lg:p-16 min-h-[50vh] lg:min-h-[60vh] flex flex-col lg:flex-row items-center justify-between gap-12 shadow-[0_20px_50px_rgba(13,18,54,0.3)]">
-            
+
             {/* Left Side: Text/Content Area */}
             <div className="flex-1 max-w-xl text-center lg:text-left">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f7d54b]/15 text-[#f7d54b] text-xs font-bold uppercase tracking-wider mb-6">
@@ -1021,17 +880,78 @@ const NewsEventsPage = ({ prismicData = null }) => {
                 {content.birthdaySpotlight.message || `Join us in wishing a very Happy Birthday to our ${content.birthdaySpotlight.role}, ${content.birthdaySpotlight.name}! We wish you continued growth, great success, and lasting happiness.`}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 w-full">
-                <a
-                  href={`mailto:?subject=Happy Birthday ${content.birthdaySpotlight.name}!&body=Dear ${content.birthdaySpotlight.name}, wishing you a very Happy Birthday!`}
-                  className="w-full sm:w-auto text-center bg-[#f7d54b] text-[#0d1236] font-bold py-3 px-8 rounded-xl transition-all duration-300 hover:bg-white hover:text-[#0d1236] shadow-lg shadow-[#f7d54b]/10 cursor-pointer"
-                >
-                  Send Wishes
-                </a>
                 <button
-                  onClick={() => setShareModalOpen(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-transparent text-white border border-white/20 hover:border-white font-bold py-3 px-8 rounded-xl transition-all duration-300 hover:bg-white/10 shadow-lg cursor-pointer"
+                  onClick={async () => {
+                    const imageUrl = content.birthdaySpotlight.image
+                      ? extractMediaUrl(content.birthdaySpotlight.image)
+                      : 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg';
+                    const bName = content.birthdaySpotlight.name || 'Team Member';
+                    const bRole = content.birthdaySpotlight.role || '';
+                    const pageUrl = `${window.location.origin}/news-events`;
+                    const fileName = `${bName.toLowerCase().replace(/\s+/g, '-')}-birthday-poster.jpg`;
+
+                    try {
+                      const file = await fetchImageAsFile(imageUrl, fileName);
+                      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                          title: `Happy Birthday ${bName}!`,
+                          text: `Wishing a very Happy Birthday to ${bRole ? bRole + ' ' : ''}${bName}! 🎂🎉 Check out TSPL News & Events:`,
+                          url: pageUrl,
+                          files: [file],
+                        });
+                        return;
+                      } else if (navigator.share) {
+                        await navigator.share({
+                          title: `Happy Birthday ${bName}!`,
+                          text: `Wishing a very Happy Birthday to ${bRole ? bRole + ' ' : ''}${bName}! 🎂🎉 Check out TSPL News & Events:`,
+                          url: pageUrl,
+                        });
+                        return;
+                      }
+                    } catch (err) {
+                      if (err.name !== 'AbortError') {
+                        console.warn('Native share failed:', err);
+                      } else {
+                        return;
+                      }
+                    }
+                    // Fallback if native share is not supported by desktop browser
+                    try {
+                      await navigator.clipboard.writeText(pageUrl);
+                      alert('Card web link copied to clipboard!');
+                    } catch (clipErr) {
+                      console.warn('Clipboard write failed:', clipErr);
+                    }
+                  }}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#f7d54b] text-[#0d1236] font-bold py-3.5 px-7 rounded-xl transition-all duration-300 hover:bg-white shadow-lg cursor-pointer text-sm sm:text-base"
                 >
                   <Share2 size={18} /> Share Card
+                </button>
+                <button
+                  onClick={async () => {
+                    const imageUrl = content.birthdaySpotlight.image
+                      ? extractMediaUrl(content.birthdaySpotlight.image)
+                      : 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg';
+                    const bName = content.birthdaySpotlight.name || 'Birthday_Poster';
+                    try {
+                      const response = await fetch(imageUrl);
+                      const blob = await response.blob();
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `${bName.replace(/\s+/g, '_')}_Birthday_Poster.jpg`;
+                      document.body.appendChild(a);
+                      a.click();
+                      document.body.removeChild(a);
+                      window.URL.revokeObjectURL(url);
+                    } catch (err) {
+                      console.warn('Direct download failed, opening in new tab:', err);
+                      window.open(imageUrl, '_blank');
+                    }
+                  }}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-transparent text-white border border-white/20 hover:border-white font-bold py-3.5 px-7 rounded-xl transition-all duration-300 hover:bg-white/10 shadow-lg cursor-pointer text-sm sm:text-base"
+                >
+                  <Download size={18} /> Download Card
                 </button>
               </div>
             </div>
@@ -1116,9 +1036,17 @@ const NewsEventsPage = ({ prismicData = null }) => {
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.65, ease: 'easeOut' }}
       >
-        <div className="mb-10 sm:mb-16 flex items-center gap-3">
-          <Calendar className="h-8 w-8 text-orange-500" />
-          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Upcoming &amp; Past Events</h2>
+        <div className="mb-10 sm:mb-16 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <Calendar className="h-8 w-8 text-orange-500" />
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Upcoming &amp; Past Events</h2>
+          </div>
+          <Link
+            to="/all-events"
+            className="group inline-flex items-center gap-2 rounded-xl border border-orange-500 bg-orange-50 px-4 py-2 text-sm font-bold text-orange-600 transition-all hover:bg-orange-500 hover:text-white shadow-sm cursor-pointer"
+          >
+            View All Events Directory <ArrowRight size={16} />
+          </Link>
         </div>
 
         <div className="relative grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
@@ -1190,16 +1118,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
       <ConfettiEffect active={confettiActive} onClose={() => setConfettiActive(false)} />
 
-      {content.birthdaySpotlight && (
-        <ShareModal
-          isOpen={shareModalOpen}
-          onClose={() => setShareModalOpen(false)}
-          birthdayName={content.birthdaySpotlight.name}
-          birthdayRole={content.birthdaySpotlight.role}
-          birthdayMessage={content.birthdaySpotlight.message || `Join us in wishing a very Happy Birthday to our ${content.birthdaySpotlight.role}, ${content.birthdaySpotlight.name}! We wish you continued growth, great success, and lasting happiness.`}
-          imageUrl={content.birthdaySpotlight.image ? extractMediaUrl(content.birthdaySpotlight.image) : 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg'}
-        />
-      )}
+
 
       <div className="mt-20 md:mt-24">
         <Footer />

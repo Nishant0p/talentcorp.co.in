@@ -12,6 +12,57 @@ const stripHtml = (value) => {
   return String(value).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 };
 
+const defaultEventsList = [
+  {
+    id: 'national-skill-development-conference-2026',
+    title: 'National Skill Development Conference 2026',
+    description: '<p>Bringing together 500+ vocational institutes, HR leaders, and policymakers to discuss NAPS and NATS 2.0 implementation across manufacturing and services sectors.</p>',
+    date: '15 APR 2026',
+    tag: 'Events',
+    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    id: 'campus-recruitment-drive-2026',
+    title: 'Campus Recruitment Drive - Engineering & Technical College',
+    description: '<p>Mass hiring drive for engineering graduates across manufacturing, IT, and automation industries organized by TSPL Group.</p>',
+    date: '22 APR 2026',
+    tag: 'Events',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    id: 'women-empowerment-skilling-2026',
+    title: 'Women Empowerment & Skill Development Workshop Series',
+    description: '<p>Special skilling initiative empowering young female candidates with industrial apprentice opportunities and certified technical training.</p>',
+    date: '01 MAY 2026',
+    tag: 'Events',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    id: 'industry-academia-conclave-2026',
+    title: 'Industry-Academia Conclave 2026',
+    description: '<p>Fostering partnerships between premier universities and manufacturing conglomerates for flexi-MoU programs.</p>',
+    date: '10 MAR 2026',
+    tag: 'Events',
+    image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    id: 'skill-india-partnership-summit',
+    title: 'Skill India Mission Partnership Summit',
+    description: '<p>National conference on accelerating skill certification and apprentice stipends across rural sectors.</p>',
+    date: '25 FEB 2026',
+    tag: 'Events',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    id: 'annual-employee-awards-2026',
+    title: 'Annual Employee Awards & Leadership Ceremony',
+    description: '<p>Honoring outstanding leadership, 5-year tenure milestones, and top-performing recruiters of TSPL Group.</p>',
+    date: '14 FEB 2026',
+    tag: 'Events',
+    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600',
+  },
+];
+
 const NewsDetailPage = () => {
   const { newsId } = useParams();
   const [items, setItems] = useState([]);
@@ -20,7 +71,7 @@ const NewsDetailPage = () => {
   useEffect(() => {
     const load = async () => {
       const data = await fetchNews();
-      setItems([...localNews, ...data]);
+      setItems([...localNews, ...defaultEventsList, ...data]);
     };
 
     load();

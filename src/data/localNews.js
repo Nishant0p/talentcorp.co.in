@@ -38,6 +38,65 @@ const localNews = [
     tag: 'News',
     image: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_05_17_at_21_29_50_a23ccb68f7.jpeg',
   },
+  {
+    id: 999997,
+    documentId: 'placements-40k-milestone',
+    title: 'TSPL Hits 40,000 Placements Milestone Across India',
+    description: `
+      <p>TSPL Group proudly announces achieving the milestone of 40,000+ placements for youth across India.</p>
+      <p>With partnerships across 450+ companies, our mission continues to empower youth through skill development, apprenticeship programs (NAPS/NATS), and direct employment opportunities.</p>
+    `,
+    date: '2026-03-15',
+    tag: 'News',
+    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+  },
+  {
+    id: 999996,
+    documentId: 'annual-skill-summit-2026',
+    title: 'Annual Skill Summit 2026 Draws 5000+ Participants in Pune',
+    description: `
+      <p>The Annual Skill Summit 2026 organized by TSPL Group witnessed participation from over 5,000 students, industry leaders, and policy makers in Pune.</p>
+      <p>Key discussions focused on bridging the industry-academia gap, expanding flexi-MoU vocational training schemes, and driving rural employment.</p>
+    `,
+    date: '2026-02-28',
+    tag: 'News',
+    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400',
+  },
+  {
+    id: 999995,
+    documentId: 'campus-placements-partnership',
+    title: 'TSPL Partners with Leading IT Companies for Campus Placements',
+    description: `
+      <p>TSPL Group has established strategic skilling and placement partnerships with leading IT and manufacturing enterprises across India.</p>
+      <p>These partnerships aim to offer work-integrated learning programs and direct campus recruitment drives for technical graduates.</p>
+    `,
+    date: '2026-02-20',
+    tag: 'News',
+    image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=400',
+  },
+  {
+    id: 999994,
+    documentId: 'green-initiative-rural',
+    title: 'Expanding Our Green Initiative Footprint Across Rural Sectors',
+    description: `
+      <p>As part of TSPL's corporate social responsibility and sustainable development initiatives, new green skill development centers are being launched in rural districts.</p>
+    `,
+    date: '2026-02-15',
+    tag: 'News',
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=400',
+  },
+  {
+    id: 999993,
+    documentId: 'strategic-growth-vision',
+    title: 'Strategic Skilling & Growth Vision for the Upcoming Fiscal Year',
+    description: `
+      <p>TSPL Group outlines its strategic roadmap for empowering 1 million youth by 2027 through expanded NAPS, NATS, B.Voc, and FLEXI-MoU programs across India.</p>
+    `,
+    date: '2026-02-10',
+    tag: 'News',
+    image: 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&q=80&w=400',
+  },
 ];
 
 export default localNews;
+
