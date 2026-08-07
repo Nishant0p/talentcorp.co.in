@@ -450,6 +450,39 @@ const NewsEventsPage = ({ prismicData = null }) => {
     [newsAndUpdatesItems, showAllNews]
   );
   const eventItems = useMemo(() => latestNews.filter((item) => item.tag === 'Events' || item.tag === 'Event'), [latestNews]);
+
+  const realPastEvents = useMemo(() => {
+    const eventsData = latestNews.filter(
+      (item) => item.tag === 'Events' || item.tag === 'Event' || item.category === 'Events'
+    );
+
+    const sourceList = eventsData.length > 0 ? eventsData : localNews.filter((i) => i.tag === 'Events' || i.tag === 'Event');
+
+    return sourceList.map((item) => {
+      let day = '21';
+      let month = 'JUN';
+      if (item.date) {
+        const d = new Date(item.date);
+        if (!isNaN(d.getTime())) {
+          day = String(d.getDate()).padStart(2, '0');
+          month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+        } else {
+          const match = item.date.match(/([A-Za-z]+)\s+(\d+)/);
+          if (match) {
+            month = match[1].substring(0, 3).toUpperCase();
+            day = String(match[2]).padStart(2, '0');
+          }
+        }
+      }
+      return {
+        date: day,
+        month: month,
+        title: item.title,
+        loc: item.venue || item.location || item.loc || 'TSPL GROUP, Pune',
+        readMoreUrl: item.documentId || item.id ? `/news-events/${item.documentId || item.id}` : null,
+      };
+    });
+  }, [latestNews]);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroParallaxRef,
@@ -1034,21 +1067,25 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
             <div className="relative space-y-8">
               <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
-              {content.pastEvents.map((event, idx) => (
+              {(realPastEvents.length > 0 ? realPastEvents : content.pastEvents).map((event, idx) => (
                 <div
                   key={`${event.title}-${idx}`}
-                  className="relative z-10 flex gap-6 opacity-70 transition-opacity hover:opacity-100"
+                  className="relative z-10 flex gap-6 opacity-80 transition-all hover:opacity-100 hover:translate-x-1"
                 >
-                  <div className="flex h-20 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-slate-100 text-slate-500">
+                  <div className="flex h-20 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-slate-100 text-slate-700 font-bold shadow-sm">
                     <span className="text-2xl font-black leading-none">{event.date}</span>
-                    <span className="mt-1 text-[10px] font-bold tracking-widest">{event.month}</span>
+                    <span className="mt-1 text-[10px] font-bold tracking-widest text-slate-400">{event.month}</span>
                   </div>
-                  <div className="flex flex-col justify-center">
-                    <h4 className="mb-2 text-lg font-bold italic leading-tight text-slate-500">
-                      {event.title}
+                  <div className="flex flex-1 flex-col justify-center">
+                    <h4 className="mb-1 text-lg font-bold leading-tight text-slate-800 transition-colors hover:text-orange-500">
+                      {event.readMoreUrl ? (
+                        <Link to={event.readMoreUrl}>{event.title}</Link>
+                      ) : (
+                        event.title
+                      )}
                     </h4>
-                    <div className="flex items-center gap-1 text-sm text-slate-400">
-                      <MapPin size={14} />
+                    <div className="flex items-center gap-1 text-sm text-slate-400 font-medium">
+                      <MapPin size={14} className="text-orange-400" />
                       {event.loc}
                     </div>
                   </div>
