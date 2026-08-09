@@ -152,7 +152,7 @@ export default function NewsSection() {
                   : 'text-slate-600 hover:text-slate-900'
                   }`}
               >
-                Upcoming Events ({eventItems.length})
+                Events ({eventItems.length})
               </button>
             </div>
 
