@@ -1,8 +1,8 @@
-import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Shield, Users, Lightbulb, HandHeart, Award, BookOpen, Globe, Star, CheckCircle, Briefcase, User } from 'lucide-react'
+import { ArrowRight, Trophy, Building2, MapPin, Calendar, Target, Eye, Heart, Shield, Users, Lightbulb, HandHeart, Award, BookOpen, Globe, Star, CheckCircle, Briefcase, User, Presentation, Play, Pause, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import React, { useState, useRef, useEffect } from 'react';
 import ProgressiveImage from '../components/ProgressiveImage';
 import useSEO from '../hooks/useSEO';
@@ -140,6 +140,9 @@ const hiringCapacity = [
 
 function DetailedProfileSection({ isMobile }) {
 	const [activeTab, setActiveTab] = useState(0);
+	const [isPresenting, setIsPresenting] = useState(false);
+	const [currentSlide, setCurrentSlide] = useState(0);
+	const [autoPlay, setAutoPlay] = useState(false);
 
 	const tabs = [
 		{ id: 0, title: 'Company Overview' },
@@ -152,6 +155,418 @@ function DetailedProfileSection({ isMobile }) {
 		{ id: 7, title: 'Vocational Programs' },
 		{ id: 8, title: 'Recruitment Strategy' },
 	];
+
+	const slides = [
+		{
+			title: "Welcome to TSPL Group",
+			subtitle: "Corporate Profile & Strategic Pitch Presentation",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full">
+					<div className="space-y-6">
+						<span className="inline-block px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm font-bold uppercase tracking-wider">Est. 2011</span>
+						<h3 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">One of India's Leading Skill &amp; HR Solutions Groups</h3>
+						<p className="text-slate-300 text-base leading-relaxed">
+							TalentCorp Solutions Private Limited (TSPL Group) is a premier provider of apprenticeship coordination, technical skilling, payroll outsourcing, and industrial workforce management across 28+ states.
+						</p>
+					</div>
+					<div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 flex flex-col justify-center gap-6">
+						<div className="flex gap-4 items-start">
+							<span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white font-black">1</span>
+							<div>
+								<h4 className="text-lg font-bold text-white">Govt. Authorized TPA partner</h4>
+								<p className="text-slate-400 text-sm">Direct portal interface with MSDE and regional BOAT hubs.</p>
+							</div>
+						</div>
+						<div className="flex gap-4 items-start">
+							<span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-white font-black">2</span>
+							<div>
+								<h4 className="text-lg font-bold text-white">World Record Recognition</h4>
+								<p className="text-slate-400 text-sm">Honored in London World Book of Records for skilling excellence.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Our Story, Vision & Mission",
+			subtitle: "Empowering industries and transforming technical careers.",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-center">
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10 h-full flex flex-col justify-between min-h-[220px]">
+						<h4 className="text-xl font-bold text-blue-400">Our Story</h4>
+						<p className="text-xs text-slate-300 leading-relaxed">
+							Founded under the leadership of Dr. Mehboob Sayyad, TSPL Group started as a vision to empower youth. Today, we are one of India's pre-eminent human resource giants.
+						</p>
+					</div>
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10 h-full flex flex-col justify-between min-h-[220px]">
+						<h4 className="text-xl font-bold text-[#f7d54b]">Our Vision</h4>
+						<p className="text-xs text-slate-300 leading-relaxed">
+							To be the most preferred and trusted partner for corporate establishments globally, recognized for high-quality training and 100% compliant recruitment operations.
+						</p>
+					</div>
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10 h-full flex flex-col justify-between min-h-[220px]">
+						<h4 className="text-xl font-bold text-emerald-400">Our Mission</h4>
+						<p className="text-xs text-slate-300 leading-relaxed">
+							To deploy next-generation practical skill programs, bridging education and corporate roles with 100% statutory execution.
+						</p>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Core Values & Quality Focus",
+			subtitle: "Built on integrity, precision engineering support, and agility.",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-center">
+					<div className="space-y-4">
+						<h4 className="text-xl font-bold text-orange-400">Our Values</h4>
+						<div className="grid grid-cols-2 gap-4">
+							<div className="p-4 rounded-xl bg-white/5 border border-white/10">
+								<span className="font-bold text-white block mb-1">Integrity</span>
+								<span className="text-xs text-slate-400">Ethical values in every single deal.</span>
+							</div>
+							<div className="p-4 rounded-xl bg-white/5 border border-white/10">
+								<span className="font-bold text-white block mb-1">Client First</span>
+								<span className="text-xs text-slate-400">Tailoring solutions to needs.</span>
+							</div>
+							<div className="p-4 rounded-xl bg-white/5 border border-white/10">
+								<span className="font-bold text-white block mb-1">Compliance</span>
+								<span className="text-xs text-slate-400">Exemptions with 100% accuracy.</span>
+							</div>
+							<div className="p-4 rounded-xl bg-white/5 border border-white/10">
+								<span className="font-bold text-white block mb-1">Agility</span>
+								<span className="text-xs text-slate-400">Turnaround within 48 Hours.</span>
+							</div>
+						</div>
+					</div>
+					<div className="p-6 rounded-2xl bg-blue-600/10 border border-blue-500/30">
+						<h4 className="text-xl font-bold text-white mb-3">Quality Policy</h4>
+						<p className="text-slate-300 text-xs leading-relaxed mb-4">
+							We are committed to delivering elite workforce solutions, ensuring full alignment with regulatory models, and maintaining highest standard of shopfloor training.
+						</p>
+						<div className="flex gap-4">
+							<div className="p-3 rounded-lg bg-white/5 text-center flex-1">
+								<span className="block text-xl font-bold text-[#f7d54b]">ISO 9001</span>
+								<span className="text-[10px] text-slate-400">Quality Certified</span>
+							</div>
+							<div className="p-3 rounded-lg bg-white/5 text-center flex-1">
+								<span className="block text-xl font-bold text-emerald-400">100%</span>
+								<span className="text-[10px] text-slate-400">Compliant</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Board of Directors",
+			subtitle: "Visionaries steering TalentCorp Solutions (TSPL Group).",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-center">
+					<div className="p-6 rounded-2xl bg-gradient-to-br from-blue-900/40 to-slate-900 border border-blue-500/30 flex flex-col justify-between min-h-[240px] md:col-span-1">
+						<div>
+							<span className="inline-block px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">Founder &amp; Chairman</span>
+							<h4 className="text-2xl font-black text-white">Dr. Mehboob Sayyad</h4>
+						</div>
+						<p className="text-slate-400 text-xs leading-relaxed mt-2">
+							Managing Director of TSPL Group, steering policy-driven apprenticeships and staffing across India.
+						</p>
+					</div>
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-between min-h-[240px]">
+						<div>
+							<span className="inline-block px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-wider mb-3">Director</span>
+							<h4 className="text-xl font-bold text-white">Sunil Chavan</h4>
+						</div>
+						<p className="text-slate-400 text-xs leading-relaxed mt-2">
+							Directs operations and client success metrics across corporate locations.
+						</p>
+					</div>
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-between min-h-[240px]">
+						<div>
+							<span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-3">Executive Directors</span>
+							<div className="space-y-1 mt-2">
+								<p className="text-xs font-semibold text-white">• Deshbhushan Jain</p>
+								<p className="text-xs font-semibold text-white">• Prakash Rathod</p>
+								<p className="text-xs font-semibold text-white">• Ruma Sayyad</p>
+								<p className="text-xs font-semibold text-white">• Sarang Chavan</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Core Management Leaders",
+			subtitle: "Key executives managing Pan-India logistics and delivery.",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-center">
+					<div className="p-5 rounded-xl bg-white/5 border border-white/10">
+						<h4 className="text-base font-bold text-blue-400 mb-3">TPA &amp; Operations Management</h4>
+						<div className="space-y-2 text-xs text-slate-300">
+							<p><strong className="text-white">Samruddhi Mam</strong> — TPA Head &amp; Apprentice Operations</p>
+							<p><strong className="text-white">Mr. Mubarak Shaikh</strong> — General Manager (Overall Operations)</p>
+							<p><strong className="text-white">Purushottam Gaikwad</strong> — Assistant General Manager</p>
+						</div>
+					</div>
+					<div className="p-5 rounded-xl bg-white/5 border border-white/10">
+						<h4 className="text-base font-bold text-orange-400 mb-3">Sourcing, Placement &amp; Finance</h4>
+						<div className="space-y-2 text-xs text-slate-300">
+							<p><strong className="text-white">Mr. Gyanendra Mishra</strong> — Sourcing Head (Pan India)</p>
+							<p><strong className="text-white">Mr. Vishal Ubale</strong> — Sourcing Head &amp; TPO (Maharashtra)</p>
+							<p><strong className="text-white">Mr. Lokesh Pardeshi</strong> — Finance Head</p>
+							<p><strong className="text-white">Mr. Kishore More</strong> — Core Management Leader</p>
+						</div>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Company Overview",
+			subtitle: "Scale, reach, and governmental authorization benchmarks.",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-center">
+					<div className="p-8 rounded-3xl bg-blue-600/10 border border-blue-500/30 text-center flex flex-col justify-center h-full min-h-[220px]">
+						<Trophy className="h-12 w-12 text-[#f7d54b] mx-auto mb-4" />
+						<span className="block text-5xl font-black text-white">#1 Rank</span>
+						<span className="text-xs text-slate-400 uppercase tracking-widest mt-2 block font-bold">Authorized TPA in India</span>
+					</div>
+					<div className="p-8 rounded-3xl bg-white/5 border border-white/10 text-center flex flex-col justify-center h-full min-h-[220px]">
+						<Users className="h-12 w-12 text-blue-400 mx-auto mb-4" />
+						<span className="block text-5xl font-black text-[#f7d54b]">40,000+</span>
+						<span className="text-xs text-slate-400 uppercase tracking-widest mt-2 block font-bold">Apprentices Deployed</span>
+					</div>
+					<div className="p-8 rounded-3xl bg-white/5 border border-white/10 text-center flex flex-col justify-center h-full min-h-[220px]">
+						<Building2 className="h-12 w-12 text-emerald-400 mx-auto mb-4" />
+						<span className="block text-5xl font-black text-emerald-400">470+</span>
+						<span className="text-xs text-slate-400 uppercase tracking-widest mt-2 block font-bold">Pan-India Corporate Clients</span>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Services Offered",
+			subtitle: "Comprehensive end-to-end skilling & compliance architectures.",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-center">
+					<div className="space-y-4">
+						<h3 className="text-2xl font-bold text-[#f7d54b]">Apprenticeship &amp; Academic Pathways</h3>
+						<div className="grid grid-cols-2 gap-3">
+							{['NAPS Management', 'NATS / BOAT', 'MAPS Coordination', 'Flexi ITI Schemes', 'D.Voc / B.Voc Programs', 'WILP & WISE Systems'].map((s) => (
+								<div key={s} className="p-4 rounded-xl bg-white/5 border border-white/10 text-sm font-semibold text-slate-200">
+									✓ {s}
+								</div>
+							))}
+						</div>
+					</div>
+					<div className="space-y-4">
+						<h3 className="text-2xl font-bold text-blue-400">Industrial Workforce Solutions</h3>
+						<div className="grid grid-cols-2 gap-3">
+							{['Contract Staffing', 'Manpower Sourcing', 'Statutory Auditing', 'Payroll Management', 'ESIC/PF Administration', 'Security Operations'].map((s) => (
+								<div key={s} className="p-4 rounded-xl bg-white/5 border border-white/10 text-sm font-semibold text-slate-200">
+									✓ {s}
+								</div>
+							))}
+						</div>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Awards & Achievements",
+			subtitle: "Recognized nationally and internationally for workforce deployment.",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-center">
+					<div className="p-6 rounded-2xl bg-orange-500/10 border border-orange-500/30 flex items-center gap-5">
+						<Trophy className="h-10 w-10 text-orange-400 shrink-0" />
+						<p className="text-slate-200 font-medium">Fastest Growing Indian Company Excellence Award (Presented in New Delhi)</p>
+					</div>
+					<div className="p-6 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center gap-5">
+						<Trophy className="h-10 w-10 text-blue-400 shrink-0" />
+						<p className="text-slate-200 font-medium">Leading Emerging Skill Development TPA Company of the Year 2023 (Goa honors)</p>
+					</div>
+					<div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-5">
+						<Trophy className="h-10 w-10 text-emerald-400 shrink-0" />
+						<p className="text-slate-200 font-medium">London World Book of Records Honor for maximum placements in skill mission</p>
+					</div>
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-5">
+						<Trophy className="h-10 w-10 text-slate-400 shrink-0" />
+						<p className="text-slate-200 font-medium">Outstanding Leadership Achievement &amp; State HR Federation Honors</p>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Clients & Reach",
+			subtitle: "Trusted partner for top-tier Indian industries and multi-national corporations.",
+			content: (
+				<div className="grid grid-cols-2 md:grid-cols-4 gap-6 h-full items-center text-center">
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+						<span className="block text-5xl font-black text-blue-400">410</span>
+						<span className="text-xs text-slate-400 uppercase tracking-widest mt-2 block font-bold">NAPS Establishments</span>
+					</div>
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+						<span className="block text-5xl font-black text-emerald-400">350</span>
+						<span className="text-xs text-slate-400 uppercase tracking-widest mt-2 block font-bold">NATS Organizations</span>
+					</div>
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+						<span className="block text-5xl font-black text-orange-400">20</span>
+						<span className="text-xs text-slate-400 uppercase tracking-widest mt-2 block font-bold">WILP Pathways</span>
+					</div>
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+						<span className="block text-5xl font-black text-[#f7d54b]">100+</span>
+						<span className="text-xs text-slate-400 uppercase tracking-widest mt-2 block font-bold">Contract Clients</span>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "NAPS Program (National Apprenticeship Promotion Scheme)",
+			subtitle: "Empowering apprenticeships with direct government DBT portal automation.",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-center">
+					<div className="md:col-span-2 space-y-4">
+						<h4 className="text-xl font-bold text-[#f7d54b] mb-2">Program Benefits</h4>
+						<ul className="space-y-3">
+							<li className="flex items-start gap-3"><CheckCircle className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" /> <span className="text-slate-300">Reimbursement of 25% of stipend (up to INR 1,500/month per apprentice).</span></li>
+							<li className="flex items-start gap-3"><CheckCircle className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" /> <span className="text-slate-300">Exemption from PF, ESIC, Bonus, and Gratuity payments for trainees.</span></li>
+							<li className="flex items-start gap-3"><CheckCircle className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" /> <span className="text-slate-300">100% CSR compliant funding structure for eligible corporations.</span></li>
+						</ul>
+					</div>
+					<div className="p-6 rounded-2xl bg-orange-500/10 border border-orange-500/30 flex flex-col justify-center">
+						<span className="text-sm font-semibold text-orange-400 uppercase tracking-wider block mb-2">NAPS Savings (1,000 Trainees)</span>
+						<span className="block text-3xl font-black text-white">INR 15 Lakhs</span>
+						<span className="text-xs text-slate-400 block mb-4">Monthly savings</span>
+						<span className="block text-3xl font-black text-white">INR 1.8 Crores</span>
+						<span className="text-xs text-slate-400 block">Annual savings</span>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "NATS / BOAT Program",
+			subtitle: "Apprentice training for graduate, diploma, and general stream candidates.",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-center">
+					<div className="md:col-span-2 space-y-4">
+						<h4 className="text-xl font-bold text-emerald-400 mb-2">Scheme Details</h4>
+						<ul className="space-y-3">
+							<li className="flex items-start gap-3"><CheckCircle className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" /> <span className="text-slate-300">Direct Benefit Transfer (DBT) of up to INR 4,500/month per apprentice.</span></li>
+							<li className="flex items-start gap-3"><CheckCircle className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" /> <span className="text-slate-300">Administered via regional Board of Apprenticeship Training (BOAT) portals.</span></li>
+							<li className="flex items-start gap-3"><CheckCircle className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" /> <span className="text-slate-300">Apprentice quota matches 2.5% to 20% of your total workforce.</span></li>
+						</ul>
+					</div>
+					<div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex flex-col justify-center">
+						<span className="text-sm font-semibold text-emerald-400 uppercase tracking-wider block mb-2">NATS Savings (1,000 Trainees)</span>
+						<span className="block text-3xl font-black text-white">INR 45 Lakhs</span>
+						<span className="text-xs text-slate-400 block mb-4">Monthly savings</span>
+						<span className="block text-3xl font-black text-white">INR 5.4 Crores</span>
+						<span className="text-xs text-slate-400 block">Annual savings</span>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Financial Savings",
+			subtitle: "Stipend optimizations & statutory exemptions breakdown.",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-center">
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+						<h4 className="text-lg font-bold text-white mb-2">CSR / ITI Trainees</h4>
+						<p className="text-slate-400 text-sm mb-4">Stipend: ~INR 23,000/mo (1k trainees)</p>
+						<span className="block text-2xl font-black text-emerald-400">INR 2.3 Cr/mo</span>
+						<span className="text-xs text-slate-500 font-bold block mt-1">INR 27.6 Cr Annually</span>
+					</div>
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+						<h4 className="text-lg font-bold text-white mb-2">Diploma / BE Trainees</h4>
+						<p className="text-slate-400 text-sm mb-4">Stipend: ~INR 26,000/mo (500 trainees)</p>
+						<span className="block text-2xl font-black text-blue-400">INR 1.3 Cr/mo</span>
+						<span className="text-xs text-slate-500 font-bold block mt-1">INR 15.6 Cr Annually</span>
+					</div>
+					<div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+						<h4 className="text-lg font-bold text-white mb-2">Statutory Savings</h4>
+						<p className="text-slate-400 text-sm mb-4">1,500 trainees (PF, ESIC, Bonus)</p>
+						<span className="block text-2xl font-black text-orange-400">~INR 75 Lakhs/mo</span>
+						<span className="text-xs text-slate-500 font-bold block mt-1">~INR 9 Crores Annually</span>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Recruitment Strategy",
+			subtitle: "Mass sourcing power & benchmark delivery speeds.",
+			content: (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-center">
+					<div className="space-y-4">
+						<h4 className="text-xl font-bold text-blue-400">Sourcing Capacity</h4>
+						<div className="space-y-3">
+							<div className="flex justify-between border-b border-white/10 pb-2">
+								<span className="text-slate-300">Pan-India Executives</span>
+								<span className="font-bold text-white">570+ Strength</span>
+							</div>
+							<div className="flex justify-between border-b border-white/10 pb-2">
+								<span className="text-slate-300">Max Sourcing Strength</span>
+								<span className="font-bold text-white">10,000 / month</span>
+							</div>
+						</div>
+					</div>
+					<div className="space-y-4">
+						<h4 className="text-xl font-bold text-orange-400">Delivery Benchmarks</h4>
+						<ul className="space-y-2 text-sm text-slate-300">
+							<li>• Sourcing &amp; shortlisting: **3 to 7 Days**</li>
+							<li>• Client deployment &amp; onboarding: **7 to 10 Days**</li>
+							<li>• Trainee replacements: **Within 48 Hours**</li>
+						</ul>
+					</div>
+				</div>
+			)
+		},
+		{
+			title: "Thank You",
+			subtitle: "Partnering for Growth & Compliance Excellence",
+			content: (
+				<div className="flex flex-col items-center justify-center text-center h-full max-w-2xl mx-auto space-y-6">
+					<h3 className="text-4xl sm:text-5xl font-black text-[#f7d54b]">TSPL Group</h3>
+					<p className="text-slate-300 text-lg leading-relaxed">
+						We look forward to collaborating with your organization to optimize apprenticeships, streamline statutory compliance, and power your shopfloor operations.
+					</p>
+					<div className="pt-6 border-t border-white/10 w-full flex flex-col sm:flex-row justify-center gap-6 text-sm text-slate-400">
+						<div>
+							<strong className="text-white block mb-1">Visit Us</strong>
+							<span>www.tsplgroup.in</span>
+						</div>
+						<div>
+							<strong className="text-white block mb-1">Enquiries</strong>
+							<span>info@tsplgroup.in</span>
+						</div>
+					</div>
+				</div>
+			)
+		}
+	];
+
+	useEffect(() => {
+		if (!autoPlay || !isPresenting) return;
+		const timer = setInterval(() => {
+			setCurrentSlide((prev) => (prev + 1) % slides.length);
+		}, 7000);
+		return () => clearInterval(timer);
+	}, [autoPlay, isPresenting, slides.length]);
+
+	useEffect(() => {
+		const handleKeyDown = (e) => {
+			if (!isPresenting) return;
+			if (e.key === 'ArrowRight') {
+				setCurrentSlide((prev) => (prev + 1) % slides.length);
+			} else if (e.key === 'ArrowLeft') {
+				setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+			} else if (e.key === 'Escape') {
+				setIsPresenting(false);
+			}
+		};
+		window.addEventListener('keydown', handleKeyDown);
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, [isPresenting, slides.length]);
 
 	const cardAnimProps = isMobile ? {} : {
 		initial: { opacity: 0, y: 16 },
@@ -175,9 +590,15 @@ function DetailedProfileSection({ isMobile }) {
 
 			<div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
 				<div className="mb-10 text-center">
-					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2">
-						<span className="text-sm font-bold tracking-widest text-blue-700 uppercase">TSPL Profile</span>
-					</div>
+					<button
+						onClick={() => {
+							setCurrentSlide(0);
+							setIsPresenting(true);
+						}}
+						className="mb-6 hidden md:inline-flex items-center gap-2.5 rounded-full border border-blue-200 bg-blue-50 hover:bg-blue-100 hover:border-blue-300 px-5 py-2.5 shadow-sm transition-all hover:scale-105 cursor-pointer text-sm font-bold tracking-widest text-blue-700 uppercase"
+					>
+						<Presentation className="h-4 w-4 text-blue-600 animate-pulse" /> TSPL Profile Presentation
+					</button>
 					<h2 className="text-4xl font-extrabold text-slate-900 lg:text-5xl">Detailed Information</h2>
 					<p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">Everything you need to know about our operations, impact, and reach.</p>
 				</div>
@@ -595,6 +1016,88 @@ function DetailedProfileSection({ isMobile }) {
 					)}
 				</div>
 			</div>
+
+			{/* Presentation Mode Modal */}
+			<AnimatePresence>
+				{isPresenting && (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						className="fixed inset-0 z-50 bg-[#0a0c20] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0f143c] via-[#070918] to-[#04050d] text-white flex flex-col justify-between p-6 sm:p-12 font-sans select-none"
+					>
+						{/* Top Slide Header */}
+						<div className="flex items-center justify-between border-b border-white/10 pb-6 w-full">
+							<div className="flex items-center gap-3">
+								<div className="h-2 w-2 rounded-full bg-[#f7d54b] animate-ping" />
+								<span className="text-sm font-bold tracking-widest text-slate-400 uppercase">TSPL Corporate Pitch Profile</span>
+							</div>
+							<div className="flex items-center gap-4">
+								<span className="text-sm font-semibold text-slate-400">Slide {currentSlide + 1} of {slides.length}</span>
+								<button
+									onClick={() => setIsPresenting(false)}
+									className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white transition-all hover:bg-white/10 cursor-pointer"
+								>
+									<X size={20} />
+								</button>
+							</div>
+						</div>
+
+						{/* Slide Main Body */}
+						<div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center py-10">
+							<motion.div
+								key={currentSlide}
+								initial={{ opacity: 0, x: 20 }}
+								animate={{ opacity: 1, x: 0 }}
+								exit={{ opacity: 0, x: -20 }}
+								transition={{ duration: 0.4 }}
+								className="space-y-12 animate-fade-in"
+							>
+								<div>
+									<h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-tight text-white mb-3">
+										{slides[currentSlide].title}
+									</h2>
+									<p className="text-lg text-slate-400 font-medium">
+										{slides[currentSlide].subtitle}
+									</p>
+								</div>
+								
+								<div className="min-h-[320px]">
+									{slides[currentSlide].content}
+								</div>
+							</motion.div>
+						</div>
+
+						{/* Bottom Slide Controls */}
+						<div className="flex items-center justify-between border-t border-white/10 pt-6 w-full">
+							<div className="flex items-center gap-4">
+								<button
+									onClick={() => setAutoPlay(!autoPlay)}
+									className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer ${autoPlay ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30' : 'bg-white/5 border border-white/10 text-slate-300 hover:text-white'}`}
+								>
+									{autoPlay ? <Pause size={16} /> : <Play size={16} />}
+									{autoPlay ? 'Pause Auto-Play' : 'Auto-Play Pitch'}
+								</button>
+							</div>
+
+							<div className="flex gap-3">
+								<button
+									onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
+									className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white transition-all hover:bg-white/10 active:scale-95 cursor-pointer"
+								>
+									<ChevronLeft size={24} />
+								</button>
+								<button
+									onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
+									className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#006bb8] text-white shadow-lg shadow-blue-500/20 hover:bg-blue-500 transition-all active:scale-95 cursor-pointer"
+								>
+									<ChevronRight size={24} />
+								</button>
+							</div>
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</section>
 	);
 }
