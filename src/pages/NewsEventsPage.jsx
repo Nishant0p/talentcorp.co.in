@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Sparkles, Award, Calendar, MapPin, ChevronRight, Cake, Star, Share2, Copy, Check, Download, X } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Sparkles, Award, Calendar, MapPin, ChevronLeft, ChevronRight, Cake, Star, Share2, Copy, Check, Download, X } from 'lucide-react';
 import { extractMediaUrl, fetchNews, fetchSingleType } from '../utils/strapi';
 import localNews from '../data/localNews';
 
@@ -397,6 +397,7 @@ const resolveNewsEventsContent = (prismicData) => {
 };
 
 const NewsEventsPage = ({ prismicData = null }) => {
+  const navigate = useNavigate();
   const heroParallaxRef = useRef(null);
   const birthdaySectionRef = useRef(null);
   const [pageData, setPageData] = useState(null);
@@ -407,6 +408,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
   const [hasTriggeredConfetti, setHasTriggeredConfetti] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [carouselIndex, setCarouselIndex] = useState(0);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -442,9 +444,22 @@ const NewsEventsPage = ({ prismicData = null }) => {
   }, [hasTriggeredConfetti, content.birthdaySpotlight]);
 
   const newsAndUpdatesItems = useMemo(
-    () => latestNews.filter((item) => !item.tag || item.tag === 'News' || item.tag === 'Updates'),
+    () => latestNews.filter((item) => item.tag === 'News'),
     [latestNews]
   );
+
+
+
+  useEffect(() => {
+    if (newsAndUpdatesItems.length <= 1) {
+      setCarouselIndex(0);
+      return;
+    }
+    const timer = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % Math.min(newsAndUpdatesItems.length, 3));
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [newsAndUpdatesItems]);
   const displayedNewsItems = useMemo(
     () => (showAllNews ? newsAndUpdatesItems : newsAndUpdatesItems.slice(0, 3)),
     [newsAndUpdatesItems, showAllNews]
@@ -509,7 +524,9 @@ const NewsEventsPage = ({ prismicData = null }) => {
   useEffect(() => {
     const loadLatestNews = async () => {
       const items = await fetchNews();
-      const combined = items && items.length > 0 ? items : localNews;
+      const combined = [...(items || []), ...localNews];
+      // Sort by date descending (newest first)
+      combined.sort((a, b) => new Date(b.date) - new Date(a.date));
       const uniqueNews = [];
       const seenTitles = new Set();
       combined.forEach((item) => {
@@ -533,6 +550,8 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
     loadPageContent();
   }, []);
+
+  const carouselItem = newsAndUpdatesItems[carouselIndex];
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-12 pt-28 sm:pt-32 font-sans">
@@ -560,31 +579,83 @@ const NewsEventsPage = ({ prismicData = null }) => {
       </motion.h1>
 
       <motion.div ref={heroParallaxRef} className="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:gap-6 md:grid-cols-4">
-        <Link to="/naps" className="group block h-full cursor-pointer md:col-span-2 md:row-span-2">
+        <div className="group block h-full cursor-pointer md:col-span-2 md:row-span-2 relative">
           <motion.div
-            className="relative h-[320px] overflow-hidden rounded-3xl sm:h-[380px] md:h-full"
+            className="relative h-[320px] overflow-hidden rounded-3xl sm:h-[380px] md:h-full w-full"
             initial={{ opacity: 0, y: 72, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.75, ease: 'easeOut' }}
             style={{ y: heroFeatureY }}
           >
-            <img
-              src={content.hero.featureImage}
-              alt="Snowy mountains"
-              className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110 md:object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            <div className="absolute bottom-0 p-8">
-              <span className="rounded-full bg-orange-500 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white">
-                {content.hero.featureTag}
-              </span>
-              <h3 className="mt-4 text-3xl font-bold text-white">
-                {content.hero.featureTitle}
-              </h3>
-            </div>
+            {carouselItem ? (
+              <div className="relative w-full h-full">
+                <Link to={`/news-events/${carouselItem.documentId || carouselItem.id}`} className="block w-full h-full">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={carouselIndex}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.6 }}
+                      className="absolute inset-0 w-full h-full"
+                    >
+                      <img
+                        src={carouselItem.image ? extractMediaUrl(carouselItem.image) : content.hero.featureImage}
+                        alt={carouselItem.title}
+                        className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent z-10" />
+                      <div className="absolute bottom-0 p-8 left-0 right-0 z-20 text-left">
+                        <span className="rounded-full bg-orange-500 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white">
+                          {carouselItem.tag || 'Featured News'}
+                        </span>
+                        <h3 className="mt-4 text-2xl sm:text-3xl font-bold text-white leading-tight line-clamp-2">
+                          {carouselItem.title}
+                        </h3>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </Link>
+
+                {/* Pagination Dots */}
+                <div className="absolute bottom-6 right-6 z-30 flex gap-2">
+                  {newsAndUpdatesItems.slice(0, 3).map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setCarouselIndex(idx);
+                      }}
+                      className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                        carouselIndex === idx ? 'w-6 bg-[#f7d54b]' : 'w-2 bg-white/40 hover:bg-white/80'
+                      }`}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <Link to="/naps" className="block w-full h-full">
+                <img
+                  src={content.hero.featureImage}
+                  alt={content.hero.featureTitle}
+                  className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute bottom-0 p-8 text-left">
+                  <span className="rounded-full bg-orange-500 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white">
+                    {content.hero.featureTag}
+                  </span>
+                  <h3 className="mt-4 text-3xl font-bold text-white">
+                    {content.hero.featureTitle}
+                  </h3>
+                </div>
+              </Link>
+            )}
           </motion.div>
-        </Link>
+        </div>
 
         <motion.div
           className="flex flex-col justify-between rounded-3xl bg-orange-500 p-8 text-white transition-all hover:scale-[1.02] hover:shadow-xl hover:shadow-orange-200"
@@ -619,8 +690,12 @@ const NewsEventsPage = ({ prismicData = null }) => {
                 key={item}
                 type="button"
                 onClick={() => {
-                  const targetId = quickAccessTargets[item];
-                  document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  if (item === 'Calendar') {
+                    navigate('/calendar');
+                  } else {
+                    const targetId = quickAccessTargets[item];
+                    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
                 }}
                 className="rounded-full border border-white/20 px-4 py-2 text-xs transition-colors hover:bg-white hover:text-slate-900"
               >
@@ -713,7 +788,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
       >
         <div className="mb-8 sm:mb-10 flex items-center gap-4">
           <div className="h-10 w-1.5 rounded-full bg-orange-500" />
-          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Spotlight</h2>
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Announcements &amp; Events</h2>
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-12">
@@ -754,7 +829,20 @@ const NewsEventsPage = ({ prismicData = null }) => {
           </motion.article>
 
           <div className="lg:col-span-4 flex flex-col gap-4 sm:gap-6">
-            {(realSpotlightCards.length > 0 ? realSpotlightCards : content.spotlightCards).map((news, index) => (
+            {(eventItems.length > 0
+              ? eventItems.slice(0, 3).map((item) => ({
+                  category: item.tag || 'Events',
+                  title: item.title,
+                  date: item.date || 'Recent',
+                  img: item.image
+                    ? extractMediaUrl(item.image)
+                    : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=400',
+                  readMoreUrl: `/news-events/${item.documentId || item.id}`,
+                }))
+              : realSpotlightCards.length > 0
+              ? realSpotlightCards
+              : content.spotlightCards
+            ).map((news, index) => (
               <Link
                 key={news.title || index}
                 to={news.readMoreUrl || '/news-events'}
@@ -788,62 +876,6 @@ const NewsEventsPage = ({ prismicData = null }) => {
         </div>
       </motion.section>
 
-
-
-      <motion.section
-        id="calendar"
-        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-0"
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.18 }}
-        transition={{ duration: 0.65, ease: 'easeOut' }}
-      >
-        <div className="mb-8 sm:mb-12 flex items-center gap-4">
-          <div className="h-10 w-1.5 rounded-full bg-orange-500" />
-          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">In The News</h2>
-        </div>
-
-        <div className="mb-10 sm:mb-14 overflow-hidden rounded-[2rem] border border-white/60 bg-white/60 p-5 shadow-sm backdrop-blur-md">
-          <div className="logo-marquee overflow-hidden">
-            <div className="logo-marquee-track gap-4 py-2">
-              {[...content.inTheNewsLogos, ...content.inTheNewsLogos].map((logo, index) => (
-                <div
-                  key={`${logo}-${index}`}
-                  className="flex h-16 w-56 shrink-0 items-center justify-center rounded-2xl border border-slate-100 bg-white/85 px-5 text-center text-sm font-black uppercase tracking-[0.22em] text-slate-400 grayscale opacity-70 transition-all duration-300 hover:grayscale-0 hover:opacity-100 hover:text-[#006bb8]"
-                >
-                  {logo}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {content.inTheNewsArticles.map((article, index) => (
-            <motion.article
-              key={article.source}
-              className="group relative overflow-hidden rounded-[2rem] bg-slate-50 p-6 sm:p-10 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-b-4 hover:border-orange-500"
-              initial={{ opacity: 0, y: 36 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.18 }}
-              transition={{ duration: 0.55, ease: 'easeOut', delay: index * 0.06 }}
-            >
-              <div className="mb-6 text-5xl leading-none text-orange-500/80">“</div>
-              <p className="mb-10 font-serif text-lg italic leading-relaxed text-slate-700">
-                {article.quote}
-              </p>
-
-              <div className="flex items-start gap-3 border-t border-slate-200 pt-6">
-                <div className="mt-1 h-6 w-1 rounded-full bg-orange-500" />
-                <div>
-                  <h4 className="text-base font-bold text-[#006bb8]">{article.source}</h4>
-                  <p className="mt-1 text-xs uppercase tracking-[0.22em] text-slate-400">{article.date}</p>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-      </motion.section>
 
 
 
@@ -904,6 +936,90 @@ const NewsEventsPage = ({ prismicData = null }) => {
         )}
       </motion.section>
 
+      {/* ── Events Gallery Reel Section ── */}
+      <motion.section
+        id="gallery"
+        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-0"
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.65, ease: 'easeOut' }}
+      >
+        <div className="mb-8 sm:mb-12 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="h-10 w-1.5 rounded-full bg-orange-500" />
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Events Gallery</h2>
+          </div>
+          
+          <div className="flex gap-2">
+            <button
+              onClick={() => {
+                const reel = document.getElementById('events-reel-container');
+                if (reel) reel.scrollLeft -= 320;
+              }}
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all hover:bg-slate-50 active:scale-95 shadow-sm cursor-pointer"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={() => {
+                const reel = document.getElementById('events-reel-container');
+                if (reel) reel.scrollLeft += 320;
+              }}
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all hover:bg-slate-50 active:scale-95 shadow-sm cursor-pointer"
+              aria-label="Scroll right"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        </div>
+
+        {/* Scrollable Reel */}
+        <div 
+          id="events-reel-container"
+          className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-4 scroll-smooth"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {eventItems.length > 0 ? (
+            eventItems.map((event, idx) => {
+              const eventId = event.documentId || event.id;
+              return (
+                <Link
+                  key={eventId || idx}
+                  to={`/news-events/${eventId}`}
+                  className="group relative h-[380px] w-[280px] sm:w-[320px] shrink-0 overflow-hidden rounded-[2rem] shadow-md snap-start transition-all duration-500 hover:-translate-y-2 hover:shadow-xl"
+                >
+                  <img
+                    src={event.image ? extractMediaUrl(event.image) : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=400'}
+                    alt={event.title}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
+                  
+                  <div className="absolute bottom-0 p-6 left-0 right-0 z-10 text-left">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#f7d54b]/20 border border-[#f7d54b]/30 text-[#f7d54b] text-[10px] font-bold uppercase tracking-wider mb-3">
+                      <Sparkles size={10} /> Event Highlight
+                    </span>
+                    <h3 className="text-lg font-bold text-white leading-snug line-clamp-2 mb-2 group-hover:text-[#f7d54b] transition-colors">
+                      {event.title}
+                    </h3>
+                    <div className="flex items-center gap-1.5 text-xs text-slate-300">
+                      <Calendar size={12} className="text-orange-500" />
+                      <span>{event.date}</span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })
+          ) : (
+            <div className="w-full text-center py-12 text-slate-400">
+              No gallery events found.
+            </div>
+          )}
+        </div>
+      </motion.section>
+
       {/* ── Team Celebrations & Welcomes Section ── */}
       {content.birthdaySpotlight && (
         <motion.section
@@ -914,11 +1030,43 @@ const NewsEventsPage = ({ prismicData = null }) => {
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.65, ease: 'easeOut' }}
         >
+          <style dangerouslySetInnerHTML={{__html: `
+            @keyframes goldShineSweep {
+              0% { transform: translateX(-150%) skewX(-15deg); }
+              100% { transform: translateX(150%) skewX(-15deg); }
+            }
+            .gold-shining-card::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(
+                to right,
+                rgba(247, 213, 75, 0) 0%,
+                rgba(247, 213, 75, 0.05) 30%,
+                rgba(247, 213, 75, 0.25) 50%,
+                rgba(247, 213, 75, 0.05) 70%,
+                rgba(247, 213, 75, 0) 100%
+              );
+              transform: translateX(-100%) skewX(-15deg);
+              animation: goldShineSweep 6s infinite ease-in-out;
+              pointer-events: none;
+              z-index: 5;
+            }
+          `}} />
           {/* Main Birthday Spotlight Banner */}
-          <div className="overflow-hidden rounded-[2rem] bg-[#0d1236] text-white p-6 sm:p-12 lg:p-16 min-h-[50vh] lg:min-h-[60vh] flex flex-col lg:flex-row items-center justify-between gap-12 shadow-[0_20px_50px_rgba(13,18,54,0.3)]">
+          <div className="gold-shining-card overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#0c0e2b] via-[#161a4f] to-[#0c0e2b] text-white p-6 sm:p-10 lg:p-12 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-[0_20px_50px_rgba(247,213,75,0.06)] relative border border-[#f7d54b]/30">
+            {/* Background elements */}
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#f7d54b] via-transparent to-transparent" />
+            <div className="absolute -right-24 -bottom-24 w-96 h-96 rounded-full bg-[#f7d54b]/10 blur-3xl pointer-events-none" />
+            <div className="absolute -left-24 -top-24 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl pointer-events-none animate-pulse" />
+            <Sparkles className="absolute top-8 right-12 text-[#f7d54b] opacity-20 pointer-events-none" size={24} />
+            <Cake className="absolute bottom-6 left-12 text-[#f7d54b] opacity-15 pointer-events-none" size={28} />
 
             {/* Left Side: Text/Content Area */}
-            <div className="flex-1 max-w-xl text-center lg:text-left">
+            <div className="flex-1 max-w-xl text-center lg:text-left relative z-10">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f7d54b]/15 text-[#f7d54b] text-xs font-bold uppercase tracking-wider mb-6">
                 <Cake size={14} /> Team Celebrations
               </span>
@@ -936,23 +1084,30 @@ const NewsEventsPage = ({ prismicData = null }) => {
                       : 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg';
                     const bName = content.birthdaySpotlight.name || 'Team Member';
                     const bRole = content.birthdaySpotlight.role || '';
-                    const pageUrl = `${window.location.origin}/news-events`;
+                    const bMsg = content.birthdaySpotlight.message || `Join us in wishing a very Happy Birthday to our ${bRole}, ${bName}! We wish you continued growth, great success, and lasting happiness.`;
+                    
+                    const encodedName = encodeURIComponent(bName);
+                    const encodedRole = encodeURIComponent(bRole);
+                    const encodedImage = encodeURIComponent(imageUrl);
+                    const encodedMsg = encodeURIComponent(bMsg);
+
+                    const pageUrl = `${window.location.origin}/birthday-card?name=${encodedName}&role=${encodedRole}&image=${encodedImage}&msg=${encodedMsg}`;
                     const fileName = `${bName.toLowerCase().replace(/\s+/g, '-')}-birthday-poster.jpg`;
+                    const shareText = `Wishing a very Happy Birthday to ${bRole ? bRole + ' ' : ''}${bName}! 🎂🎉 Open wishing card here: ${pageUrl}`;
 
                     try {
                       const file = await fetchImageAsFile(imageUrl, fileName);
                       if (navigator.canShare && navigator.canShare({ files: [file] })) {
                         await navigator.share({
                           title: `Happy Birthday ${bName}!`,
-                          text: `Wishing a very Happy Birthday to ${bRole ? bRole + ' ' : ''}${bName}! 🎂🎉 Check out TSPL News & Events:`,
-                          url: pageUrl,
+                          text: `Wishing a very Happy Birthday to ${bRole ? bRole + ' ' : ''}${bName}! 🎂🎉\n\nOpen wishing card here: ${pageUrl}`,
                           files: [file],
                         });
                         return;
                       } else if (navigator.share) {
                         await navigator.share({
                           title: `Happy Birthday ${bName}!`,
-                          text: `Wishing a very Happy Birthday to ${bRole ? bRole + ' ' : ''}${bName}! 🎂🎉 Check out TSPL News & Events:`,
+                          text: `Wishing a very Happy Birthday to ${bRole ? bRole + ' ' : ''}${bName}! 🎂🎉`,
                           url: pageUrl,
                         });
                         return;
@@ -966,10 +1121,23 @@ const NewsEventsPage = ({ prismicData = null }) => {
                     }
                     // Fallback if native share is not supported by desktop browser
                     try {
-                      await navigator.clipboard.writeText(pageUrl);
-                      alert('Card web link copied to clipboard!');
+                      await navigator.clipboard.writeText(shareText);
+                      
+                      const response = await fetch(imageUrl);
+                      const blob = await response.blob();
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = fileName;
+                      document.body.appendChild(a);
+                      a.click();
+                      document.body.removeChild(a);
+                      window.URL.revokeObjectURL(url);
+
+                      alert('🎉 Birthday poster downloaded & wishes copied to clipboard!\n\nYou can now upload the photo directly to your Instagram Story or WhatsApp Status and paste the wishing link.');
                     } catch (clipErr) {
-                      console.warn('Clipboard write failed:', clipErr);
+                      console.warn('Fallback sharing copy/download failed:', clipErr);
+                      alert('Birthday wishing card link & message copied to clipboard!');
                     }
                   }}
                   className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#f7d54b] text-[#0d1236] font-bold py-3.5 px-7 rounded-xl transition-all duration-300 hover:bg-white shadow-lg cursor-pointer text-sm sm:text-base"
@@ -1010,7 +1178,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
               <img
                 src={content.birthdaySpotlight.image ? extractMediaUrl(content.birthdaySpotlight.image) : 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg'}
                 alt={`Happy Birthday ${content.birthdaySpotlight.name}`}
-                className="w-full max-w-[450px] sm:max-w-[500px] h-auto rounded-2xl shadow-[0_15px_35px_rgba(0,0,0,0.5)] object-contain border border-white/10"
+                className="w-full max-w-[320px] sm:max-w-[380px] h-auto rounded-2xl shadow-[0_15px_35px_rgba(0,0,0,0.5)] object-contain border-2 border-[#f7d54b]/30"
                 loading="lazy"
               />
             </div>
@@ -1021,6 +1189,60 @@ const NewsEventsPage = ({ prismicData = null }) => {
         </motion.section>
       )}
 
+      <motion.section
+        id="in-the-news"
+        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-0"
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.18 }}
+        transition={{ duration: 0.65, ease: 'easeOut' }}
+      >
+        <div className="mb-8 sm:mb-12 flex items-center gap-4">
+          <div className="h-10 w-1.5 rounded-full bg-orange-500" />
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">In The News</h2>
+        </div>
+
+        <div className="mb-10 sm:mb-14 overflow-hidden rounded-[2rem] border border-white/60 bg-white/60 p-5 shadow-sm backdrop-blur-md">
+          <div className="logo-marquee overflow-hidden">
+            <div className="logo-marquee-track gap-4 py-2">
+              {[...content.inTheNewsLogos, ...content.inTheNewsLogos].map((logo, index) => (
+                <div
+                  key={`${logo}-${index}`}
+                  className="flex h-16 w-56 shrink-0 items-center justify-center rounded-2xl border border-slate-100 bg-white/85 px-5 text-center text-sm font-black uppercase tracking-[0.22em] text-slate-400 grayscale opacity-70 transition-all duration-300 hover:grayscale-0 hover:opacity-100 hover:text-[#006bb8]"
+                >
+                  {logo}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {content.inTheNewsArticles.map((article, index) => (
+            <motion.article
+              key={article.source}
+              className="group relative overflow-hidden rounded-[2rem] bg-slate-50 p-6 sm:p-10 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-b-4 hover:border-orange-500"
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.18 }}
+              transition={{ duration: 0.55, ease: 'easeOut', delay: index * 0.06 }}
+            >
+              <div className="mb-6 text-5xl leading-none text-orange-500/80">“</div>
+              <p className="mb-10 font-serif text-lg italic leading-relaxed text-slate-700">
+                {article.quote}
+              </p>
+
+              <div className="flex items-start gap-3 border-t border-slate-200 pt-6">
+                <div className="mt-1 h-6 w-1 rounded-full bg-orange-500" />
+                <div>
+                  <h4 className="text-base font-bold text-[#006bb8]">{article.source}</h4>
+                  <p className="mt-1 text-xs uppercase tracking-[0.22em] text-slate-400">{article.date}</p>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </motion.section>
       <motion.section
         className="mx-auto mt-12 sm:mt-24 max-w-7xl px-0"
         initial={{ opacity: 0, y: 30 }}

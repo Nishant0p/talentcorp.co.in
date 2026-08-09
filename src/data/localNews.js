@@ -96,6 +96,42 @@ const localNews = [
     tag: 'News',
     image: 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&q=80&w=400',
   },
+  {
+    id: 999992,
+    documentId: 'dbt-portal-update',
+    title: 'TSPL Group Launches New Portal for Automated DBT Verification Process',
+    description: `
+      <p>In line with our commitment to transparency and compliance, TSPL has introduced a new state-of-the-art automated portal checking system for Direct Benefit Transfer (DBT) verification.</p>
+      <p>This portal will enable seamless validation of candidates, automated stipend processing, and real-time dashboard tracking for corporate clients and candidates alike.</p>
+    `,
+    date: '2026-07-15',
+    tag: 'Updates',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=400',
+  },
+  {
+    id: 999991,
+    documentId: 'naps-nats-stipend-guidelines',
+    title: 'Revised Guidelines for NAPS & NATS Stipend Disbursements',
+    description: `
+      <p>TSPL Group's compliance board has released updated guidelines for corporate partners managing stipend payments under the National Apprenticeship Promotion Scheme (NAPS) and National Apprenticeship Training Scheme (NATS).</p>
+      <p>The revised protocols aim to speed up direct benefits transfers while ensuring 100% statutory alignment with central guidelines.</p>
+    `,
+    date: '2026-07-05',
+    tag: 'Updates',
+    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=400',
+  },
+  {
+    id: 999990,
+    documentId: 'rural-skilling-expansion',
+    title: 'Operations Update: Expansion of Skill Centers in Rural Regions',
+    description: `
+      <p>TSPL's operations division has launched 5 new training centers across rural sectors to bring work-integrated vocational training closer to rural youth.</p>
+      <p>These centers are fully equipped to support B.Voc, D.Voc, and flexi-MoU curriculums in partnership with regional industries.</p>
+    `,
+    date: '2026-06-30',
+    tag: 'Updates',
+    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=400',
+  }
 ];
 
 export default localNews;

@@ -68,70 +68,90 @@ const FullPageConfetti = ({ active, onClose }) => {
 
     const colors = ['#6C63FF', '#9B5CFF', '#FF4FD8', '#4F8CFF', '#F7B733', '#ffffff', '#55efc4'];
     const particles = [];
-    const particleCount = 240;
 
-    for (let i = 0; i < particleCount; i++) {
-      const isLeft = i < particleCount / 2;
+    // Populate initial batch (fewer, for an elegant start)
+    const initialCount = 60;
+    for (let i = 0; i < initialCount; i++) {
+      const isLeft = i < initialCount / 2;
       const angle = isLeft
-        ? (Math.random() * 50 + 25) * (Math.PI / 180)
-        : (Math.random() * 50 + 105) * (Math.PI / 180);
+        ? (Math.random() * 45 + 30) * (Math.PI / 180)
+        : (Math.random() * 45 + 105) * (Math.PI / 180);
 
-      const speed = Math.random() * 30 + 15;
+      const speed = Math.random() * 18 + 10;
 
       particles.push({
         x: isLeft ? 0 : canvas.width,
         y: canvas.height,
         vx: Math.cos(angle) * speed * (isLeft ? 1 : -1),
         vy: -Math.sin(angle) * speed,
-        r: Math.random() * 7 + 4,
+        r: Math.random() * 6 + 3,
         color: colors[Math.floor(Math.random() * colors.length)],
-        tilt: Math.random() * 14 - 7,
-        tiltAngleIncremental: Math.random() * 0.12 + 0.05,
+        tilt: Math.random() * 12 - 6,
+        tiltAngleIncremental: Math.random() * 0.1 + 0.04,
         tiltAngle: 0,
         opacity: 1,
       });
     }
 
-    let framesElapsed = 0;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      let activeParticles = 0;
-      particles.forEach((p) => {
+      // Continuously spawn new slow particles from the bottom corners
+      if (particles.length < 180 && Math.random() < 0.45) {
+        const isLeft = Math.random() < 0.5;
+        const angle = isLeft
+          ? (Math.random() * 40 + 35) * (Math.PI / 180) // 35 to 75 degrees
+          : (Math.random() * 40 + 105) * (Math.PI / 180); // 105 to 145 degrees
+        const speed = Math.random() * 12 + 8; // slow drift speed
+
+        particles.push({
+          x: isLeft ? 0 : canvas.width,
+          y: canvas.height,
+          vx: Math.cos(angle) * speed * (isLeft ? 1 : -1),
+          vy: -Math.sin(angle) * speed,
+          r: Math.random() * 5 + 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          tilt: Math.random() * 10 - 5,
+          tiltAngleIncremental: Math.random() * 0.08 + 0.03,
+          tiltAngle: 0,
+          opacity: 1,
+        });
+      }
+
+      // Update and draw particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.42;
-        p.vx *= 0.98;
-        p.vy *= 0.98;
+        p.vy += 0.22; // low gravity float
+        p.vx *= 0.985;
+        p.vy *= 0.985;
 
         p.tiltAngle += p.tiltAngleIncremental;
-        p.tilt = Math.sin(p.tiltAngle) * 14;
+        p.tilt = Math.sin(p.tiltAngle) * 12;
 
-        if (p.vy > 0 && p.y > canvas.height * 0.35) {
-          p.opacity -= 0.01;
+        if (p.vy > 0 && p.y > canvas.height * 0.2) {
+          p.opacity -= 0.007; // elegant fade-out
         }
 
-        if (p.opacity > 0 && p.y <= canvas.height && p.x >= 0 && p.x <= canvas.width) {
-          activeParticles++;
-          ctx.save();
-          ctx.globalAlpha = p.opacity;
-          ctx.beginPath();
-          ctx.lineWidth = p.r;
-          ctx.strokeStyle = p.color;
-          ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
-          ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
-          ctx.stroke();
-          ctx.restore();
+        // Clean up out of bounds or dead particles
+        if (p.opacity <= 0 || p.y > canvas.height + 20 || p.x < -20 || p.x > canvas.width + 20) {
+          particles.splice(i, 1);
+          continue;
         }
-      });
 
-      framesElapsed++;
-      if (activeParticles === 0 || framesElapsed > 320) {
-        cancelAnimationFrame(animationFrameId);
-        onClose();
-      } else {
-        animationFrameId = requestAnimationFrame(animate);
+        ctx.save();
+        ctx.globalAlpha = p.opacity;
+        ctx.beginPath();
+        ctx.lineWidth = p.r;
+        ctx.strokeStyle = p.color;
+        ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+        ctx.stroke();
+        ctx.restore();
       }
+
+      animationFrameId = requestAnimationFrame(animate);
     };
 
     animate();
@@ -318,12 +338,21 @@ const BirthdayCardPage = () => {
       const file = await fetchImageAsFile(image, fileName);
 
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        const pageUrl = window.location.href;
         await navigator.share({
           files: [file],
           title: `Happy Birthday ${name || 'Team Member'}!`,
-          text: `Wishing a very Happy Birthday to ${name || 'our team member'}! 🎂🎉`,
+          text: `Wishing a very Happy Birthday to ${name || 'our team member'}! 🎂🎉\n\nOpen wishing card here: ${pageUrl}`,
         });
       } else {
+        const pageUrl = window.location.href;
+        const shareText = `Wishing a very Happy Birthday to ${role ? role + ' ' : ''}${name}! 🎂🎉 Click to open wishing card: ${pageUrl}`;
+        try {
+          await navigator.clipboard.writeText(shareText);
+        } catch (clipErr) {
+          console.warn('Clipboard write failed:', clipErr);
+        }
+
         const url = window.URL.createObjectURL(file);
         const a = document.createElement('a');
         a.href = url;
@@ -332,6 +361,8 @@ const BirthdayCardPage = () => {
         a.click();
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
+
+        alert('🎉 Birthday poster downloaded & wishes copied to clipboard!\n\nYou can now upload the photo directly to your Instagram Story or WhatsApp Status and paste the wishing text.');
       }
     } catch (err) {
       console.warn('Share poster failed:', err);
@@ -342,7 +373,8 @@ const BirthdayCardPage = () => {
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
+    const shareText = `Wishing a very Happy Birthday to ${role ? role + ' ' : ''}${name}! 🎂🎉 Click to open wishing card: ${window.location.href}`;
+    navigator.clipboard.writeText(shareText);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2200);
   };
@@ -456,9 +488,9 @@ const BirthdayCardPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5 }}
-          className="text-4xl sm:text-5xl md:text-[56px] font-extrabold leading-none tracking-[-2px] text-transparent bg-clip-text bg-gradient-to-r from-[#6C63FF] via-[#9B5CFF] to-[#FF4FD8] mb-10"
+          className="text-5xl sm:text-6xl md:text-[68px] font-black leading-tight tracking-tight text-white mb-8 text-center"
         >
-          Happy Birthday
+          Happy Birthday, <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f7d54b] via-orange-400 to-[#f7d54b]">{name || 'Team Member'}</span>!
         </motion.h1>
 
         {/* Employee Card (Background: #10172D, Padding: 48px, Radius: 28px, Glass Effect) */}
@@ -466,18 +498,24 @@ const BirthdayCardPage = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.35, duration: 0.5 }}
-          className="relative w-full max-w-[850px] mb-12 rounded-[28px] bg-[#10172D]/95 border border-white/10 backdrop-blur-[18px] p-8 sm:p-12 shadow-[0_30px_90px_rgba(0,0,0,0.5)] flex flex-col items-center overflow-hidden"
+          className="relative w-full max-w-[850px] mb-12 rounded-[28px] bg-gradient-to-br from-[#12163b] via-[#10132b] to-[#0c0e22] border border-[#f7d54b]/30 backdrop-blur-[18px] p-8 sm:p-12 shadow-[0_30px_90px_rgba(247,213,75,0.08)] flex flex-col items-center overflow-hidden"
         >
-          {/* Animated Gradient Border Shimmer Accent */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#6C63FF] via-[#9B5CFF] via-[#FF4FD8] to-[#F7B733] animate-pulse" />
+          {/* Gold corner ornaments */}
+          <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-[#f7d54b]/40 rounded-tl-lg pointer-events-none" />
+          <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-[#f7d54b]/40 rounded-tr-lg pointer-events-none" />
+          <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-[#f7d54b]/40 rounded-bl-lg pointer-events-none" />
+          <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-[#f7d54b]/40 rounded-br-lg pointer-events-none" />
+
+          {/* Animated Gold Border Shimmer Accent */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#f7d54b] via-orange-400 to-[#f7d54b] animate-pulse" />
 
           {/* Employee Avatar & Name Card */}
           <div className="flex flex-col sm:flex-row items-center gap-5 mb-6 text-center sm:text-left">
-            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-[#6C63FF] p-0.5 bg-gradient-to-r from-[#6C63FF] to-[#FF4FD8] shadow-lg shrink-0">
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-[#f7d54b] p-0.5 bg-gradient-to-r from-[#f7d54b] to-orange-400 shadow-lg shrink-0">
               {image ? (
                 <img src={image} alt={name || 'Employee'} className="w-full h-full object-cover rounded-full" />
               ) : (
-                <div className="w-full h-full bg-[#151E38] flex items-center justify-center text-[#6C63FF]">
+                <div className="w-full h-full bg-[#151E38] flex items-center justify-center text-[#f7d54b]">
                   <User size={32} />
                 </div>
               )}
@@ -492,7 +530,7 @@ const BirthdayCardPage = () => {
                   {role || 'TSPL Team'}
                 </span>
                 {tenure && (
-                  <span className="rounded-full bg-[#6C63FF]/20 border border-[#6C63FF]/40 px-3 py-0.5 text-xs font-bold text-[#4F8CFF]">
+                  <span className="rounded-full bg-[#f7d54b]/20 border border-[#f7d54b]/40 px-3 py-0.5 text-xs font-bold text-[#f7d54b]">
                     {tenure}
                   </span>
                 )}
@@ -522,9 +560,9 @@ const BirthdayCardPage = () => {
             {/* Secondary Action Button */}
             <button
               onClick={triggerPopper}
-              className="w-full sm:w-auto h-[56px] px-[34px] rounded-[16px] bg-transparent border border-[#2E3B66] hover:border-[#6C63FF] text-slate-200 hover:text-white font-bold text-base flex items-center justify-center gap-3 transition-all duration-200 hover:-translate-y-[3px] cursor-pointer"
+              className="w-full sm:w-auto h-[56px] px-[34px] rounded-[16px] bg-transparent border border-[#2E3B66] hover:border-[#f7d54b] text-slate-200 hover:text-white font-bold text-base flex items-center justify-center gap-3 transition-all duration-200 hover:-translate-y-[3px] cursor-pointer"
             >
-              <PartyPopper size={20} className="text-[#F7B733]" />
+              <PartyPopper size={20} className="text-[#f7d54b]" />
               Pop Confetti
             </button>
 
@@ -532,7 +570,7 @@ const BirthdayCardPage = () => {
             <button
               onClick={handleCopyLink}
               title={copiedLink ? 'Link Copied!' : 'Copy Page Link'}
-              className="h-[56px] w-[56px] rounded-[16px] bg-transparent border border-[#2E3B66] hover:border-[#6C63FF] text-slate-300 hover:text-white flex items-center justify-center transition-all duration-200 hover:-translate-y-[3px] cursor-pointer shrink-0"
+              className="h-[56px] w-[56px] rounded-[16px] bg-transparent border border-[#2E3B66] hover:border-[#f7d54b] text-slate-300 hover:text-white flex items-center justify-center transition-all duration-200 hover:-translate-y-[3px] cursor-pointer shrink-0"
             >
               {copiedLink ? <Check size={20} className="text-emerald-400" /> : <Copy size={20} />}
             </button>
@@ -545,12 +583,12 @@ const BirthdayCardPage = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7 }}
-            className="w-full max-w-[850px] overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#10172D] shadow-[0_30px_80px_rgba(0,0,0,0.45)] group relative"
+            className="w-full max-w-[650px] overflow-hidden rounded-[2rem] border-4 border-double border-[#f7d54b]/40 bg-[#10172D] shadow-[0_30px_80px_rgba(0,0,0,0.6)] group relative p-3 bg-gradient-to-br from-[#f7d54b] via-orange-400 to-[#f7d54b] hover:-translate-y-1 transition-all duration-300"
           >
             <img
               src={image}
               alt={`${name || 'Employee'} Birthday Poster`}
-              className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+              className="w-full h-auto object-cover rounded-[1.4rem] transition-transform duration-700 group-hover:scale-[1.01]"
             />
           </motion.div>
         )}

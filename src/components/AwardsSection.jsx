@@ -18,16 +18,16 @@ const awardsData = [
     title: 'Government Authorized',
     description: 'Compliant with all norms',
     tag: 'Verified & Recognized',
-    glow: 'rgba(249,115,22,0.2)',
-    colorClass: 'text-orange-600',
-    titleClass: 'text-[#0f2a4d]',
-    descClass: 'text-slate-500',
-    bulletClass: 'text-slate-600',
-    checkClass: 'text-orange-500',
-    pillClass: 'bg-orange-50 border-orange-100/50 text-[#FF8C00]',
-    bgGradient: 'from-orange-50/40 via-white to-white group-hover:from-orange-50 group-hover:via-white group-hover:to-orange-50',
-    borderColor: 'border-slate-200/60 group-hover:border-orange-500',
-    iconBg: 'bg-orange-500/10 text-orange-600',
+    glow: 'rgba(247,213,75,0.25)',
+    colorClass: 'text-[#f7d54b]',
+    titleClass: 'text-white',
+    descClass: 'text-slate-400',
+    bulletClass: 'text-slate-300',
+    checkClass: 'text-[#f7d54b]',
+    pillClass: 'bg-[#f7d54b]/15 border-[#f7d54b]/30 text-[#f7d54b]',
+    bgGradient: 'from-slate-900 via-slate-950 to-slate-950 group-hover:from-slate-900 group-hover:via-slate-950 group-hover:to-slate-950',
+    borderColor: 'border-slate-800/80 group-hover:border-[#f7d54b]',
+    iconBg: 'bg-[#f7d54b]/10 text-[#f7d54b]',
     bulletPoints: [
       'Official Ministry of Skill Dev TPA partner',
       'Comprehensive PF & ESIC statutory audits',
@@ -43,16 +43,16 @@ const awardsData = [
     title: 'World Record Holder',
     description: 'Recognized globally',
     tag: 'Verified & Recognized',
-    glow: 'rgba(37,99,235,0.2)',
-    colorClass: 'text-blue-600',
-    titleClass: 'text-[#0f2a4d]',
-    descClass: 'text-slate-500',
-    bulletClass: 'text-slate-600',
-    checkClass: 'text-blue-500',
-    pillClass: 'bg-blue-50 border-blue-100/50 text-[#2563EB]',
-    bgGradient: 'from-blue-50/40 via-white to-white group-hover:from-blue-50 group-hover:via-white group-hover:to-blue-50',
-    borderColor: 'border-slate-200/60 group-hover:border-blue-500',
-    iconBg: 'bg-blue-500/10 text-blue-600',
+    glow: 'rgba(247,213,75,0.25)',
+    colorClass: 'text-[#f7d54b]',
+    titleClass: 'text-white',
+    descClass: 'text-slate-400',
+    bulletClass: 'text-slate-300',
+    checkClass: 'text-[#f7d54b]',
+    pillClass: 'bg-[#f7d54b]/15 border-[#f7d54b]/30 text-[#f7d54b]',
+    bgGradient: 'from-slate-900 via-slate-950 to-slate-950 group-hover:from-slate-900 group-hover:via-slate-950 group-hover:to-slate-950',
+    borderColor: 'border-slate-800/80 group-hover:border-[#f7d54b]',
+    iconBg: 'bg-[#f7d54b]/10 text-[#f7d54b]',
     bulletPoints: [
       'Honored in Delhi World Book of Records',
       'Top Ranking Third Party Aggregator',
@@ -68,16 +68,16 @@ const awardsData = [
     title: 'Excellence Award',
     description: 'Awards for contribution',
     tag: 'Verified & Recognized',
-    glow: 'rgba(249,115,22,0.2)',
-    colorClass: 'text-orange-600',
-    titleClass: 'text-[#0f2a4d]',
-    descClass: 'text-slate-500',
-    bulletClass: 'text-slate-600',
-    checkClass: 'text-orange-500',
-    pillClass: 'bg-orange-50 border-orange-100/50 text-[#FF8C00]',
-    bgGradient: 'from-orange-50/40 via-white to-white group-hover:from-orange-50 group-hover:via-white group-hover:to-orange-50',
-    borderColor: 'border-slate-200/60 group-hover:border-orange-500',
-    iconBg: 'bg-orange-500/10 text-orange-600',
+    glow: 'rgba(247,213,75,0.25)',
+    colorClass: 'text-[#f7d54b]',
+    titleClass: 'text-white',
+    descClass: 'text-slate-400',
+    bulletClass: 'text-slate-300',
+    checkClass: 'text-[#f7d54b]',
+    pillClass: 'bg-[#f7d54b]/15 border-[#f7d54b]/30 text-[#f7d54b]',
+    bgGradient: 'from-slate-900 via-slate-950 to-slate-950 group-hover:from-slate-900 group-hover:via-slate-950 group-hover:to-slate-950',
+    borderColor: 'border-slate-800/80 group-hover:border-[#f7d54b]',
+    iconBg: 'bg-[#f7d54b]/10 text-[#f7d54b]',
     bulletPoints: [
       'Excellence in skilling mission award 2024',
       'State Human Resource Federation honors',
@@ -93,45 +93,20 @@ const awardsData = [
     title: 'ISO Certified',
     description: 'Satisfaction rate',
     tag: 'Verified & Recognized',
-    glow: 'rgba(37,99,235,0.2)',
-    colorClass: 'text-blue-600',
-    titleClass: 'text-[#0f2a4d]',
-    descClass: 'text-slate-500',
-    bulletClass: 'text-slate-600',
-    checkClass: 'text-blue-500',
-    pillClass: 'bg-blue-50 border-blue-100/50 text-[#2563EB]',
-    bgGradient: 'from-blue-50/40 via-white to-white group-hover:from-blue-50 group-hover:via-white group-hover:to-blue-50',
-    borderColor: 'border-slate-200/60 group-hover:border-blue-500',
-    iconBg: 'bg-blue-500/10 text-blue-600',
+    glow: 'rgba(247,213,75,0.25)',
+    colorClass: 'text-[#f7d54b]',
+    titleClass: 'text-white',
+    descClass: 'text-slate-400',
+    bulletClass: 'text-slate-300',
+    checkClass: 'text-[#f7d54b]',
+    pillClass: 'bg-[#f7d54b]/15 border-[#f7d54b]/30 text-[#f7d54b]',
+    bgGradient: 'from-slate-900 via-slate-950 to-slate-950 group-hover:from-slate-900 group-hover:via-slate-950 group-hover:to-slate-950',
+    borderColor: 'border-slate-800/80 group-hover:border-[#f7d54b]',
+    iconBg: 'bg-[#f7d54b]/10 text-[#f7d54b]',
     bulletPoints: [
       'ISO 9001:2015 premium quality standard',
       'Dedicated client resolution within 24 hours',
       '99.4% annual client retention quotient'
-    ]
-  },
-  {
-    id: 'half-year-awards',
-    icon: Award,
-    highlight: '2026',
-    subtext: 'Half-Year',
-    pill: 'Annual Honor',
-    title: 'Performance Awards',
-    description: 'Outstanding Team Awards',
-    tag: 'Verified & Recognized',
-    glow: 'rgba(249,115,22,0.2)',
-    colorClass: 'text-orange-600',
-    titleClass: 'text-[#0f2a4d]',
-    descClass: 'text-slate-500',
-    bulletClass: 'text-slate-600',
-    checkClass: 'text-orange-500',
-    pillClass: 'bg-orange-50 border-orange-100/50 text-[#FF8C00]',
-    bgGradient: 'from-orange-50/40 via-white to-white group-hover:from-orange-50 group-hover:via-white group-hover:to-orange-50',
-    borderColor: 'border-slate-200/60 group-hover:border-orange-500',
-    iconBg: 'bg-orange-500/10 text-orange-600',
-    bulletPoints: [
-      'Honoring Compliance, HR & Operations teams',
-      'Recognizing top regional leadership',
-      'Celebrating excellence across TSPL Group'
     ]
   }
 ];
@@ -170,7 +145,7 @@ const AwardsSection = () => {
         </div>
 
         {/* Redesigned Card Layout */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {awardsData.map((award, index) => {
             const IconComponent = award.icon;
             return (
@@ -236,14 +211,6 @@ const AwardsSection = () => {
                   </div>
                 </div>
 
-                {/* Bottom Verification Footer */}
-                <div className="border-t border-slate-100/80 group-hover:border-slate-200 pt-4 flex items-center justify-between relative z-10 transition-all duration-500">
-                  <span className="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-[#0f2a4d] transition-colors duration-500">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500 transition-colors duration-500" />
-                    {award.tag}
-                  </span>
-                  <Sparkles size={12} className="text-orange-500 animate-pulse transition-colors duration-500" />
-                </div>
               </div>
             );
           })}

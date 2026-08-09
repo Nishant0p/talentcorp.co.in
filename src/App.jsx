@@ -43,6 +43,8 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const BlogList = lazy(() => import('./pages/blog/BlogList'))
 const BlogPost = lazy(() => import('./pages/blog/BlogPost'))
 const LeaderProfilePage = lazy(() => import('./pages/LeaderProfilePage'))
+const CalendarPage = lazy(() => import('./pages/CalendarPage'))
+const BirthdayCardPage = lazy(() => import('./pages/BirthdayCardPage'))
 
 
 const PRELOADER_DURATION_MS = 2800
@@ -171,6 +173,8 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="about" path="/about" element={<AboutPage />} />
           <Route key="jobs" path="/jobs" element={<JobsPage />} />
           <Route key="news-events" path="/news-events" element={<NewsEventsPage />} />
+          <Route key="calendar" path="/calendar" element={<CalendarPage />} />
+          <Route key="birthday-card" path="/birthday-card" element={<BirthdayCardPage />} />
           <Route key="all-news" path="/all-news" element={<AllNewsPage />} />
           <Route key="all-events" path="/all-events" element={<AllEventsPage />} />
           <Route key="news-detail" path="/news-events/:newsId" element={<NewsDetailPage />} />

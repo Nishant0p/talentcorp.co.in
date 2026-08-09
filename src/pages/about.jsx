@@ -833,7 +833,7 @@ function ManagementSection({ isMobile }) {
 						<Link
 							key={leader.id}
 							to={`/leader/${leader.slug}`}
-							className="w-full max-w-[280px] sm:max-w-none sm:w-[calc(50%-8px)] md:w-[calc(33.333%-16px)] lg:w-[calc(20%-20px)] block transition-transform duration-300 hover:scale-102"
+							className="w-full max-w-[280px] sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(16.666%-20px)] block transition-transform duration-300 hover:scale-102"
 						>
 							<motion.div
 								{...getLeaderAnimProps(i)}
