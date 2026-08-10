@@ -1,28 +1,42 @@
 const localNews = [
   {
-    id: 999998,
-    documentId: 'outstanding-performance-awards-2026',
-    title: 'Half-Year Outstanding Performance Awards 2026',
+    id: 999988,
+    documentId: 'yearly-trip-2026',
+    title: 'TSPL Group Yearly Trip 2026 – A Memorable Monsoon Adventure to Kaas Plateau & Mahabaleshwar',
     description: `
-      <p>TSPL GROUP is delighted to invite you to the Half-Year Outstanding Performance Awards 2026 🎉</p>
-      <p>🏅 <strong>Award Categories Include:</strong></p>
-      <ul>
-        <li>🔹 Compliance Team</li>
-        <li>🔹 Accounts Team</li>
-        <li>🔹 Operations Team</li>
-        <li>🔹 HR Team</li>
-        <li>🔹 Recruitment Team</li>
-        <li>🔹 Digital Marketing Team</li>
-      </ul>
-      <p>🏆 Plus other special awards for outstanding achievements and contributions.</p>
-      <p>📅 <strong>Date:</strong> 21 June 2026 (Sunday)</p>
-      <p>🕒 <strong>Time:</strong> 11:00 AM to 2:00 PM</p>
-      <p>📍 <strong>Venue:</strong> TSPL GROUP Head Office, Chakan</p>
-      <p>✨ Your presence will make this occasion even more special.</p>
+      <p>TSPL Group employees embarked on a memorable monsoon adventure to Kaas Plateau & Mahabaleshwar, fostering team bonding and celebrating our collective achievements.</p>
+      <p>📅 <strong>Date:</strong> 20 July 2026</p>
+      <p>📍 <strong>Venue:</strong> TSPL GROUP, Pune</p>
     `,
-    date: '2026-06-21',
+    date: '2026-07-20',
     tag: 'Events',
-    image: 'https://images.prismic.io/alphas/aj9_6VbRV8_Qf7oY_IMG_0905.HEIC?auto=format,compress',
+    image: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    id: 999987,
+    documentId: 'family-get-together-talegaon-2026',
+    title: 'TSPL Group Family Get-Together & Inauguration of the 31st Office at Talegaon',
+    description: `
+      <p>Celebrating the inauguration of our 31st office branch at Talegaon with a grand family get-together, marking another milestone in TSPL Group’s expansion.</p>
+      <p>📅 <strong>Date:</strong> 28 March 2026</p>
+      <p>📍 <strong>Venue:</strong> TSPL GROUP, Pune</p>
+    `,
+    date: '2026-03-28',
+    tag: 'Events',
+    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    id: 999986,
+    documentId: 'womens-day-celebration-2026',
+    title: 'International Women’s Day Celebration 2026 at TSPL Group',
+    description: `
+      <p>Honoring and celebrating the incredible contributions of women leaders and team members at TSPL Group on International Women’s Day 2026.</p>
+      <p>📅 <strong>Date:</strong> 08 March 2026</p>
+      <p>📍 <strong>Venue:</strong> TSPL GROUP, Pune</p>
+    `,
+    date: '2026-03-08',
+    tag: 'Events',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600',
   },
   {
     id: 999999,

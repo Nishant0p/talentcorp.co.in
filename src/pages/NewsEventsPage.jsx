@@ -103,50 +103,25 @@ const defaultNewsEventsContent = {
       image: 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&q=80&w=400',
     },
   ],
-  upcomingEvents: [
-    {
-      date: '15',
-      month: 'APR',
-      title: 'National Skill Development Conference 2026',
-      loc: 'Pune Convention Center',
-    },
-    {
-      date: '22',
-      month: 'APR',
-      title: 'Campus Recruitment Drive - Engineering College',
-      loc: 'Multiple Locations, Maharashtra',
-    },
-    {
-      date: '01',
-      month: 'MAY',
-      title: 'Women Empowerment Workshop Series',
-      loc: 'Mumbai Training Center',
-    },
-  ],
+  upcomingEvents: [],
   pastEvents: [
     {
-      date: '21',
-      month: 'JUN',
-      title: 'Half-Year Outstanding Performance Awards 2026',
-      loc: 'TSPL GROUP Head Office, Chakan',
+      date: '20',
+      month: 'JUL',
+      title: 'TSPL Group Yearly Trip 2026 – A Memorable Monsoon Adventure to Kaas Plateau & Mahabaleshwar',
+      loc: 'TSPL GROUP, Pune',
     },
     {
-      date: '10',
+      date: '28',
       month: 'MAR',
-      title: 'Industry-Academia Conclave 2026',
-      loc: 'Hyderabad',
+      title: 'TSPL Group Family Get-Together & Inauguration of the 31st Office at Talegaon',
+      loc: 'TSPL GROUP, Pune',
     },
     {
-      date: '25',
-      month: 'FEB',
-      title: 'Skill India Mission Partnership Summit',
-      loc: 'New Delhi',
-    },
-    {
-      date: '14',
-      month: 'FEB',
-      title: 'Annual Employee Awards Ceremony',
-      loc: 'Pune Headquarters',
+      date: '08',
+      month: 'MAR',
+      title: 'International Women’s Day Celebration 2026 at TSPL Group',
+      loc: 'TSPL GROUP, Pune',
     },
   ],
   birthdayUpcoming: [
@@ -473,7 +448,13 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
     const sourceList = eventsData.length > 0 ? eventsData : localNews.filter((i) => i.tag === 'Events' || i.tag === 'Event');
 
-    return sourceList.map((item) => {
+    const sortedSourceList = [...sourceList].sort((a, b) => {
+      const dateA = a.date ? new Date(a.date) : new Date(0);
+      const dateB = b.date ? new Date(b.date) : new Date(0);
+      return dateB - dateA;
+    });
+
+    return sortedSourceList.map((item) => {
       let day = '21';
       let month = 'JUN';
       if (item.date) {
@@ -1021,7 +1002,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
       </motion.section>
 
       {/* ── Team Celebrations & Welcomes Section ── */}
-      {content.birthdaySpotlight && (
+      {false && content.birthdaySpotlight && (
         <motion.section
           ref={birthdaySectionRef}
           className="mx-auto mt-12 sm:mt-24 max-w-7xl px-0"
@@ -1273,30 +1254,36 @@ const NewsEventsPage = ({ prismicData = null }) => {
             </div>
 
             <div className="relative space-y-8">
-              <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
-              {content.upcomingEvents.map((event, idx) => (
-                <div
-                  key={`${event.title}-${idx}`}
-                  className="group relative z-10 flex gap-6 transition-transform duration-300 hover:translate-x-2"
-                >
-                  <div className="flex h-20 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-[#006bb8] text-white shadow-lg shadow-blue-900/20">
-                    <span className="text-2xl font-black leading-none">{event.date}</span>
-                    <span className="mt-1 text-[10px] font-bold tracking-widest">{event.month}</span>
-                  </div>
-                  <div className="flex flex-1 flex-col justify-center">
-                    <h4 className="mb-2 text-lg font-bold leading-tight text-slate-900 transition-colors group-hover:text-orange-500">
-                      {event.title}
-                    </h4>
-                    <div className="flex items-center gap-1 text-sm text-slate-400">
-                      <MapPin size={14} className="text-orange-500" />
-                      {event.loc}
+              {content.upcomingEvents.length > 0 ? (
+                <>
+                  <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
+                  {content.upcomingEvents.slice(0, 3).map((event, idx) => (
+                    <div
+                      key={`${event.title}-${idx}`}
+                      className="group relative z-10 flex gap-6 transition-transform duration-300 hover:translate-x-2"
+                    >
+                      <div className="flex h-20 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-[#006bb8] text-white shadow-lg shadow-blue-900/20">
+                        <span className="text-2xl font-black leading-none">{event.date}</span>
+                        <span className="mt-1 text-[10px] font-bold tracking-widest">{event.month}</span>
+                      </div>
+                      <div className="flex flex-1 flex-col justify-center">
+                        <h4 className="mb-2 text-lg font-bold leading-tight text-slate-900 transition-colors group-hover:text-orange-500">
+                          {event.title}
+                        </h4>
+                        <div className="flex items-center gap-1 text-sm text-slate-400">
+                          <MapPin size={14} className="text-orange-500" />
+                          {event.loc}
+                        </div>
+                        <Link to="/contact-us" className="mt-3 inline-flex w-fit items-center gap-1 text-sm font-semibold text-[#006bb8] opacity-0 transition-all group-hover:opacity-100">
+                          Register <ChevronRight size={14} />
+                        </Link>
+                      </div>
                     </div>
-                    <Link to="/contact-us" className="mt-3 inline-flex w-fit items-center gap-1 text-sm font-semibold text-[#006bb8] opacity-0 transition-all group-hover:opacity-100">
-                      Register <ChevronRight size={14} />
-                    </Link>
-                  </div>
-                </div>
-              ))}
+                  ))}
+                </>
+              ) : (
+                <p className="text-slate-500 text-sm italic pl-2">No upcoming events scheduled at the moment.</p>
+              )}
             </div>
           </div>
 
@@ -1305,7 +1292,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
             <div className="relative space-y-8">
               <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
-              {(realPastEvents.length > 0 ? realPastEvents : content.pastEvents).map((event, idx) => (
+              {(realPastEvents.length > 0 ? realPastEvents : content.pastEvents).slice(0, 3).map((event, idx) => (
                 <div
                   key={`${event.title}-${idx}`}
                   className="relative z-10 flex gap-6 opacity-80 transition-all hover:opacity-100 hover:translate-x-1"
