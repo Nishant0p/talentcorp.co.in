@@ -6,28 +6,33 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import RozgaarPreloader from '../components/RozgaarPreloader'
 import { rojgaarYatraOptimizedImages } from '../data/rojgaarYatraOptimizedImages'
+import { fetchCollection, extractMediaUrl } from '../utils/strapi'
 
 const journeyHighlightFolderConfigs = [
 	{
 		title: 'Offer Letter Distribution',
+		slug: 'offer-letter-distribution',
 		folder: '/Offer Letter Distribution/',
 		subtitle: 'Selection handovers, offer dispatch, and the final mile of candidate onboarding.',
 		accent: 'from-emerald-400 to-teal-300',
 	},
 	{
 		title: 'Campus Drive Held Overall India',
+		slug: 'campus-drive',
 		folder: '/Campus Drive Held Overall India/',
 		subtitle: 'Large-scale hiring drives connecting candidates directly with employers and recruiters.',
 		accent: 'from-blue-400 to-cyan-300',
 	},
 	{
 		title: 'Colleges Visits In Pan India',
+		slug: 'colleges-visits',
 		folder: '/Colleges Visits In Pan India/',
 		subtitle: 'Campus visits, student engagement, and awareness sessions across institutes.',
 		accent: 'from-violet-400 to-fuchsia-300',
 	},
 	{
 		title: 'Banner Distribution & Pasting',
+		slug: 'banner-distribution',
 		folder: '/Banner Distribution & Pasting/',
 		subtitle: 'Street-level visibility, wall branding, and hyperlocal outreach across the route.',
 		accent: 'from-orange-400 to-amber-300',
@@ -163,6 +168,62 @@ export default function YatraPage() {
 		return () => window.removeEventListener('resize', checkMobile)
 	}, [])
 
+	const [stages, setStages] = useState([
+		{ id: '1', state: 'Maharashtra', status: 'COMPLETED' },
+		{ id: '2', state: 'M.Pradesh', status: 'COMPLETED' },
+		{ id: '3', state: 'U.Pradesh', status: 'COMPLETED' },
+		{ id: '4', state: 'Bihar', status: 'COMPLETED' },
+		{ id: '5', state: 'Gujarat', status: 'ACTIVE' },
+		{ id: '6', state: 'West Bengal', status: 'IN_PROCESS' },
+		{ id: '7', state: 'Odisha', status: 'IN_PROCESS' }
+	])
+	const [highlightSections, setHighlightSections] = useState(() =>
+		journeyHighlightFolderConfigs.map((config, sectionIndex) => ({
+			...config,
+			sectionIndex,
+			images: rojgaarYatraOptimizedImages[config.title] ?? [],
+		}))
+	)
+
+	useEffect(() => {
+		const loadYatraData = async () => {
+			try {
+				const fetchedStages = await fetchCollection('/api/yatra-stages?sort=order:asc');
+				if (fetchedStages && fetchedStages.length > 0) {
+					setStages(fetchedStages);
+				}
+			} catch (err) {
+				console.warn('Failed to load yatra stages from Strapi:', err);
+			}
+
+			try {
+				const fetchedGalleries = await fetchCollection('/api/yatra-galleries?populate=*&sort=order:asc');
+				if (fetchedGalleries && fetchedGalleries.length > 0) {
+					const mappedSections = fetchedGalleries.map((gallery, sectionIndex) => {
+						const imagesList = [
+							...(gallery.images || []),
+							...(gallery.photos || [])
+						];
+						const images = imagesList.map((img) => extractMediaUrl(img));
+						return {
+							title: gallery.title,
+							slug: gallery.slug,
+							subtitle: gallery.subtitle || gallery.description,
+							accent: gallery.accent || 'from-blue-400 to-cyan-300',
+							sectionIndex,
+							images: images.length > 0 ? images : (rojgaarYatraOptimizedImages[gallery.title] ?? []),
+						};
+					});
+					setHighlightSections(mappedSections);
+				}
+			} catch (err) {
+				console.warn('Failed to load yatra galleries from Strapi:', err);
+			}
+		};
+
+		loadYatraData();
+	}, []);
+
 	useEffect(() => {
 		if (typeof window !== 'undefined' && window.innerWidth < 768) {
 			return
@@ -193,7 +254,7 @@ export default function YatraPage() {
 	}
 
 	useEffect(() => {
-		const allJourneyImages = journeyHighlightSections.flatMap((section) => section.images)
+		const allJourneyImages = highlightSections.flatMap((section) => section.images)
 		let cancelled = false
 		const preloaders = allJourneyImages.map((src) => {
 			const image = new Image()
@@ -215,7 +276,7 @@ export default function YatraPage() {
 				image.onerror = null
 			})
 		}
-	}, [])
+	}, [highlightSections])
 
 	return (
 		<div className="bg-white text-slate-800">
@@ -275,68 +336,37 @@ export default function YatraPage() {
 									{/* Timeline Line */}
 									<div className="absolute left-0 right-0 top-8 h-1 bg-gradient-to-r from-emerald-500 via-orange-500 to-yellow-500 opacity-30" style={{ zIndex: 0 }} />
 									
-									{/* Maharashtra - Completed */}
-									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
-										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
-											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
-										</div>
-										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Maharashtra</span>
-										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
-									</div>
-
-									{/* Madhya Pradesh - Completed */}
-									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
-										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
-											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
-										</div>
-										<span className="font-bold text-xs text-center text-white whitespace-nowrap">M.Pradesh</span>
-										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
-									</div>
-
-									{/* Uttar Pradesh - Completed */}
-									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
-										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
-											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
-										</div>
-										<span className="font-bold text-xs text-center text-white whitespace-nowrap">U.Pradesh</span>
-										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
-									</div>
-
-									{/* Bihar - Completed */}
-									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
-										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0">
-											<CheckCircle2 className="h-7 w-7 text-emerald-400" />
-										</div>
-										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Bihar</span>
-										<span className="text-[7px] uppercase tracking-widest text-emerald-400/70">Completed</span>
-									</div>
-
-									{/* Gujarat - Active */}
-									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
-										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-orange-500/20 border-2 border-orange-500 animate-pulse flex-shrink-0">
-											<PlayCircle className="h-7 w-7 text-orange-400" />
-										</div>
-										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Gujarat</span>
-										<span className="text-[7px] uppercase tracking-widest text-orange-400/70">Active</span>
-									</div>
-
-									{/* West Bengal - In Process */}
-									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
-										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow-500/20 border-2 border-yellow-500 animate-pulse flex-shrink-0">
-											<Activity className="h-7 w-7 text-yellow-400" />
-										</div>
-										<span className="font-bold text-xs text-center text-white whitespace-nowrap">West Bengal</span>
-										<span className="text-[7px] uppercase tracking-widest text-yellow-400/70">In Process</span>
-									</div>
-
-									{/* Odisha - In Process */}
-									<div className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
-										<div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow-500/20 border-2 border-yellow-500 animate-pulse flex-shrink-0">
-											<Activity className="h-7 w-7 text-yellow-400" />
-										</div>
-										<span className="font-bold text-xs text-center text-white whitespace-nowrap">Odisha</span>
-										<span className="text-[7px] uppercase tracking-widest text-yellow-400/70">In Process</span>
-									</div>
+									{stages.map((stage, idx) => {
+										const isCompleted = stage.status === 'COMPLETED';
+										const isActive = stage.status === 'ACTIVE';
+										
+										let bgBorderColor = 'bg-yellow-500/20 border-yellow-500 animate-pulse';
+										let textColor = 'text-yellow-400';
+										let textLabel = 'In Process';
+										let Icon = Activity;
+										
+										if (isCompleted) {
+											bgBorderColor = 'bg-emerald-500/20 border-emerald-500';
+											textColor = 'text-emerald-400';
+											textLabel = 'Completed';
+											Icon = CheckCircle2;
+										} else if (isActive) {
+											bgBorderColor = 'bg-orange-500/20 border-orange-500 animate-pulse';
+											textColor = 'text-orange-400';
+											textLabel = 'Active';
+											Icon = PlayCircle;
+										}
+										
+										return (
+											<div key={stage.id || idx} className="relative flex flex-col items-center gap-2 flex-1" style={{ zIndex: 1 }}>
+												<div className={`flex h-16 w-16 items-center justify-center rounded-full border-2 ${bgBorderColor} flex-shrink-0`}>
+													<Icon className={`h-7 w-7 ${textColor}`} />
+												</div>
+												<span className="font-bold text-xs text-center text-white whitespace-nowrap">{stage.state}</span>
+												<span className={`text-[7px] uppercase tracking-widest ${textColor}/70`}>{textLabel}</span>
+											</div>
+										);
+									})}
 								</div>
 
 								{/* Mobile Vertical Timeline */}
@@ -344,82 +374,39 @@ export default function YatraPage() {
 									{/* Vertical Timeline Line */}
 									<div className="absolute left-7 top-6 bottom-6 w-0.5 bg-gradient-to-b from-emerald-500 via-orange-500 to-yellow-500 opacity-30" style={{ zIndex: 0 }} />
 
-									{/* Maharashtra - Completed */}
-									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
-										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-											<CheckCircle2 className="h-6 w-6 text-emerald-400" />
-										</div>
-										<div className="flex flex-col">
-											<span className="font-bold text-sm text-white">Maharashtra</span>
-											<span className="text-[9px] font-bold uppercase tracking-widest text-emerald-400/70">Completed</span>
-										</div>
-									</div>
-
-									{/* Madhya Pradesh - Completed */}
-									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
-										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-											<CheckCircle2 className="h-6 w-6 text-emerald-400" />
-										</div>
-										<div className="flex flex-col">
-											<span className="font-bold text-sm text-white">Madhya Pradesh</span>
-											<span className="text-[9px] font-bold uppercase tracking-widest text-emerald-400/70">Completed</span>
-										</div>
-									</div>
-
-									{/* Uttar Pradesh - Completed */}
-									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
-										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-											<CheckCircle2 className="h-6 w-6 text-emerald-400" />
-										</div>
-										<div className="flex flex-col">
-											<span className="font-bold text-sm text-white">Uttar Pradesh</span>
-											<span className="text-[9px] font-bold uppercase tracking-widest text-emerald-400/70">Completed</span>
-										</div>
-									</div>
-
-									{/* Bihar - Completed */}
-									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
-										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex-shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-											<CheckCircle2 className="h-6 w-6 text-emerald-400" />
-										</div>
-										<div className="flex flex-col">
-											<span className="font-bold text-sm text-white">Bihar</span>
-											<span className="text-[9px] font-bold uppercase tracking-widest text-emerald-400/70">Completed</span>
-										</div>
-									</div>
-
-									{/* Gujarat - Active */}
-									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
-										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/20 border-2 border-orange-500 animate-pulse flex-shrink-0 shadow-[0_0_15px_rgba(249,115,22,0.3)]">
-											<PlayCircle className="h-6 w-6 text-orange-400 animate-pulse" />
-										</div>
-										<div className="flex flex-col">
-											<span className="font-bold text-sm text-white">Gujarat</span>
-											<span className="text-[9px] font-bold uppercase tracking-widest text-orange-400/70 animate-pulse">Active</span>
-										</div>
-									</div>
-
-									{/* West Bengal - In Process */}
-									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
-										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-yellow-500/20 border-2 border-yellow-500 animate-pulse flex-shrink-0 shadow-[0_0_15px_rgba(234,179,8,0.3)]">
-											<Activity className="h-6 w-6 text-yellow-400" />
-										</div>
-										<div className="flex flex-col">
-											<span className="font-bold text-sm text-white">West Bengal</span>
-											<span className="text-[9px] font-bold uppercase tracking-widest text-yellow-400/70">In Process</span>
-										</div>
-									</div>
-
-									{/* Odisha - In Process */}
-									<div className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
-										<div className="flex h-14 w-14 items-center justify-center rounded-full bg-yellow-500/20 border-2 border-yellow-500 animate-pulse flex-shrink-0 shadow-[0_0_15px_rgba(234,179,8,0.3)]">
-											<Activity className="h-6 w-6 text-yellow-400" />
-										</div>
-										<div className="flex flex-col">
-											<span className="font-bold text-sm text-white">Odisha</span>
-											<span className="text-[9px] font-bold uppercase tracking-widest text-yellow-400/70">In Process</span>
-										</div>
-									</div>
+									{stages.map((stage, idx) => {
+										const isCompleted = stage.status === 'COMPLETED';
+										const isActive = stage.status === 'ACTIVE';
+										
+										let bgBorderColor = 'bg-yellow-500/20 border-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.3)] animate-pulse';
+										let textColor = 'text-yellow-400';
+										let textLabel = 'In Process';
+										let Icon = Activity;
+										
+										if (isCompleted) {
+											bgBorderColor = 'bg-emerald-500/20 border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.2)]';
+											textColor = 'text-emerald-400';
+											textLabel = 'Completed';
+											Icon = CheckCircle2;
+										} else if (isActive) {
+											bgBorderColor = 'bg-orange-500/20 border-orange-500 animate-pulse shadow-[0_0_15px_rgba(249,115,22,0.3)]';
+											textColor = 'text-orange-400';
+											textLabel = 'Active';
+											Icon = PlayCircle;
+										}
+										
+										return (
+											<div key={stage.id || idx} className="relative flex items-center gap-4" style={{ zIndex: 1 }}>
+												<div className={`flex h-14 w-14 items-center justify-center rounded-full border-2 ${bgBorderColor} flex-shrink-0`}>
+													<Icon className={`h-6 w-6 ${textColor}`} />
+												</div>
+												<div className="flex flex-col text-left">
+													<span className="font-bold text-sm text-white">{stage.state}</span>
+													<span className={`text-[9px] font-bold uppercase tracking-widest ${textColor}/70`}>{textLabel}</span>
+												</div>
+											</div>
+										);
+									})}
 								</div>
 							</div>
 						</div>
@@ -462,7 +449,7 @@ export default function YatraPage() {
 						</div>
 
 						<div className="grid gap-6 xl:grid-cols-2">
-							{journeyHighlightSections.map((section, index) => (
+							{highlightSections.map((section, index) => (
 								<article key={section.title} className="overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/55 shadow-[0_30px_80px_rgba(2,6,23,0.45)] backdrop-blur-sm">
 									<div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
 										<div>
@@ -471,7 +458,7 @@ export default function YatraPage() {
 											</p>
 											<h3 className="mt-1 text-xl font-extrabold text-white sm:text-2xl">{section.title}</h3>
 										</div>
-										<div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-slate-200">
+										<div className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-slate-200">
 											{section.images.length} Photos
 										</div>
 									</div>
@@ -517,8 +504,16 @@ export default function YatraPage() {
 										</div>
 									</div>
 
-									<div className="border-t border-white/10 px-5 py-4 sm:px-6">
+									<div className="border-t border-white/10 px-5 py-4 sm:px-6 flex items-center justify-between gap-4">
 										<p className="text-sm text-slate-300">{section.subtitle}</p>
+										{section.slug && (
+											<Link
+												to={`/rojgaar-yatra/gallery/${section.slug}`}
+												className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-orange-400 hover:text-orange-300 transition-colors shrink-0"
+											>
+												View Gallery <ArrowRight size={14} />
+											</Link>
+										)}
 									</div>
 								</article>
 							))}

@@ -1,19 +1,62 @@
+import React, { useState, useEffect } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { ArrowLeft, ExternalLink } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getYatraGalleryCard } from '../data/yatraGalleryData'
+import { fetchCollection, extractMediaUrl } from '../utils/strapi'
+import { rojgaarYatraOptimizedImages } from '../data/rojgaarYatraOptimizedImages'
 
 export default function YatraGalleryPage() {
-const { slug } = useParams()
-const card = getYatraGalleryCard(slug)
+	const { slug } = useParams()
+	const defaultCard = getYatraGalleryCard(slug)
 
-if (!card) {
-return <Navigate to="/rojgaar-yatra" replace />
-}
+	const [card, setCard] = useState(() => {
+		if (defaultCard) {
+			return {
+				...defaultCard,
+				images: defaultCard.images && defaultCard.images.length > 0 
+					? defaultCard.images 
+					: (rojgaarYatraOptimizedImages[defaultCard.title] ?? [])
+			};
+		}
+		return null;
+	});
 
-const images = card.images.map((imagePath) => encodeURI(imagePath))
-const heroImage = images[0]
+	useEffect(() => {
+		const loadGallery = async () => {
+			try {
+				const fetchedGalleries = await fetchCollection(`/api/yatra-galleries?filters[slug][$eq]=${slug}&populate=*`);
+				if (fetchedGalleries && fetchedGalleries.length > 0) {
+					const gallery = fetchedGalleries[0];
+					const imagesList = [
+						...(gallery.images || []),
+						...(gallery.photos || [])
+					];
+					const images = imagesList.map((img) => extractMediaUrl(img));
+					setCard({
+						slug: gallery.slug,
+						title: gallery.title,
+						subtitle: gallery.subtitle || gallery.description,
+						description: gallery.description,
+						folderName: gallery.folderName || gallery.title,
+						images: images.length > 0 ? images : (rojgaarYatraOptimizedImages[gallery.title] ?? []),
+					});
+				}
+			} catch (err) {
+				console.warn('Failed to load gallery from Strapi:', err);
+			}
+		};
+
+		loadGallery();
+	}, [slug]);
+
+	if (!card) {
+		return <Navigate to="/rojgaar-yatra" replace />
+	}
+
+	const images = card.images.map((imagePath) => encodeURI(imagePath))
+	const heroImage = images[0]
 
 return (
 <div className="bg-slate-950 text-white">
