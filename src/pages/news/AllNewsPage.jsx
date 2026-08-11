@@ -15,24 +15,32 @@ const AllNewsPage = () => {
   const [newsItems, setNewsItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState('All');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadNews = async () => {
-      const data = await fetchNews();
-      const combined = items => {
-        const list = items && items.length > 0 ? items : localNews;
-        const unique = [];
-        const seen = new Set();
-        list.forEach((item) => {
-          const titleKey = (item.title || '').trim().toLowerCase();
-          if (titleKey && !seen.has(titleKey)) {
-            seen.add(titleKey);
-            unique.push(item);
-          }
-        });
-        return unique;
-      };
-      setNewsItems(combined([...(data || []), ...localNews]));
+      setLoading(true);
+      try {
+        const data = await fetchNews();
+        const combined = items => {
+          const list = items && items.length > 0 ? items : localNews;
+          const unique = [];
+          const seen = new Set();
+          list.forEach((item) => {
+            const titleKey = (item.title || '').trim().toLowerCase();
+            if (titleKey && !seen.has(titleKey)) {
+              seen.add(titleKey);
+              unique.push(item);
+            }
+          });
+          return unique;
+        };
+        setNewsItems(combined([...(data || []), ...localNews]));
+      } catch (err) {
+        console.error('Failed to load news:', err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     loadNews();
@@ -123,7 +131,18 @@ const AllNewsPage = () => {
         </div>
 
         {/* News Grid */}
-        {filteredNews.length > 0 ? (
+        {loading ? (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm h-[380px] p-6 animate-pulse">
+                <div className="h-48 sm:h-56 w-full bg-slate-200 rounded-2xl mb-4" />
+                <div className="h-4 w-1/4 bg-slate-200 rounded mb-3" />
+                <div className="h-6 w-3/4 bg-slate-200 rounded mb-2" />
+                <div className="h-4 w-full bg-slate-200 rounded" />
+              </div>
+            ))}
+          </div>
+        ) : filteredNews.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredNews.map((item) => {
               const itemId = item.documentId || item.id;

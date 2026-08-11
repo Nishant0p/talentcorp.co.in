@@ -384,6 +384,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -554,24 +555,31 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
   useEffect(() => {
     const loadLatestNews = async () => {
-      const items = await fetchNews();
-      const combined = [...(items || []), ...localNews];
-      // Sort by date descending (newest first)
-      combined.sort((a, b) => {
-        const dateA = a.date ? new Date(a.date) : new Date(0);
-        const dateB = b.date ? new Date(b.date) : new Date(0);
-        return dateB - dateA;
-      });
-      const uniqueNews = [];
-      const seenTitles = new Set();
-      combined.forEach((item) => {
-        const itemTitle = (item.title || '').trim().toLowerCase();
-        if (itemTitle && !seenTitles.has(itemTitle)) {
-          seenTitles.add(itemTitle);
-          uniqueNews.push(item);
-        }
-      });
-      setLatestNews(uniqueNews);
+      setLoading(true);
+      try {
+        const items = await fetchNews();
+        const combined = [...(items || []), ...localNews];
+        // Sort by date descending (newest first)
+        combined.sort((a, b) => {
+          const dateA = a.date ? new Date(a.date) : new Date(0);
+          const dateB = b.date ? new Date(b.date) : new Date(0);
+          return dateB - dateA;
+        });
+        const uniqueNews = [];
+        const seenTitles = new Set();
+        combined.forEach((item) => {
+          const itemTitle = (item.title || '').trim().toLowerCase();
+          if (itemTitle && !seenTitles.has(itemTitle)) {
+            seenTitles.add(itemTitle);
+            uniqueNews.push(item);
+          }
+        });
+        setLatestNews(uniqueNews);
+      } catch (err) {
+        console.error('Error loading latest news:', err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     loadLatestNews();
@@ -623,7 +631,9 @@ const NewsEventsPage = ({ prismicData = null }) => {
             transition={{ duration: 0.75, ease: 'easeOut' }}
             style={{ y: heroFeatureY }}
           >
-            {carouselItem ? (
+            {loading ? (
+              <div className="w-full h-full bg-slate-200 animate-pulse rounded-3xl" />
+            ) : carouselItem ? (
               <div className="relative w-full h-full">
                 <Link to={`/news-events/${carouselItem.documentId || carouselItem.id}`} className="block w-full h-full">
                   <AnimatePresence mode="wait">
@@ -770,7 +780,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
         </motion.div>
       </motion.div>
 
-      {newsAndUpdatesItems.length > 0 && (
+      {(loading || newsAndUpdatesItems.length > 0) && (
         <section className="mx-auto mt-14 max-w-7xl">
           <div className="mb-8 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -786,29 +796,40 @@ const NewsEventsPage = ({ prismicData = null }) => {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {newsAndUpdatesItems.slice(0, 3).map((item) => {
-              const itemId = item.documentId || item.id;
-              return (
-                <Link
-                  key={itemId || item.title}
-                  to={`/news-events/${itemId}`}
-                  className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
-                >
-                  <div>
-                    <img
-                      src={item.image ? extractMediaUrl(item.image) : (item.tag === 'Updates' ? '' : content.hero.featureImage)}
-                      alt={item.title || 'News image'}
-                      className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="p-5">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'News'}</p>
-                      <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900 group-hover:text-orange-500 transition-colors">{item.title}</h3>
-                      <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
+            {loading ? (
+              [1, 2, 3].map((i) => (
+                <div key={i} className="flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm h-[380px] p-6 animate-pulse">
+                  <div className="h-44 w-full bg-slate-200 rounded-2xl mb-4" />
+                  <div className="h-4 w-1/4 bg-slate-200 rounded mb-3" />
+                  <div className="h-6 w-3/4 bg-slate-200 rounded mb-2" />
+                  <div className="h-4 w-full bg-slate-200 rounded" />
+                </div>
+              ))
+            ) : (
+              newsAndUpdatesItems.slice(0, 3).map((item) => {
+                const itemId = item.documentId || item.id;
+                return (
+                  <Link
+                    key={itemId || item.title}
+                    to={`/news-events/${itemId}`}
+                    className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+                  >
+                    <div>
+                      <img
+                        src={item.image ? extractMediaUrl(item.image) : (item.tag === 'Updates' ? '' : content.hero.featureImage)}
+                        alt={item.title || 'News image'}
+                        className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="p-5">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'News'}</p>
+                        <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900 group-hover:text-orange-500 transition-colors">{item.title}</h3>
+                        <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              );
-            })}
+                  </Link>
+                );
+              })
+            )}
           </div>
         </section>
       )}
@@ -937,34 +958,44 @@ const NewsEventsPage = ({ prismicData = null }) => {
         </div>
 
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {eventItems.slice(0, 3).map((item) => {
-            const itemId = item.documentId || item.id;
-            return (
-              <Link key={itemId} to={`/news-events/${itemId}`} className="group block">
-                <motion.article
-                  className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md h-full"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.55, ease: 'easeOut' }}
-                >
-                  <img
-                    src={item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=400'}
-                    alt={item.title || 'Event image'}
-                    className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="p-5">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'Event'}</p>
-                    <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900">{item.title}</h3>
-                    <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
-                  </div>
-                </motion.article>
-              </Link>
-            );
-          })}
+          {loading ? (
+            [1, 2, 3].map((i) => (
+              <div key={i} className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm h-[320px] p-5 animate-pulse">
+                <div className="h-40 w-full bg-slate-200 rounded-xl mb-4" />
+                <div className="h-4 w-1/4 bg-slate-200 rounded mb-3" />
+                <div className="h-6 w-3/4 bg-slate-200 rounded" />
+              </div>
+            ))
+          ) : (
+            eventItems.slice(0, 3).map((item) => {
+              const itemId = item.documentId || item.id;
+              return (
+                <Link key={itemId} to={`/news-events/${itemId}`} className="group block">
+                  <motion.article
+                    className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md h-full"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.55, ease: 'easeOut' }}
+                  >
+                    <img
+                      src={item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=400'}
+                      alt={item.title || 'Event image'}
+                      className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="p-5">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.tag || 'Event'}</p>
+                      <h3 className="mt-2 line-clamp-2 text-lg font-bold text-slate-900">{item.title}</h3>
+                      <p className="mt-2 text-sm text-slate-500">{item.date || '-'}</p>
+                    </div>
+                  </motion.article>
+                </Link>
+              );
+            })
+          )}
         </div>
 
-        {eventItems.length === 0 && (
+        {!loading && eventItems.length === 0 && (
           <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-12 text-center">
             <p className="text-slate-500">No events available yet.</p>
           </div>
@@ -1308,7 +1339,17 @@ const NewsEventsPage = ({ prismicData = null }) => {
             </div>
 
             <div className="relative space-y-8">
-              {realUpcomingEvents.length > 0 ? (
+              {loading ? (
+                [1, 2, 3].map((i) => (
+                  <div key={i} className="flex gap-6 animate-pulse">
+                    <div className="h-20 w-16 bg-slate-200 rounded-2xl" />
+                    <div className="flex-1 py-2">
+                      <div className="h-5 w-3/4 bg-slate-200 rounded mb-2" />
+                      <div className="h-4 w-1/2 bg-slate-200 rounded" />
+                    </div>
+                  </div>
+                ))
+              ) : realUpcomingEvents.length > 0 ? (
                 <>
                   <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
                   {realUpcomingEvents.slice(0, 3).map((event, idx) => (
@@ -1354,30 +1395,42 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
             <div className="relative space-y-8">
               <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
-              {realPastEvents.slice(0, 3).map((event, idx) => (
-                <div
-                  key={`${event.title}-${idx}`}
-                  className="relative z-10 flex gap-6 opacity-80 transition-all hover:opacity-100 hover:translate-x-1"
-                >
-                  <div className="flex h-20 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-slate-100 text-slate-700 font-bold shadow-sm">
-                    <span className="text-2xl font-black leading-none">{event.date}</span>
-                    <span className="mt-1 text-[10px] font-bold tracking-widest text-slate-400">{event.month}</span>
-                  </div>
-                  <div className="flex flex-1 flex-col justify-center">
-                    <h4 className="mb-1 text-lg font-bold leading-tight text-slate-800 transition-colors hover:text-orange-500">
-                      {event.readMoreUrl ? (
-                        <Link to={event.readMoreUrl}>{event.title}</Link>
-                      ) : (
-                        event.title
-                      )}
-                    </h4>
-                    <div className="flex items-center gap-1 text-sm text-slate-400 font-medium">
-                      <MapPin size={14} className="text-orange-400" />
-                      {event.loc}
+              {loading ? (
+                [1, 2, 3].map((i) => (
+                  <div key={i} className="flex gap-6 animate-pulse">
+                    <div className="flex h-20 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-slate-100 text-slate-700 font-bold shadow-sm" />
+                    <div className="flex-1 py-2">
+                      <div className="h-5 w-3/4 bg-slate-100 rounded mb-2" />
+                      <div className="h-4 w-1/2 bg-slate-100 rounded" />
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                realPastEvents.slice(0, 3).map((event, idx) => (
+                  <div
+                    key={`${event.title}-${idx}`}
+                    className="relative z-10 flex gap-6 opacity-80 transition-all hover:opacity-100 hover:translate-x-1"
+                  >
+                    <div className="flex h-20 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-slate-100 text-slate-700 font-bold shadow-sm">
+                      <span className="text-2xl font-black leading-none">{event.date}</span>
+                      <span className="mt-1 text-[10px] font-bold tracking-widest text-slate-400">{event.month}</span>
+                    </div>
+                    <div className="flex flex-1 flex-col justify-center">
+                      <h4 className="mb-1 text-lg font-bold leading-tight text-slate-800 transition-colors hover:text-orange-500">
+                        {event.readMoreUrl ? (
+                          <Link to={event.readMoreUrl}>{event.title}</Link>
+                        ) : (
+                          event.title
+                        )}
+                      </h4>
+                      <div className="flex items-center gap-1 text-sm text-slate-400 font-medium">
+                        <MapPin size={14} className="text-orange-400" />
+                        {event.loc}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

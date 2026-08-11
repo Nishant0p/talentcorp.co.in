@@ -14,49 +14,57 @@ const AllEventsPage = () => {
   const [fetchedEvents, setFetchedEvents] = useState([]);
   const [activeTab, setActiveTab] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadEvents = async () => {
-      const data = await fetchNews();
-      const eventItems = (data || []).filter(
-        (item) =>
-          item.tag === 'Events' ||
-          item.tag === 'Event' ||
-          item.tag === 'Updates' ||
-          item.tag === 'Announcement' ||
-          item.tag === 'Announcements'
-      );
-      const localEvents = localNews.filter(
-        (item) =>
-          item.tag === 'Events' ||
-          item.tag === 'Event' ||
-          item.tag === 'Updates' ||
-          item.tag === 'Announcement' ||
-          item.tag === 'Announcements'
-      );
+      setLoading(true);
+      try {
+        const data = await fetchNews();
+        const eventItems = (data || []).filter(
+          (item) =>
+            item.tag === 'Events' ||
+            item.tag === 'Event' ||
+            item.tag === 'Updates' ||
+            item.tag === 'Announcement' ||
+            item.tag === 'Announcements'
+        );
+        const localEvents = localNews.filter(
+          (item) =>
+            item.tag === 'Events' ||
+            item.tag === 'Event' ||
+            item.tag === 'Updates' ||
+            item.tag === 'Announcement' ||
+            item.tag === 'Announcements'
+        );
 
-      const rawEvents = eventItems.length > 0 ? eventItems : localEvents;
-      const normalizedStrapiEvents = rawEvents.map((item) => {
-        const itemDate = new Date(item.date || Date.now());
-        const day = isNaN(itemDate.getDate()) ? '15' : String(itemDate.getDate()).padStart(2, '0');
-        const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-        const month = isNaN(itemDate.getMonth()) ? 'JUN' : monthNames[itemDate.getMonth()];
-        const year = isNaN(itemDate.getFullYear()) ? '2026' : String(itemDate.getFullYear());
+        const rawEvents = eventItems.length > 0 ? eventItems : localEvents;
+        const normalizedStrapiEvents = rawEvents.map((item) => {
+          const itemDate = new Date(item.date || Date.now());
+          const day = isNaN(itemDate.getDate()) ? '15' : String(itemDate.getDate()).padStart(2, '0');
+          const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+          const month = isNaN(itemDate.getMonth()) ? 'JUN' : monthNames[itemDate.getMonth()];
+          const year = isNaN(itemDate.getFullYear()) ? '2026' : String(itemDate.getFullYear());
 
-        return {
-          id: item.documentId || item.id,
-          date: day,
-          month: month,
-          year: year,
-          title: item.title,
-          loc: item.venue || item.location || item.loc || 'TSPL Group Center',
-          desc: (item.description || '').replace(/<[^>]*>/g, ' ').slice(0, 140) + '...',
-          type: itemDate > new Date() ? 'Upcoming' : 'Past',
-          image: item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=600',
-        };
-      });
+          return {
+            id: item.documentId || item.id,
+            date: day,
+            month: month,
+            year: year,
+            title: item.title,
+            loc: item.venue || item.location || item.loc || 'TSPL Group Center',
+            desc: (item.description || '').replace(/<[^>]*>/g, ' ').slice(0, 140) + '...',
+            type: itemDate > new Date() ? 'Upcoming' : 'Past',
+            image: item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=600',
+          };
+        });
 
-      setFetchedEvents(normalizedStrapiEvents);
+        setFetchedEvents(normalizedStrapiEvents);
+      } catch (err) {
+        console.error('Failed to load events:', err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     loadEvents();
@@ -151,7 +159,18 @@ const AllEventsPage = () => {
         </div>
 
         {/* Events Cards Grid */}
-        {filteredEvents.length > 0 ? (
+        {loading ? (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm h-[380px] p-6 animate-pulse">
+                <div className="h-52 w-full bg-slate-200 rounded-2xl mb-4" />
+                <div className="h-4 w-1/4 bg-slate-200 rounded mb-3" />
+                <div className="h-6 w-3/4 bg-slate-200 rounded mb-2" />
+                <div className="h-4 w-full bg-slate-200 rounded" />
+              </div>
+            ))}
+          </div>
+        ) : filteredEvents.length > 0 ? (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filteredEvents.map((event, idx) => (
               <Link
