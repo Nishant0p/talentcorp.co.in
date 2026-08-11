@@ -137,7 +137,7 @@ const AllNewsPage = () => {
                   <div>
                     <div className="relative h-48 sm:h-56 overflow-hidden">
                       <img
-                        src={item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&q=80'}
+                        src={item.image ? extractMediaUrl(item.image) : (item.tag === 'Updates' ? '' : 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&q=80')}
                         alt={item.title || 'News image'}
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />

@@ -29,7 +29,7 @@ export default function NewsSection() {
           tag: item.tag || 'News',
           title: item.title || '',
           desc: item.description ? item.description.replace(/<[^>]+>/g, '').trim() : item.desc || '',
-          img: item.image ? extractMediaUrl(item.image) : (item.img || 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80'),
+          img: item.image ? extractMediaUrl(item.image) : (item.tag === 'Updates' ? '' : (item.img || 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80')),
         }));
 
         const news = formatted.filter((item) => !item.tag || item.tag === 'News' || item.tag === 'Updates' || item.tag === 'Partnerships');
@@ -47,7 +47,7 @@ export default function NewsSection() {
             tag: item.tag || 'News',
             title: item.title || '',
             desc: item.description ? item.description.replace(/<[^>]+>/g, '').trim() : '',
-            img: item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+            img: item.image ? extractMediaUrl(item.image) : (item.tag === 'Updates' ? '' : 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80'),
           }));
 
           const news = formatted.filter((item) => !item.tag || item.tag === 'News' || item.tag === 'Updates');

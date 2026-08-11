@@ -636,7 +636,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
                       className="absolute inset-0 w-full h-full"
                     >
                       <img
-                        src={carouselItem.image ? extractMediaUrl(carouselItem.image) : content.hero.featureImage}
+                        src={carouselItem.image ? extractMediaUrl(carouselItem.image) : (carouselItem.tag === 'Updates' ? '' : content.hero.featureImage)}
                         alt={carouselItem.title}
                         className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                       />
@@ -796,7 +796,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
                 >
                   <div>
                     <img
-                      src={item.image ? extractMediaUrl(item.image) : content.hero.featureImage}
+                      src={item.image ? extractMediaUrl(item.image) : (item.tag === 'Updates' ? '' : content.hero.featureImage)}
                       alt={item.title || 'News image'}
                       className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -1332,16 +1332,13 @@ const NewsEventsPage = ({ prismicData = null }) => {
                           <MapPin size={14} className="text-orange-500" />
                           {event.loc}
                         </div>
-                        <div className="mt-3 flex items-center gap-4 opacity-0 transition-all group-hover:opacity-100">
-                          <Link to="/contact-us" className="inline-flex items-center gap-1 text-sm font-semibold text-[#006bb8] hover:text-orange-500">
-                            Register <ChevronRight size={14} />
-                          </Link>
-                          {event.readMoreUrl && (
+                        {event.readMoreUrl && (
+                          <div className="mt-3 flex items-center gap-4 opacity-0 transition-all group-hover:opacity-100">
                             <Link to={event.readMoreUrl} className="inline-flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-orange-500">
                               Details <ChevronRight size={14} />
                             </Link>
-                          )}
-                        </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
