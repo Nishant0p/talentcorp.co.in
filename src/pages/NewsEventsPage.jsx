@@ -419,7 +419,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
   }, [hasTriggeredConfetti, content.birthdaySpotlight]);
 
   const newsAndUpdatesItems = useMemo(
-    () => latestNews.filter((item) => item.tag === 'News'),
+    () => latestNews.filter((item) => !item.tag || item.tag === 'News' || item.tag === 'Updates' || item.tag === 'Partnerships'),
     [latestNews]
   );
 
@@ -441,20 +441,70 @@ const NewsEventsPage = ({ prismicData = null }) => {
   );
   const eventItems = useMemo(() => latestNews.filter((item) => item.tag === 'Events' || item.tag === 'Event'), [latestNews]);
 
+  const realUpcomingEvents = useMemo(() => {
+    const now = new Date();
+    const upcomingEvents = latestNews.filter((item) => {
+      const isEventOrUpdate =
+        item.tag === 'Events' ||
+        item.tag === 'Event' ||
+        item.category === 'Events' ||
+        item.tag === 'Updates' ||
+        item.tag === 'Announcement' ||
+        item.tag === 'Announcements';
+      const itemDate = new Date(item.date);
+      return isEventOrUpdate && !isNaN(itemDate.getTime()) && itemDate > now;
+    });
+
+    const sortedUpcoming = [...upcomingEvents].sort((a, b) => {
+      const dateA = a.date ? new Date(a.date) : new Date(0);
+      const dateB = b.date ? new Date(b.date) : new Date(0);
+      return dateA - dateB;
+    });
+
+    return sortedUpcoming.map((item) => {
+      let day = '21';
+      let month = 'JUN';
+      if (item.date) {
+        const d = new Date(item.date);
+        if (!isNaN(d.getTime())) {
+          day = String(d.getDate()).padStart(2, '0');
+          month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+        } else {
+          const match = item.date.match(/([A-Za-z]+)\s+(\d+)/);
+          if (match) {
+            month = match[1].substring(0, 3).toUpperCase();
+            day = String(match[2]).padStart(2, '0');
+          }
+        }
+      }
+      return {
+        date: day,
+        month: month,
+        title: item.title,
+        loc: item.venue || item.location || item.loc || 'TSPL GROUP, Pune',
+        readMoreUrl: item.documentId || item.id ? `/news-events/${item.documentId || item.id}` : null,
+      };
+    });
+  }, [latestNews]);
+
   const realPastEvents = useMemo(() => {
-    const eventsData = latestNews.filter(
-      (item) => item.tag === 'Events' || item.tag === 'Event' || item.category === 'Events'
-    );
+    const now = new Date();
+    const pastEvents = latestNews.filter((item) => {
+      const isEvent =
+        item.tag === 'Events' ||
+        item.tag === 'Event' ||
+        item.category === 'Events';
+      const itemDate = new Date(item.date);
+      return isEvent && (isNaN(itemDate.getTime()) || itemDate <= now);
+    });
 
-    const sourceList = eventsData.length > 0 ? eventsData : localNews.filter((i) => i.tag === 'Events' || i.tag === 'Event');
-
-    const sortedSourceList = [...sourceList].sort((a, b) => {
+    const sortedPast = [...pastEvents].sort((a, b) => {
       const dateA = a.date ? new Date(a.date) : new Date(0);
       const dateB = b.date ? new Date(b.date) : new Date(0);
       return dateB - dateA;
     });
 
-    return sortedSourceList.map((item) => {
+    return sortedPast.map((item) => {
       let day = '21';
       let month = 'JUN';
       if (item.date) {
@@ -507,7 +557,11 @@ const NewsEventsPage = ({ prismicData = null }) => {
       const items = await fetchNews();
       const combined = [...(items || []), ...localNews];
       // Sort by date descending (newest first)
-      combined.sort((a, b) => new Date(b.date) - new Date(a.date));
+      combined.sort((a, b) => {
+        const dateA = a.date ? new Date(a.date) : new Date(0);
+        const dateB = b.date ? new Date(b.date) : new Date(0);
+        return dateB - dateA;
+      });
       const uniqueNews = [];
       const seenTitles = new Set();
       combined.forEach((item) => {
@@ -721,7 +775,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
           <div className="mb-8 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="h-8 w-1.5 rounded-full bg-orange-500" />
-              <h2 className="text-3xl font-bold text-[#006bb8]">Latest News</h2>
+              <h2 className="text-3xl font-bold text-[#006bb8]">Latest News &amp; Updates</h2>
             </div>
             <Link
               to="/all-news"
@@ -1254,10 +1308,10 @@ const NewsEventsPage = ({ prismicData = null }) => {
             </div>
 
             <div className="relative space-y-8">
-              {content.upcomingEvents.length > 0 ? (
+              {realUpcomingEvents.length > 0 ? (
                 <>
                   <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
-                  {content.upcomingEvents.slice(0, 3).map((event, idx) => (
+                  {realUpcomingEvents.slice(0, 3).map((event, idx) => (
                     <div
                       key={`${event.title}-${idx}`}
                       className="group relative z-10 flex gap-6 transition-transform duration-300 hover:translate-x-2"
@@ -1268,15 +1322,26 @@ const NewsEventsPage = ({ prismicData = null }) => {
                       </div>
                       <div className="flex flex-1 flex-col justify-center">
                         <h4 className="mb-2 text-lg font-bold leading-tight text-slate-900 transition-colors group-hover:text-orange-500">
-                          {event.title}
+                          {event.readMoreUrl ? (
+                            <Link to={event.readMoreUrl}>{event.title}</Link>
+                          ) : (
+                            event.title
+                          )}
                         </h4>
                         <div className="flex items-center gap-1 text-sm text-slate-400">
                           <MapPin size={14} className="text-orange-500" />
                           {event.loc}
                         </div>
-                        <Link to="/contact-us" className="mt-3 inline-flex w-fit items-center gap-1 text-sm font-semibold text-[#006bb8] opacity-0 transition-all group-hover:opacity-100">
-                          Register <ChevronRight size={14} />
-                        </Link>
+                        <div className="mt-3 flex items-center gap-4 opacity-0 transition-all group-hover:opacity-100">
+                          <Link to="/contact-us" className="inline-flex items-center gap-1 text-sm font-semibold text-[#006bb8] hover:text-orange-500">
+                            Register <ChevronRight size={14} />
+                          </Link>
+                          {event.readMoreUrl && (
+                            <Link to={event.readMoreUrl} className="inline-flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-orange-500">
+                              Details <ChevronRight size={14} />
+                            </Link>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -1292,7 +1357,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
 
             <div className="relative space-y-8">
               <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
-              {(realPastEvents.length > 0 ? realPastEvents : content.pastEvents).slice(0, 3).map((event, idx) => (
+              {realPastEvents.slice(0, 3).map((event, idx) => (
                 <div
                   key={`${event.title}-${idx}`}
                   className="relative z-10 flex gap-6 opacity-80 transition-all hover:opacity-100 hover:translate-x-1"

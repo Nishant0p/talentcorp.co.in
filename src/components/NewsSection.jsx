@@ -112,7 +112,7 @@ export default function NewsSection() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Latest <span className="text-orange-500">News &amp; Events</span>
+              Latest <span className="text-orange-500">News, Updates &amp; Events</span>
             </motion.h2>
             <motion.p
               className="mt-3 text-base md:text-lg text-slate-600 max-w-xl"
@@ -142,7 +142,7 @@ export default function NewsSection() {
                   : 'text-slate-600 hover:text-slate-900'
                   }`}
               >
-                Latest News ({newsItems.length})
+                News &amp; Updates ({newsItems.length})
               </button>
               <button
                 type="button"

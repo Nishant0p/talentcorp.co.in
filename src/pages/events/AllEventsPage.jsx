@@ -8,41 +8,7 @@ import localNews from '../../data/localNews';
 
 const defaultUpcomingEvents = [];
 
-const defaultPastEvents = [
-  {
-    id: 'yearly-trip-2026',
-    date: '20',
-    month: 'JUL',
-    year: '2026',
-    title: 'TSPL Group Yearly Trip 2026 – A Memorable Monsoon Adventure to Kaas Plateau & Mahabaleshwar',
-    loc: 'TSPL GROUP, Pune',
-    desc: 'TSPL Group employees embarked on a memorable monsoon adventure to Kaas Plateau & Mahabaleshwar, fostering team bonding and celebrating our collective achievements.',
-    type: 'Past',
-    image: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&q=80&w=600',
-  },
-  {
-    id: 'family-get-together-talegaon-2026',
-    date: '28',
-    month: 'MAR',
-    year: '2026',
-    title: 'TSPL Group Family Get-Together & Inauguration of the 31st Office at Talegaon',
-    loc: 'TSPL GROUP, Pune',
-    desc: 'Celebrating the inauguration of our 31st office branch at Talegaon with a grand family get-together, marking another milestone in TSPL Group’s expansion.',
-    type: 'Past',
-    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600',
-  },
-  {
-    id: 'womens-day-celebration-2026',
-    date: '08',
-    month: 'MAR',
-    year: '2026',
-    title: 'International Women’s Day Celebration 2026 at TSPL Group',
-    loc: 'TSPL GROUP, Pune',
-    desc: 'Honoring and celebrating the incredible contributions of women leaders and team members at TSPL Group on International Women’s Day 2026.',
-    type: 'Past',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600',
-  },
-];
+const defaultPastEvents = [];
 
 const AllEventsPage = () => {
   const [fetchedEvents, setFetchedEvents] = useState([]);
@@ -52,10 +18,25 @@ const AllEventsPage = () => {
   useEffect(() => {
     const loadEvents = async () => {
       const data = await fetchNews();
-      const eventItems = (data || []).filter((item) => item.tag === 'Events' || item.tag === 'Event');
-      const localEvents = localNews.filter((item) => item.tag === 'Events' || item.tag === 'Event');
+      const eventItems = (data || []).filter(
+        (item) =>
+          item.tag === 'Events' ||
+          item.tag === 'Event' ||
+          item.tag === 'Updates' ||
+          item.tag === 'Announcement' ||
+          item.tag === 'Announcements'
+      );
+      const localEvents = localNews.filter(
+        (item) =>
+          item.tag === 'Events' ||
+          item.tag === 'Event' ||
+          item.tag === 'Updates' ||
+          item.tag === 'Announcement' ||
+          item.tag === 'Announcements'
+      );
 
-      const normalizedStrapiEvents = [...eventItems, ...localEvents].map((item) => {
+      const rawEvents = eventItems.length > 0 ? eventItems : localEvents;
+      const normalizedStrapiEvents = rawEvents.map((item) => {
         const itemDate = new Date(item.date || Date.now());
         const day = isNaN(itemDate.getDate()) ? '15' : String(itemDate.getDate()).padStart(2, '0');
         const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -68,7 +49,7 @@ const AllEventsPage = () => {
           month: month,
           year: year,
           title: item.title,
-          loc: 'TSPL Group Center',
+          loc: item.venue || item.location || item.loc || 'TSPL Group Center',
           desc: (item.description || '').replace(/<[^>]*>/g, ' ').slice(0, 140) + '...',
           type: itemDate > new Date() ? 'Upcoming' : 'Past',
           image: item.image ? extractMediaUrl(item.image) : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=600',
