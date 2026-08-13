@@ -304,18 +304,18 @@ function DetailedProfileSection({ isMobile }) {
 					<div className="p-5 rounded-xl bg-white/5 border border-white/10">
 						<h4 className="text-base font-bold text-blue-400 mb-3">TPA &amp; Operations Management</h4>
 						<div className="space-y-2 text-xs text-slate-300">
-							<p><strong className="text-white">Samruddhi Mam</strong> — TPA Head &amp; Apprentice Operations</p>
-							<p><strong className="text-white">Mr. Mubarak Shaikh</strong> — General Manager (Overall Operations)</p>
-							<p><strong className="text-white">Purushottam Gaikwad</strong> — Assistant General Manager</p>
+							<p><strong className="text-white">Samruddhi Chavan</strong> — Overall Head &amp; Operations</p>
+							<p><strong className="text-white">Mubarak Shaikh</strong> — General Manager - Operations</p>
+							<p><strong className="text-white">Purushottam Gaikwad</strong> — Assistant General Manager - Operations</p>
 						</div>
 					</div>
 					<div className="p-5 rounded-xl bg-white/5 border border-white/10">
 						<h4 className="text-base font-bold text-orange-400 mb-3">Sourcing, Placement &amp; Finance</h4>
 						<div className="space-y-2 text-xs text-slate-300">
-							<p><strong className="text-white">Mr. Gyanendra Mishra</strong> — Sourcing Head (Pan India)</p>
-							<p><strong className="text-white">Mr. Vishal Ubale</strong> — Sourcing Head &amp; TPO (Maharashtra)</p>
-							<p><strong className="text-white">Mr. Lokesh Pardeshi</strong> — Finance Head</p>
-							<p><strong className="text-white">Mr. Kishore More</strong> — Core Management Leader</p>
+							<p><strong className="text-white">Gyanendra Mishra</strong> — Sourcing Head (Pan India)</p>
+							<p><strong className="text-white">Vishal Ubale</strong> — Sourcing &amp; TPO Placement Head</p>
+							<p><strong className="text-white">Lokesh Pardeshi</strong> — Finance Head</p>
+							<p><strong className="text-white">Kishor More</strong> — General Manager - Business Development</p>
 						</div>
 					</div>
 				</div>
@@ -1104,8 +1104,8 @@ function DetailedProfileSection({ isMobile }) {
 
 function LeadershipSection({ isMobile }) {
 	const topLeaders = [
-		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman', imageUrl: '/visionaries/Dr mehboob Sayyad.png', slug: 'dr-mehboob-sayyad' },
-		{ id: '2', name: 'Sunil Chavan', role: 'Director', imageUrl: '/visionaries/Sunil Chavan.png', slug: 'sunil-chavan' },
+		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman & Founder', imageUrl: '/visionaries/Dr mehboob Sayyad.png', slug: 'dr-mehboob-sayyad' },
+		{ id: '2', name: 'Sunil Chavan', role: 'Director & Co-Founder', imageUrl: '/visionaries/Sunil Chavan.png', slug: 'sunil-chavan' },
 	];
 
 	const otherDirectors = [
@@ -1161,7 +1161,7 @@ function LeadershipSection({ isMobile }) {
 										loading="eager"
 										width="300"
 										height="400"
-										className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+										className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 									/>
 									<figcaption className="sr-only">
 										{leader.name} - {leader.role} of TalentCorp Solutions Private Limited (TSPL Group)
@@ -1170,13 +1170,18 @@ function LeadershipSection({ isMobile }) {
 									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
 
 									{/* Leadership Info Overlay */}
-									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
-										<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
-											{leader.name}
-										</h3>
-										<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
-											{leader.role}
-										</p>
+									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left flex justify-between items-end z-10">
+										<div className="min-w-0 flex-1 pr-2">
+											<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+												{leader.name}
+											</h3>
+											<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+												{leader.role}
+											</p>
+										</div>
+										<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white opacity-0 transform translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+											<ArrowRight className="h-4 w-4" />
+										</div>
 									</div>
 								</figure>
 							</motion.div>
@@ -1205,7 +1210,7 @@ function LeadershipSection({ isMobile }) {
 										loading="eager"
 										width="300"
 										height="400"
-										className={`h-full w-full object-cover object-top transition-transform duration-700 ${leader.slug === 'ruma-sayyad' ? 'scale-110 origin-top group-hover:scale-115' : 'group-hover:scale-105'}`}
+										className={`absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ${leader.slug === 'ruma-sayyad' ? 'scale-110 origin-top group-hover:scale-115' : 'group-hover:scale-105'}`}
 									/>
 									<figcaption className="sr-only">
 										{leader.name} - {leader.role} of TalentCorp Solutions Private Limited (TSPL Group)
@@ -1214,13 +1219,18 @@ function LeadershipSection({ isMobile }) {
 									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
 
 									{/* Leadership Info Overlay */}
-									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
-										<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
-											{leader.name}
-										</h3>
-										<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
-											{leader.role}
-										</p>
+									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left flex justify-between items-end z-10">
+										<div className="min-w-0 flex-1 pr-2">
+											<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+												{leader.name}
+											</h3>
+											<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+												{leader.role}
+											</p>
+										</div>
+										<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white opacity-0 transform translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+											<ArrowRight className="h-4 w-4" />
+										</div>
 									</div>
 								</figure>
 							</motion.div>
@@ -1236,42 +1246,42 @@ function ManagementSection({ isMobile }) {
 	const keyLeaders = [
 		{
 			id: '1',
-			name: 'Miss. Samruddhi Chavan',
-			role: 'OverAll Head',
+			name: 'Samruddhi Chavan',
+			role: 'Overall Head',
 			imageUrl: '/leaders/mam.png',
 			slug: 'samruddhi-chavan'
 		},
 		{
 			id: '2',
-			name: 'Mr. Kishor More',
+			name: 'Kishor More',
 			role: 'General Manager - Business Development',
 			imageUrl: '/leaders/1 mr kishore more.jpg',
 			slug: 'kishor-more'
 		},
 		{
 			id: '3',
-			name: 'Mr. Mubarak Shaikh',
-			role: 'General Manager Overall Operation',
+			name: 'Mubarak Shaikh',
+			role: 'General Manager - Operations',
 			imageUrl: '/leaders/2 Mr. Mubarak Shaikh.jpg',
 			slug: 'mubarak-shaikh'
 		},
 		{
 			id: '4',
-			name: 'Mr. Gyanendra Mishra',
-			role: 'Sourcing Head Pan India',
+			name: 'Gyanendra Mishra',
+			role: 'Sourcing Head (Pan India)',
 			imageUrl: '/leaders/3 mr gyanendra mishra.jpg',
 			slug: 'gyanendra-mishra'
 		},
 		{
 			id: '5',
-			name: 'Mr. Vishal Ubale',
-			role: 'Sourcing Head & TPO Maharashtra',
+			name: 'Vishal Ubale',
+			role: 'Sourcing & TPO Placement Head',
 			imageUrl: '/leaders/4 mr vishal ubale.jpg',
 			slug: 'vishal-ubale'
 		},
 		{
 			id: '6',
-			name: 'Mr. Lokesh Pardeshi',
+			name: 'Lokesh Pardeshi',
 			role: 'Finance Head',
 			imageUrl: '/leaders/5 lokesh.jpg',
 			slug: 'lokesh-pardeshi'
@@ -1279,27 +1289,27 @@ function ManagementSection({ isMobile }) {
 		{
 			id: '7',
 			name: 'Purushottam Gaikwad',
-			role: 'Assistant General Manager in Operation',
+			role: 'Assistant General Manager - Operations',
 			imageUrl: '/leaders/7th Photo Purushottam Gaikwad (Assistant General Manager in Operation).jpeg',
 			slug: 'purushottam-gaikwad'
 		},
 		{
 			id: '8',
-			name: 'Mr. Shivanand Mane',
-			role: 'Regional Head',
+			name: 'Shivanand Mane',
+			role: 'Regional Head - Operations',
 			imageUrl: '/leaders/7 mr shivanand mane .jpg',
 			slug: 'shivanand-mane'
 		},
 		{
 			id: '9',
-			name: 'Mr. Namdev Egave',
+			name: 'Namdev Egave',
 			role: 'Payroll & Compliance Head',
 			imageUrl: '/leaders/namdev-egave.jpg',
 			slug: 'namdev-egave'
 		},
 		{
 			id: '10',
-			name: 'Mr. Rahul Borkar',
+			name: 'Rahul Borkar',
 			role: 'Recruitment Head',
 			imageUrl: '/leaders/9 mr rahul borkar.jpg',
 			slug: 'rahul-borkar'
@@ -1351,10 +1361,10 @@ function ManagementSection({ isMobile }) {
 											loading="lazy"
 											width="300"
 											height="400"
-											className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+											className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
 										/>
 									) : (
-										<div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col items-center justify-center p-6 transition-colors duration-300 group-hover:from-blue-50/50 group-hover:to-slate-100">
+										<div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col items-center justify-center p-6 transition-colors duration-300 group-hover:from-blue-50/50 group-hover:to-slate-100">
 											<User className="h-16 w-16 text-slate-400/80 mb-2 transition-transform duration-500 group-hover:scale-110 group-hover:text-blue-500" />
 											<span className="text-[10px] font-bold text-slate-400/60 uppercase tracking-widest text-center">Photo Coming Soon</span>
 										</div>
@@ -1363,13 +1373,18 @@ function ManagementSection({ isMobile }) {
 									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
 
 									{/* Leadership Info Overlay */}
-									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left">
-										<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
-											{leader.name}
-										</h3>
-										<p className="text-[10px] font-bold text-orange-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
-											{leader.role}
-										</p>
+									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left flex justify-between items-end z-10">
+										<div className="min-w-0 flex-1 pr-2">
+											<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+												{leader.name}
+											</h3>
+											<p className="text-[10px] font-bold text-orange-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+												{leader.role}
+											</p>
+										</div>
+										<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-600 text-white opacity-0 transform translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+											<ArrowRight className="h-4 w-4" />
+										</div>
 									</div>
 								</div>
 							</motion.div>
