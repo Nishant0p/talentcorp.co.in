@@ -65,7 +65,7 @@ export default function GlobalTextureOverlay() {
   if (!enabled || !isReady) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[15]">
+    <div className="pointer-events-none fixed inset-0 z-[-1]">
       {textureUrl ? (
         <div
           className="absolute inset-0"
@@ -74,9 +74,9 @@ export default function GlobalTextureOverlay() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            opacity: 0.08,
-            mixBlendMode: 'normal',
-            filter: 'grayscale(1) contrast(0.6) brightness(1.35) saturate(0)',
+            opacity: 1.0,
+            mixBlendMode: 'multiply',
+            filter: 'none',
             WebkitMaskImage:
               'linear-gradient(to bottom, transparent 0, transparent 82svh, rgba(0,0,0,0.92) 96svh, rgba(0,0,0,1) 100svh)',
             maskImage:

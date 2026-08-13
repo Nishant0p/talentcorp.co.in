@@ -1103,9 +1103,12 @@ function DetailedProfileSection({ isMobile }) {
 }
 
 function LeadershipSection({ isMobile }) {
-	const directors = [
+	const topDirectors = [
 		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman & Founder', imageUrl: '/visionaries/Dr mehboob Sayyad.png', slug: 'dr-mehboob-sayyad' },
 		{ id: '2', name: 'Sunil Chavan', role: 'Director & Co-Founder', imageUrl: '/visionaries/Sunil Chavan.png', slug: 'sunil-chavan' },
+	];
+
+	const bottomDirectors = [
 		{ id: '3', name: 'Deshbhushan Jain', role: 'Director', imageUrl: '/visionaries/Deshbushan Jain.png', slug: 'deshbhushan-jain' },
 		{ id: '5', name: 'Prakash Rathod', role: 'Director', imageUrl: '/visionaries/Prakash Rathod.png', slug: 'prakash-rathod' },
 		{ id: '8', name: 'Ruma Sayyad', role: 'Director', imageUrl: '/visionaries/Ruma Sayyad.png', slug: 'ruma-sayyad' },
@@ -1142,9 +1145,9 @@ function LeadershipSection({ isMobile }) {
 					</p>
 				</div>
 
-				{/* Directors Flex Container - Same size and layout as keyLeaders */}
-				<div className="flex flex-wrap justify-center gap-4 lg:gap-6 w-full max-w-[90rem] mx-auto">
-					{directors.map((leader, i) => (
+				{/* Top Directors Row */}
+				<div className="flex flex-wrap justify-center gap-4 lg:gap-6 w-full max-w-[90rem] mx-auto mb-6">
+					{topDirectors.map((leader, i) => (
 						<Link
 							key={leader.id}
 							to={`/leader/${leader.slug}`}
@@ -1172,10 +1175,57 @@ function LeadershipSection({ isMobile }) {
 									{/* Leadership Info Overlay */}
 									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left flex justify-between items-end z-10">
 										<div className="min-w-0 flex-1 pr-2">
-											<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+											<h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-0.5 transition-transform duration-300 group-hover:-translate-y-1 whitespace-nowrap truncate">
 												{leader.name}
 											</h3>
-											<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+											<p className="text-[9px] sm:text-[10px] font-bold text-blue-400 uppercase tracking-wider transition-transform duration-300 group-hover:-translate-y-1 leading-tight">
+												{leader.role}
+											</p>
+										</div>
+										<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white opacity-0 transform translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+											<ArrowRight className="h-4 w-4" />
+										</div>
+									</div>
+								</div>
+							</motion.div>
+						</Link>
+					))}
+				</div>
+
+				{/* Bottom Directors Row */}
+				<div className="flex flex-wrap justify-center gap-4 lg:gap-6 w-full max-w-[90rem] mx-auto">
+					{bottomDirectors.map((leader, i) => (
+						<Link
+							key={leader.id}
+							to={`/leader/${leader.slug}`}
+							className="w-full max-w-[280px] sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(16.666%-20px)] block transition-transform duration-300 hover:scale-102"
+						>
+							<motion.div
+								{...getLeaderAnimProps(i + 2)}
+								className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full"
+							>
+								<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
+									{/* Image */}
+									<ProgressiveImage
+										src={leader.imageUrl}
+										alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
+										title={`${leader.name} - ${leader.role}`}
+										loading="eager"
+										width="300"
+										height="400"
+										className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+									/>
+									
+									{/* Gradient Overlay */}
+									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+
+									{/* Leadership Info Overlay */}
+									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left flex justify-between items-end z-10">
+										<div className="min-w-0 flex-1 pr-2">
+											<h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-0.5 transition-transform duration-300 group-hover:-translate-y-1 whitespace-nowrap truncate">
+												{leader.name}
+											</h3>
+											<p className="text-[9px] sm:text-[10px] font-bold text-blue-400 uppercase tracking-wider transition-transform duration-300 group-hover:-translate-y-1 leading-tight">
 												{leader.role}
 											</p>
 										</div>
@@ -1326,10 +1376,10 @@ function ManagementSection({ isMobile }) {
 									{/* Leadership Info Overlay */}
 									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left flex justify-between items-end z-10">
 										<div className="min-w-0 flex-1 pr-2">
-											<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
+											<h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-0.5 transition-transform duration-300 group-hover:-translate-y-1 whitespace-nowrap truncate">
 												{leader.name}
 											</h3>
-											<p className="text-[10px] font-bold text-orange-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
+											<p className="text-[9px] sm:text-[10px] font-bold text-orange-400 uppercase tracking-wider transition-transform duration-300 group-hover:-translate-y-1 leading-tight">
 												{leader.role}
 											</p>
 										</div>
