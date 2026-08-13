@@ -1103,12 +1103,9 @@ function DetailedProfileSection({ isMobile }) {
 }
 
 function LeadershipSection({ isMobile }) {
-	const topLeaders = [
+	const directors = [
 		{ id: '1', name: 'Dr. Mehboob Sayyad', role: 'Chairman & Founder', imageUrl: '/visionaries/Dr mehboob Sayyad.png', slug: 'dr-mehboob-sayyad' },
 		{ id: '2', name: 'Sunil Chavan', role: 'Director & Co-Founder', imageUrl: '/visionaries/Sunil Chavan.png', slug: 'sunil-chavan' },
-	];
-
-	const otherDirectors = [
 		{ id: '3', name: 'Deshbhushan Jain', role: 'Director', imageUrl: '/visionaries/Deshbushan Jain.png', slug: 'deshbhushan-jain' },
 		{ id: '5', name: 'Prakash Rathod', role: 'Director', imageUrl: '/visionaries/Prakash Rathod.png', slug: 'prakash-rathod' },
 		{ id: '8', name: 'Ruma Sayyad', role: 'Director', imageUrl: '/visionaries/Ruma Sayyad.png', slug: 'ruma-sayyad' },
@@ -1123,26 +1120,31 @@ function LeadershipSection({ isMobile }) {
 	};
 
 	return (
-		<section className="py-12 sm:py-24 bg-slate-50 relative overflow-hidden">
-			<div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-blue-100/30 blur-3xl hidden md:block" />
-			<div className="mx-auto max-w-[96rem] px-4 lg:px-8 relative z-10">
-				{/* Section Heading */}
-				<div className="mb-16 text-center">
-					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2">
-						<span className="text-sm font-bold tracking-widest text-blue-700 uppercase">Board of Directors</span>
+		<section className="py-12 bg-slate-50 relative overflow-hidden flex flex-col justify-center min-h-screen">
+			{/* Dotted Grid Texture */}
+			<div className="absolute inset-0 opacity-[0.06] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #0756c8 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+			
+			{/* Ambient Glowing Orbs */}
+			<div className="absolute top-[-20%] right-[-10%] h-[600px] w-[600px] rounded-full bg-gradient-to-br from-blue-200/20 to-[#ff6817]/5 blur-3xl opacity-60 hidden md:block" />
+			<div className="absolute bottom-[-20%] left-[-10%] h-[600px] w-[600px] rounded-full bg-gradient-to-tr from-orange-200/10 to-blue-200/20 blur-3xl opacity-60 hidden md:block" />
+			
+			<div className="mx-auto w-full max-w-[90rem] px-4 lg:px-8 relative z-10 flex flex-col justify-center">
+				{/* Section Heading - Compact & Modern */}
+				<div className="mb-8 text-center">
+					<div className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1">
+						<span className="text-[11px] font-black tracking-widest text-blue-700 uppercase">Board of Directors</span>
 					</div>
-					<h2 className="text-4xl font-extrabold text-slate-900 mb-4 sm:text-5xl">
+					<h2 className="text-3xl font-extrabold text-slate-900 mb-2 sm:text-4xl">
 						Our Leadership Team
 					</h2>
-					<p className="text-slate-600 max-w-2xl mx-auto text-lg">
+					<p className="text-slate-500 max-w-xl mx-auto text-sm leading-relaxed">
 						Meet the visionary leaders shaping TSPL Group's future with decades of combined experience.
 					</p>
 				</div>
 
-				{/* Top Leaders (Chairman & Sunil Chavan) */}
-				{/* Top Leaders – centred flex row */}
-				<div className="flex flex-wrap justify-center gap-4 lg:gap-6 mb-16">
-					{topLeaders.map((leader, i) => (
+				{/* Directors Flex Container - Same size and layout as keyLeaders */}
+				<div className="flex flex-wrap justify-center gap-4 lg:gap-6 w-full max-w-[90rem] mx-auto">
+					{directors.map((leader, i) => (
 						<Link
 							key={leader.id}
 							to={`/leader/${leader.slug}`}
@@ -1152,8 +1154,8 @@ function LeadershipSection({ isMobile }) {
 								{...getLeaderAnimProps(i)}
 								className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full"
 							>
-								{/* Uniform Aspect Ratio Container */}
-								<figure className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px] m-0">
+								<div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px]">
+									{/* Image */}
 									<ProgressiveImage
 										src={leader.imageUrl}
 										alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
@@ -1161,12 +1163,10 @@ function LeadershipSection({ isMobile }) {
 										loading="eager"
 										width="300"
 										height="400"
-										className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+										className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
 									/>
-									<figcaption className="sr-only">
-										{leader.name} - {leader.role} of TalentCorp Solutions Private Limited (TSPL Group)
-									</figcaption>
-									{/* Gradient Overlay for Text Readability */}
+									
+									{/* Gradient Overlay */}
 									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
 
 									{/* Leadership Info Overlay */}
@@ -1183,56 +1183,7 @@ function LeadershipSection({ isMobile }) {
 											<ArrowRight className="h-4 w-4" />
 										</div>
 									</div>
-								</figure>
-							</motion.div>
-						</Link>
-					))}
-				</div>
-
-				{/* Other Directors – centred flex row */}
-				<div className="flex flex-wrap justify-center gap-4 lg:gap-6">
-					{otherDirectors.map((leader, i) => (
-						<Link
-							key={leader.id}
-							to={`/leader/${leader.slug}`}
-							className="w-full max-w-[280px] sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(16.666%-20px)] block transition-transform duration-300 hover:scale-102"
-						>
-							<motion.div
-								{...getLeaderAnimProps(i + 2)}
-								className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-blue-200 w-full"
-							>
-								{/* Uniform Aspect Ratio Container */}
-								<figure className="relative aspect-[3/4] w-full overflow-hidden bg-slate-200 min-h-[280px] m-0">
-									<ProgressiveImage
-										src={leader.imageUrl}
-										alt={`${leader.name} - ${leader.role} of TalentCorp Solutions Private Limited (TSPL Group)`}
-										title={`${leader.name} - ${leader.role}`}
-										loading="eager"
-										width="300"
-										height="400"
-										className={`absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ${leader.slug === 'ruma-sayyad' ? 'scale-110 origin-top group-hover:scale-115' : 'group-hover:scale-105'}`}
-									/>
-									<figcaption className="sr-only">
-										{leader.name} - {leader.role} of TalentCorp Solutions Private Limited (TSPL Group)
-									</figcaption>
-									{/* Gradient Overlay for Text Readability */}
-									<div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-
-									{/* Leadership Info Overlay */}
-									<div className="absolute bottom-0 left-0 w-full p-4 md:p-5 text-left flex justify-between items-end z-10">
-										<div className="min-w-0 flex-1 pr-2">
-											<h3 className="text-base md:text-lg font-bold text-white mb-1 transition-transform duration-300 group-hover:-translate-y-1">
-												{leader.name}
-											</h3>
-											<p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest transition-transform duration-300 group-hover:-translate-y-1 line-clamp-1">
-												{leader.role}
-											</p>
-										</div>
-										<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white opacity-0 transform translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
-											<ArrowRight className="h-4 w-4" />
-										</div>
-									</div>
-								</figure>
+								</div>
 							</motion.div>
 						</Link>
 					))}

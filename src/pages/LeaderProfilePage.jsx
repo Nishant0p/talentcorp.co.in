@@ -409,7 +409,14 @@ export default function LeaderProfilePage() {
 	}
 
 	return (
-		<div className="min-h-screen bg-[#f8f9fc] font-sans text-[#12213f]">
+		<div className="min-h-screen bg-[#f8f9fc] font-sans text-[#12213f] relative overflow-hidden">
+			{/* Dotted Grid Background Texture */}
+			<div className="pointer-events-none absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #0756c8 1px, transparent 0)', backgroundSize: '36px 36px' }} />
+
+			{/* Soft Background Blur Orbs */}
+			<div className="pointer-events-none absolute -left-64 -top-64 h-[600px] w-[600px] rounded-full bg-blue-200/10 blur-3xl" />
+			<div className="pointer-events-none absolute -right-64 bottom-0 h-[600px] w-[600px] rounded-full bg-orange-200/10 blur-3xl" />
+
 			<Navbar />
 
 			<script
@@ -419,7 +426,7 @@ export default function LeaderProfilePage() {
 				}}
 			/>
 
-			<main className="px-4 pb-16 pt-24 sm:px-6 lg:px-8 lg:pt-28">
+			<main className="relative z-10 px-4 pb-16 pt-24 sm:px-6 lg:px-8 lg:pt-28">
 				<div className="mx-auto w-full max-w-[1440px]">
 					{/* Back button */}
 					<Link
