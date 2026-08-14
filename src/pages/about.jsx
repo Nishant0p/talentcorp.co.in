@@ -1721,7 +1721,7 @@ function Achievements({ isMobile }) {
 
 export default function AboutPage() {
 	useSEO({
-		title: 'Dr. Mehboob Sayyad (Chairman) & Board of Directors - TSPL Group',
+		title: 'About - TSPL Group',
 		description: 'Meet Dr. Mehboob Sayyad, Chairman and Managing Director of TalentCorp Solutions Private Limited (TSPL Group), alongside our Board of Directors.',
 		keywords: 'Dr. Mehboob Sayyad, Dr. Mehboob Sayyed, Dr. Mahiboob Sayyad, Chairman, Managing Director, Sunil Chavan, Prakash Rathod, Deshbhushan Jain, TSPL Group, TalentCorp Solutions'
 	});
