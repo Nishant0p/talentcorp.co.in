@@ -117,10 +117,10 @@ Under his leadership, TSPL Group continues to strengthen its position as a trust
 	},
 	'kishor-more': {
 		name: 'Kishor More',
-		role: 'General Manager - Business Development',
+		role: 'General Manager',
 		category: 'Leader',
 		imageUrl: '/leaders/1 mr kishore more.jpg',
-		bio: `Kishor More serves as the General Manager – Business Development at TSPL Group and plays a key role in driving the organization's growth strategy. He leads client acquisition, strategic partnerships, and business expansion initiatives across staffing, recruitment, apprenticeship, and workforce management services.
+		bio: `Kishor More serves as the General Manager at TSPL Group and plays a key role in driving the organization's growth strategy. He leads client acquisition, strategic partnerships, and business expansion initiatives across staffing, recruitment, apprenticeship, and workforce management services.
 
 His strong understanding of market dynamics and customer requirements has helped TSPL establish long-term partnerships with leading organizations across various industries. Through his leadership and relationship-building capabilities, he continues to contribute significantly to the company's expansion and market leadership position.`,
 		longBio: 'With extensive industry knowledge, Mr. More has secured partnerships with top automotive, production, and manufacturing companies in India, ensuring robust options for our candidate pool.',
@@ -133,10 +133,10 @@ His strong understanding of market dynamics and customer requirements has helped
 	},
 	'mubarak-shaikh': {
 		name: 'Mubarak Shaikh',
-		role: 'General Manager - Operations',
+		role: 'General Manager, Operations',
 		category: 'Leader',
 		imageUrl: '/leaders/2 Mr. Mubarak Shaikh.jpg',
-		bio: `Mubarak Shaikh serves as the General Manager – Operations at TSPL Group, leading operational excellence across multiple branches and business verticals. He is responsible for ensuring seamless execution of staffing, apprenticeship, payroll, and workforce management services while maintaining high standards of service delivery.
+		bio: `Mubarak Shaikh serves as the General Manager, Operations at TSPL Group, leading operational excellence across multiple branches and business verticals. He is responsible for ensuring seamless execution of staffing, apprenticeship, payroll, and workforce management services while maintaining high standards of service delivery.
 
 His expertise in operational planning, team management, process optimization, and client servicing plays a crucial role in driving efficiency throughout the organization. His leadership ensures smooth coordination between clients, candidates, and internal teams across India.`,
 		longBio: 'Mr. Shaikh manages operational departments, site supervisors, and candidate coordination to guarantee high placement retention and smooth candidate transition.',
@@ -149,10 +149,10 @@ His expertise in operational planning, team management, process optimization, an
 	},
 	'gyanendra-mishra': {
 		name: 'Gyanendra Mishra',
-		role: 'Sourcing Head (Pan India)',
+		role: 'Asst. General Manager, Sourcing',
 		category: 'Leader',
 		imageUrl: '/leaders/3 mr gyanendra mishra.jpg',
-		bio: `Gyanendra Mishra leads Pan India Sourcing and Recruitment operations at TSPL Group. He is responsible for developing nationwide talent acquisition strategies, managing sourcing teams, and ensuring timely fulfillment of workforce requirements across multiple industries and locations.
+		bio: `Gyanendra Mishra serves as Asst. General Manager, Sourcing at TSPL Group. He is responsible for developing nationwide talent acquisition strategies, managing sourcing teams, and ensuring timely fulfillment of workforce requirements across multiple industries and locations.
 
 With extensive experience in recruitment planning, bulk hiring, candidate sourcing, and workforce deployment, he has successfully built strong talent pipelines across India. His expertise enables TSPL to deliver quality manpower solutions and support large-scale recruitment projects efficiently.`,
 		longBio: 'Mr. Mishra manages our massive network of regional recruiters, local agents, and college tie-ups to deliver high-volume sourcing requests within short deadlines.',
@@ -165,10 +165,10 @@ With extensive experience in recruitment planning, bulk hiring, candidate sourci
 	},
 	'vishal-ubale': {
 		name: 'Vishal Ubale',
-		role: 'Sourcing & TPO Placement Head',
+		role: 'Manager Sourcing & TPO Placement',
 		category: 'Leader',
 		imageUrl: '/leaders/4 mr vishal ubale.jpg',
-		bio: `Vishal Ubale leads Sourcing and TPO Placement activities at TSPL Group, acting as a key bridge between educational institutions, training centers, and industry partners. He is responsible for conducting campus drives, strengthening placement networks, and creating employment opportunities for students and job seekers.
+		bio: `Vishal Ubale serves as Manager Sourcing & TPO Placement at TSPL Group, acting as a key bridge between educational institutions, training centers, and industry partners. He is responsible for conducting campus drives, strengthening placement networks, and creating employment opportunities for students and job seekers.
 
 His extensive engagement with colleges, ITIs, universities, and skill development institutes has strengthened TSPL's talent acquisition ecosystem. Through his dedication to candidate development and industry collaboration, he continues to support workforce readiness and employment generation initiatives.`,
 		longBio: 'Mr. Ubale specializes in connecting Maharashtra’s ITI/polytechnic students with active industrial opportunities, utilizing close links with colleges and local training departments.',
@@ -177,7 +177,7 @@ His extensive engagement with colleges, ITIs, universities, and skill developmen
 			'Placed over 4,500+ trainees across Maharashtra.',
 			'Coordinated large-scale job fairs in partnership with local authorities.'
 		],
-		location: 'Maharashtra, India'
+		location: 'Pune, India'
 	},
 	'lokesh-pardeshi': {
 		name: 'Lokesh Pardeshi',
@@ -197,10 +197,10 @@ His expertise in financial governance, cost management, and regulatory complianc
 	},
 	'purushottam-gaikwad': {
 		name: 'Purushottam Gaikwad',
-		role: 'Assistant General Manager - Operations',
+		role: 'Assistant General Manager, Operations',
 		category: 'Leader',
 		imageUrl: '/leaders/6 mr purshotam gaikwad.jpg',
-		bio: `Purushottam Gaikwad serves as Assistant General Manager – Operations at TSPL Group, supporting workforce deployment, client servicing, and operational management activities. He works closely with regional teams and corporate clients to ensure smooth execution of staffing and apprenticeship programs.
+		bio: `Purushottam Gaikwad serves as Assistant General Manager, Operations at TSPL Group, supporting workforce deployment, client servicing, and operational management activities. He works closely with regional teams and corporate clients to ensure smooth execution of staffing and apprenticeship programs.
 
 His strong operational expertise and problem-solving capabilities help maintain high levels of service quality and client satisfaction. Through his hands-on leadership approach, he contributes significantly to operational efficiency and business continuity across the organization.`,
 		longBio: 'Mr. Gaikwad acts as the direct link between general management and site operations, maintaining clean workplace metrics, student discipline, and safety standards.',
@@ -213,10 +213,10 @@ His strong operational expertise and problem-solving capabilities help maintain 
 	},
 	'shivanand-mane': {
 		name: 'Shivanand Mane',
-		role: 'Regional Head - Operations',
+		role: 'Regional Head, Operations',
 		category: 'Leader',
 		imageUrl: '/leaders/7 mr shivanand mane .jpg',
-		bio: `Shivanand Mane serves as Regional Head – Operations at TSPL Group and is responsible for overseeing workforce management, client servicing, and operational performance within his region. He ensures effective implementation of staffing, recruitment, and apprenticeship projects while maintaining strong relationships with clients and stakeholders.
+		bio: `Shivanand Mane serves as Regional Head, Operations at TSPL Group and is responsible for overseeing workforce management, client servicing, and operational performance within his region. He ensures effective implementation of staffing, recruitment, apprenticeship, and workforce management projects while maintaining strong relationships with clients and stakeholders.
 
 His deep understanding of regional industry requirements enables him to deliver customized workforce solutions that meet client expectations. Through his leadership, TSPL continues to strengthen its regional presence and operational excellence across diverse industries.`,
 		longBio: 'Mr. Mane coordinates regional offices, local mobilization programs, and client feedback cycles, maintaining stable service quality across distant zones.',

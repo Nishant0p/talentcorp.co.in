@@ -305,17 +305,17 @@ function DetailedProfileSection({ isMobile }) {
 						<h4 className="text-base font-bold text-blue-400 mb-3">TPA &amp; Operations Management</h4>
 						<div className="space-y-2 text-xs text-slate-300">
 							<p><strong className="text-white">Samruddhi Chavan</strong> — Overall Head &amp; Operations</p>
-							<p><strong className="text-white">Mubarak Shaikh</strong> — General Manager - Operations</p>
-							<p><strong className="text-white">Purushottam Gaikwad</strong> — Assistant General Manager - Operations</p>
+							<p><strong className="text-white">Mubarak Shaikh</strong> — General Manager, Operations</p>
+							<p><strong className="text-white">Purushottam Gaikwad</strong> — Assistant General Manager, Operations</p>
 						</div>
 					</div>
 					<div className="p-5 rounded-xl bg-white/5 border border-white/10">
 						<h4 className="text-base font-bold text-orange-400 mb-3">Sourcing, Placement &amp; Finance</h4>
 						<div className="space-y-2 text-xs text-slate-300">
-							<p><strong className="text-white">Gyanendra Mishra</strong> — Sourcing Head (Pan India)</p>
-							<p><strong className="text-white">Vishal Ubale</strong> — Sourcing &amp; TPO Placement Head</p>
+							<p><strong className="text-white">Gyanendra Mishra</strong> — Asst. General Manager, Sourcing</p>
+							<p><strong className="text-white">Vishal Ubale</strong> — Manager Sourcing &amp; TPO Placement</p>
 							<p><strong className="text-white">Lokesh Pardeshi</strong> — Finance Head</p>
-							<p><strong className="text-white">Kishor More</strong> — General Manager - Business Development</p>
+							<p><strong className="text-white">Kishor More</strong> — General Manager</p>
 						</div>
 					</div>
 				</div>
@@ -1255,28 +1255,28 @@ function ManagementSection({ isMobile }) {
 		{
 			id: '2',
 			name: 'Kishor More',
-			role: 'General Manager - Business Development',
+			role: 'General Manager',
 			imageUrl: '/leaders/1 mr kishore more.jpg',
 			slug: 'kishor-more'
 		},
 		{
 			id: '3',
 			name: 'Mubarak Shaikh',
-			role: 'General Manager - Operations',
+			role: 'General Manager, Operations',
 			imageUrl: '/leaders/2 Mr. Mubarak Shaikh.jpg',
 			slug: 'mubarak-shaikh'
 		},
 		{
 			id: '4',
 			name: 'Gyanendra Mishra',
-			role: 'Sourcing Head (Pan India)',
+			role: 'Asst. General Manager, Sourcing',
 			imageUrl: '/leaders/3 mr gyanendra mishra.jpg',
 			slug: 'gyanendra-mishra'
 		},
 		{
 			id: '5',
 			name: 'Vishal Ubale',
-			role: 'Sourcing & TPO Placement Head',
+			role: 'Manager Sourcing & TPO Placement',
 			imageUrl: '/leaders/4 mr vishal ubale.jpg',
 			slug: 'vishal-ubale'
 		},
@@ -1290,14 +1290,14 @@ function ManagementSection({ isMobile }) {
 		{
 			id: '7',
 			name: 'Purushottam Gaikwad',
-			role: 'Assistant General Manager - Operations',
+			role: 'Assistant General Manager, Operations',
 			imageUrl: '/leaders/7th Photo Purushottam Gaikwad (Assistant General Manager in Operation).jpeg',
 			slug: 'purushottam-gaikwad'
 		},
 		{
 			id: '8',
 			name: 'Shivanand Mane',
-			role: 'Regional Head - Operations',
+			role: 'Regional Head, Operations',
 			imageUrl: '/leaders/7 mr shivanand mane .jpg',
 			slug: 'shivanand-mane'
 		},
@@ -1801,24 +1801,24 @@ export default function AboutPage() {
 							{
 								"@type": "Person",
 								"name": "Mr. Kishor More",
-								"jobTitle": "General Manager - Business Development"
+								"jobTitle": "General Manager"
 							},
 							{
 								"@type": "Person",
 								"name": "Mr. Mubarak Shaikh",
-								"jobTitle": "General Manager Overall Operation",
+								"jobTitle": "General Manager, Operations",
 								"image": "https://tsplgroup.in/leaders/2nd%20Photo%20Mr.%20Mubarak%20Shaikh%20(General%20Manager%20Overall%20Operation).jpeg"
 							},
 							{
 								"@type": "Person",
 								"name": "Mr. Gyanendra Mishra",
-								"jobTitle": "Sourcing Head Pan India",
+								"jobTitle": "Asst. General Manager, Sourcing",
 								"image": "https://tsplgroup.in/leaders/3rd%20Mr.%20Gyanendra%20Mishra%20(Sourcing%20Head%20Pan%20India).jpeg"
 							},
 							{
 								"@type": "Person",
 								"name": "Mr. Vishal Ubale",
-								"jobTitle": "Sourcing Head & TPO Maharashtra",
+								"jobTitle": "Manager Sourcing & TPO Placement",
 								"image": "https://tsplgroup.in/leaders/4th%20Photo%20Mr.Vishal%20Ubale%20(Sourcing%20Head%20&%20TPO%20Maharashtra).jpeg"
 							},
 							{
@@ -1830,12 +1830,12 @@ export default function AboutPage() {
 							{
 								"@type": "Person",
 								"name": "Mr. Shivanand Mane",
-								"jobTitle": "Regional Head"
+								"jobTitle": "Regional Head, Operations"
 							},
 							{
 								"@type": "Person",
 								"name": "Purushottam Gaikwad",
-								"jobTitle": "Assistant General Manager in Operation"
+								"jobTitle": "Assistant General Manager, Operations"
 							},
 							{
 								"@type": "Person",
