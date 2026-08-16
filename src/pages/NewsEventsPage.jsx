@@ -104,26 +104,7 @@ const defaultNewsEventsContent = {
     },
   ],
   upcomingEvents: [],
-  pastEvents: [
-    {
-      date: '20',
-      month: 'JUL',
-      title: 'TSPL Group Yearly Trip 2026 – A Memorable Monsoon Adventure to Kaas Plateau & Mahabaleshwar',
-      loc: 'TSPL GROUP, Pune',
-    },
-    {
-      date: '28',
-      month: 'MAR',
-      title: 'TSPL Group Family Get-Together & Inauguration of the 31st Office at Talegaon',
-      loc: 'TSPL GROUP, Pune',
-    },
-    {
-      date: '08',
-      month: 'MAR',
-      title: 'International Women’s Day Celebration 2026 at TSPL Group',
-      loc: 'TSPL GROUP, Pune',
-    },
-  ],
+  pastEvents: [],
   birthdayUpcoming: [
     { name: 'Priya Sharma', dept: 'Operations', date: 'Oct 12', initial: 'PS' },
     { name: 'Rahul Verma', dept: 'Training', date: 'Oct 15', initial: 'RV' },

@@ -12,32 +12,7 @@ const stripHtml = (value) => {
   return String(value).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 };
 
-const defaultEventsList = [
-  {
-    id: 'yearly-trip-2026',
-    title: 'TSPL Group Yearly Trip 2026 – A Memorable Monsoon Adventure to Kaas Plateau & Mahabaleshwar',
-    description: '<p>TSPL Group employees embarked on a memorable monsoon adventure to Kaas Plateau & Mahabaleshwar, fostering team bonding and celebrating our collective achievements.</p>',
-    date: '20 JUL 2026',
-    tag: 'Events',
-    image: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&q=80&w=600',
-  },
-  {
-    id: 'family-get-together-talegaon-2026',
-    title: 'TSPL Group Family Get-Together & Inauguration of the 31st Office at Talegaon',
-    description: '<p>Celebrating the inauguration of our 31st office branch at Talegaon with a grand family get-together, marking another milestone in TSPL Group’s expansion.</p>',
-    date: '28 MAR 2026',
-    tag: 'Events',
-    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600',
-  },
-  {
-    id: 'womens-day-celebration-2026',
-    title: 'International Women’s Day Celebration 2026 at TSPL Group',
-    description: '<p>Honoring and celebrating the incredible contributions of women leaders and team members at TSPL Group on International Women’s Day 2026.</p>',
-    date: '08 MAR 2026',
-    tag: 'Events',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600',
-  },
-];
+const defaultEventsList = [];
 
 const NewsDetailPage = () => {
   const { newsId } = useParams();
