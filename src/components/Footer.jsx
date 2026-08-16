@@ -52,6 +52,13 @@ const officesByState = {
       email: 'info@tsplgroup.in'
     },
     {
+      city: 'Mahalunge (Pune)',
+      company: 'TalentCorp Solutions Private Limited',
+      address: 'Near Apex Hospital, Chakan-Talegaon Road, Mahalunge, Taluka Khed, District Pune, Maharashtra',
+      phone: '+91 7397971322',
+      email: 'info@tsplgroup.in'
+    },
+    {
       city: 'Nashik',
       company: 'TalentCorp Solutions Private Limited',
       address: '2nd Floor, Tadake building, near Vijay Nagar Bus Stop , Vijay Nagar, CIDCO , Nashik, Maharashtra 422009.',

@@ -88,6 +88,16 @@ const officeLocations = [
     mapQuery: 'City+plaza+Bank+of+Maharashtra+Railway+station+Talegaon+Dabhade+Maharashtra+410507',
   },
   {
+    city: 'Mahalunge (Pune)',
+    short: 'Mahalunge',
+    company: 'TalentCorp Solutions Private Limited',
+    address: 'Near Apex Hospital, Chakan-Talegaon Road, Mahalunge, Taluka Khed, District Pune, Maharashtra',
+    calls: ['+91 7397971322'],
+    emails: ['info@tsplgroup.in'],
+    lat: 18.7482, lng: 73.8035, zoom: 15,
+    mapQuery: 'Near+Apex+Hospital+Chakan-Talegaon+Road+Mahalunge+Taluka+Khed+District+Pune',
+  },
+  {
     city: 'Nashik',
     short: 'Nashik',
     company: 'TalentCorp Solutions Private Limited',
