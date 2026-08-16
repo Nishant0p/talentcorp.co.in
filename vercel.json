@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/news-events/:newsId",
+      "destination": "/api/ssrOG?newsId=:newsId"
+    },
+    {
       "source": "/((?!robots.txt|sitemap.xml|.*\\..*$).*)",
       "destination": "/index.html"
     }

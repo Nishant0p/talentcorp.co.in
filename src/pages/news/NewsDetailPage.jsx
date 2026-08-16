@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 import { extractMediaUrl, fetchNews, parseMarkdown } from '../../utils/strapi';
 import { useEffect, useState } from 'react';
 import localNews from '../../data/localNews';
+import useSEO from '../../hooks/useSEO';
 
 const stripHtml = (value) => {
   if (!value) return '';
@@ -32,6 +33,24 @@ const NewsDetailPage = () => {
     () => items.find((item) => String(item.documentId || item.id) === String(newsId)),
     [items, newsId]
   );
+
+  const imageUrl = useMemo(() => {
+    if (!newsItem) return '';
+    return newsItem.image ? extractMediaUrl(newsItem.image) : 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80';
+  }, [newsItem]);
+
+  const cleanDescription = useMemo(() => {
+    if (!newsItem) return '';
+    const cleanDesc = stripHtml(newsItem.description).replace(/\s+/g, ' ').trim();
+    return cleanDesc.length > 160 ? cleanDesc.slice(0, 160) + '...' : cleanDesc;
+  }, [newsItem]);
+
+  useSEO({
+    title: newsItem ? `${newsItem.title} | TSPL Group` : 'News Detail | TSPL Group',
+    description: cleanDescription,
+    image: imageUrl,
+    url: typeof window !== 'undefined' ? window.location.href : '',
+  });
 
   const shareText = useMemo(() => {
     if (!newsItem) return '';
