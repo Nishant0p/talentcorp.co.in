@@ -1181,7 +1181,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.65, ease: 'easeOut' }}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="flex flex-col gap-12 lg:gap-16">
             
             {/* Left Card: Birthday Spotlight */}
             {birthdayItems.length > 0 && (() => {
@@ -1239,147 +1239,161 @@ const NewsEventsPage = ({ prismicData = null }) => {
               };
 
               return (
-                <div className="relative overflow-hidden rounded-[32px] bg-[#0c0e22] text-slate-100 border border-[#f7d54b]/30 p-8 sm:p-12 shadow-[0_20px_50px_rgba(247,213,75,0.06)] flex flex-col items-center text-center">
+                <div className="relative overflow-hidden rounded-[32px] bg-[#0c0e22] text-slate-100 border border-[#f7d54b]/30 p-6 sm:p-12 shadow-[0_20px_50px_rgba(247,213,75,0.06)] flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
                   <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#f7d54b] via-transparent to-transparent" />
                   
-                  {/* Badge */}
-                  <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#f7d54b]/40 bg-[#1a150c]/80 px-5 py-2 text-xs font-extrabold uppercase tracking-widest text-[#f7d54b] shadow-[0_0_20px_rgba(247,213,75,0.15)] relative z-10">
-                    <Cake size={14} className="text-[#f7d54b] animate-bounce" />
-                    TSPL Spotlight Celebration
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-3xl sm:text-5xl font-black leading-tight tracking-tight text-white mb-6 relative z-10">
-                    HAPPY BIRTHDAY!
-                  </h3>
-
-                  {/* Capsule */}
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={birthdayIndex}
-                      initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.9, y: -10 }}
-                      transition={{ duration: 0.3 }}
-                      className="mb-6 inline-flex flex-col items-center bg-[#10172D]/90 border border-slate-700/50 px-8 py-3.5 rounded-[20px] shadow-lg relative z-10"
-                    >
-                      <h4 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
-                        {activeB.name}
-                      </h4>
-                      <span className="mt-0.5 text-[10px] sm:text-xs font-extrabold text-[#f7d54b] tracking-widest uppercase">
-                        {activeB.role || 'TSPL Team'}
-                      </span>
-                    </motion.div>
-                  </AnimatePresence>
-
-                  {/* Message */}
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={birthdayIndex}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.3, delay: 0.05 }}
-                      className="text-sm sm:text-base font-normal text-slate-300 leading-relaxed max-w-[450px] mb-8 relative z-10"
-                    >
-                      {activeB.message || `Join us in wishing a very Happy Birthday to our ${activeB.role}, ${activeB.name}! We wish you continued growth, great success, and lasting happiness.`}
-                    </motion.p>
-                  </AnimatePresence>
-
-                  {/* Buttons Stack */}
-                  <div className="flex flex-col gap-3 w-full max-w-[320px] mb-6 relative z-10">
-                    <button
-                      onClick={() => handleOpenWishesModal('birthday', activeB)}
-                      className="h-[48px] w-full rounded-[12px] bg-[#f7d54b] hover:bg-[#ffe26b] active:scale-98 text-[#070B1A] font-extrabold text-sm flex items-center justify-center gap-2.5 transition-all shadow-md cursor-pointer"
-                    >
-                      <Send size={16} />
-                      Send Wishes
-                    </button>
-
-                    {activeB.image && (
-                      <button
-                        onClick={handleSharePoster}
-                        className="h-[48px] w-full rounded-[12px] bg-[#e65100] hover:bg-[#f57c00] active:scale-98 text-white font-extrabold text-sm flex items-center justify-center gap-2.5 transition-all shadow-md cursor-pointer"
-                      >
-                        <Share2 size={16} />
-                        Share Poster Image
-                      </button>
-                    )}
-
-                    <button
-                      onClick={triggerPopper}
-                      className="h-[48px] w-full rounded-[12px] bg-white/10 hover:bg-white/15 border border-white/10 active:scale-98 text-white font-extrabold text-sm flex items-center justify-center gap-2.5 transition-all cursor-pointer"
-                    >
-                      <PartyPopper size={16} className="text-[#f7d54b]" />
-                      Pop Confetti
-                    </button>
-                  </div>
-
-                  {/* Pagination Dots */}
-                  {birthdayItems.length > 1 && (
-                    <div className="flex gap-2 mb-6 z-10">
-                      {birthdayItems.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => {
-                            setBirthdayIndex(idx);
-                            triggerPopper();
-                          }}
-                          className={`h-2 rounded-full transition-all cursor-pointer ${
-                            idx === birthdayIndex ? 'w-5 bg-[#f7d54b]' : 'w-2 bg-slate-600 hover:bg-slate-400'
-                          }`}
-                        />
-                      ))}
+                  {/* Left Side: Info & Buttons */}
+                  <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left z-10 w-full">
+                    {/* Badge */}
+                    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#f7d54b]/40 bg-[#1a150c]/80 px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest text-[#f7d54b] shadow-[0_0_20px_rgba(247,213,75,0.15)] relative z-10">
+                      <Cake size={14} className="text-[#f7d54b] animate-bounce" />
+                      TSPL Spotlight Celebration
                     </div>
-                  )}
 
-                  {/* Copy Link Row (Flanked by Mobile Arrows) */}
-                  <div className="flex items-center gap-4 z-10">
-                    {birthdayItems.length > 1 && (
-                      <button
-                        onClick={() => {
-                          setBirthdayIndex((prev) => (prev - 1 + birthdayItems.length) % birthdayItems.length);
-                          triggerPopper();
-                        }}
-                        className="h-10 w-10 rounded-lg bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center cursor-pointer"
-                      >
-                        <ChevronLeft size={16} />
-                      </button>
+                    {/* Title */}
+                    <h3 className="text-2xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight text-white mb-2 relative z-10 text-center lg:text-left uppercase px-2 lg:px-0">
+                      HAPPY BIRTHDAY, {activeB.name}!
+                    </h3>
+
+                    {/* Role Subtitle */}
+                    {activeB.role && (
+                      <div className="mb-6 text-xs sm:text-sm font-extrabold text-[#f7d54b] tracking-widest uppercase relative z-10 text-center lg:text-left px-4 lg:px-0">
+                        {activeB.role}
+                      </div>
                     )}
 
-                    <button
-                      onClick={handleCopyBLink}
-                      className="h-12 w-12 rounded-xl bg-[#10172D]/90 border border-slate-700/50 hover:border-[#f7d54b] text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
-                      title="Copy Card Link"
-                    >
-                      <Copy size={16} />
-                    </button>
+                    {/* Photo - Mobile only (inline) */}
+                    <AnimatePresence mode="wait">
+                      {activeB.image && (
+                        <motion.div
+                          key={`mb-${birthdayIndex}`}
+                          initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.95, y: -15 }}
+                          transition={{ duration: 0.3 }}
+                          className="block lg:hidden relative w-full max-w-[260px] sm:max-w-[360px] mb-6 overflow-visible rounded-2xl border-2 border-double border-[#f7d54b]/30 p-1 bg-gradient-to-br from-[#f7d54b] to-orange-500 shadow-xl z-10"
+                        >
+                          <img src={activeB.image} alt={activeB.name} className="w-full h-auto object-cover rounded-xl" />
+                          <button
+                            onClick={handleCopyBLink}
+                            className="absolute -top-3 -right-3 z-20 h-9 w-9 rounded-full bg-[#10172D]/95 border border-[#f7d54b]/60 hover:border-[#f7d54b] text-[#f7d54b] hover:bg-[#1a223f] flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                            title="Copy Card Link"
+                          >
+                            <Copy size={14} />
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
-                    {birthdayItems.length > 1 && (
-                      <button
-                        onClick={() => {
-                          setBirthdayIndex((prev) => (prev + 1) % birthdayItems.length);
-                          triggerPopper();
-                        }}
-                        className="h-10 w-10 rounded-lg bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center cursor-pointer"
+                    {/* Message */}
+                    <AnimatePresence mode="wait">
+                      <motion.p
+                        key={birthdayIndex}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3, delay: 0.05 }}
+                        className="text-xs sm:text-base font-normal text-slate-300 leading-relaxed max-w-[650px] mb-6 relative z-10 text-center lg:text-left px-4 sm:px-6 lg:px-0"
                       >
-                        <ChevronRight size={16} />
+                        {activeB.message || `Join us in wishing a very Happy Birthday to our ${activeB.role}, ${activeB.name}! We wish you continued growth, great success, and lasting happiness.`}
+                      </motion.p>
+                    </AnimatePresence>
+
+                    {/* Buttons Row / Stack */}
+                    <div className="flex flex-col sm:flex-row gap-3 w-full max-w-[280px] sm:max-w-[550px] mb-6 relative z-10 items-center justify-center lg:justify-start">
+                      <button
+                        onClick={() => handleOpenWishesModal('birthday', activeB)}
+                        className="h-[48px] w-full sm:flex-1 rounded-[12px] bg-[#f7d54b] hover:bg-[#ffe26b] active:scale-98 text-[#070B1A] font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                      >
+                        <Send size={16} />
+                        Send Wishes
                       </button>
-                    )}
+
+                      {activeB.image && (
+                        <button
+                          onClick={handleSharePoster}
+                          className="h-[48px] w-full sm:flex-1 rounded-[12px] bg-[#e65100] hover:bg-[#f57c00] active:scale-98 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                        >
+                          <Share2 size={16} />
+                          Share Poster
+                        </button>
+                      )}
+
+                      <button
+                        onClick={triggerPopper}
+                        className="h-[48px] w-full sm:flex-1 rounded-[12px] bg-white/10 hover:bg-white/15 border border-white/10 active:scale-98 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
+                      >
+                        <PartyPopper size={16} className="text-[#f7d54b]" />
+                        Pop Confetti
+                      </button>
+                    </div>
+
+                    {/* Navigation Controls Row */}
+                    <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6 z-10 mt-2 w-full lg:w-auto">
+                      {birthdayItems.length > 1 && (
+                        <div className="flex gap-2">
+                          {birthdayItems.map((_, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => {
+                                setBirthdayIndex(idx);
+                                triggerPopper();
+                              }}
+                              className={`h-1.5 sm:h-2 rounded-full transition-all cursor-pointer ${
+                                idx === birthdayIndex ? 'w-4 sm:w-5 bg-[#f7d54b]' : 'w-1.5 sm:w-2 bg-slate-600 hover:bg-slate-400'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="flex items-center gap-2.5">
+                        {birthdayItems.length > 1 && (
+                          <button
+                            onClick={() => {
+                              setBirthdayIndex((prev) => (prev - 1 + birthdayItems.length) % birthdayItems.length);
+                              triggerPopper();
+                            }}
+                            className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center hover:bg-white/10 cursor-pointer animate-none"
+                          >
+                            <ChevronLeft size={16} />
+                          </button>
+                        )}
+
+                        {birthdayItems.length > 1 && (
+                          <button
+                            onClick={() => {
+                              setBirthdayIndex((prev) => (prev + 1) % birthdayItems.length);
+                              triggerPopper();
+                            }}
+                            className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center hover:bg-white/10 cursor-pointer animate-none"
+                          >
+                            <ChevronRight size={16} />
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Dynamic Inline Poster image */}
+                  {/* Photo - Desktop only (right column) */}
                   <AnimatePresence mode="wait">
                     {activeB.image && (
                       <motion.div
-                        key={birthdayIndex}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
+                        key={`dt-${birthdayIndex}`}
+                        initial={{ opacity: 0, scale: 0.95, x: 20 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, x: -20 }}
                         transition={{ duration: 0.3 }}
-                        className="w-full max-w-[280px] mt-6 overflow-hidden rounded-2xl border-2 border-double border-[#f7d54b]/30 p-1 bg-gradient-to-br from-[#f7d54b] to-orange-500"
+                        className="hidden lg:block relative w-full lg:w-[380px] max-w-[380px] shrink-0 overflow-visible rounded-2xl border-2 border-double border-[#f7d54b]/30 p-1 bg-gradient-to-br from-[#f7d54b] to-orange-500 shadow-xl z-10"
                       >
                         <img src={activeB.image} alt={activeB.name} className="w-full h-auto object-cover rounded-xl" />
+                        <button
+                          onClick={handleCopyBLink}
+                          className="absolute -top-3 -right-3 z-20 h-9 w-9 rounded-full bg-[#10172D]/95 border border-[#f7d54b]/60 hover:border-[#f7d54b] text-[#f7d54b] hover:bg-[#1a223f] flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                          title="Copy Card Link"
+                        >
+                          <Copy size={14} />
+                        </button>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -1443,147 +1457,161 @@ const NewsEventsPage = ({ prismicData = null }) => {
               };
 
               return (
-                <div className="relative overflow-hidden rounded-[32px] bg-[#0c0e22] text-slate-100 border border-blue-500/30 p-8 sm:p-12 shadow-[0_20px_50px_rgba(59,130,246,0.06)] flex flex-col items-center text-center">
+                <div className="relative overflow-hidden rounded-[32px] bg-[#0c0e22] text-slate-100 border border-blue-500/30 p-6 sm:p-12 shadow-[0_20px_50px_rgba(59,130,246,0.06)] flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
                   <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500 via-transparent to-transparent" />
                   
-                  {/* Badge */}
-                  <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-500/40 bg-[#0c1328]/80 px-5 py-2 text-xs font-extrabold uppercase tracking-widest text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.15)] relative z-10">
-                    <Sparkles size={14} className="text-blue-400 animate-pulse" />
-                    TSPL Welcome Spotlight
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-3xl sm:text-5xl font-black leading-tight tracking-tight text-white mb-6 relative z-10">
-                    WELCOME ABOARD!
-                  </h3>
-
-                  {/* Capsule */}
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={welcomeIndex}
-                      initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.9, y: -10 }}
-                      transition={{ duration: 0.3 }}
-                      className="mb-6 inline-flex flex-col items-center bg-[#10172D]/90 border border-slate-700/50 px-8 py-3.5 rounded-[20px] shadow-lg relative z-10"
-                    >
-                      <h4 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
-                        {activeW.name}
-                      </h4>
-                      <span className="mt-0.5 text-[10px] sm:text-xs font-extrabold text-[#f7d54b] tracking-widest uppercase">
-                        {activeW.role || 'TSPL Team'}
-                      </span>
-                    </motion.div>
-                  </AnimatePresence>
-
-                  {/* Message */}
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={welcomeIndex}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.3, delay: 0.05 }}
-                      className="text-sm sm:text-base font-normal text-slate-300 leading-relaxed max-w-[450px] mb-8 relative z-10"
-                    >
-                      {activeW.message || `Welcome to the TSPL family! We are thrilled to have you lead our operations.`}
-                    </motion.p>
-                  </AnimatePresence>
-
-                  {/* Buttons Stack */}
-                  <div className="flex flex-col gap-3 w-full max-w-[320px] mb-6 relative z-10">
-                    <button
-                      onClick={() => handleOpenWishesModal('welcome', activeW)}
-                      className="h-[48px] w-full rounded-[12px] bg-[#f7d54b] hover:bg-[#ffe26b] active:scale-98 text-[#070B1A] font-extrabold text-sm flex items-center justify-center gap-2.5 transition-all shadow-md cursor-pointer"
-                    >
-                      <Send size={16} />
-                      Send Welcome Wishes
-                    </button>
-
-                    {activeW.image && (
-                      <button
-                        onClick={handleShareWelcomePoster}
-                        className="h-[48px] w-full rounded-[12px] bg-[#e65100] hover:bg-[#f57c00] active:scale-98 text-white font-extrabold text-sm flex items-center justify-center gap-2.5 transition-all shadow-md cursor-pointer"
-                      >
-                        <Share2 size={16} />
-                        Share Welcome Poster
-                      </button>
-                    )}
-
-                    <button
-                      onClick={triggerPopper}
-                      className="h-[48px] w-full rounded-[12px] bg-white/10 hover:bg-white/15 border border-white/10 active:scale-98 text-white font-extrabold text-sm flex items-center justify-center gap-2.5 transition-all cursor-pointer"
-                    >
-                      <PartyPopper size={16} className="text-blue-400" />
-                      Pop Confetti
-                    </button>
-                  </div>
-
-                  {/* Pagination Dots */}
-                  {welcomeItems.length > 1 && (
-                    <div className="flex gap-2 mb-6 z-10">
-                      {welcomeItems.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => {
-                            setWelcomeIndex(idx);
-                            triggerPopper();
-                          }}
-                          className={`h-2 rounded-full transition-all cursor-pointer ${
-                            idx === welcomeIndex ? 'w-5 bg-blue-500' : 'w-2 bg-slate-600 hover:bg-slate-400'
-                          }`}
-                        />
-                      ))}
+                  {/* Left Side: Info & Buttons */}
+                  <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left z-10 w-full">
+                    {/* Badge */}
+                    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/40 bg-[#0c1328]/80 px-5 py-1.5 text-xs font-extrabold uppercase tracking-widest text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.15)] relative z-10">
+                      <Sparkles size={14} className="text-blue-400 animate-pulse" />
+                      TSPL Welcome Spotlight
                     </div>
-                  )}
 
-                  {/* Copy Link Row (Flanked by Mobile Arrows) */}
-                  <div className="flex items-center gap-4 z-10">
-                    {welcomeItems.length > 1 && (
-                      <button
-                        onClick={() => {
-                          setWelcomeIndex((prev) => (prev - 1 + welcomeItems.length) % welcomeItems.length);
-                          triggerPopper();
-                        }}
-                        className="h-10 w-10 rounded-lg bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center cursor-pointer"
-                      >
-                        <ChevronLeft size={16} />
-                      </button>
+                    {/* Title */}
+                    <h3 className="text-2xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight text-white mb-2 relative z-10 text-center lg:text-left uppercase px-2 lg:px-0">
+                      WELCOME ABOARD, {activeW.name}!
+                    </h3>
+
+                    {/* Role Subtitle */}
+                    {activeW.role && (
+                      <div className="mb-6 text-xs sm:text-sm font-extrabold text-blue-400 tracking-widest uppercase relative z-10 text-center lg:text-left px-4 lg:px-0">
+                        {activeW.role}
+                      </div>
                     )}
 
-                    <button
-                      onClick={handleCopyWLink}
-                      className="h-12 w-12 rounded-xl bg-[#10172D]/90 border border-slate-700/50 hover:border-blue-500 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
-                      title="Copy Card Link"
-                    >
-                      <Copy size={16} />
-                    </button>
+                    {/* Photo - Mobile only (inline) */}
+                    <AnimatePresence mode="wait">
+                      {activeW.image && (
+                        <motion.div
+                          key={`mb-${welcomeIndex}`}
+                          initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.95, y: -15 }}
+                          transition={{ duration: 0.3 }}
+                          className="block lg:hidden relative w-full max-w-[260px] sm:max-w-[360px] mb-6 overflow-visible rounded-2xl border-2 border-double border-blue-500/30 p-1 bg-gradient-to-br from-blue-500 to-indigo-600 shadow-xl z-10"
+                        >
+                          <img src={activeW.image} alt={activeW.name} className="w-full h-auto object-cover rounded-xl" />
+                          <button
+                            onClick={handleCopyWLink}
+                            className="absolute -top-3 -right-3 z-20 h-9 w-9 rounded-full bg-[#10172D]/95 border border-blue-400/60 hover:border-blue-400 text-blue-400 hover:bg-[#1a223f] flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                            title="Copy Card Link"
+                          >
+                            <Copy size={14} />
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
-                    {welcomeItems.length > 1 && (
-                      <button
-                        onClick={() => {
-                          setWelcomeIndex((prev) => (prev + 1) % welcomeItems.length);
-                          triggerPopper();
-                        }}
-                        className="h-10 w-10 rounded-lg bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center cursor-pointer"
+                    {/* Message */}
+                    <AnimatePresence mode="wait">
+                      <motion.p
+                        key={welcomeIndex}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3, delay: 0.05 }}
+                        className="text-xs sm:text-base font-normal text-slate-300 leading-relaxed max-w-[650px] mb-6 relative z-10 text-center lg:text-left px-4 sm:px-6 lg:px-0"
                       >
-                        <ChevronRight size={16} />
+                        {activeW.message || `Welcome to the TSPL family! We are thrilled to have you lead our operations.`}
+                      </motion.p>
+                    </AnimatePresence>
+
+                    {/* Buttons Row / Stack */}
+                    <div className="flex flex-col sm:flex-row gap-3 w-full max-w-[280px] sm:max-w-[550px] mb-6 relative z-10 items-center justify-center lg:justify-start">
+                      <button
+                        onClick={() => handleOpenWishesModal('welcome', activeW)}
+                        className="h-[48px] w-full sm:flex-1 rounded-[12px] bg-[#f7d54b] hover:bg-[#ffe26b] active:scale-98 text-[#070B1A] font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                      >
+                        <Send size={16} />
+                        Send Welcome Wishes
                       </button>
-                    )}
+
+                      {activeW.image && (
+                        <button
+                          onClick={handleShareWelcomePoster}
+                          className="h-[48px] w-full sm:flex-1 rounded-[12px] bg-[#e65100] hover:bg-[#f57c00] active:scale-98 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                        >
+                          <Share2 size={16} />
+                          Share Poster
+                        </button>
+                      )}
+
+                      <button
+                        onClick={triggerPopper}
+                        className="h-[48px] w-full sm:flex-1 rounded-[12px] bg-white/10 hover:bg-white/15 border border-white/10 active:scale-98 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
+                      >
+                        <PartyPopper size={16} className="text-blue-400" />
+                        Pop Confetti
+                      </button>
+                    </div>
+
+                    {/* Navigation Controls Row */}
+                    <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6 z-10 mt-2 w-full lg:w-auto">
+                      {welcomeItems.length > 1 && (
+                        <div className="flex gap-2">
+                          {welcomeItems.map((_, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => {
+                                setWelcomeIndex(idx);
+                                triggerPopper();
+                              }}
+                              className={`h-1.5 sm:h-2 rounded-full transition-all cursor-pointer ${
+                                idx === welcomeIndex ? 'w-4 sm:w-5 bg-blue-500' : 'w-1.5 sm:w-2 bg-slate-600 hover:bg-slate-400'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="flex items-center gap-2.5">
+                        {welcomeItems.length > 1 && (
+                          <button
+                            onClick={() => {
+                              setWelcomeIndex((prev) => (prev - 1 + welcomeItems.length) % welcomeItems.length);
+                              triggerPopper();
+                            }}
+                            className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center hover:bg-white/10 cursor-pointer animate-none"
+                          >
+                            <ChevronLeft size={16} />
+                          </button>
+                        )}
+
+                        {welcomeItems.length > 1 && (
+                          <button
+                            onClick={() => {
+                              setWelcomeIndex((prev) => (prev + 1) % welcomeItems.length);
+                              triggerPopper();
+                            }}
+                            className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center hover:bg-white/10 cursor-pointer animate-none"
+                          >
+                            <ChevronRight size={16} />
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Dynamic Inline Poster image */}
+                  {/* Photo - Desktop only (right column) */}
                   <AnimatePresence mode="wait">
                     {activeW.image && (
                       <motion.div
-                        key={welcomeIndex}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
+                        key={`dt-${welcomeIndex}`}
+                        initial={{ opacity: 0, scale: 0.95, x: 20 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, x: -20 }}
                         transition={{ duration: 0.3 }}
-                        className="w-full max-w-[280px] mt-6 overflow-hidden rounded-2xl border-2 border-double border-blue-500/30 p-1 bg-gradient-to-br from-blue-500 to-indigo-600"
+                        className="hidden lg:block relative w-full lg:w-[380px] max-w-[380px] shrink-0 overflow-visible rounded-2xl border-2 border-double border-blue-500/30 p-1 bg-gradient-to-br from-blue-500 to-indigo-600 shadow-xl z-10"
                       >
                         <img src={activeW.image} alt={activeW.name} className="w-full h-auto object-cover rounded-xl" />
+                        <button
+                          onClick={handleCopyWLink}
+                          className="absolute -top-3 -right-3 z-20 h-9 w-9 rounded-full bg-[#10172D]/95 border border-blue-400/60 hover:border-blue-400 text-blue-400 hover:bg-[#1a223f] flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                          title="Copy Card Link"
+                        >
+                          <Copy size={14} />
+                        </button>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -1650,20 +1678,20 @@ const NewsEventsPage = ({ prismicData = null }) => {
         </div>
       </motion.section>
       <motion.section
-        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-0"
+        className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-6 lg:px-8"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.65, ease: 'easeOut' }}
       >
-        <div className="mb-10 sm:mb-16 flex items-center justify-between gap-4">
+        <div className="mb-10 sm:mb-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <Calendar className="h-8 w-8 text-orange-500" />
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#006bb8]">Upcoming &amp; Past Events</h2>
+            <Calendar className="h-7 w-7 sm:h-8 sm:w-8 text-orange-500 shrink-0" />
+            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#006bb8] leading-tight">Upcoming &amp; Past Events</h2>
           </div>
           <Link
             to="/all-events"
-            className="group inline-flex items-center gap-2 rounded-xl border border-orange-500 bg-orange-50 px-4 py-2 text-sm font-bold text-orange-600 transition-all hover:bg-orange-500 hover:text-white shadow-sm cursor-pointer"
+            className="group inline-flex items-center justify-center gap-2 rounded-xl border border-orange-500 bg-orange-50 px-4 py-2 text-sm font-bold text-orange-600 transition-all hover:bg-orange-500 hover:text-white shadow-sm cursor-pointer w-fit"
           >
             View All Events Directory <ArrowRight size={16} />
           </Link>
@@ -1678,11 +1706,14 @@ const NewsEventsPage = ({ prismicData = null }) => {
               <h3 className="text-lg sm:text-xl font-bold uppercase tracking-wide text-slate-900">Upcoming</h3>
             </div>
 
-            <div className="relative space-y-8">
+            <div className="relative space-y-6 md:space-y-8">
+              {/* Timeline Connector Line - Hidden on Mobile */}
+              <div className="hidden md:block absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
+
               {loading ? (
                 [1, 2, 3].map((i) => (
                   <div key={i} className="flex gap-6 animate-pulse">
-                    <div className="h-20 w-16 bg-slate-200 rounded-2xl" />
+                    <div className="hidden md:flex h-20 w-16 bg-slate-200 rounded-2xl" />
                     <div className="flex-1 py-2">
                       <div className="h-5 w-3/4 bg-slate-200 rounded mb-2" />
                       <div className="h-4 w-1/2 bg-slate-200 rounded" />
@@ -1690,40 +1721,56 @@ const NewsEventsPage = ({ prismicData = null }) => {
                   </div>
                 ))
               ) : realUpcomingEvents.length > 0 ? (
-                <>
-                  <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
-                  {realUpcomingEvents.slice(0, 3).map((event, idx) => (
-                    <div
-                      key={`${event.title}-${idx}`}
-                      className="group relative z-10 flex gap-6 transition-transform duration-300 hover:translate-x-2"
-                    >
-                      <div className="flex h-20 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-[#006bb8] text-white shadow-lg shadow-blue-900/20">
-                        <span className="text-2xl font-black leading-none">{event.date}</span>
-                        <span className="mt-1 text-[10px] font-bold tracking-widest">{event.month}</span>
-                      </div>
-                      <div className="flex flex-1 flex-col justify-center">
-                        <h4 className="mb-2 text-lg font-bold leading-tight text-slate-900 transition-colors group-hover:text-orange-500">
-                          {event.readMoreUrl ? (
-                            <Link to={event.readMoreUrl}>{event.title}</Link>
-                          ) : (
-                            event.title
-                          )}
-                        </h4>
-                        <div className="flex items-center gap-1 text-sm text-slate-400">
-                          <MapPin size={14} className="text-orange-500" />
-                          {event.loc}
-                        </div>
-                        {event.readMoreUrl && (
-                          <div className="mt-3 flex items-center gap-4 opacity-0 transition-all group-hover:opacity-100">
-                            <Link to={event.readMoreUrl} className="inline-flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-orange-500">
-                              Details <ChevronRight size={14} />
-                            </Link>
-                          </div>
+                realUpcomingEvents.slice(0, 3).map((event, idx) => (
+                  <div
+                    key={`${event.title}-${idx}`}
+                    className="relative z-10 flex flex-col md:flex-row gap-3 md:gap-6 bg-slate-50/60 md:bg-transparent p-4 md:p-0 rounded-2xl border border-slate-100/75 md:border-none transition-all duration-300 hover:translate-x-1"
+                  >
+                    {/* Desktop Date Box - Hidden on Mobile */}
+                    <div className="hidden md:flex h-20 w-16 min-w-[64px] max-w-[64px] flex-none flex-col items-center justify-center rounded-2xl bg-[#006bb8] text-white shadow-lg shadow-blue-900/20 text-center">
+                      <span className="text-xl sm:text-2xl font-black leading-none text-center block w-full">{event.date}</span>
+                      <span className="mt-1.5 text-[9px] sm:text-[10px] font-bold tracking-wider uppercase text-center block w-full">{event.month}</span>
+                    </div>
+
+                    {/* Content Section */}
+                    <div className="flex flex-col justify-center min-w-0">
+                      {/* Mobile Header Row (Date & Location) - Hidden on Desktop */}
+                      <div className="flex md:hidden items-center gap-2 mb-2">
+                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-black text-blue-700 uppercase tracking-wide border border-blue-100">
+                          {event.date} {event.month}
+                        </span>
+                        {event.loc && (
+                          <span className="text-xs font-semibold text-slate-500 truncate flex items-center gap-1">
+                            <MapPin size={12} className="text-orange-500 shrink-0" />
+                            {event.loc.replace('TSPL GROUP, ', '')}
+                          </span>
                         )}
                       </div>
+
+                      <h4 className="mb-2 text-base sm:text-lg font-bold leading-tight text-slate-900 transition-colors hover:text-[#006bb8] break-words">
+                        {event.readMoreUrl ? (
+                          <Link to={event.readMoreUrl}>{event.title}</Link>
+                        ) : (
+                          event.title
+                        )}
+                      </h4>
+
+                      {/* Desktop Location Row - Hidden on Mobile */}
+                      <div className="hidden md:flex items-center gap-1 text-sm text-slate-400">
+                        <MapPin size={14} className="text-orange-500 shrink-0" />
+                        <span className="truncate">{event.loc}</span>
+                      </div>
+
+                      {event.readMoreUrl && (
+                        <div className="mt-2 flex items-center gap-4">
+                          <Link to={event.readMoreUrl} className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-slate-500 hover:text-[#006bb8]">
+                            Details <ChevronRight size={14} />
+                          </Link>
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </>
+                  </div>
+                ))
               ) : (
                 <p className="text-slate-500 text-sm italic pl-2">No upcoming events scheduled at the moment.</p>
               )}
@@ -1733,15 +1780,17 @@ const NewsEventsPage = ({ prismicData = null }) => {
           <div>
             <h3 className="mb-6 sm:mb-8 text-lg sm:text-xl font-bold uppercase tracking-wide text-slate-400">Past</h3>
 
-            <div className="relative space-y-8">
-              <div className="absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
+            <div className="relative space-y-6 md:space-y-8">
+              {/* Timeline Connector Line - Hidden on Mobile */}
+              <div className="hidden md:block absolute left-8 top-2 bottom-2 w-px bg-slate-200" />
+
               {loading ? (
                 [1, 2, 3].map((i) => (
                   <div key={i} className="flex gap-6 animate-pulse">
-                    <div className="flex h-20 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-slate-100 text-slate-700 font-bold shadow-sm" />
+                    <div className="hidden md:flex h-20 w-16 bg-slate-200 rounded-2xl" />
                     <div className="flex-1 py-2">
-                      <div className="h-5 w-3/4 bg-slate-100 rounded mb-2" />
-                      <div className="h-4 w-1/2 bg-slate-100 rounded" />
+                      <div className="h-5 w-3/4 bg-slate-200 rounded mb-2" />
+                      <div className="h-4 w-1/2 bg-slate-200 rounded" />
                     </div>
                   </div>
                 ))
@@ -1749,23 +1798,41 @@ const NewsEventsPage = ({ prismicData = null }) => {
                 realPastEvents.slice(0, 3).map((event, idx) => (
                   <div
                     key={`${event.title}-${idx}`}
-                    className="relative z-10 flex gap-6 opacity-80 transition-all hover:opacity-100 hover:translate-x-1"
+                    className="relative z-10 flex flex-col md:flex-row gap-3 md:gap-6 bg-slate-50/60 md:bg-transparent p-4 md:p-0 rounded-2xl border border-slate-100/75 md:border-none opacity-90 transition-all hover:opacity-100 hover:translate-x-1"
                   >
-                    <div className="flex h-20 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-slate-100 text-slate-700 font-bold shadow-sm">
-                      <span className="text-2xl font-black leading-none">{event.date}</span>
-                      <span className="mt-1 text-[10px] font-bold tracking-widest text-slate-400">{event.month}</span>
+                    {/* Desktop Date Box - Hidden on Mobile */}
+                    <div className="hidden md:flex h-20 w-16 min-w-[64px] max-w-[64px] flex-none flex-col items-center justify-center rounded-2xl bg-slate-100 text-slate-700 font-bold shadow-sm text-center">
+                      <span className="text-xl sm:text-2xl font-black leading-none text-center block w-full">{event.date}</span>
+                      <span className="mt-1.5 text-[9px] sm:text-[10px] font-bold tracking-wider text-slate-400 uppercase text-center block w-full">{event.month}</span>
                     </div>
-                    <div className="flex flex-1 flex-col justify-center">
-                      <h4 className="mb-1 text-lg font-bold leading-tight text-slate-800 transition-colors hover:text-orange-500">
+
+                    {/* Content Section */}
+                    <div className="flex flex-col justify-center min-w-0">
+                      {/* Mobile Header Row (Date & Location) - Hidden on Desktop */}
+                      <div className="flex md:hidden items-center gap-2 mb-2">
+                        <span className="inline-flex items-center rounded-md bg-slate-100 px-2 py-1 text-xs font-black text-slate-600 uppercase tracking-wide border border-slate-200">
+                          {event.date} {event.month}
+                        </span>
+                        {event.loc && (
+                          <span className="text-xs font-semibold text-slate-500 truncate flex items-center gap-1">
+                            <MapPin size={12} className="text-orange-400 shrink-0" />
+                            {event.loc.replace('TSPL GROUP, ', '')}
+                          </span>
+                        )}
+                      </div>
+
+                      <h4 className="mb-1 text-base sm:text-lg font-bold leading-tight text-slate-800 transition-colors hover:text-orange-500 break-words">
                         {event.readMoreUrl ? (
                           <Link to={event.readMoreUrl}>{event.title}</Link>
                         ) : (
                           event.title
                         )}
                       </h4>
-                      <div className="flex items-center gap-1 text-sm text-slate-400 font-medium">
-                        <MapPin size={14} className="text-orange-400" />
-                        {event.loc}
+
+                      {/* Desktop Location Row - Hidden on Mobile */}
+                      <div className="hidden md:flex items-center gap-1 text-sm text-slate-400 font-medium">
+                        <MapPin size={14} className="text-orange-400 shrink-0" />
+                        <span className="truncate">{event.loc}</span>
                       </div>
                     </div>
                   </div>
