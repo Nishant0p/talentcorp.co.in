@@ -124,7 +124,7 @@ const defaultNewsEventsContent = {
     name: 'Vikram Malhotra',
     role: 'Operations Director',
     message: 'Welcome to the TSPL family! We are thrilled to have you lead our operations.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=900',
+    image: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg',
   },
   inTheNewsLogos: [
     'Times of India',
@@ -410,13 +410,14 @@ const NewsEventsPage = ({ prismicData = null }) => {
   // Resolve welcome items as array
   const welcomeItems = useMemo(() => {
     const raw = content.welcomeSpotlight;
+    const birthdayImg = birthdayItems[0]?.image || 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg';
     if (!raw) return [];
     if (Array.isArray(raw)) {
       return raw.map(w => ({
         name: w.name || '',
         role: w.role || '',
         message: w.message || '',
-        image: w.image ? extractMediaUrl(w.image) : '',
+        image: birthdayImg,
         phone: w.phone || '',
       }));
     }
@@ -425,12 +426,12 @@ const NewsEventsPage = ({ prismicData = null }) => {
         name: raw.name || '',
         role: raw.role || '',
         message: raw.message || '',
-        image: raw.image ? (typeof raw.image === 'string' ? raw.image : extractMediaUrl(raw.image)) : '',
+        image: birthdayImg,
         phone: raw.phone || '',
       }];
     }
     return [];
-  }, [content.welcomeSpotlight]);
+  }, [content.welcomeSpotlight, birthdayItems]);
 
   const handleOpenWishesModal = (type, person) => {
     setWishesModalType(type);
