@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Sparkles, Share2, PartyPopper, Check, Copy, User, Heart } from 'lucide-react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { ArrowLeft, Sparkles, Share2, PartyPopper, Check, Copy, User, Heart, Cake, Send, ChevronLeft, ChevronRight, X, Mail, MessageCircle } from 'lucide-react';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
 import { fetchSingleType, extractMediaUrl } from '../utils/strapi';
 
 // Helper to convert an image URL to a File object for native sharing
@@ -298,16 +298,26 @@ const BirthdayCardPage = () => {
   const navigate = useNavigate();
 
   // Dynamic state from URL parameters or Strapi API
-  const [name, setName] = useState('');
-  const [role, setRole] = useState('');
-  const [message, setMessage] = useState('');
-  const [image, setImage] = useState('');
-  const [tenure, setTenure] = useState('');
+  const [birthdays, setBirthdays] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const [confettiActive, setConfettiActive] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isSharing, setIsSharing] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [isWishesModalOpen, setIsWishesModalOpen] = useState(false);
+  const [customWish, setCustomWish] = useState('');
+  const [copiedWish, setCopiedWish] = useState(false);
+
+  // Derived properties from active birthday
+  const activeBirthday = birthdays[currentIndex] || {};
+  const type = activeBirthday.type || 'birthday';
+  const name = activeBirthday.name || '';
+  const role = activeBirthday.role || '';
+  const message = activeBirthday.message || '';
+  const image = activeBirthday.image || '';
+  const tenure = activeBirthday.tenure || '';
+  const phone = activeBirthday.phone || '';
 
   // Mouse Parallax for Hero section
   const mouseX = useMotionValue(0);
@@ -334,19 +344,27 @@ const BirthdayCardPage = () => {
     try {
       setIsSharing(true);
       const safeName = (name || 'tspl-member').toLowerCase().replace(/\s+/g, '-');
-      const fileName = `${safeName}-birthday-poster.jpg`;
+      const fileName = `${safeName}-${type}-poster.jpg`;
       const file = await fetchImageAsFile(image, fileName);
 
+      const encodedName = encodeURIComponent(name);
+      const encodedRole = encodeURIComponent(role);
+      const encodedImage = encodeURIComponent(image);
+      const encodedMsg = encodeURIComponent(message);
+      const pageUrl = `${window.location.origin}/birthday-card?type=${type}&name=${encodedName}&role=${encodedRole}&image=${encodedImage}&msg=${encodedMsg}`;
+
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        const pageUrl = window.location.href;
         await navigator.share({
           files: [file],
-          title: `Happy Birthday ${name || 'Team Member'}!`,
-          text: `Wishing a very Happy Birthday to ${name || 'our team member'}! 🎂🎉\n\nOpen wishing card here: ${pageUrl}`,
+          title: type === 'welcome' ? `Welcome Aboard ${name || 'Team Member'}!` : `Happy Birthday ${name || 'Team Member'}!`,
+          text: type === 'welcome' 
+            ? `Wishing a warm Welcome to ${name || 'our new team member'}! 🤝✨\n\nOpen card here: ${pageUrl}`
+            : `Wishing a very Happy Birthday to ${name || 'our team member'}! 🎂🎉\n\nOpen card here: ${pageUrl}`,
         });
       } else {
-        const pageUrl = window.location.href;
-        const shareText = `Wishing a very Happy Birthday to ${role ? role + ' ' : ''}${name}! 🎂🎉 Click to open wishing card: ${pageUrl}`;
+        const shareText = type === 'welcome'
+          ? `Wishing a warm Welcome to ${role ? role + ' ' : ''}${name}! 🤝✨ Click to open card: ${pageUrl}`
+          : `Wishing a very Happy Birthday to ${role ? role + ' ' : ''}${name}! 🎂🎉 Click to open wishing card: ${pageUrl}`;
         try {
           await navigator.clipboard.writeText(shareText);
         } catch (clipErr) {
@@ -362,7 +380,7 @@ const BirthdayCardPage = () => {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
 
-        alert('🎉 Birthday poster downloaded & wishes copied to clipboard!\n\nYou can now upload the photo directly to your Instagram Story or WhatsApp Status and paste the wishing text.');
+        alert(`🎉 Poster downloaded & wishes copied to clipboard!\n\nYou can now upload the photo directly and paste the wishing text.`);
       }
     } catch (err) {
       console.warn('Share poster failed:', err);
@@ -373,46 +391,147 @@ const BirthdayCardPage = () => {
   };
 
   const handleCopyLink = () => {
-    const shareText = `Wishing a very Happy Birthday to ${role ? role + ' ' : ''}${name}! 🎂🎉 Click to open wishing card: ${window.location.href}`;
+    const encodedName = encodeURIComponent(name);
+    const encodedRole = encodeURIComponent(role);
+    const encodedImage = encodeURIComponent(image);
+    const encodedMsg = encodeURIComponent(message);
+    const pageUrl = `${window.location.origin}/birthday-card?type=${type}&name=${encodedName}&role=${encodedRole}&image=${encodedImage}&msg=${encodedMsg}`;
+
+    const shareText = type === 'welcome'
+      ? `Wishing a warm Welcome to ${role ? role + ' ' : ''}${name}! 🤝✨ Click to open welcome card: ${pageUrl}`
+      : `Wishing a very Happy Birthday to ${role ? role + ' ' : ''}${name}! 🎂🎉 Click to open wishing card: ${pageUrl}`;
     navigator.clipboard.writeText(shareText);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2200);
   };
 
+  const handleSendWishes = () => {
+    const defaultWish = type === 'welcome'
+      ? `Welcome to the TSPL family, ${name}! Thrilled to have you onboard and looking forward to working with you! 🤝✨`
+      : `Wishing you a very Happy Birthday, ${name}! Hope you have a fantastic day ahead! 🎂🎉`;
+    setCustomWish(defaultWish);
+
+    if (phone) {
+      const cleanPhone = phone.replace(/\D/g, '');
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(defaultWish)}`;
+      window.open(whatsappUrl, '_blank');
+    } else {
+      setIsWishesModalOpen(true);
+    }
+  };
+
+  const sendWhatsAppWish = () => {
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(customWish)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  const sendEmailWish = () => {
+    const mailtoUrl = `mailto:?subject=${encodeURIComponent(type === 'welcome' ? `Welcome ${name}!` : `Happy Birthday ${name}!`)}&body=${encodeURIComponent(customWish)}`;
+    window.open(mailtoUrl, '_blank');
+  };
+
+  const copyCustomWish = () => {
+    navigator.clipboard.writeText(customWish);
+    setCopiedWish(true);
+    setTimeout(() => setCopiedWish(false), 2000);
+  };
+
+  const handleNext = () => {
+    if (birthdays.length <= 1) return;
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % birthdays.length);
+    triggerPopper();
+  };
+
+  const handlePrev = () => {
+    if (birthdays.length <= 1) return;
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + birthdays.length) % birthdays.length);
+    triggerPopper();
+  };
+
   useEffect(() => {
     const initData = async () => {
-      const qName = searchParams.get('name');
-      const qRole = searchParams.get('role');
-      const qMsg = searchParams.get('msg');
-      const qImg = searchParams.get('image');
-      const qTenure = searchParams.get('tenure');
+      const parseParamArray = (paramName) => {
+        const allVal = searchParams.getAll(paramName);
+        if (allVal.length === 0) return [];
+        if (allVal.length === 1 && allVal[0].includes(',')) {
+          return allVal[0].split(',').map(s => decodeURIComponent(s.trim()));
+        }
+        return allVal;
+      };
 
-      if (qName || qRole || qMsg || qImg) {
-        if (qName) setName(qName);
-        if (qRole) setRole(qRole);
-        if (qMsg) setMessage(qMsg);
-        if (qImg) setImage(qImg);
-        if (qTenure) setTenure(qTenure);
+      const qTypes = parseParamArray('type');
+      const qNames = parseParamArray('name');
+      const qRoles = parseParamArray('role');
+      const qMsgs = parseParamArray('msg');
+      const qImgs = parseParamArray('image');
+      const qTenures = parseParamArray('tenure');
+      const qPhones = parseParamArray('phone');
+
+      if (qNames.length > 0 || qRoles.length > 0 || qMsgs.length > 0 || qImgs.length > 0) {
+        const items = [];
+        const maxLength = Math.max(qNames.length, qRoles.length, qMsgs.length, qImgs.length, qTenures.length, qPhones.length);
+        for (let i = 0; i < maxLength; i++) {
+          items.push({
+            type: qTypes[i] || 'birthday',
+            name: qNames[i] || '',
+            role: qRoles[i] || '',
+            message: qMsgs[i] || '',
+            image: qImgs[i] || '',
+            tenure: qTenures[i] || '',
+            phone: qPhones[i] || '',
+          });
+        }
+        setBirthdays(items);
         setLoading(false);
         triggerPopper();
       } else {
         try {
           const data = await fetchSingleType(
-            '/api/news-events-page?populate[birthdaySpotlight][populate]=image'
+            '/api/news-events-page?populate[birthdaySpotlight][populate]=image&populate[welcomeSpotlight][populate]=image'
           );
-          if (data && data.birthdaySpotlight) {
-            const b = data.birthdaySpotlight;
-            if (b.name) setName(b.name);
-            if (b.role) setRole(b.role);
-            if (b.message) setMessage(b.message);
-            if (b.tenure) setTenure(b.tenure);
-            if (b.image) {
-              const url = extractMediaUrl(b.image);
-              if (url) setImage(url);
+          let items = [];
+          if (data) {
+            if (data.birthdaySpotlight) {
+              const b = data.birthdaySpotlight;
+              if (Array.isArray(b)) {
+                items.push(...b.map(item => ({ ...item, type: 'birthday', image: item.image ? extractMediaUrl(item.image) : '' })));
+              } else if (b.name) {
+                items.push({ ...b, type: 'birthday', image: b.image ? extractMediaUrl(b.image) : '' });
+              }
+            }
+            if (data.welcomeSpotlight) {
+              const w = data.welcomeSpotlight;
+              if (Array.isArray(w)) {
+                items.push(...w.map(item => ({ ...item, type: 'welcome', image: item.image ? extractMediaUrl(item.image) : '' })));
+              } else if (w.name) {
+                items.push({ ...w, type: 'welcome', image: w.image ? extractMediaUrl(w.image) : '' });
+              }
             }
           }
+          if (items.length > 0) {
+            setBirthdays(items);
+          } else {
+            setBirthdays([
+              {
+                type: 'birthday',
+                name: 'Pooja Ingle',
+                role: 'HR Recruiter',
+                message: 'Join us in wishing a very Happy Birthday to our HR Recruiter, Pooja Ingle! We wish you continued growth, great success, and lasting happiness.',
+                image: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg',
+              }
+            ]);
+          }
         } catch (err) {
-          console.warn('Failed to load Strapi birthday spotlight:', err);
+          console.warn('Failed to load Strapi spotlights:', err);
+          setBirthdays([
+            {
+              type: 'birthday',
+              name: 'Pooja Ingle',
+              role: 'HR Recruiter',
+              message: 'Join us in wishing a very Happy Birthday to our HR Recruiter, Pooja Ingle! We wish you continued growth, great success, and lasting happiness.',
+              image: 'https://backend.tsplgroup.in/uploads/Whats_App_Image_2026_08_01_at_16_04_27_f763ed2bcf.jpeg',
+            }
+          ]);
         } finally {
           setLoading(false);
           triggerPopper();
@@ -452,6 +571,27 @@ const BirthdayCardPage = () => {
       {/* Confetti Explosion Canvas */}
       <FullPageConfetti active={confettiActive} onClose={() => setConfettiActive(false)} />
 
+      {/* Fixed Navigation Arrows (Desktop Flanking) */}
+      {birthdays.length > 1 && (
+        <>
+          <button
+            onClick={handlePrev}
+            className="fixed left-6 top-1/2 -translate-y-1/2 z-30 hidden md:flex h-14 w-14 items-center justify-center rounded-full border border-slate-700/60 bg-[#10172D]/90 text-slate-300 hover:text-white hover:border-[#f7d54b] transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xl"
+            aria-label="Previous birthday"
+          >
+            <ChevronLeft size={28} />
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="fixed right-6 top-1/2 -translate-y-1/2 z-30 hidden md:flex h-14 w-14 items-center justify-center rounded-full border border-slate-700/60 bg-[#10172D]/90 text-slate-300 hover:text-white hover:border-[#f7d54b] transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xl"
+            aria-label="Next birthday"
+          >
+            <ChevronRight size={28} />
+          </button>
+        </>
+      )}
+
       {/* Back Button Navigation */}
       <motion.button
         initial={{ opacity: 0, x: -20 }}
@@ -464,23 +604,32 @@ const BirthdayCardPage = () => {
         Back to News &amp; Events
       </motion.button>
 
-      {/* Main Centered Container (max-width: 1200px, padding: 80px 40px, radius: 32px) */}
+      {/* Main Centered Container */}
       <motion.main
         style={{ rotateX, rotateY }}
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 w-full max-w-[1200px] px-6 sm:px-10 py-12 sm:py-20 rounded-[32px] flex flex-col items-center text-center"
+        className="relative z-20 w-full max-w-[650px] px-4 py-8 rounded-[32px] flex flex-col items-center text-center"
       >
         {/* Top Celebration Badge */}
         <motion.div
           initial={{ scale: 0.85, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.15, duration: 0.4 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#6C63FF]/30 bg-[#151E38]/90 backdrop-blur-md px-5 py-2 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#F7B733] shadow-[0_0_20px_rgba(108,99,255,0.2)]"
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#f7d54b]/40 bg-[#1a150c]/80 backdrop-blur-md px-6 py-2.5 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#f7d54b] shadow-[0_0_20px_rgba(247,213,75,0.15)]"
         >
-          <Sparkles size={16} className="text-[#F7B733] animate-pulse" />
-          ✨ TSPL Spotlight Celebration
+          {type === 'welcome' ? (
+            <>
+              <Sparkles size={16} className="text-[#f7d54b] animate-bounce" />
+              TSPL Welcome Spotlight
+            </>
+          ) : (
+            <>
+              <Cake size={16} className="text-[#f7d54b] animate-bounce" />
+              TSPL Spotlight Celebration
+            </>
+          )}
         </motion.div>
 
         {/* Hero Title: Happy Birthday */}
@@ -488,111 +637,232 @@ const BirthdayCardPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5 }}
-          className="text-5xl sm:text-6xl md:text-[68px] font-black leading-tight tracking-tight text-white mb-8 text-center"
+          className="text-4xl sm:text-6xl md:text-7xl font-black leading-tight tracking-tight text-white mb-6 text-center"
         >
-          Happy Birthday, <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f7d54b] via-orange-400 to-[#f7d54b]">{name || 'Team Member'}</span>!
+          {type === 'welcome' ? 'WELCOME ABOARD!' : 'HAPPY BIRTHDAY!'}
         </motion.h1>
 
-        {/* Employee Card (Background: #10172D, Padding: 48px, Radius: 28px, Glass Effect) */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.35, duration: 0.5 }}
-          className="relative w-full max-w-[850px] mb-12 rounded-[28px] bg-gradient-to-br from-[#12163b] via-[#10132b] to-[#0c0e22] border border-[#f7d54b]/30 backdrop-blur-[18px] p-8 sm:p-12 shadow-[0_30px_90px_rgba(247,213,75,0.08)] flex flex-col items-center overflow-hidden"
-        >
-          {/* Gold corner ornaments */}
-          <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-[#f7d54b]/40 rounded-tl-lg pointer-events-none" />
-          <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-[#f7d54b]/40 rounded-tr-lg pointer-events-none" />
-          <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-[#f7d54b]/40 rounded-bl-lg pointer-events-none" />
-          <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-[#f7d54b]/40 rounded-br-lg pointer-events-none" />
+        {/* Employee Capsule Badge (Name and role in dark pill container) */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: -10 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="mb-8 inline-flex flex-col items-center bg-[#10172D]/90 border border-slate-700/50 px-10 py-4.5 rounded-[24px] shadow-[0_15px_35px_rgba(0,0,0,0.4)]"
+          >
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight text-center">
+              {name || 'Team Member'}
+            </h2>
+            <span className="mt-1 text-xs sm:text-sm font-extrabold text-[#f7d54b] tracking-widest uppercase">
+              {role || 'TSPL Team'}
+            </span>
+          </motion.div>
+        </AnimatePresence>
 
-          {/* Animated Gold Border Shimmer Accent */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#f7d54b] via-orange-400 to-[#f7d54b] animate-pulse" />
+        {/* Description Paragraph */}
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={currentIndex}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            className="text-base sm:text-[18px] font-normal text-slate-300 leading-[1.8] max-w-[500px] mb-8 text-center px-4"
+          >
+            {message || `Join us in wishing a very Happy Birthday to our ${role}, ${name}! We wish you continued growth, great success, and lasting happiness.`}
+          </motion.p>
+        </AnimatePresence>
 
-          {/* Employee Avatar & Name Card */}
-          <div className="flex flex-col sm:flex-row items-center gap-5 mb-6 text-center sm:text-left">
-            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-[#f7d54b] p-0.5 bg-gradient-to-r from-[#f7d54b] to-orange-400 shadow-lg shrink-0">
-              {image ? (
-                <img src={image} alt={name || 'Employee'} className="w-full h-full object-cover rounded-full" />
-              ) : (
-                <div className="w-full h-full bg-[#151E38] flex items-center justify-center text-[#f7d54b]">
-                  <User size={32} />
-                </div>
-              )}
-            </div>
+        {/* Action Buttons Block (Stacked Vertically) */}
+        <div className="flex flex-col gap-4 w-full max-w-[400px] px-4 mb-6">
+          {/* Send Wishes Button */}
+          <button
+            onClick={handleSendWishes}
+            className="h-[56px] w-full rounded-[16px] bg-[#f7d54b] hover:bg-[#ffe26b] active:scale-98 text-[#070B1A] font-extrabold text-base flex items-center justify-center gap-3 transition-all duration-200 shadow-[0_15px_30px_rgba(247,213,75,0.15)] cursor-pointer"
+          >
+            <Send size={18} />
+            Send Wishes
+          </button>
 
-            <div>
-              <h2 className="text-2xl sm:text-[34px] font-bold text-white leading-tight">
-                {name || 'Team Member'}
-              </h2>
-              <div className="mt-1 flex flex-wrap items-center justify-center sm:justify-start gap-3">
-                <span className="text-sm font-semibold text-slate-300 opacity-80">
-                  {role || 'TSPL Team'}
-                </span>
-                {tenure && (
-                  <span className="rounded-full bg-[#f7d54b]/20 border border-[#f7d54b]/40 px-3 py-0.5 text-xs font-bold text-[#f7d54b]">
-                    {tenure}
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Description Paragraph (18px, 400, line-height: 1.8, max-width: 650px) */}
-          {message && (
-            <p className="text-base sm:text-[18px] font-normal text-slate-300 leading-[1.8] max-w-[650px] text-center border-t border-white/5 pt-6">
-              {message}
-            </p>
-          )}
-
-          {/* Action Buttons Row (Height: 56px, Radius: 16px, Gap: 20px, Padding: 22px 34px) */}
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-[20px] w-full">
-            {/* Primary Action Button */}
+          {/* Share Poster Image Button */}
+          {image && (
             <button
               onClick={handleSharePosterImage}
               disabled={isSharing}
-              className="w-full sm:w-auto h-[56px] px-[34px] rounded-[16px] bg-[#6C63FF] hover:bg-[#7A72FF] text-white font-bold text-base flex items-center justify-center gap-3 transition-all duration-200 shadow-[0_20px_50px_rgba(108,99,255,0.25)] hover:-translate-y-[3px] cursor-pointer disabled:opacity-60"
+              className="h-[56px] w-full rounded-[16px] bg-[#e65100] hover:bg-[#f57c00] active:scale-98 text-white font-extrabold text-base flex items-center justify-center gap-3 transition-all duration-200 shadow-[0_15px_30px_rgba(230,81,0,0.2)] cursor-pointer disabled:opacity-60"
             >
-              <Share2 size={20} />
+              <Share2 size={18} />
               {isSharing ? 'Preparing Poster...' : 'Share Poster Image'}
             </button>
+          )}
 
-            {/* Secondary Action Button */}
-            <button
-              onClick={triggerPopper}
-              className="w-full sm:w-auto h-[56px] px-[34px] rounded-[16px] bg-transparent border border-[#2E3B66] hover:border-[#f7d54b] text-slate-200 hover:text-white font-bold text-base flex items-center justify-center gap-3 transition-all duration-200 hover:-translate-y-[3px] cursor-pointer"
-            >
-              <PartyPopper size={20} className="text-[#f7d54b]" />
-              Pop Confetti
-            </button>
-
-            {/* Copy Link Button */}
-            <button
-              onClick={handleCopyLink}
-              title={copiedLink ? 'Link Copied!' : 'Copy Page Link'}
-              className="h-[56px] w-[56px] rounded-[16px] bg-transparent border border-[#2E3B66] hover:border-[#f7d54b] text-slate-300 hover:text-white flex items-center justify-center transition-all duration-200 hover:-translate-y-[3px] cursor-pointer shrink-0"
-            >
-              {copiedLink ? <Check size={20} className="text-emerald-400" /> : <Copy size={20} />}
-            </button>
-          </div>
-        </motion.div>
-
-        {/* Large Birthday Poster Container (max-width: 850px, border-radius: 24px, shadow) */}
-        {image && (
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.7 }}
-            className="w-full max-w-[650px] overflow-hidden rounded-[2rem] border-4 border-double border-[#f7d54b]/40 bg-[#10172D] shadow-[0_30px_80px_rgba(0,0,0,0.6)] group relative p-3 bg-gradient-to-br from-[#f7d54b] via-orange-400 to-[#f7d54b] hover:-translate-y-1 transition-all duration-300"
+          {/* Pop Confetti Button */}
+          <button
+            onClick={triggerPopper}
+            className="h-[56px] w-full rounded-[16px] bg-white/10 hover:bg-white/15 border border-white/10 active:scale-98 text-white font-extrabold text-base flex items-center justify-center gap-3 transition-all duration-200 cursor-pointer"
           >
-            <img
-              src={image}
-              alt={`${name || 'Employee'} Birthday Poster`}
-              className="w-full h-auto object-cover rounded-[1.4rem] transition-transform duration-700 group-hover:scale-[1.01]"
-            />
-          </motion.div>
+            <PartyPopper size={18} className="text-[#f7d54b]" />
+            Pop Confetti
+          </button>
+        </div>
+
+        {/* Carousel Pagination Dots */}
+        {birthdays.length > 1 && (
+          <div className="flex gap-2.5 mb-6 z-30">
+            {birthdays.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  setCurrentIndex(idx);
+                  triggerPopper();
+                }}
+                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  idx === currentIndex ? 'w-6 bg-[#f7d54b]' : 'w-2.5 bg-slate-600 hover:bg-slate-400'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
         )}
+
+        {/* Copy Page Link (Flanked by navigation on mobile) */}
+        <div className="flex items-center gap-6 mb-8 z-30">
+          {birthdays.length > 1 && (
+            <button
+              onClick={handlePrev}
+              className="h-12 w-12 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white flex items-center justify-center active:scale-90 cursor-pointer md:hidden"
+              aria-label="Previous birthday"
+            >
+              <ChevronLeft size={20} />
+            </button>
+          )}
+
+          <button
+            onClick={handleCopyLink}
+            title={copiedLink ? 'Link Copied!' : 'Copy Page Link'}
+            className="h-[56px] w-[56px] rounded-[16px] bg-[#10172D]/90 border border-slate-700/50 hover:border-[#f7d54b] text-slate-300 hover:text-white flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-lg"
+          >
+            {copiedLink ? <Check size={20} className="text-emerald-400" /> : <Copy size={20} />}
+          </button>
+
+          {birthdays.length > 1 && (
+            <button
+              onClick={handleNext}
+              className="h-12 w-12 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white flex items-center justify-center active:scale-90 cursor-pointer md:hidden"
+              aria-label="Next birthday"
+            >
+              <ChevronRight size={20} />
+            </button>
+          )}
+        </div>
+
+        {/* Large Birthday Poster Container */}
+        <AnimatePresence mode="wait">
+          {image && (
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.4 }}
+              className="w-full max-w-[500px] overflow-hidden rounded-[2rem] border-4 border-double border-[#f7d54b]/40 bg-[#10172D] shadow-[0_30px_80px_rgba(0,0,0,0.6)] group relative p-2 bg-gradient-to-br from-[#f7d54b] via-orange-400 to-[#f7d54b] hover:-translate-y-1 transition-all duration-300"
+            >
+              <img
+                src={image}
+                alt={`${name || 'Employee'} Birthday Poster`}
+                className="w-full h-auto object-cover rounded-[1.4rem] transition-transform duration-700 group-hover:scale-[1.01]"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.main>
+
+      {/* Wishes Modal */}
+      <AnimatePresence>
+        {isWishesModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsWishesModalOpen(false)}
+              className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+            />
+
+            {/* Modal Content */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative z-10 w-full max-w-lg bg-[#10172D] border border-slate-700/60 rounded-[28px] p-6 sm:p-8 shadow-[0_25px_50px_rgba(0,0,0,0.6)] text-left overflow-hidden"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setIsWishesModalOpen(false)}
+                className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-full hover:bg-slate-800 transition-colors cursor-pointer"
+                aria-label="Close modal"
+              >
+                <X size={20} />
+              </button>
+
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                Send Birthday Wishes
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400 mb-6">
+                Customize your birthday message for <span className="text-[#f7d54b] font-semibold">{name}</span>:
+              </p>
+
+              {/* Message text area */}
+              <textarea
+                value={customWish}
+                onChange={(e) => setCustomWish(e.target.value)}
+                className="w-full h-32 px-4 py-3 bg-slate-900 border border-slate-700/80 rounded-2xl text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#f7d54b] transition-all resize-none text-sm leading-relaxed mb-6 font-sans"
+                placeholder="Write your wishes here..."
+              />
+
+              {/* Action Choices */}
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={sendWhatsAppWish}
+                  className="h-12 w-full rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold flex items-center justify-center gap-2.5 transition-all duration-200 cursor-pointer shadow-lg"
+                >
+                  <MessageCircle size={18} />
+                  Send via WhatsApp
+                </button>
+
+                <button
+                  onClick={sendEmailWish}
+                  className="h-12 w-full rounded-xl bg-[#6C63FF] hover:bg-[#5b52f2] text-white font-bold flex items-center justify-center gap-2.5 transition-all duration-200 cursor-pointer shadow-lg"
+                >
+                  <Mail size={18} />
+                  Send via Email
+                </button>
+
+                <button
+                  onClick={copyCustomWish}
+                  className="h-12 w-full rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-200 font-bold flex items-center justify-center gap-2.5 transition-all duration-200 cursor-pointer"
+                >
+                  {copiedWish ? (
+                    <>
+                      <Check size={18} className="text-emerald-400" />
+                      Wishes Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={18} />
+                      Copy Wishes Text
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
