@@ -632,33 +632,56 @@ const BirthdayCardPage = () => {
           )}
         </motion.div>
 
-        {/* Hero Title: Happy Birthday */}
+        {/* Hero Title */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5 }}
-          className="text-4xl sm:text-6xl md:text-7xl font-black leading-tight tracking-tight text-white mb-6 text-center"
+          className="text-3xl sm:text-5xl md:text-6xl font-black leading-tight tracking-tight text-white mb-2 text-center uppercase"
         >
-          {type === 'welcome' ? 'WELCOME ABOARD!' : 'HAPPY BIRTHDAY!'}
+          {type === 'welcome' ? `WELCOME ABOARD, ${name}!` : `HAPPY BIRTHDAY, ${name}!`}
         </motion.h1>
 
-        {/* Employee Capsule Badge (Name and role in dark pill container) */}
+        {/* Role Subtitle */}
+        {role && (
+          <div className={`mb-6 text-xs sm:text-sm font-extrabold tracking-widest uppercase text-center ${type === 'welcome' ? 'text-blue-400' : 'text-[#f7d54b]'}`}>
+            {role}
+          </div>
+        )}
+
+        {/* Photo Poster Container with overlapping Copy button */}
         <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: -10 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="mb-8 inline-flex flex-col items-center bg-[#10172D]/90 border border-slate-700/50 px-10 py-4.5 rounded-[24px] shadow-[0_15px_35px_rgba(0,0,0,0.4)]"
-          >
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight text-center">
-              {name || 'Team Member'}
-            </h2>
-            <span className="mt-1 text-xs sm:text-sm font-extrabold text-[#f7d54b] tracking-widest uppercase">
-              {role || 'TSPL Team'}
-            </span>
-          </motion.div>
+          {image && (
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -15 }}
+              transition={{ duration: 0.4 }}
+              className={`relative w-full max-w-[320px] sm:max-w-[400px] mb-8 overflow-visible rounded-2xl border-2 border-double p-1 shadow-xl z-10 ${
+                type === 'welcome' 
+                  ? 'border-blue-500/30 bg-gradient-to-br from-blue-500 to-indigo-600' 
+                  : 'border-[#f7d54b]/30 bg-gradient-to-br from-[#f7d54b] to-orange-500'
+              }`}
+            >
+              <img
+                src={image}
+                alt={`${name || 'Employee'} Poster`}
+                className="w-full h-auto object-cover rounded-xl"
+              />
+              <button
+                onClick={handleCopyLink}
+                className={`absolute -top-3 -right-3 z-20 h-9 w-9 rounded-full bg-[#10172D]/95 border flex items-center justify-center transition-all cursor-pointer shadow-lg hover:bg-[#1a223f] ${
+                  type === 'welcome'
+                    ? 'border-blue-400/60 text-blue-400 hover:border-blue-400'
+                    : 'border-[#f7d54b]/60 text-[#f7d54b] hover:border-[#f7d54b]'
+                }`}
+                title="Copy Page Link"
+              >
+                <Copy size={14} />
+              </button>
+            </motion.div>
+          )}
         </AnimatePresence>
 
         {/* Description Paragraph */}
@@ -669,9 +692,11 @@ const BirthdayCardPage = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, delay: 0.05 }}
-            className="text-base sm:text-[18px] font-normal text-slate-300 leading-[1.8] max-w-[500px] mb-8 text-center px-4"
+            className="text-xs sm:text-base font-normal text-slate-300 leading-[1.8] max-w-[500px] mb-8 text-center px-4"
           >
-            {message || `Join us in wishing a very Happy Birthday to our ${role}, ${name}! We wish you continued growth, great success, and lasting happiness.`}
+            {message || (type === 'welcome'
+              ? `Welcome to the TSPL family! We are thrilled to have you lead our operations.`
+              : `Join us in wishing a very Happy Birthday to our ${role}, ${name}! We wish you continued growth, great success, and lasting happiness.`)}
           </motion.p>
         </AnimatePresence>
 
@@ -757,26 +782,6 @@ const BirthdayCardPage = () => {
             </button>
           )}
         </div>
-
-        {/* Large Birthday Poster Container */}
-        <AnimatePresence mode="wait">
-          {image && (
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.4 }}
-              className="w-full max-w-[500px] overflow-hidden rounded-[2rem] border-4 border-double border-[#f7d54b]/40 bg-[#10172D] shadow-[0_30px_80px_rgba(0,0,0,0.6)] group relative p-2 bg-gradient-to-br from-[#f7d54b] via-orange-400 to-[#f7d54b] hover:-translate-y-1 transition-all duration-300"
-            >
-              <img
-                src={image}
-                alt={`${name || 'Employee'} Birthday Poster`}
-                className="w-full h-auto object-cover rounded-[1.4rem] transition-transform duration-700 group-hover:scale-[1.01]"
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.main>
 
       {/* Wishes Modal */}
