@@ -4,19 +4,19 @@ import {
   ArrowLeft, MapPin, IndianRupee, Clock, Briefcase, Calendar,
   CheckCircle, Send, Zap, Shield, TrendingUp, Heart, Award, Star, Building2, Phone
 } from 'lucide-react';
-import { fetchJobs, submitApplicant, submitToAdminBackend, parseMarkdown, cleanMarkdown, isJobExpired } from '../utils/strapi';
+import { fetchJobs, submitApplicant, submitToAdminBackend, parseMarkdown, cleanMarkdown, isJobExpired, parseSkillsAndTags, formatExperience } from '../utils/strapi';
 import useSEO from '../hooks/useSEO';
 import './JobDetailPage.css';
 
 // ─── Static constants ────────────────────────────────────────────────────────
 
 const FALLBACK = [
-  { id: 1, title: 'Production Operator', company: 'Tata Motors', location: 'Pune, MH', salary: '₹18,000–₹25,000', type: 'Full-time', urgent: true },
-  { id: 2, title: 'ITI Technician', company: 'Maruti Suzuki', location: 'Pune, MH', salary: '₹15,000–₹22,000', type: 'Apprenticeship', urgent: false },
-  { id: 3, title: 'Quality Inspector', company: 'Bajaj Auto', location: 'Aurangabad, MH', salary: '₹20,000–₹28,000', type: 'Full-time', urgent: true },
-  { id: 4, title: 'Electrical Trainee', company: 'L&T Construction', location: 'Chennai, TN', salary: '₹12,000–₹18,000', type: 'Apprenticeship', urgent: false },
-  { id: 5, title: 'CNC Operator', company: 'Mahindra & Mahindra', location: 'Nashik, MH', salary: '₹22,000–₹30,000', type: 'Full-time', urgent: false },
-  { id: 6, title: 'Assembly Line Worker', company: 'Hero MotoCorp', location: 'Haridwar, UK', salary: '₹16,000–₹20,000', type: 'Contract', urgent: true },
+  { id: 1, title: 'Production Operator', company: 'Tata Motors', location: 'Pune, MH', salary: '₹18,000–₹25,000', type: 'Full-time', experience: '1-2 years', skills: ['Teamwork', 'Machine Operation', 'Quality Check'], urgent: true },
+  { id: 2, title: 'ITI Technician', company: 'Maruti Suzuki', location: 'Pune, MH', salary: '₹15,000–₹22,000', type: 'Apprenticeship', experience: 'Fresher', skills: ['Electrical', 'Wiring', 'Panel Board'], urgent: false },
+  { id: 3, title: 'Quality Inspector', company: 'Bajaj Auto', location: 'Aurangabad, MH', salary: '₹20,000–₹28,000', type: 'Full-time', experience: '2-5 years', skills: ['Quality Inspection', 'Blueprint Reading', 'Safety'], urgent: true },
+  { id: 4, title: 'Electrical Trainee', company: 'L&T Construction', location: 'Chennai, TN', salary: '₹12,000–₹18,000', type: 'Apprenticeship', experience: 'Fresher', skills: ['Wiring', 'Teamwork', 'Communication'], urgent: false },
+  { id: 5, title: 'CNC Operator', company: 'Mahindra & Mahindra', location: 'Nashik, MH', salary: '₹22,000–₹30,000', type: 'Full-time', experience: '2-5 years', skills: ['CNC Operation', 'Tool Setting', 'Communication'], urgent: false },
+  { id: 6, title: 'Assembly Line Worker', company: 'Hero MotoCorp', location: 'Haridwar, UK', salary: '₹16,000–₹20,000', type: 'Contract', experience: '1-2 years', skills: ['Assembly', 'Teamwork', 'Safety Compliance'], urgent: true },
 ];
 
 const BENEFITS = [
@@ -51,6 +51,7 @@ const formatDateString = (dateStr) => {
 const getStats = (job) => {
   const stats = [
     { icon: Briefcase, label: 'Category', value: job.category || 'General' },
+    { icon: Award, label: 'Experience', value: formatExperience(job.experience) },
     { icon: MapPin, label: 'Location', value: job.location },
     { icon: IndianRupee, label: 'Salary', value: job.salary },
     { icon: Clock, label: 'Type', value: job.type },
@@ -154,6 +155,27 @@ const Requirements = React.memo(({ job }) => {
             );
           })}
         </ul>
+      </div>
+    </section>
+  );
+});
+
+const SkillsSection = React.memo(({ job }) => {
+  const skills = parseSkillsAndTags(job?.skills, job?.tags);
+  if (!skills || skills.length === 0) return null;
+
+  return (
+    <section className="pro-section">
+      <h2 className="pro-section-title">Required Skills & Tags</h2>
+      <div className="pro-section-content">
+        <div className="pro-skills-grid">
+          {skills.map((skill, index) => (
+            <span key={index} className="pro-skill-badge">
+              <span className="pro-skill-bullet" />
+              {skill}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -269,6 +291,9 @@ const JobDetailPage = () => {
             location: found.location || 'India',
             salary: found.salary || 'Competitive',
             type: found.type || 'Full-time',
+            experience: found.experience || found.experienceRequired || '1-2',
+            skills: found.skills || '',
+            tags: found.tags || '',
             urgent: Boolean(found.urgent),
             description: found.description || '',
             requirements: found.requirements || [],
@@ -435,6 +460,7 @@ const JobDetailPage = () => {
       <div className="pro-main-layout">
         <div className="pro-content">
           <JobDescription job={job} />
+          <SkillsSection job={job} />
           <Requirements job={job} />
           <BenefitsCard />
         </div>

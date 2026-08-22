@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, IndianRupee, Clock, ArrowRight, Filter, Briefcase, Car, Cpu, Factory, Share2, Calendar, Phone } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { buildJobCategoryOptions, fetchJobs, getJobCategoryFilterValue, toJobFilterSlug, cleanMarkdown, isJobExpired } from '../utils/strapi';
+import { buildJobCategoryOptions, fetchJobs, getJobCategoryFilterValue, toJobFilterSlug, cleanMarkdown, isJobExpired, parseSkillsAndTags, formatExperience } from '../utils/strapi';
 
 const defaultContacts = [{ name: 'HR Recruiting', phone: '+91 95615 04911' }];
 
@@ -48,6 +48,8 @@ const fallbackJobs = [
     location: 'Pune, Maharashtra',
     salary: '₹18,000 - ₹25,000',
     type: 'Full-time',
+    experience: '1-2 years',
+    skills: ['Teamwork', 'Communication', 'Machine Handling'],
     urgent: true,
     postedDate: 'March 15, 2026',
     applyBy: 'April 30, 2026',
@@ -63,6 +65,8 @@ const fallbackJobs = [
     location: 'Gurugram, Haryana',
     salary: '₹15,000 - ₹22,000',
     type: 'Apprenticeship',
+    experience: 'Fresher',
+    skills: ['Electrical', 'Wiring', 'Panel Board'],
     urgent: false,
     postedDate: 'March 18, 2026',
     applyBy: 'April 25, 2026',
@@ -77,6 +81,8 @@ const fallbackJobs = [
     location: 'Aurangabad, Maharashtra',
     salary: '₹20,000 - ₹28,000',
     type: 'Full-time',
+    experience: '2-5 years',
+    skills: ['Quality Inspection', 'Blueprint Reading', 'Safety'],
     urgent: true,
     postedDate: 'March 20, 2026',
     applyBy: 'May 10, 2026',
@@ -91,6 +97,8 @@ const fallbackJobs = [
     location: 'Chennai, Tamil Nadu',
     salary: '₹12,000 - ₹18,000',
     type: 'Apprenticeship',
+    experience: 'Fresher',
+    skills: ['Wiring', 'Teamwork', 'Communication'],
     urgent: false,
     postedDate: 'March 22, 2026',
     applyBy: 'May 15, 2026',
@@ -105,6 +113,8 @@ const fallbackJobs = [
     location: 'Nashik, Maharashtra',
     salary: '₹22,000 - ₹30,000',
     type: 'Full-time',
+    experience: '2-5 years',
+    skills: ['CNC Operation', 'Tool Setting', 'Communication'],
     urgent: false,
     postedDate: 'March 25, 2026',
     applyBy: 'April 28, 2026',
@@ -120,6 +130,8 @@ const fallbackJobs = [
     location: 'Haridwar, Uttarakhand',
     salary: '₹16,000 - ₹20,000',
     type: 'Contract',
+    experience: '1-2 years',
+    skills: ['Assembly', 'Teamwork', 'Safety Compliance'],
     urgent: true,
     postedDate: 'March 28, 2026',
     applyBy: 'May 5, 2026',
@@ -217,7 +229,22 @@ const JobCard = ({ job, navigate, index }) => {
             <Clock size={12} className="text-slate-400 shrink-0" />
             <span className="truncate max-w-[130px]">{job.type}</span>
           </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold">
+            <Briefcase size={12} className="text-emerald-500 shrink-0" />
+            <span className="truncate max-w-[130px]">{formatExperience(job.experience)}</span>
+          </span>
         </div>
+
+        {/* Skill Tags */}
+        {job.skills && job.skills.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {job.skills.slice(0, 4).map((skill, sIdx) => (
+              <span key={sIdx} className="rounded-lg bg-blue-50/90 border border-blue-100/70 px-2.5 py-0.5 text-[11px] font-semibold text-blue-700">
+                {skill}
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* HR Contact Section */}
         <div className="mt-4 bg-slate-50/80 rounded-xl p-3 border border-slate-100">
@@ -331,7 +358,9 @@ const JobBoard = () => {
             category: job.category || job.type || '',
             location: job.location || '',
             salary: formatSalaryFromJob(job),
-            type: job.type || '',
+            type: job.type || job.jobType || '',
+            experience: job.experience || job.experienceRequired || '1-2',
+            skills: parseSkillsAndTags(job.skills, job.tags || job.skillTags),
             urgent: job.urgent || false,
             date: job.createdAt || job.publishedAt || job.date || null,
             postedDate: job.publishedDate || job.publishedAt || job.createdAt || null,
@@ -369,7 +398,8 @@ const JobBoard = () => {
       if (!normalized) {
         return byCategory;
       }
-      const haystack = `${job.title} ${job.company} ${job.location} ${job.category} ${job.type}`.toLowerCase();
+      const skillsText = (job.skills || []).join(' ');
+      const haystack = `${job.title} ${job.company} ${job.location} ${job.category} ${job.type} ${job.experience || ''} ${skillsText}`.toLowerCase();
       return byCategory && haystack.includes(normalized);
     });
   }, [jobs, filter, query]);

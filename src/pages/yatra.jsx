@@ -337,8 +337,9 @@ export default function YatraPage() {
 									<div className="absolute left-0 right-0 top-8 h-1 bg-gradient-to-r from-emerald-500 via-orange-500 to-yellow-500 opacity-30" style={{ zIndex: 0 }} />
 									
 									{stages.map((stage, idx) => {
-										const isCompleted = stage.status === 'COMPLETED';
-										const isActive = stage.status === 'ACTIVE';
+										const currentStatus = String(stage.stageStatus || stage.status || '').toUpperCase();
+										const isCompleted = currentStatus === 'COMPLETED';
+										const isActive = currentStatus === 'ACTIVE';
 										
 										let bgBorderColor = 'bg-yellow-500/20 border-yellow-500 animate-pulse';
 										let textColor = 'text-yellow-400';
@@ -375,8 +376,9 @@ export default function YatraPage() {
 									<div className="absolute left-7 top-6 bottom-6 w-0.5 bg-gradient-to-b from-emerald-500 via-orange-500 to-yellow-500 opacity-30" style={{ zIndex: 0 }} />
 
 									{stages.map((stage, idx) => {
-										const isCompleted = stage.status === 'COMPLETED';
-										const isActive = stage.status === 'ACTIVE';
+										const currentStatus = String(stage.stageStatus || stage.status || '').toUpperCase();
+										const isCompleted = currentStatus === 'COMPLETED';
+										const isActive = currentStatus === 'ACTIVE';
 										
 										let bgBorderColor = 'bg-yellow-500/20 border-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.3)] animate-pulse';
 										let textColor = 'text-yellow-400';

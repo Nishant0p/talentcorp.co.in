@@ -30,7 +30,7 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProgressiveImage from '../components/ProgressiveImage';
-import { extractMediaUrl, fetchJobs, submitLead, submitToAdminBackend, cleanMarkdown, cleanJobTitle, cleanCompany, isJobExpired } from '../utils/strapi';
+import { extractMediaUrl, fetchJobs, submitLead, submitToAdminBackend, cleanMarkdown, cleanJobTitle, cleanCompany, isJobExpired, parseSkillsAndTags, formatExperience } from '../utils/strapi';
 import { uploadResumeToGoogleDrive } from '../utils/googleSheets';
 import { getPageAsset, usePageAssets } from '../hooks/usePageAssets';
 import { buildJobCategoryOptions } from '../utils/strapi';
@@ -187,12 +187,12 @@ const formatDateString = (dateStr) => {
 
 const mapApiJobToListing = (job, index, placeholderImages, fallbackImage) => {
 	const { salaryMin, salaryMax } = parseSalaryText(job.salary);
-	const normalizedType = String(job.type || 'full-time').toLowerCase();
+	const normalizedType = String(job.type || job.jobType || 'full-time').toLowerCase();
 	const cleanTitleStr = cleanJobTitle(job.title || `Job ${job.id}`);
 	const cleanCompanyStr = cleanCompany(job.company);
 	const category = cleanMarkdown(String(job.category || job.jobCategory || job.type || cleanTitleStr || 'General')).trim();
 	const location = String(job.location || 'India').trim();
-	const skills = Array.isArray(job.skills) && job.skills.length ? job.skills : ['Teamwork', 'Communication'];
+	const skills = parseSkillsAndTags(job.skills, job.tags || job.skillTags);
 	const uploadedPhotoUrl = extractMediaUrl(job.photo || job.image);
 	const imageMedia = job.photo || job.image || null;
 
@@ -207,8 +207,9 @@ const mapApiJobToListing = (job, index, placeholderImages, fallbackImage) => {
 		salaryMin,
 		salaryMax,
 		jobType: normalizedType,
-		experience: job.experience || '1-2',
+		experience: job.experience || job.experienceRequired || '1-2',
 		skills,
+		tags: skills,
 		description: cleanMarkdown(job.description || 'Apply now to join TSPL Group.'),
 		rawApplyBy: job.applyBy,
 		applyBy: formatDateString(job.applyBy),
@@ -742,7 +743,7 @@ function JobCard({ job, index }) {
 					<div className="rounded-lg bg-emerald-50 p-2.5">
 						<div className="flex items-center gap-2 text-sm text-slate-700">
 							<Briefcase className="h-4 w-4 text-emerald-600" />
-							<span className="font-semibold">{job.experience === 'fresher' ? 'Fresher' : `${job.experience} Years`}</span>
+							<span className="font-semibold">{formatExperience(job.experience)}</span>
 						</div>
 					</div>
 				</div>
@@ -757,8 +758,8 @@ function JobCard({ job, index }) {
 				<p className="mb-4 line-clamp-2 text-sm text-slate-600">{cleanMarkdown(job.description)}</p>
 
 				<div className="mb-4 flex flex-wrap gap-1.5">
-					{job.skills.slice(0, 4).map((skill) => (
-						<span key={skill} className="rounded bg-slate-100 px-2 py-1 text-xs text-slate-700">
+					{job.skills.slice(0, 5).map((skill) => (
+						<span key={skill} className="rounded-lg bg-blue-50/90 border border-blue-100/70 px-2.5 py-1 text-xs font-semibold text-blue-700">
 							{skill}
 						</span>
 					))}
@@ -857,7 +858,23 @@ function JobsListing({ filters, searchQuery, jobs, loading }) {
 		}
 
 		if (filters.experience) {
-			filtered = filtered.filter((job) => job.experience === filters.experience);
+			const filterExp = normalizeText(filters.experience);
+			filtered = filtered.filter((job) => {
+				const jobExp = normalizeText(job.experience);
+				if (filterExp === 'fresher') {
+					return jobExp.includes('fresher') || jobExp === '0';
+				}
+				if (filterExp === '1-2') {
+					return jobExp.includes('1-2') || jobExp.includes('1') || jobExp.includes('2');
+				}
+				if (filterExp === '2-5') {
+					return jobExp.includes('2-5') || jobExp.includes('3') || jobExp.includes('4') || jobExp.includes('5');
+				}
+				if (filterExp === '5+') {
+					return jobExp.includes('5+') || jobExp.includes('5') || jobExp.includes('6') || jobExp.includes('10');
+				}
+				return jobExp.includes(filterExp);
+			});
 		}
 
 		if (normalizedSearch) {

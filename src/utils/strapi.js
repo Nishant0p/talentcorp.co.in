@@ -597,5 +597,66 @@ export const parseMarkdown = (text) => {
   return html;
 };
 
+export const parseSkillsAndTags = (skills, tags) => {
+  const list = [];
 
+  const extract = (val) => {
+    if (!val) return;
+    if (Array.isArray(val)) {
+      val.forEach((item) => {
+        if (typeof item === 'string') {
+          const s = item.trim();
+          if (s) list.push(s);
+        } else if (item && typeof item === 'object') {
+          const s = String(item.name || item.title || item.tag || item.skill || '').trim();
+          if (s) list.push(s);
+        }
+      });
+      return;
+    }
+    if (typeof val === 'string') {
+      const trimmed = val.trim();
+      if (!trimmed) return;
+      if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+        try {
+          const parsed = JSON.parse(trimmed);
+          if (Array.isArray(parsed)) {
+            parsed.forEach((p) => extract(p));
+            return;
+          }
+        } catch {
+          // fallback to splitting
+        }
+      }
+      trimmed
+        .split(/[,\n\r|•;]+/)
+        .map((s) => s.trim().replace(/^[-•*]\s*/, ''))
+        .filter(Boolean)
+        .forEach((s) => list.push(s));
+    }
+  };
 
+  extract(skills);
+  extract(tags);
+
+  const unique = [];
+  const seen = new Set();
+  for (const item of list) {
+    const key = item.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(item);
+    }
+  }
+
+  return unique.length > 0 ? unique : ['Teamwork', 'Communication'];
+};
+
+export const formatExperience = (exp) => {
+  if (!exp) return '1-2 Years';
+  const cleaned = String(exp).trim();
+  if (!cleaned) return '1-2 Years';
+  if (/fresher/i.test(cleaned)) return 'Fresher';
+  if (/year/i.test(cleaned)) return cleaned;
+  return `${cleaned} Years`;
+};
