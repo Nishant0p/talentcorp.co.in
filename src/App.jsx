@@ -189,8 +189,8 @@ function AnimatedRoutes({ isLoading }) {
           <Route key="privacy" path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route key="contact" path="/contact" element={<ContactUs />} />
           <Route key="contact-us" path="/contact-us" element={<ContactUs />} />
-          <Route key="blog" path="/blog" element={<BlogList />} />
-          <Route key="blog-post" path="/blog/:slug" element={<BlogPost />} />
+          {/* <Route key="blog" path="/blog" element={<BlogList />} /> */}
+          {/* <Route key="blog-post" path="/blog/:slug" element={<BlogPost />} /> */}
           <Route key="leader-profile" path="/leader/:slug" element={<LeaderProfilePage />} />
           <Route key="notfound" path="*" element={<NotFoundPage />} />
         </Routes>

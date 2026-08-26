@@ -1172,8 +1172,7 @@ const NewsEventsPage = ({ prismicData = null }) => {
       </motion.section>
 
       {/* ── Team Celebrations & Welcomes Section ── */}
-      {/* ── Team Spotlights: Celebrations & Welcomes Section ── */}
-      {(birthdayItems.length > 0 || welcomeItems.length > 0) && (
+      {false && (birthdayItems.length > 0 || welcomeItems.length > 0) && (
         <motion.section
           ref={birthdaySectionRef}
           className="mx-auto mt-12 sm:mt-24 max-w-7xl px-4 sm:px-8"
