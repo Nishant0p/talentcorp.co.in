@@ -694,12 +694,7 @@ function JobCard({ job, index }) {
 		<div className={`group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl ${
 			isOrange ? 'hover:shadow-orange-100/50 hover:border-orange-200' : 'hover:shadow-blue-100/50 hover:border-blue-200'
 		}`}>
-			{(job.urgent || job.featured) && (
-				<div className="absolute left-3 top-3 z-10 flex gap-2">
-					{job.urgent && <span className="rounded-full bg-red-500 px-2.5 py-1 text-xs font-bold text-white">URGENT</span>}
-					{job.featured && <span className="rounded-full bg-orange-500 px-2.5 py-1 text-xs font-bold text-white">FEATURED</span>}
-				</div>
-			)}
+
 
 			<div className="absolute right-3 top-3 z-10 flex gap-2">
 				<button onClick={() => setLiked((prev) => !prev)} className={`rounded-full p-2 shadow-md ${liked ? 'bg-red-500 text-white' : 'bg-white text-slate-600'}`}>
@@ -764,6 +759,13 @@ function JobCard({ job, index }) {
 						</span>
 					))}
 				</div>
+
+				{(job.urgent || job.featured) && (
+					<div className="mb-4 flex flex-wrap gap-2">
+						{job.urgent && <span className="rounded-full bg-red-500 px-2.5 py-1 text-xs font-bold text-white uppercase tracking-wider">URGENT</span>}
+						{job.featured && <span className="rounded-full bg-orange-500 px-2.5 py-1 text-xs font-bold text-white uppercase tracking-wider">FEATURED</span>}
+					</div>
+				)}
 
 				{/* HR Contact Section */}
 				<div className="mt-4 bg-slate-50/80 rounded-xl p-3 border border-slate-100">
