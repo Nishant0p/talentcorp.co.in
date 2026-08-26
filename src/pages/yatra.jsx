@@ -144,7 +144,7 @@ export default function YatraPage() {
 		if (typeof window !== 'undefined') {
 			return window.innerWidth >= 768
 		}
-		return true
+		return false
 	})
 	const [selectedImage, setSelectedImage] = useState('')
 	const [loadedImages, setLoadedImages] = useState({})
@@ -226,6 +226,7 @@ export default function YatraPage() {
 
 	useEffect(() => {
 		if (typeof window !== 'undefined' && window.innerWidth < 768) {
+			setLoading(false)
 			return
 		}
 		// Fallback hide only if callback fails; keep long enough for full GSAP sequence.
@@ -281,7 +282,9 @@ export default function YatraPage() {
 	return (
 		<div className="bg-white text-slate-800">
 			<Navbar />
-			{loading && <RozgaarPreloader onFinish={() => setLoading(false)} />}
+			{loading && !(typeof window !== 'undefined' && window.innerWidth < 768) && (
+				<RozgaarPreloader onFinish={() => setLoading(false)} />
+			)}
 
 			<main className="min-h-screen">
 				{/* REDESIGNED HERO SECTION */}
@@ -596,10 +599,10 @@ export default function YatraPage() {
 									{ icon: MapPin, text: "Rural outreach for villages and small towns." }
 								].map((item, i) => (
 									<motion.div 
-										initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-										whileInView={isMobile ? {} : { opacity: 1, y: 0 }}
-										viewport={isMobile ? {} : { once: true, margin: "-100px" }}
-										transition={isMobile ? {} : { delay: i * 0.1 }}
+										initial={{ opacity: 0, y: 20 }}
+										whileInView={{ opacity: 1, y: 0 }}
+										viewport={{ once: true, margin: "-50px" }}
+										transition={{ delay: isMobile ? 0 : i * 0.1 }}
 										key={i} 
 										className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-300 group"
 									>
