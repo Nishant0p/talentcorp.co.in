@@ -79,6 +79,16 @@ export const normalizeStrapiCollection = (data) => {
   return data.map(normalizeStrapiEntry).filter(Boolean);
 };
 
+export const extractMediaArray = (media) => {
+  if (!media) return [];
+  if (Array.isArray(media)) return media;
+  if (media.data) {
+    if (Array.isArray(media.data)) return media.data;
+    return [media.data];
+  }
+  return [];
+};
+
 export const extractMediaUrl = (media) => {
   if (!media) return '';
   const variants = extractMediaVariants(media);

@@ -4,7 +4,7 @@ import { ArrowLeft, ExternalLink } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getYatraGalleryCard } from '../data/yatraGalleryData'
-import { fetchCollection, extractMediaUrl } from '../utils/strapi'
+import { fetchCollection, extractMediaUrl, extractMediaArray } from '../utils/strapi'
 import { rojgaarYatraOptimizedImages } from '../data/rojgaarYatraOptimizedImages'
 
 export default function YatraGalleryPage() {
@@ -30,8 +30,8 @@ export default function YatraGalleryPage() {
 				if (fetchedGalleries && fetchedGalleries.length > 0) {
 					const gallery = fetchedGalleries[0];
 					const imagesList = [
-						...(gallery.images || []),
-						...(gallery.photos || [])
+						...extractMediaArray(gallery.images),
+						...extractMediaArray(gallery.photos)
 					];
 					const images = imagesList.map((img) => extractMediaUrl(img));
 					setCard({

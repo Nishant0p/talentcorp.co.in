@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import RozgaarPreloader from '../components/RozgaarPreloader'
 import { rojgaarYatraOptimizedImages } from '../data/rojgaarYatraOptimizedImages'
-import { fetchCollection, extractMediaUrl } from '../utils/strapi'
+import { fetchCollection, extractMediaUrl, extractMediaArray } from '../utils/strapi'
 
 const journeyHighlightFolderConfigs = [
 	{
@@ -201,8 +201,8 @@ export default function YatraPage() {
 				if (fetchedGalleries && fetchedGalleries.length > 0) {
 					const mappedSections = fetchedGalleries.map((gallery, sectionIndex) => {
 						const imagesList = [
-							...(gallery.images || []),
-							...(gallery.photos || [])
+							...extractMediaArray(gallery.images),
+							...extractMediaArray(gallery.photos)
 						];
 						const images = imagesList.map((img) => extractMediaUrl(img));
 						return {
