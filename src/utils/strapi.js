@@ -666,7 +666,17 @@ export const formatExperience = (exp) => {
   if (!exp) return '1-2 Years';
   const cleaned = String(exp).trim();
   if (!cleaned) return '1-2 Years';
-  if (/fresher/i.test(cleaned)) return 'Fresher';
-  if (/year/i.test(cleaned)) return cleaned;
-  return `${cleaned} Years`;
+  
+  // If it already has "year", "years", "fresher", "freshers", etc., return it exactly as is
+  if (/year/i.test(cleaned) || /fresher/i.test(cleaned)) {
+    return cleaned;
+  }
+  
+  // If it's just a number or numeric range (like "1-2", "3+", "5"), append " Years"
+  if (/^[0-9]+(-[0-9]+)?\+?$/.test(cleaned)) {
+    return `${cleaned} Years`;
+  }
+  
+  // Otherwise, return exactly as defined in the backend
+  return cleaned;
 };
