@@ -88,10 +88,12 @@ async function main() {
         const fileName = `${id}.jpg`;
         fs.writeFileSync(path.join(socialDir, fileName), imageBuffer);
         finalImageUrl = `${SITE_BASE}/social-preview/${fileName}`;
-      } else if (rawUrl) {
+      } else if (rawUrl && !rawUrl.toLowerCase().endsWith('.avif')) {
         finalImageUrl = rawUrl;
       }
 
+      const isPng = finalImageUrl.toLowerCase().endsWith('.png');
+      const mimeType = isPng ? 'image/png' : 'image/jpeg';
       const pageUrl = `${SITE_BASE}/news-events/${id}`;
 
       let customHtml = baseHtml;
@@ -116,7 +118,7 @@ async function main() {
       const ogImageTags = `
     <meta property="og:image" content="${finalImageUrl}" />
     <meta property="og:image:secure_url" content="${finalImageUrl}" />
-    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:type" content="${mimeType}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:type" content="article" />`;
@@ -146,6 +148,13 @@ async function main() {
   }
 
   console.log(`[prerender] Successfully generated ${count} WhatsApp & social-ready preview pages!`);
+  return count;
 }
 
-main();
+export { main as prerenderNewsMeta };
+
+if (process.argv[1] && import.meta.url.endsWith(path.basename(process.argv[1]))) {
+  main().catch(err => {
+    console.error('[prerender] Error during execution:', err);
+  });
+}

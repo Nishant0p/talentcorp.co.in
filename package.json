@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/prerender-news-meta.mjs",
+    "prerender": "node scripts/prerender-news-meta.mjs",
+    "preview:daemon": "node scripts/preview-daemon.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
