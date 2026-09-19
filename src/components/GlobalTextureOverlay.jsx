@@ -1,8 +1,7 @@
 import React from 'react';
 import { STRAPI_BASE_URL, fetchSingleType, extractMediaUrl } from '../utils/strapi';
 
-const DEFAULT_TEXTURE_URL =
-  '/images-10.jpeg';
+const DEFAULT_TEXTURE_URL = '/light-orange-texture.jpg';
 
 export default function GlobalTextureOverlay() {
   const [textureUrl, setTextureUrl] = React.useState(DEFAULT_TEXTURE_URL);
@@ -62,7 +61,7 @@ export default function GlobalTextureOverlay() {
     return () => controller.abort();
   }, [isReady]);
 
-  if (!enabled || !isReady) return null;
+  if (!enabled || !isReady || !textureUrl) return null;
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[-1]">
@@ -74,13 +73,9 @@ export default function GlobalTextureOverlay() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            opacity: 1.0,
+            opacity: 0.18,
             mixBlendMode: 'multiply',
-            filter: 'none',
-            WebkitMaskImage:
-              'linear-gradient(to bottom, transparent 0, transparent 82svh, rgba(0,0,0,0.92) 96svh, rgba(0,0,0,1) 100svh)',
-            maskImage:
-              'linear-gradient(to bottom, transparent 0, transparent 82svh, rgba(0,0,0,0.92) 96svh, rgba(0,0,0,1) 100svh)',
+            filter: 'brightness(1.15) saturate(0.85)',
           }}
           aria-hidden="true"
         />

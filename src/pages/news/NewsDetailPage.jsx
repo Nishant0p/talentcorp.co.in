@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Calendar, ArrowLeft, Tag, Share2, Copy, MessageCircle, CheckCircle } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { extractMediaUrl, fetchNews, parseMarkdown } from '../../utils/strapi';
+import { extractMediaUrl, extractMediaVariants, fetchNews, parseMarkdown } from '../../utils/strapi';
 import { useEffect, useState } from 'react';
 import localNews from '../../data/localNews';
 import useSEO from '../../hooks/useSEO';
@@ -35,8 +35,9 @@ const NewsDetailPage = () => {
   );
 
   const imageUrl = useMemo(() => {
-    if (!newsItem) return '';
-    return newsItem.image ? extractMediaUrl(newsItem.image) : 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80';
+    if (!newsItem || !newsItem.image) return 'https://tsplgroup.in/tspl%20main%20logo.png';
+    const variants = extractMediaVariants(newsItem.image);
+    return variants.original || variants.large || variants.medium || extractMediaUrl(newsItem.image);
   }, [newsItem]);
 
   const cleanDescription = useMemo(() => {
@@ -50,21 +51,23 @@ const NewsDetailPage = () => {
     description: cleanDescription,
     image: imageUrl,
     url: typeof window !== 'undefined' ? window.location.href : '',
+    type: 'article',
   });
+
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://tsplgroup.in/news-events/${newsId}`;
 
   const shareText = useMemo(() => {
     if (!newsItem) return '';
     const cleanDesc = stripHtml(newsItem.description)
       .replace(/\s+/g, ' ')
       .trim();
-    const truncatedDesc = cleanDesc.length > 250 ? cleanDesc.slice(0, 250) + '...' : cleanDesc;
+    const truncatedDesc = cleanDesc.length > 200 ? cleanDesc.slice(0, 200) + '...' : cleanDesc;
     return `${newsItem.title}\n\n${truncatedDesc}\n\nRead more here:`;
   }, [newsItem]);
 
-  const shareUrl = window.location.href;
-
   const handleShareWhatsApp = () => {
-    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+    const message = `*${newsItem?.title || 'TSPL News'}*\n${shareUrl}\n\n${stripHtml(newsItem?.description || '').slice(0, 180)}...`;
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
 

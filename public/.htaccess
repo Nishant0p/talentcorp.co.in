@@ -16,9 +16,15 @@
   RewriteEngine On
   RewriteBase /
 
+  # Serve existing files and directories directly (serves prerendered news-events/:id/index.html)
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
+  # Dynamic fallback for social media crawlers fetching news/events
+  RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp|TelegramBot|Discordbot|Slackbot|SkypeUriPreview) [NC]
+  RewriteRule ^news-events/([0-9a-zA-Z_-]+)/?$ news-preview.php?id=$1 [L,QSA]
+
+  # All other routes to index.html for React SPA
   RewriteRule ^ index.html [L]
 </IfModule>

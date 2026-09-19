@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { fetchJobs, submitApplicant, submitToAdminBackend, parseMarkdown, cleanMarkdown, isJobExpired, parseSkillsAndTags, formatExperience } from '../utils/strapi';
 import useSEO from '../hooks/useSEO';
+import Footer from '../components/Footer';
 import './JobDetailPage.css';
 
 // ─── Static constants ────────────────────────────────────────────────────────
@@ -409,52 +410,71 @@ const JobDetailPage = () => {
   );
 
   return (
-    <div className="pro-container">
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
-      {/* ── Top Navigation ── */}
-      <nav className="pro-nav">
-        <button className="pro-back-btn" onClick={goBack}>
-          <ArrowLeft size={16} /> Back to Jobs
-        </button>
-      </nav>
+    <div className="pro-page-wrapper">
+      <div className="pro-container">
+        {jsonLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        )}
+        {/* ── Top Navigation ── */}
+        <nav className="pro-nav">
+          <button className="pro-back-btn" onClick={goBack}>
+            <ArrowLeft size={16} /> <span>Back to Jobs</span>
+          </button>
+          <div className="pro-nav-breadcrumb hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-500">
+            <span>Careers</span>
+            <span className="text-slate-300">/</span>
+            <span>Positions</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-slate-800 truncate max-w-[240px]">{cleanMarkdown(job.title)}</span>
+          </div>
+        </nav>
 
-      {/* ── Hero Header ── */}
-      <header className="pro-hero">
-        <div className="pro-hero-inner">
-          <div className="pro-hero-main">
-            {job.image ? (
-              <div className="pro-company-logo overflow-hidden p-0">
-                <img src={job.image} alt={job.title} className="h-full w-full object-cover" />
-              </div>
-            ) : (
-              <div className="pro-company-logo">
-                {job.company.charAt(0)}
-              </div>
-            )}
-            <div className="pro-hero-details">
-              <h1 className="pro-title">{cleanMarkdown(job.title)}</h1>
-              <div className="pro-subtitle">
-                <Building2 size={16} />
-                <span>{cleanMarkdown(job.company)}</span>
-              </div>
-              <div className="pro-badges">
-                {job.urgent && (
-                  <span className="pro-badge pro-badge-urgent">
-                    <Zap size={12} /> Urgent Requirement
-                  </span>
-                )}
-                <span className="pro-badge pro-badge-type">{job.type}</span>
+        {/* ── Hero Header ── */}
+        <header className="pro-hero">
+          <div className="pro-hero-accent-bar" />
+          <div className="pro-hero-inner">
+            <div className="pro-hero-main">
+              {job.image ? (
+                <div className="pro-company-logo overflow-hidden p-0">
+                  <img src={job.image} alt={job.title} className="h-full w-full object-cover" />
+                </div>
+              ) : (
+                <div className="pro-company-logo">
+                  {job.company.charAt(0)}
+                </div>
+              )}
+              <div className="pro-hero-details">
+                <div className="pro-verified-tag">
+                  <span className="pro-verified-dot" />
+                  Verified Opportunity · TSPL Recruitment
+                </div>
+                <h1 className="pro-title">{cleanMarkdown(job.title)}</h1>
+                <div className="pro-subtitle">
+                  <Building2 size={16} className="text-blue-600 shrink-0" />
+                  <span className="font-semibold text-slate-800">{cleanMarkdown(job.company)}</span>
+                  <span className="text-slate-300">•</span>
+                  <MapPin size={15} className="text-slate-400 shrink-0" />
+                  <span>{job.location}</span>
+                </div>
+                <div className="pro-badges">
+                  {job.urgent && (
+                    <span className="pro-badge pro-badge-urgent">
+                      <Zap size={13} className="shrink-0" /> Urgent Requirement
+                    </span>
+                  )}
+                  <span className="pro-badge pro-badge-type">{job.type}</span>
+                  {job.category && (
+                    <span className="pro-badge pro-badge-category">{job.category}</span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <StatStrip job={job} />
-      </header>
+          <StatStrip job={job} />
+        </header>
 
       {/* ── Main Layout (Content + Sticky Form) ── */}
       <div className="pro-main-layout">
@@ -599,6 +619,8 @@ const JobDetailPage = () => {
           </div>
         </aside>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 };

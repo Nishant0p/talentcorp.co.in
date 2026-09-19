@@ -1,6 +1,14 @@
 import { useEffect } from 'react';
 
-export default function useSEO({ title, description, keywords, image, url }) {
+const ensureAbsoluteUrl = (rawUrl) => {
+  if (!rawUrl || typeof rawUrl !== 'string') return '';
+  const trimmed = rawUrl.trim();
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://tsplgroup.in';
+  return `${origin}${trimmed.startsWith('/') ? '' : '/'}${trimmed}`;
+};
+
+export default function useSEO({ title, description, keywords, image, url, type = 'website' }) {
   useEffect(() => {
     if (title) {
       document.title = title;
@@ -18,20 +26,25 @@ export default function useSEO({ title, description, keywords, image, url }) {
       setMetaName('keywords', keywords);
     }
 
+    setMetaProperty('og:type', type);
+    setMetaName('twitter:card', 'summary_large_image');
+
     if (image) {
-      setMetaProperty('og:image', image);
-      setMetaName('twitter:image', image);
+      const absoluteImage = ensureAbsoluteUrl(image);
+      setMetaProperty('og:image', absoluteImage);
+      setMetaProperty('og:image:secure_url', absoluteImage);
+      setMetaProperty('og:image:alt', title || 'TSPL News & Events');
+      setMetaName('twitter:image', absoluteImage);
     }
 
-    if (url) {
-      setMetaProperty('og:url', url);
-    } else if (typeof window !== 'undefined') {
-      setMetaProperty('og:url', window.location.href);
-    }
-  }, [title, description, keywords, image, url]);
+    const currentUrl = url ? ensureAbsoluteUrl(url) : (typeof window !== 'undefined' ? window.location.href : 'https://tsplgroup.in');
+    setMetaProperty('og:url', currentUrl);
+    setMetaName('twitter:url', currentUrl);
+  }, [title, description, keywords, image, url, type]);
 }
 
 function setMetaName(name, content) {
+  if (!content) return;
   let element = document.querySelector(`meta[name="${name}"]`);
   if (!element) {
     element = document.createElement('meta');
@@ -42,6 +55,7 @@ function setMetaName(name, content) {
 }
 
 function setMetaProperty(property, content) {
+  if (!content) return;
   let element = document.querySelector(`meta[property="${property}"]`);
   if (!element) {
     element = document.createElement('meta');

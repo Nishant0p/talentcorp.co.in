@@ -24,6 +24,13 @@ const officesByState = {
       email: 'info@tsplgroup.in'
     },
     {
+      city: 'Pune Viman Nagar (Corporate Office)',
+      company: 'TalentCorp Solutions Private Limited',
+      address: 'Nyati Empress – Office No. A-308, Viman Nagar Road, Next to Baker Gauges India Pvt. Ltd., Clover Park, Viman Nagar, Pune, Maharashtra – 411014',
+      phone: '+91 7397971322',
+      email: 'info@tsplgroup.in'
+    },
+    {
       city: 'Mumbai',
       company: 'TalentCorp Solutions Private Limited',
       address: 'White House, Six Floor, Office No. 605, SV Road, Opposite to Andheri Metro Station West, Mumbai, Maharashtra - 400 058, India',
@@ -344,7 +351,7 @@ export default function Footer() {
                     className="border-l-2 border-blue-500/30 pl-3 py-0.5 text-left transition-colors duration-300 hover:border-[#f07a1a]"
                   >
                     <h4 className="font-bold text-white text-xs flex items-center gap-1.5">
-                      {office.city.includes('Head Office') ? <Building size={12} className="text-[#f07a1a]" /> : <MapPin size={12} className="text-[#f07a1a]" />}
+                      {office.city.includes('Office') ? <Building size={12} className="text-[#f07a1a]" /> : <MapPin size={12} className="text-[#f07a1a]" />}
                       {office.city}
                     </h4>
                     <p className="text-blue-300 text-[11px] mt-1 leading-relaxed">
