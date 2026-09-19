@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import https from 'node:https';
+import { Jimp } from 'jimp';
 
 const STRAPI_BASE = 'https://backend.tsplgroup.in';
 const SITE_BASE = 'https://tsplgroup.in';
@@ -26,10 +27,10 @@ const fetchJson = (url) => {
   });
 };
 
-const resolveMedia = (imgObj) => {
-  if (!imgObj) return `${SITE_BASE}/tspl%20main%20logo.png`;
-  const url = imgObj.formats?.large?.url || imgObj.formats?.medium?.url || imgObj.url;
-  if (!url) return `${SITE_BASE}/tspl%20main%20logo.png`;
+const resolveRawStrapiUrl = (imgObj) => {
+  if (!imgObj) return null;
+  const url = imgObj.formats?.medium?.url || imgObj.formats?.small?.url || imgObj.url;
+  if (!url) return null;
   if (url.startsWith('http')) return url;
   return `${STRAPI_BASE}${url.startsWith('/') ? '' : '/'}${url}`;
 };
@@ -37,12 +38,14 @@ const resolveMedia = (imgObj) => {
 async function main() {
   const distDir = path.resolve('dist');
   const indexHtmlPath = path.join(distDir, 'index.html');
+  const socialDir = path.join(distDir, 'social-preview');
 
   if (!fs.existsSync(indexHtmlPath)) {
     console.warn('[prerender] dist/index.html not found, skipping prerender.');
     return;
   }
 
+  fs.mkdirSync(socialDir, { recursive: true });
   const baseHtml = fs.readFileSync(indexHtmlPath, 'utf8');
 
   console.log('[prerender] Fetching news and events from Strapi...');
@@ -55,18 +58,40 @@ async function main() {
     return;
   }
 
-  console.log(`[prerender] Generating social meta previews for ${newsList.length} news items...`);
+  console.log(`[prerender] Processing & optimizing social preview cards for ${newsList.length} items...`);
 
   let count = 0;
   for (const item of newsList) {
     const title = item.title || 'News & Events';
     const cleanDesc = stripHtml(item.description || item.title || '');
     const desc = cleanDesc.length > 160 ? cleanDesc.slice(0, 160) + '...' : cleanDesc;
-    const imageUrl = resolveMedia(item.image);
+    const rawUrl = resolveRawStrapiUrl(item.image);
+
+    let finalImageUrl = `${SITE_BASE}/tspl%20main%20logo.png`;
+    let imageBuffer = null;
+
+    if (rawUrl) {
+      try {
+        const jimpImage = await Jimp.read(rawUrl);
+        // WhatsApp & Facebook optimal aspect ratio (1.91:1) at 1200x630
+        jimpImage.cover({ w: 1200, h: 630 });
+        imageBuffer = await jimpImage.getBuffer('image/jpeg', { quality: 80 });
+      } catch (err) {
+        console.warn(`[prerender] Failed to optimize image for item ${item.id}:`, err.message);
+      }
+    }
 
     const identifiers = [item.id, item.documentId].filter(Boolean);
 
     for (const id of identifiers) {
+      if (imageBuffer) {
+        const fileName = `${id}.jpg`;
+        fs.writeFileSync(path.join(socialDir, fileName), imageBuffer);
+        finalImageUrl = `${SITE_BASE}/social-preview/${fileName}`;
+      } else if (rawUrl) {
+        finalImageUrl = rawUrl;
+      }
+
       const pageUrl = `${SITE_BASE}/news-events/${id}`;
 
       let customHtml = baseHtml;
@@ -87,9 +112,17 @@ async function main() {
         customHtml = customHtml.replace(/<meta property="og:description" content=".*?" \/>/i, `<meta property="og:description" content="${desc.replace(/"/g, '&quot;')}" />`);
       }
 
-      // Replace OG Image
+      // Replace OG Image with WhatsApp-compliant meta specifications
+      const ogImageTags = `
+    <meta property="og:image" content="${finalImageUrl}" />
+    <meta property="og:image:secure_url" content="${finalImageUrl}" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:type" content="article" />`;
+
       if (customHtml.includes('property="og:image"')) {
-        customHtml = customHtml.replace(/<meta property="og:image" content=".*?" \/>/i, `<meta property="og:image" content="${imageUrl}" />\n    <meta property="og:image:secure_url" content="${imageUrl}" />\n    <meta property="og:type" content="article" />`);
+        customHtml = customHtml.replace(/<meta property="og:image" content=".*?" \/>/i, ogImageTags.trim());
       }
 
       // Replace OG URL
@@ -99,7 +132,10 @@ async function main() {
 
       // Replace Twitter Tags
       if (customHtml.includes('name="twitter:title"')) {
-        customHtml = customHtml.replace(/<meta name="twitter:title" content=".*?" \/>/i, `<meta name="twitter:title" content="${title.replace(/"/g, '&quot;')} | TSPL Group" />\n    <meta name="twitter:description" content="${desc.replace(/"/g, '&quot;')}" />\n    <meta name="twitter:image" content="${imageUrl}" />`);
+        customHtml = customHtml.replace(
+          /<meta name="twitter:title" content=".*?" \/>/i,
+          `<meta name="twitter:title" content="${title.replace(/"/g, '&quot;')} | TSPL Group" />\n    <meta name="twitter:description" content="${desc.replace(/"/g, '&quot;')}" />\n    <meta name="twitter:image" content="${finalImageUrl}" />`
+        );
       }
 
       const targetDir = path.join(distDir, 'news-events', String(id));
@@ -109,7 +145,7 @@ async function main() {
     }
   }
 
-  console.log(`[prerender] Successfully generated ${count} news detail social preview pages!`);
+  console.log(`[prerender] Successfully generated ${count} WhatsApp & social-ready preview pages!`);
 }
 
 main();
