@@ -48,6 +48,16 @@ const officeLocations = [
     mapQuery: 'Shree+Gajanan+Commercial+Complex+Chakan+Pune+Maharashtra+410501',
   },
   {
+    city: 'Pune – Viman Nagar (Corporate)',
+    short: 'Viman Nagar',
+    company: 'TalentCorp Solutions Private Limited',
+    address: 'Nyati Empress – Office No. A-308, Viman Nagar Road, Next to Baker Gauges India Pvt. Ltd., Clover Park, Viman Nagar, Pune, Maharashtra – 411014',
+    calls: ['+91 7397971322'],
+    emails: ['info@tsplgroup.in'],
+    lat: 18.5645, lng: 73.9140, zoom: 16,
+    mapQuery: 'Nyati+Empress+Viman+Nagar+Road+Clover+Park+Viman+Nagar+Pune+411014',
+  },
+  {
     city: 'Mumbai',
     short: 'Mumbai',
     company: 'TalentCorp Solutions Private Limited',
@@ -262,6 +272,82 @@ const ContactUs = () => {
       <style>{`
         @keyframes contactOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes popupTimerShrink { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+        @keyframes shimmerSlide {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes floatDot {
+          0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+          50% { transform: translateY(-18px) scale(1.1); opacity: 1; }
+        }
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .contact-input {
+          width: 100%;
+          padding: 14px 20px;
+          background: rgba(255,255,255,0.06);
+          border: 1.5px solid rgba(255,255,255,0.12);
+          border-radius: 14px;
+          color: #fff;
+          font-size: 15px;
+          outline: none;
+          transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+          backdrop-filter: blur(4px);
+        }
+        .contact-input::placeholder { color: rgba(255,255,255,0.38); }
+        .contact-input:focus {
+          border-color: rgba(251,146,60,0.7);
+          background: rgba(255,255,255,0.1);
+          box-shadow: 0 0 0 3px rgba(251,146,60,0.18), 0 0 20px rgba(251,146,60,0.1);
+        }
+        .contact-input option { background: #1e293b; color: #fff; }
+        .contact-submit-btn {
+          position: relative;
+          overflow: hidden;
+          background: linear-gradient(135deg, #f97316, #ea580c, #f97316);
+          background-size: 200% 200%;
+          animation: gradientShift 3s ease infinite;
+          border: none;
+          border-radius: 14px;
+          color: white;
+          font-weight: 700;
+          font-size: 15px;
+          letter-spacing: 0.03em;
+          padding: 15px 32px;
+          width: 100%;
+          cursor: pointer;
+          transition: transform 0.15s ease, box-shadow 0.25s ease;
+          box-shadow: 0 6px 24px rgba(249,115,22,0.35);
+        }
+        .contact-submit-btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 10px 32px rgba(249,115,22,0.5);
+        }
+        .contact-submit-btn:active { transform: scale(0.98); }
+        .contact-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; animation: none; }
+        .contact-submit-btn::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+          background-size: 200% 100%;
+          animation: shimmerSlide 2.5s infinite;
+        }
+        .contact-label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 7px; }
+        .info-badge {
+          display: inline-flex; align-items: center; gap: 8px;
+          background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+          border-radius: 100px; padding: 8px 16px; font-size: 13px; color: rgba(255,255,255,0.75);
+          transition: background 0.2s;
+        }
+        .info-badge:hover { background: rgba(255,255,255,0.14); }
+        .info-badge-icon {
+          width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+          background: rgba(249,115,22,0.2); color: #fb923c; flex-shrink: 0;
+        }
       `}</style>
 
       {/* === HERO === */}
@@ -275,151 +361,241 @@ const ContactUs = () => {
           <div className="grid w-full items-end gap-10 lg:grid-cols-2">
             <div className="max-w-2xl pt-6 md:pt-10 lg:pt-14">
               <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
-                Let's Connect<br />&amp; <span className="text-blue-500">Build the Future</span><br />Workforce
+                Let's Connect<br />& <span className="text-blue-500">Build the Future</span><br />Workforce
               </h1>
               <p className="text-gray-300 text-lg max-w-lg">Scale your business towards your highest potential. Our experts are ready to catalyze your growth.</p>
             </div>
-            <div className="lg:justify-self-end lg:text-right">
-              <div className="mb-10 flex flex-wrap gap-4 lg:justify-end">
-                <Link to="/jobs" className="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-full shadow-lg transition-colors flex items-center gap-2">Scale Fast <ArrowRight size={18} /></Link>
-                <Link to="/nats" className="px-8 py-3 bg-transparent border border-gray-400 hover:border-white text-white font-medium rounded-full transition-colors flex items-center gap-2">Explore Training <ArrowRight size={18} /></Link>
-              </div>
-              <div className="flex gap-12 text-white lg:justify-end">
-                <div><p className="text-3xl font-bold">20+</p><p className="text-sm text-gray-400">Offices across India</p></div>
-                <div><p className="text-3xl font-bold text-blue-500">24/7</p><p className="text-sm text-gray-400">Expert Support</p></div>
-              </div>
-            </div>
+
           </div>
         </div>
       </header>
 
-      {/* === CONTACT FORM + INFO === */}
-      <section className="max-w-7xl mx-auto py-12 px-6 relative -mt-16 z-20 sm:py-20 sm:px-8">
-        <div className="grid md:grid-cols-2 gap-12">
+      {/* === PREMIUM CONTACT FORM === */}
+      <section className="relative z-20 -mt-10 sm:-mt-20 py-12 sm:py-24 px-4 sm:px-8"
+        style={{ background: 'linear-gradient(160deg, #0f172a 0%, #1e293b 55%, #0c1a2e 100%)' }}>
 
-          {/* Contact Form */}
-          <div
-            className="group relative overflow-hidden bg-white p-8 rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300"
-            onMouseEnter={() => setIsFormHovered(true)}
-            onMouseLeave={() => setIsFormHovered(false)}
-            onFocusCapture={() => setIsFormHovered(true)}
-            onBlurCapture={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setIsFormHovered(false); }}
-          >
-            <AnimatePresence>
-              {showPlaneAnimation && (
-                <motion.div className="pointer-events-none absolute inset-0 z-30 overflow-hidden rounded-[3rem]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  <div className="absolute left-4 right-4 bottom-6 top-6">
-                    {(flightManifest.length ? flightManifest : [{ label: 'Message', value: 'Delivered' }]).map((entry, index) => (
-                      <motion.div key={`${entry.label}-${index}`} className="absolute left-0 flex max-w-[80%] items-center gap-2 rounded-full border border-blue-100 bg-white/90 px-3 py-1.5 shadow-[0_14px_30px_rgba(59,130,246,0.12)]"
-                        initial={{ opacity: 0, x: -24, y: 20 + index * 40, scale: 0.98, rotate: -3 }}
-                        animate={{ opacity: [0,1,1,0.65,0], x: [-24,0,56,128+index*4,214], y: [20+index*40,20+index*36,18+index*20,6-index*8,-8], scale: [0.98,1,0.95,0.68,0.25], rotate: [-3,0,3,-7,-20] }}
-                        transition={{ duration: 1.9, ease: 'easeInOut', delay: index * 0.08 }}
-                      >
-                        <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-700">{entry.label}</span>
-                        <span className="max-w-[170px] truncate text-xs font-medium text-gray-600">{entry.value}</span>
-                      </motion.div>
-                    ))}
+        {/* Decorative floating orbs */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div style={{ position:'absolute', width:420, height:420, borderRadius:'50%', background:'radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%)', top:'-80px', right:'10%', filter:'blur(40px)' }} />
+          <div style={{ position:'absolute', width:320, height:320, borderRadius:'50%', background:'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)', bottom:'5%', left:'5%', filter:'blur(40px)' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-14 lg:hidden">
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-4"
+              style={{ background:'rgba(249,115,22,0.15)', color:'#fb923c', border:'1px solid rgba(249,115,22,0.25)' }}>
+              Get In Touch
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-bold text-white mb-4">
+              Start a Conversation
+            </h2>
+            <p className="text-slate-400 max-w-xl mx-auto text-base">
+              Tell us what you need — our specialists will respond within 24 hours with a tailored solution.
+            </p>
+          </div>
+
+          {/* Main card grid */}
+          <div className="grid lg:grid-cols-[420px_1fr] gap-0 rounded-[2.5rem] overflow-hidden shadow-[0_40px_120px_rgba(0,0,0,0.6)]">
+
+            {/* ── LEFT: Info Panel ── */}
+            <div className="relative flex flex-col justify-between p-10 overflow-hidden"
+              style={{ background:'linear-gradient(145deg, #1d4ed8 0%, #1e3a8a 40%, #0f2470 100%)' }}>
+
+              {/* Decorative pattern */}
+              <div className="pointer-events-none absolute inset-0">
+                <div style={{ position:'absolute', width:280, height:280, borderRadius:'50%', border:'1px solid rgba(255,255,255,0.06)', top:'-60px', right:'-80px' }} />
+                <div style={{ position:'absolute', width:180, height:180, borderRadius:'50%', border:'1px solid rgba(255,255,255,0.06)', top:'-20px', right:'-40px' }} />
+                <div style={{ position:'absolute', width:200, height:200, borderRadius:'50%', border:'1px solid rgba(255,255,255,0.06)', bottom:'80px', left:'-60px' }} />
+                {[0,1,2].map(i => (
+                  <div key={i} style={{
+                    position:'absolute', width:8, height:8, borderRadius:'50%',
+                    background:'rgba(249,115,22,0.6)',
+                    bottom: `${20 + i * 28}%`, right: `${15 + i * 8}%`,
+                    animation: `floatDot ${2.4 + i * 0.5}s ease-in-out infinite`,
+                    animationDelay: `${i * 0.4}s`
+                  }} />
+                ))}
+              </div>
+
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-white mb-2">Contact Information</h3>
+                <p className="text-blue-200 text-sm mb-10 leading-relaxed">We're here to help and answer any question you might have.</p>
+
+                <div className="space-y-6">
+                  <a href="tel:+917397971322" className="flex items-center gap-4 group">
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-200 group-hover:scale-110"
+                      style={{ background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.15)' }}>
+                      <Phone size={18} className="text-orange-400" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-widest text-blue-300 mb-0.5">Phone</p>
+                      <p className="text-white font-semibold text-sm group-hover:text-orange-300 transition-colors">+91 7397971322</p>
+                      <p className="text-blue-300 text-xs">Mon – Fri, 9AM – 6PM</p>
+                    </div>
+                  </a>
+
+                  <a href="mailto:info@tsplgroup.in" className="flex items-center gap-4 group">
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-200 group-hover:scale-110"
+                      style={{ background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.15)' }}>
+                      <Mail size={18} className="text-orange-400" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-widest text-blue-300 mb-0.5">Email</p>
+                      <p className="text-white font-semibold text-sm group-hover:text-orange-300 transition-colors">info@tsplgroup.in</p>
+                      <p className="text-blue-300 text-xs">hrd1@tsplgroup.in</p>
+                    </div>
+                  </a>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 mt-0.5"
+                      style={{ background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.15)' }}>
+                      <MapPin size={18} className="text-orange-400" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-widest text-blue-300 mb-0.5">Head Office</p>
+                      <p className="text-white font-semibold text-sm">Chakan, Pune</p>
+                      <p className="text-blue-300 text-xs leading-relaxed">Shree Gajanan Complex, Maharashtra 410501</p>
+                    </div>
                   </div>
-                  <motion.div className="absolute left-[53%] bottom-[24%] z-10 flex h-10 w-14 items-center justify-center rounded-[40%_50%_45%_48%] border border-blue-200 bg-gradient-to-br from-white via-blue-50 to-blue-100 shadow-[0_20px_60px_rgba(59,130,246,0.24)]"
-                    initial={{ x: -22, y: 40, scale: 0.45, rotate: -26, opacity: 0 }}
-                    animate={{ x: [-22,8,54,126,200], y: [40,4,-36,-86,-144], rotate: [-26,-8,12,24,36], scale: [0.45,1,1.03,1.05,0.94], opacity: [0,1,1,1,0] }}
-                    transition={{ duration: 2, ease: 'easeInOut' }}
-                  >
-                    <Send size={17} className="text-blue-700" />
+                </div>
+              </div>
+
+              {/* Stats row */}
+              <div className="relative z-10 mt-10 pt-8 border-t border-white/10">
+                <div className="grid grid-cols-2 gap-6">
+                  {[['36+', 'Offices Nationwide'], ['15+', 'Years of Excellence']].map(([num, label]) => (
+                    <div key={label}>
+                      <p className="text-2xl font-black text-white">{num}</p>
+                      <p className="text-blue-300 text-xs mt-0.5">{label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* ── RIGHT: Form Panel ── */}
+            <div className="relative overflow-hidden p-8 sm:p-12"
+              style={{ background:'rgba(15,23,42,0.95)', backdropFilter:'blur(20px)' }}>
+
+              <AnimatePresence>
+                {showPlaneAnimation && (
+                  <motion.div className="pointer-events-none absolute inset-0 z-30 overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    <div className="absolute left-4 right-4 bottom-6 top-6">
+                      {(flightManifest.length ? flightManifest : [{ label: 'Message', value: 'Delivered' }]).map((entry, index) => (
+                        <motion.div key={`${entry.label}-${index}`} className="absolute left-0 flex max-w-[80%] items-center gap-2 rounded-full border border-orange-200/30 bg-white/10 px-3 py-1.5 backdrop-blur"
+                          initial={{ opacity: 0, x: -24, y: 20 + index * 40, scale: 0.98, rotate: -3 }}
+                          animate={{ opacity: [0,1,1,0.65,0], x: [-24,0,56,128+index*4,214], y: [20+index*40,20+index*36,18+index*20,6-index*8,-8], scale: [0.98,1,0.95,0.68,0.25], rotate: [-3,0,3,-7,-20] }}
+                          transition={{ duration: 1.9, ease: 'easeInOut', delay: index * 0.08 }}
+                        >
+                          <span className="rounded-full bg-orange-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-orange-300">{entry.label}</span>
+                          <span className="max-w-[170px] truncate text-xs font-medium text-white/70">{entry.value}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                    <motion.div className="absolute left-[53%] bottom-[24%] z-10 flex h-10 w-14 items-center justify-center rounded-[40%_50%_45%_48%] shadow-[0_20px_60px_rgba(249,115,22,0.3)]"
+                      style={{ background:'linear-gradient(135deg, rgba(249,115,22,0.9), rgba(234,88,12,0.9))', border:'1px solid rgba(249,115,22,0.4)' }}
+                      initial={{ x: -22, y: 40, scale: 0.45, rotate: -26, opacity: 0 }}
+                      animate={{ x: [-22,8,54,126,200], y: [40,4,-36,-86,-144], rotate: [-26,-8,12,24,36], scale: [0.45,1,1.03,1.05,0.94], opacity: [0,1,1,1,0] }}
+                      transition={{ duration: 2, ease: 'easeInOut' }}
+                    >
+                      <Send size={17} className="text-white" />
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                )}
+              </AnimatePresence>
 
-            <div className="pointer-events-none absolute inset-0 rounded-[3rem]" style={{ opacity: isFormHovered ? 1 : 0, transition: 'opacity 180ms ease' }}>
-              <div className="absolute inset-0 rounded-[3rem] opacity-80" style={{ background: 'radial-gradient(circle at 18% 18%, rgba(96,165,250,0.28) 0%, transparent 58%), radial-gradient(circle at 82% 78%, rgba(251,191,36,0.26) 0%, transparent 58%)', filter: 'blur(10px)', animation: isFormHovered ? 'contactOrbit 5s linear infinite' : 'none' }} />
-            </div>
+              <motion.div animate={isFormFlyingAway ? { opacity: 0, y: -34, x: 58, rotate: -12, scale: 0.9, filter: 'blur(1.5px)' } : { opacity: 1, y: 0, x: 0, rotate: 0, scale: 1, filter: 'blur(0px)' }} transition={{ duration: 0.8, ease: 'easeInOut' }}>
 
-            <motion.div animate={isFormFlyingAway ? { opacity: 0, y: -34, x: 58, rotate: -12, scale: 0.9, filter: 'blur(1.5px)' } : { opacity: 1, y: 0, x: 0, rotate: 0, scale: 1, filter: 'blur(0px)' }} transition={{ duration: 0.8, ease: 'easeInOut' }}>
-              <h3 className="text-2xl font-bold mb-6">Send us a Message</h3>
-              <form className="space-y-4" onSubmit={handleContactSubmit}>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                  <input name="fullName" type="text" placeholder="John Doe" required className="w-full px-5 py-3 border border-gray-200 rounded-full outline-none transition-all duration-300 focus:border-blue-300 focus:ring-4 focus:ring-blue-200/70" />
+                <div className="mb-8">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">Send us a Message</h3>
+                  <p className="text-slate-400 text-sm">Fill in the details below and we'll get back to you shortly.</p>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                  <input name="email" type="email" placeholder="hello@company.com" required className="w-full px-5 py-3 border border-gray-200 rounded-full outline-none transition-all duration-300 focus:border-blue-300 focus:ring-4 focus:ring-blue-200/70" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                  <input name="phone" type="tel" placeholder="+91 98765 43210" minLength={5} required className="w-full px-5 py-3 border border-gray-200 rounded-full outline-none transition-all duration-300 focus:border-blue-300 focus:ring-4 focus:ring-blue-200/70" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Service Interested In</label>
-                  <select name="service" required defaultValue="" className="w-full px-5 py-3 border border-gray-200 rounded-full outline-none transition-all duration-300 focus:border-blue-300 focus:ring-4 focus:ring-blue-200/70 text-gray-500">
-                    <option value="" disabled hidden>Select a Service</option>
-                    {serviceOptions.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                  <textarea name="message" rows="4" placeholder="How can we help you?" minLength={10} required className="w-full px-5 py-3 border border-gray-200 rounded-[1.75rem] outline-none transition-all duration-300 focus:border-blue-300 focus:ring-4 focus:ring-blue-200/70" />
-                </div>
-                <label className="flex items-start gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600">
-                  <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                  <span><Check size={14} className="mr-1 inline text-orange-500" />I agree to receive messages from TALENTCORP SOLUTIONS PRIVATE LIMITED through WhatsApp, RCS, Email, and other channels.</span>
-                </label>
-                <button type="submit" disabled={isSubmitting} className="w-full bg-blue-600 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 text-white font-medium py-3 rounded-full transition-all duration-300 mt-2 active:scale-[0.99]">
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </button>
-              </form>
-              {submitError && (
-                <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  <p className="font-semibold">Submission failed</p>
-                  <p className="mt-1 break-words">{submitError}</p>
-                  <p className="mt-1 text-xs text-red-500">API target: {STRAPI_BASE_URL}/api/leads</p>
-                </div>
-              )}
-            </motion.div>
 
-            {showSuccessPopup && (
-              <div className="fixed left-1/2 top-6 z-[9999] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 rounded-[2.25rem] border border-blue-100 bg-white px-6 py-5 shadow-[0_20px_60px_rgba(59,130,246,0.18)]">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-base font-semibold text-blue-700">Your message was sent successfully</p>
-                    <p className="mt-1 text-sm text-gray-500">We received your message and will review it shortly.</p>
-                    {submitStatusNote && <p className="mt-2 text-xs font-medium text-blue-600">{submitStatusNote}</p>}
+                <form className="space-y-5" onSubmit={handleContactSubmit}>
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="contact-label">Full Name</label>
+                      <input name="fullName" type="text" placeholder="John Doe" required className="contact-input" />
+                    </div>
+                    <div>
+                      <label className="contact-label">Phone Number</label>
+                      <input name="phone" type="tel" placeholder="+91 98765 43210" minLength={5} required className="contact-input" />
+                    </div>
                   </div>
-                  <button type="button" onClick={() => setShowSuccessPopup(false)} className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100" aria-label="Close">×</button>
-                </div>
-                <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-blue-50">
-                  <div className="h-full w-full origin-left rounded-full bg-gradient-to-r from-blue-300 via-orange-300 to-blue-300" style={{ animation: 'popupTimerShrink 4s linear forwards' }} onAnimationEnd={() => setShowSuccessPopup(false)} />
-                </div>
-              </div>
-            )}
+
+                  <div>
+                    <label className="contact-label">Email Address</label>
+                    <input name="email" type="email" placeholder="hello@company.com" required className="contact-input" />
+                  </div>
+
+                  <div>
+                    <label className="contact-label">Service Interested In</label>
+                    <select name="service" required defaultValue="" className="contact-input" style={{ cursor:'pointer' }}>
+                      <option value="" disabled hidden>Select a service...</option>
+                      {serviceOptions.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="contact-label">Your Message</label>
+                    <textarea name="message" rows="4" placeholder="Tell us how we can help you..." minLength={10} required className="contact-input" style={{ borderRadius:'14px', resize:'vertical' }} />
+                  </div>
+
+                  <label className="flex items-start gap-3 cursor-pointer" style={{ padding:'12px 16px', borderRadius:'12px', border:'1px solid rgba(255,255,255,0.08)', background:'rgba(255,255,255,0.04)' }}>
+                    <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 rounded border-gray-600 text-orange-500 focus:ring-orange-500 focus:ring-offset-0 flex-shrink-0" style={{ accentColor:'#f97316' }} />
+                    <span className="text-xs text-slate-400 leading-relaxed">
+                      <Check size={12} className="inline mr-1 text-orange-400" />
+                      I agree to receive communications from TalentCorp Solutions via WhatsApp, Email &amp; other channels.
+                    </span>
+                  </label>
+
+                  <button type="submit" disabled={isSubmitting} className="contact-submit-btn">
+                    {isSubmitting ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                        Sending...
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center gap-2 relative z-10">
+                        <Send size={16} />
+                        Send Message
+                      </span>
+                    )}
+                  </button>
+                </form>
+
+                {submitError && (
+                  <div className="mt-4 rounded-2xl px-4 py-3 text-sm" style={{ border:'1px solid rgba(239,68,68,0.3)', background:'rgba(239,68,68,0.08)', color:'#fca5a5' }}>
+                    <p className="font-semibold">Submission failed</p>
+                    <p className="mt-1 break-words opacity-80">{submitError}</p>
+                  </div>
+                )}
+              </motion.div>
+            </div>
           </div>
 
-          {/* Contact Info */}
-          <div className="pt-8">
-            <h3 className="text-2xl font-bold mb-8">Contact Information</h3>
-            <div className="space-y-8">
-              <div className="group flex items-start gap-4 rounded-2xl px-3 py-2 transition-all duration-300 hover:bg-blue-50/70">
-                <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all"><Phone size={20} /></div>
-                <div><p className="text-sm text-gray-500">Call Us</p><a href="tel:+917397971322" className="font-bold text-lg group-hover:text-blue-700">+91 7397971322</a><p className="text-sm text-gray-500">Mon - Fri, 9AM - 6PM</p></div>
+          {showSuccessPopup && (
+            <div className="fixed left-1/2 top-6 z-[9999] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 rounded-[2rem] px-6 py-5 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
+              style={{ background:'linear-gradient(135deg, #1e293b, #0f172a)', border:'1px solid rgba(249,115,22,0.3)' }}>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style={{ background:'rgba(249,115,22,0.2)' }}>
+                    <Check size={16} className="text-orange-400" />
+                  </div>
+                  <div>
+                    <p className="text-base font-semibold text-white">Message sent successfully!</p>
+                    <p className="mt-0.5 text-sm text-slate-400">We'll get back to you within 24 hours.</p>
+                    {submitStatusNote && <p className="mt-1 text-xs font-medium text-orange-400">{submitStatusNote}</p>}
+                  </div>
+                </div>
+                <button type="button" onClick={() => setShowSuccessPopup(false)} className="flex h-7 w-7 items-center justify-center rounded-full text-slate-400 hover:text-white transition-colors" style={{ background:'rgba(255,255,255,0.08)' }} aria-label="Close">×</button>
               </div>
-              <div className="group flex items-start gap-4 rounded-2xl px-3 py-2 transition-all duration-300 hover:bg-orange-50/80">
-                <div className="w-12 h-12 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-all"><Mail size={20} /></div>
-                <div><p className="text-sm text-gray-500">Email Us</p><a href="mailto:info@tsplgroup.in" className="font-bold text-lg group-hover:text-orange-600">info@tsplgroup.in</a><a href="mailto:hrd1@tsplgroup.in" className="font-bold text-lg group-hover:text-orange-600 block">hrd1@tsplgroup.in</a><p className="text-sm text-gray-500">We aim to reply in 24 hours</p></div>
-              </div>
-              <div className="group flex items-start gap-4 rounded-2xl px-3 py-2 transition-all duration-300 hover:bg-blue-50/70">
-                <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all"><MapPin size={20} /></div>
-                <div><p className="text-sm text-gray-500">Visit Office</p><p className="font-bold text-lg">Head Office</p><p className="text-sm text-gray-500">Office No. 111,112,113,103 First Floor, Shree Gajanan Commercial Complex, Chakan, Pune, Maharashtra 410501</p></div>
-              </div>
-            </div>
-            <div className="mt-10 bg-gray-50 p-6 rounded-[2.5rem] border border-gray-100">
-              <p className="italic text-gray-600 text-sm mb-4">"Transformation builds workforce potential and global expansion."</p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-full" />
-                <div><p className="font-bold text-sm">TalentCorp</p><p className="text-xs text-gray-500">Industry Leader</p></div>
+              <div className="mt-4 h-0.5 w-full overflow-hidden rounded-full" style={{ background:'rgba(255,255,255,0.08)' }}>
+                <div className="h-full w-full origin-left rounded-full" style={{ background:'linear-gradient(90deg, #f97316, #fb923c)', animation: 'popupTimerShrink 4s linear forwards' }} onAnimationEnd={() => setShowSuccessPopup(false)} />
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
