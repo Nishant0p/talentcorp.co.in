@@ -91,41 +91,37 @@ export default function ServiceEnquirySection({ serviceName }) {
 					<p className="mx-auto max-w-2xl text-lg text-[#64748B]">Fill this form and our team will call you within 2 hours.</p>
 				</div>
 
-				<div className="grid gap-12 lg:grid-cols-3">
-					<div className="animate-fade-in-up lg:col-span-2">
-						<form onSubmit={handleSubmit} className="rounded-3xl border border-slate-100 bg-white p-8 shadow-2xl">
-							<div className="grid gap-6 sm:grid-cols-2">
+				<div className="grid gap-12 lg:grid-cols-3 lg:items-stretch">
+					<div className="flex flex-col lg:col-span-2">
+						<form onSubmit={handleSubmit} className="flex flex-col h-full rounded-3xl border border-slate-100 bg-white p-6 shadow-2xl">
+							<div className="grid gap-4 sm:grid-cols-2 flex-1 content-start">
 								<div>
-									<label className="mb-2 block text-sm font-bold text-[#0F172A]">Your Name *</label>
-									<input type="text" required placeholder="Enter your full name" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} />
+									<label className="mb-1.5 block text-sm font-bold text-[#0F172A]">Your Name *</label>
+									<input type="text" required placeholder="Enter your full name" className="w-full rounded-xl border border-slate-200 px-4 py-2.5 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} />
 								</div>
 								<div>
-									<label className="mb-2 block text-sm font-bold text-[#0F172A]">Phone Number *</label>
-									<input type="tel" required placeholder="Enter your phone number" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} />
+									<label className="mb-1.5 block text-sm font-bold text-[#0F172A]">Phone Number *</label>
+									<input type="tel" required placeholder="Enter your phone number" className="w-full rounded-xl border border-slate-200 px-4 py-2.5 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} />
 								</div>
 								<div>
-									<label className="mb-2 block text-sm font-bold text-[#0F172A]">Email Address *</label>
-									<input type="email" required placeholder="Enter your email" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} />
+									<label className="mb-1.5 block text-sm font-bold text-[#0F172A]">Email Address *</label>
+									<input type="email" required placeholder="Enter your email" className="w-full rounded-xl border border-slate-200 px-4 py-2.5 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} />
 								</div>
 								<div>
-									<label className="mb-2 block text-sm font-bold text-[#0F172A]">Company / Organization</label>
-									<input type="text" placeholder="Enter company name" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.company} onChange={(event) => setFormData({ ...formData, company: event.target.value })} />
+									<label className="mb-1.5 block text-sm font-bold text-[#0F172A]">Company / Organization</label>
+									<input type="text" placeholder="Enter company name" className="w-full rounded-xl border border-slate-200 px-4 py-2.5 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.company} onChange={(event) => setFormData({ ...formData, company: event.target.value })} />
 								</div>
 								<div className="sm:col-span-2">
-									<label className="mb-2 block text-sm font-bold text-[#0F172A]">Service</label>
-									<input type="text" readOnly value={serviceName} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-[#475569] outline-none" />
+									<label className="mb-1.5 block text-sm font-bold text-[#0F172A]">City / Location *</label>
+									<input type="text" required placeholder="Enter your city or location" className="w-full rounded-xl border border-slate-200 px-4 py-2.5 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.city} onChange={(event) => setFormData({ ...formData, city: event.target.value })} />
 								</div>
 								<div className="sm:col-span-2">
-									<label className="mb-2 block text-sm font-bold text-[#0F172A]">City / Location *</label>
-									<input type="text" required placeholder="Enter your city or location" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.city} onChange={(event) => setFormData({ ...formData, city: event.target.value })} />
-								</div>
-								<div className="sm:col-span-2">
-									<label className="mb-2 block text-sm font-bold text-[#0F172A]">Additional Details</label>
-									<textarea rows={4} placeholder="Tell us more about your requirements..." className="w-full resize-none rounded-xl border border-slate-200 px-4 py-3 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.message} onChange={(event) => setFormData({ ...formData, message: event.target.value })} />
+									<label className="mb-1.5 block text-sm font-bold text-[#0F172A]">Additional Details</label>
+									<textarea rows={2} placeholder="Tell us more about your requirements..." className="w-full resize-none rounded-xl border border-slate-200 px-4 py-2.5 outline-none transition-all focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20" value={formData.message} onChange={(event) => setFormData({ ...formData, message: event.target.value })} />
 								</div>
 							</div>
 
-							<button type="submit" disabled={isSubmitting} className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-lg font-bold text-white shadow-xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-[1.02] hover:bg-[#EA580C] hover:shadow-2xl disabled:cursor-not-allowed disabled:opacity-70">
+							<button type="submit" disabled={isSubmitting} className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-3 text-base font-bold text-white shadow-xl shadow-[#F97316]/30 transition-all duration-300 hover:scale-[1.02] hover:bg-[#EA580C] hover:shadow-2xl disabled:cursor-not-allowed disabled:opacity-70">
 								{isSubmitting ? 'Sending...' : 'Send Enquiry'}
 								<Send className={`h-5 w-5 ${isSubmitting ? 'animate-plane-send' : ''}`} />
 							</button>
@@ -134,7 +130,7 @@ export default function ServiceEnquirySection({ serviceName }) {
 						</form>
 					</div>
 
-					<div className="space-y-6 animate-fade-in-right">
+					<div className="flex flex-col justify-between gap-6">
 						<div className="rounded-3xl bg-[#0F172A] p-8 text-white">
 							<h3 className="mb-6 text-xl font-bold">Quick Contact</h3>
 

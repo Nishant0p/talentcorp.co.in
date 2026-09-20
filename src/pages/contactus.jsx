@@ -353,7 +353,7 @@ const ContactUs = () => {
       {/* === HERO === */}
       <header className="relative bg-gray-900 min-h-[100svh] md:min-h-[86vh] flex flex-col">
         <div className="absolute inset-0 z-0">
-          <img src={contactHeroAsset.url} alt={contactHeroAsset.alt || 'Office Meeting'} className="w-full h-full object-cover object-center opacity-55" />
+          <img src="/contact.png" alt="Contact TSPL Group" className="w-full h-full object-cover object-center opacity-55" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/40 to-black/65" />
         </div>
         <Navbar />
@@ -610,18 +610,18 @@ const ContactUs = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-[1fr_400px] gap-8 items-start">
+          <div className="grid lg:grid-cols-[1fr_400px] gap-8 items-stretch">
 
-            {/* LEFT — Google Map embed (updates on office select) */}
-            <div className="rounded-3xl overflow-hidden shadow-2xl border border-blue-100 bg-white">
+            {/* LEFT — Google Map embed */}
+            <div className="rounded-3xl overflow-hidden shadow-2xl border border-blue-100 bg-white flex flex-col">
               {/* Static Office Map Header */}
-              <div className="flex flex-wrap gap-2 p-4 border-b border-gray-100 bg-white items-center">
+              <div className="flex flex-wrap gap-2 p-4 border-b border-gray-100 bg-white items-center shrink-0">
                 <span className="px-3 py-1 bg-blue-50 text-blue-600 border border-blue-200 rounded-full text-xs font-semibold shadow-sm inline-flex items-center gap-1.5">
                   📍 Head Office (Pune HQ) Map
                 </span>
               </div>
 
-              {/* Google Maps iframe */}
+              {/* Google Maps iframe — flex-1 so it fills remaining height */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key="headoffice-map"
@@ -629,14 +629,14 @@ const ContactUs = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="w-full h-[480px]"
+                  className="flex-1 min-h-[380px]"
                 >
                   <iframe
                     title={`Map - ${selectedOffice.city}`}
                     src={googleMapsEmbedUrl}
                     width="100%"
                     height="100%"
-                    style={{ border: 0 }}
+                    style={{ border: 0, display: 'block' }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
@@ -645,7 +645,7 @@ const ContactUs = () => {
               </AnimatePresence>
 
               {/* Footer bar with directions link */}
-              <div className="flex items-center justify-between px-5 py-3 bg-gray-50 border-t border-gray-100">
+              <div className="flex items-center justify-between px-5 py-3 bg-gray-50 border-t border-gray-100 shrink-0">
                 <p className="text-sm font-semibold text-gray-700 truncate max-w-[60%]">
                   📌 Head Office (Pune)
                 </p>
@@ -660,14 +660,14 @@ const ContactUs = () => {
               </div>
             </div>
 
-            {/* RIGHT — Office list + detail card */}
-            <div className="flex flex-col gap-4">
-              {/* Office list */}
-              <div className="rounded-2xl border border-blue-100 bg-white shadow-sm overflow-hidden">
-                <div className="px-4 py-3 bg-blue-600 text-white text-sm font-bold tracking-wide flex items-center gap-2">
+            {/* RIGHT — Office list + detail card, same height as map */}
+            <div className="flex flex-col gap-4 h-full">
+              {/* Office list — grows to fill space */}
+              <div className="rounded-2xl border border-blue-100 bg-white shadow-sm overflow-hidden flex flex-col flex-1">
+                <div className="px-4 py-3 bg-blue-600 text-white text-sm font-bold tracking-wide flex items-center gap-2 shrink-0">
                   <MapPin size={14} /> All Offices
                 </div>
-                <div className="divide-y divide-gray-100 max-h-[300px] overflow-y-auto">
+                <div className="divide-y divide-gray-100 overflow-y-auto flex-1">
                   {officeLocations.map((office) => {
                     const isActive = selectedOffice.city === office.city;
                     return (
@@ -688,7 +688,7 @@ const ContactUs = () => {
                 </div>
               </div>
 
-              {/* Selected office card */}
+              {/* Selected office card — fixed at bottom */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={selectedOffice.city}
@@ -696,7 +696,7 @@ const ContactUs = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.25 }}
-                  className="rounded-2xl border border-blue-100 bg-white shadow-md overflow-hidden"
+                  className="rounded-2xl border border-blue-100 bg-white shadow-md overflow-hidden shrink-0"
                 >
                   <div className="px-5 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
                     <div className="flex items-center gap-2">
@@ -722,16 +722,14 @@ const ContactUs = () => {
                         ))}
                       </div>
                     </div>
-                    {selectedOffice.city.includes('Head Office') && (
-                      <a
-                        href={googleMapsDirectionsUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-full transition-colors w-fit"
-                      >
-                        <ExternalLink size={13} /> Open in Google Maps
-                      </a>
-                    )}
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${selectedOffice.mapQuery}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-full transition-colors w-fit"
+                    >
+                      <ExternalLink size={13} /> Open in Google Maps
+                    </a>
                   </div>
                 </motion.div>
               </AnimatePresence>

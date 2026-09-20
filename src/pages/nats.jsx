@@ -133,10 +133,10 @@ This certificate can be registered at all employment exchanges across India as v
 						<h2 className="mb-4 text-3xl sm:text-4xl font-bold">
 							Why Choose <span className="text-blue-600">NATS?</span>
 						</h2>
-							<p className="text-slate-500">Government support, quota compliance, and practical training for both sides.</p>
+						<p className="text-slate-500">Government support, quota compliance, and practical training for both sides.</p>
 					</div>
 
-					<div className="mx-auto grid max-w-7xl gap-6 sm:gap-12 md:grid-cols-2">
+					<div className="mx-auto grid max-w-7xl gap-6 sm:gap-12 md:grid-cols-2 md:items-start">
 						<div>
 							<div className="mb-6 flex items-center space-x-3">
 								<div className="rounded-lg bg-blue-600 p-2 text-white transition-transform duration-300 hover:rotate-6 hover:scale-105">
@@ -144,10 +144,10 @@ This certificate can be registered at all employment exchanges across India as v
 								</div>
 								<h3 className="text-2xl font-bold">For Apprentices</h3>
 							</div>
-							<div className="grid grid-cols-2 gap-4">
+							<div className="grid grid-cols-2 gap-4 auto-rows-fr">
 								{apprenticeBenefits.map((item) => (
-									<div key={item} className="group flex flex-col h-full rounded-xl border border-slate-100 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-xl min-h-[140px]">
-										<div className="mb-4 rounded-full bg-blue-100 p-2 text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white">
+									<div key={item} className="group flex flex-col rounded-xl border border-slate-100 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-xl">
+										<div className="mb-4 w-fit rounded-full bg-blue-100 p-2 text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white">
 											<CheckCircle2 className="h-5 w-5" />
 										</div>
 										<h4 className="font-bold text-slate-800">{item}</h4>
@@ -163,10 +163,10 @@ This certificate can be registered at all employment exchanges across India as v
 								</div>
 								<h3 className="text-2xl font-bold">For Employers</h3>
 							</div>
-							<div className="grid grid-cols-2 gap-4">
+							<div className="grid grid-cols-2 gap-4 auto-rows-fr">
 								{employerBenefits.map((item) => (
-									<div key={item} className="group flex flex-col h-full rounded-xl border border-slate-100 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:bg-white hover:shadow-xl min-h-[140px]">
-										<div className="mb-4 rounded-full bg-orange-100 p-2 text-orange-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white">
+									<div key={item} className="group flex flex-col rounded-xl border border-slate-100 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:bg-white hover:shadow-xl">
+										<div className="mb-4 w-fit rounded-full bg-orange-100 p-2 text-orange-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white">
 											<CheckCircle2 className="h-5 w-5" />
 										</div>
 										<h4 className="font-bold text-slate-800">{item}</h4>
