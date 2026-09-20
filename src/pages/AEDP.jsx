@@ -43,7 +43,7 @@ const industries = [
 ]
 
 function AedpHero({ resolveAsset }) {
-	const heroAsset = resolveAsset('aedp.hero', '/happy-excited-executive-business-team-600nw-2424450635.jpg.webp', 'AEDP students in practical learning')
+	const heroAsset = resolveAsset('aedp.hero', '/aedp-hero.jpg', 'AEDP Indian students in practical learning')
 
 	return (
 		<section className="relative min-h-[100svh] overflow-hidden bg-[#0F172A] pt-28 pb-12 sm:pt-36 sm:pb-16">
