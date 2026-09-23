@@ -227,22 +227,6 @@ His deep understanding of regional industry requirements enables him to deliver 
 		],
 		location: 'Pune, India'
 	},
-	'namdev-egave': {
-		name: 'Namdev Egave',
-		role: 'Payroll & Compliance Head',
-		category: 'Leader',
-		imageUrl: '/leaders/namdev-egave.jpg',
-		bio: `Namdev Egave leads the Payroll & Compliance function at TSPL Group and is responsible for ensuring complete adherence to statutory regulations, labor laws, and payroll management processes. He oversees payroll operations for a large workforce while maintaining accuracy, transparency, and compliance across all business activities.
-
-His expertise in labor legislation, PF, ESIC, statutory audits, and compliance management helps safeguard the interests of both clients and employees. His dedication to regulatory excellence has contributed significantly to TSPL's reputation as a trusted workforce and apprenticeship solutions provider.`,
-		longBio: 'Mr. Egave monitors PF, ESI, and other labor-related filings. Under his oversight, TSPL maintains a clean record with government compliance departments.',
-		expertise: ['Labor Laws', 'Payroll Compliance', 'Statutory Filings', 'PF & ESI Management'],
-		achievements: [
-			'Managed monthly payroll compliance for 25,000+ active candidates.',
-			'Achieved audit approvals with zero compliance penalties.'
-		],
-		location: 'Pune, India'
-	},
 	'rahul-borkar': {
 		name: 'Rahul Borkar',
 		role: 'Recruitment Head',

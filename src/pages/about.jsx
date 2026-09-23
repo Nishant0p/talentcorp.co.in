@@ -1303,13 +1303,6 @@ function ManagementSection({ isMobile }) {
 		},
 		{
 			id: '9',
-			name: 'Namdev Egave',
-			role: 'Payroll & Compliance Head',
-			imageUrl: '/leaders/namdev-egave.jpg',
-			slug: 'namdev-egave'
-		},
-		{
-			id: '10',
 			name: 'Rahul Borkar',
 			role: 'Recruitment Head',
 			imageUrl: '/leaders/9 mr rahul borkar.jpg',
@@ -1836,11 +1829,6 @@ export default function AboutPage() {
 								"@type": "Person",
 								"name": "Purushottam Gaikwad",
 								"jobTitle": "Assistant General Manager, Operations"
-							},
-							{
-								"@type": "Person",
-								"name": "Mr. Namdev Egave",
-								"jobTitle": "Payroll & Compliance Head"
 							},
 							{
 								"@type": "Person",
